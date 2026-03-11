@@ -36,7 +36,7 @@ const AudienceGate = () => {
           <motion.img
             src={logoWhite}
             alt="Re-Rooted® logo"
-            className="mb-8 h-80 w-auto md:h-[27.5rem]"
+            className="mb-2 h-80 w-auto md:h-[27.5rem]"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
@@ -44,7 +44,7 @@ const AudienceGate = () => {
 
           {/* Tagline */}
           <motion.p
-            className="mb-12 text-lg font-light italic tracking-wide text-primary-foreground md:text-xl"
+            className="mb-6 text-lg font-light italic tracking-wide text-primary-foreground md:text-xl"
             style={{ fontWeight: 300 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
