@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logoShorthand from "@/assets/logo-shorthand-blue.png";
@@ -42,13 +42,24 @@ const AudienceToggle = ({ className = "" }: { className?: string }) => {
 
 const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { gateOpen } = useAudience();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (gateOpen) return null;
 
   return (
     <motion.header
-      className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm"
+      className={`fixed inset-x-0 z-40 bg-background/95 backdrop-blur-sm transition-all duration-300 ${
+        scrolled
+          ? "top-3 mx-4 md:mx-8 rounded-2xl shadow-lg border border-border"
+          : "top-0 border-b border-border"
+      }`}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
