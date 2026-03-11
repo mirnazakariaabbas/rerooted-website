@@ -12,6 +12,34 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
+const AudienceToggle = ({ className = "" }: { className?: string }) => {
+  const { audience, setAudience } = useAudience();
+  const isOrg = audience === "organization" || audience === null;
+  const label = isOrg ? "For Organizations" : "For Individuals";
+
+  const toggle = () => setAudience(isOrg ? "individual" : "organization");
+
+  return (
+    <button
+      onClick={toggle}
+      className={`inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold text-foreground/80 transition-colors hover:bg-muted cursor-pointer ${className}`}
+    >
+      <span className={`h-2 w-2 rounded-full transition-colors ${isOrg ? "bg-secondary" : "bg-accent"}`} />
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={label}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.2 }}
+        >
+          {label}
+        </motion.span>
+      </AnimatePresence>
+    </button>
+  );
+};
+
 const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { gateOpen } = useAudience();
@@ -43,10 +71,7 @@ const StickyNav = () => {
         </nav>
 
         <div className="flex items-center gap-4">
-          <span className="hidden items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold text-foreground/80 md:inline-flex">
-            <span className="h-2 w-2 rounded-full bg-secondary" />
-            For Organizations
-          </span>
+          <AudienceToggle className="hidden md:inline-flex" />
 
           <button
             className="md:hidden"
@@ -82,10 +107,7 @@ const StickyNav = () => {
                   {link.label}
                 </a>
               ))}
-              <span className="mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold text-foreground/80">
-                <span className="h-2 w-2 rounded-full bg-secondary" />
-                For Organizations
-              </span>
+              <AudienceToggle className="mt-2 w-fit" />
             </div>
           </motion.nav>
         )}
