@@ -1,0 +1,116 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import logoBlue from "@/assets/logo-blue.png";
+import { useAudience } from "@/contexts/AudienceContext";
+
+const navLinks = [
+  { label: "The Program", href: "#program" },
+  { label: "The Journey", href: "#journey" },
+  { label: "About", href: "#about" },
+  { label: "Insights", href: "#insights" },
+  { label: "Contact", href: "#contact" },
+];
+
+const StickyNav = () => {
+  const [visible, setVisible] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { gateOpen } = useAudience();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > window.innerHeight * 0.9);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (gateOpen) return null;
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.header
+          className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm"
+          initial={{ y: -80 }}
+          animate={{ y: 0 }}
+          exit={{ y: -80 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        >
+          <div className="container mx-auto flex h-16 items-center justify-between px-6 lg:px-12">
+            {/* Logo */}
+            <a href="#top" className="shrink-0">
+              <img src={logoBlue} alt="Re-Rooted®" className="h-8 w-auto" />
+            </a>
+
+            {/* Desktop nav */}
+            <nav className="hidden items-center gap-8 md:flex">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            {/* Toggle pill + Hamburger */}
+            <div className="flex items-center gap-4">
+              <span className="hidden items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold text-foreground/80 md:inline-flex">
+                <span className="h-2 w-2 rounded-full bg-secondary" />
+                For Organizations
+              </span>
+
+              {/* Mobile hamburger */}
+              <button
+                className="md:hidden"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label="Toggle menu"
+              >
+                {mobileOpen ? (
+                  <X className="h-6 w-6 text-foreground" />
+                ) : (
+                  <Menu className="h-6 w-6 text-foreground" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile menu */}
+          <AnimatePresence>
+            {mobileOpen && (
+              <motion.nav
+                className="border-t border-border bg-background px-6 py-6 md:hidden"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex flex-col gap-4">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="text-base font-medium text-foreground/80 transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                  <span className="mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold text-foreground/80">
+                    <span className="h-2 w-2 rounded-full bg-secondary" />
+                    For Organizations
+                  </span>
+                </div>
+              </motion.nav>
+            )}
+          </AnimatePresence>
+        </motion.header>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default StickyNav;
