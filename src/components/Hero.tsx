@@ -24,17 +24,17 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
           >
             <motion.span
               className="block"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
               {headline1}
             </motion.span>
             <motion.span
               className="block"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
             >
               {headline2}
             </motion.span>
@@ -43,18 +43,18 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
           <motion.div
             className="mt-8 max-w-xl space-y-4 text-lg text-foreground/90"
             style={{ fontWeight: 400 }}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
             {body}
           </motion.div>
 
           <motion.div
             className="mt-10 flex flex-wrap items-center gap-5"
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
             <a
               href={cta1.href}
@@ -71,7 +71,12 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
           </motion.div>
         </div>
 
-        <div className="flex-[2] flex items-center justify-center">
+        <motion.div
+          className="flex-[2] flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+        >
           <div className="w-[320px] h-[320px] md:w-[400px] md:h-[400px] overflow-hidden rounded-full">
             <img
               src={heroImage}
@@ -80,7 +85,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
               loading="eager"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

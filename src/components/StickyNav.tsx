@@ -51,7 +51,7 @@ const AudienceToggle = ({ className = "" }: { className?: string }) => {
 const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { gateOpen, audience } = useAudience();
+  const { gateOpen, setGateOpen, audience } = useAudience();
 
   const navLinks = audience === "individual" ? individualLinks : corporateLinks;
 
@@ -75,9 +75,12 @@ const StickyNav = () => {
       transition={{ duration: 0.35, ease: "easeOut" }}
     >
       <div className="container mx-auto flex h-24 items-center justify-between px-6 lg:px-12">
-        <a href="#top" className="shrink-0">
+        <button
+          onClick={() => { setGateOpen(true); window.scrollTo({ top: 0 }); }}
+          className="shrink-0 cursor-pointer"
+        >
           <img src={logoShorthand} alt="Re-Rooted®" className="h-20 w-auto" />
-        </a>
+        </button>
 
         <nav className="hidden items-center gap-8 md:flex">
           <AnimatePresence mode="wait">
