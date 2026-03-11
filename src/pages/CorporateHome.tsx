@@ -1,0 +1,40 @@
+import Hero from "@/components/Hero";
+import ProblemStats from "@/components/ProblemStats";
+import IntegrationProgram from "@/components/IntegrationProgram";
+
+const CorporateHome = () => (
+  <main id="top">
+    <Hero
+      headline1="Relocation is not a moment."
+      headline2="It's a journey."
+      body={
+        <>
+          <p>
+            Your organization moves people across borders.
+            <br />
+            <strong>Re-Rooted®</strong> makes sure they arrive and are equipped to perform.
+          </p>
+          <p>
+            We help expatriates and their families settle, adapt, and thrive
+            through every stage of transition. So they can do the work they
+            were sent to do.
+          </p>
+        </>
+      }
+      cta1={{ label: "See how it works", href: "#program" }}
+      cta2={{ label: "Start a conversation", href: "#contact" }}
+    />
+    <ProblemStats
+      label="Why I Built Re-Rooted®"
+      headline="The Problem Companies Avoid"
+    />
+    <IntegrationProgram />
+
+    {/* Placeholder sections for future phases */}
+    <section id="about" className="min-h-[50vh] bg-card" />
+    <section id="insights" className="min-h-[50vh] bg-background" />
+    <section id="contact" className="min-h-[50vh] bg-card" />
+  </main>
+);
+
+export default CorporateHome;
