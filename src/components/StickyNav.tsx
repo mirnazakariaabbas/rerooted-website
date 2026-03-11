@@ -25,9 +25,9 @@ const StickyNav = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-6 lg:px-12">
+      <div className="container mx-auto flex h-24 items-center justify-between px-6 lg:px-12">
         <a href="#top" className="shrink-0">
-          <img src={logoBlue} alt="Re-Rooted®" className="h-8 w-auto" />
+          <img src={logoShorthand} alt="Re-Rooted®" className="h-20 w-auto" />
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
