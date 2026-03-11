@@ -8,9 +8,9 @@ const CorporateHero = () => {
 
   return (
     <section className="relative flex min-h-screen items-center bg-background">
-      <div className="container mx-auto grid grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-5 lg:gap-16 lg:px-12">
-        {/* Text — 60% */}
-        <div ref={textRef} className="lg:col-span-3">
+      <div className="container mx-auto flex flex-col items-center gap-12 px-6 py-20 lg:flex-row lg:gap-16 lg:px-12">
+        {/* Text — left side */}
+        <div ref={textRef} className="flex-[3]">
           <motion.h1
             className="text-4xl font-black leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-[56px]"
             style={{ fontWeight: 900 }}
@@ -73,49 +73,80 @@ const CorporateHero = () => {
           </motion.div>
         </div>
 
-        {/* Image — 40% with decorative Q border */}
-        <div className="relative lg:col-span-2">
-          <div className="relative mx-auto w-full max-w-md">
-            {/* Decorative Q-shaped SVG border */}
+        {/* Image — right side with hand-drawn Q frame */}
+        <div className="relative flex-[2] flex items-center justify-center">
+          <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px]">
+            {/* Hand-drawn Q-shaped frame */}
             <svg
-              viewBox="0 0 400 440"
+              viewBox="0 0 420 480"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="absolute -inset-4 z-10 h-[calc(100%+2rem)] w-[calc(100%+2rem)]"
-              preserveAspectRatio="none"
+              className="absolute -top-6 -left-6 z-10 w-[calc(100%+48px)] h-[calc(100%+80px)] pointer-events-none"
             >
-              {/* Main circular stroke */}
-              <ellipse
-                cx="190"
-                cy="190"
-                rx="175"
-                ry="180"
-                stroke="hsl(233 67% 37%)"
-                strokeWidth="12"
-                fill="none"
-              />
-              {/* Q tail - the organic swirl */}
+              {/* Organic hand-drawn circle — slightly wobbly */}
               <path
-                d="M 300 310 Q 340 360, 310 410 Q 280 450, 240 430 Q 200 410, 220 370 Q 240 330, 280 310"
+                d="M 210 18
+                   C 120 14, 52 58, 34 120
+                   C 14 190, 18 260, 50 310
+                   C 80 358, 140 390, 210 392
+                   C 280 394, 340 368, 370 318
+                   C 398 268, 404 198, 388 138
+                   C 370 72, 308 22, 210 18 Z"
                 stroke="hsl(233 67% 37%)"
-                strokeWidth="12"
-                fill="none"
+                strokeWidth="8"
                 strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+                style={{
+                  filter: "url(#hand-drawn)",
+                }}
               />
+              {/* Q tail — organic loop swirl */}
+              <path
+                d="M 320 340
+                   C 345 370, 365 400, 348 435
+                   C 332 462, 295 468, 270 448
+                   C 248 430, 245 400, 262 378
+                   C 280 356, 310 348, 320 340"
+                stroke="hsl(233 67% 37%)"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+                style={{
+                  filter: "url(#hand-drawn)",
+                }}
+              />
+              {/* SVG filter for hand-drawn wobble effect */}
+              <defs>
+                <filter id="hand-drawn">
+                  <feTurbulence
+                    type="turbulence"
+                    baseFrequency="0.03"
+                    numOctaves="3"
+                    result="turbulence"
+                    seed="2"
+                  />
+                  <feDisplacementMap
+                    in="SourceGraphic"
+                    in2="turbulence"
+                    scale="3"
+                    xChannelSelector="R"
+                    yChannelSelector="G"
+                  />
+                </filter>
+              </defs>
             </svg>
 
-            {/* Image with lavender tint */}
-            <div className="relative overflow-hidden rounded-full">
+            {/* Circular image with lavender tint */}
+            <div className="relative w-full h-full overflow-hidden rounded-full">
               <img
                 src={heroImage}
                 alt="Professional in a modern workspace"
-                className="h-auto w-full object-cover aspect-square"
+                className="h-full w-full object-cover"
                 loading="eager"
               />
-              {/* Lavender overlay tint */}
-              <div
-                className="absolute inset-0 rounded-full bg-accent/40 mix-blend-multiply"
-              />
+              <div className="absolute inset-0 rounded-full bg-accent/30 mix-blend-multiply" />
             </div>
           </div>
         </div>
