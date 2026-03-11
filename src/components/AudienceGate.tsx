@@ -33,14 +33,18 @@ const AudienceGate = () => {
           transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
         >
           {/* Logo */}
-          <motion.img
-            src={logoWhite}
-            alt="Re-Rooted® logo"
-            className="mb-2 h-80 w-auto md:h-[27.5rem]"
+          <motion.div
+            className="mb-2 h-52 w-[28rem] overflow-hidden md:h-72 md:w-[38rem]"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
-          />
+          >
+            <img
+              src={logoWhite}
+              alt="Re-Rooted® logo"
+              className="h-80 w-full object-contain object-center md:h-[27.5rem]"
+            />
+          </motion.div>
 
           {/* Tagline */}
           <motion.p
