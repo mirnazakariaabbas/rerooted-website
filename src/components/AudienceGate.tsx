@@ -44,7 +44,7 @@ const AudienceGate = () => {
 
           {/* Tagline */}
           <motion.p
-            className="mb-12 text-lg font-light italic tracking-wide text-primary-foreground md:text-xl"
+            className="mb-6 text-lg font-light italic tracking-wide text-primary-foreground md:text-xl"
             style={{ fontWeight: 300 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
