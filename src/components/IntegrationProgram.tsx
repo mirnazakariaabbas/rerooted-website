@@ -156,7 +156,7 @@ const IntegrationProgram = () => {
       {/* Title with inline logo */}
       <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] text-center flex items-center justify-center gap-3 flex-wrap">
         <span>The</span>
-        <img src={logoBlue} alt="Re-Rooted" className="h-[36px] md:h-[44px] inline-block" />
+        <img src={logoBlue} alt="Re-Rooted" className="h-[40px] md:h-[52px] inline-block" />
         <span>Journey</span>
       </h2>
 
