@@ -44,7 +44,7 @@ const CorporateHero = () => {
             <p>
               Your organization moves people across borders.
               <br />
-              Re-Rooted® makes sure they arrive and are equipped to perform.
+              <strong>Re-Rooted®</strong> makes sure they arrive and are equipped to perform.
             </p>
             <p>
               We help expatriates and their families settle, adapt, and thrive
