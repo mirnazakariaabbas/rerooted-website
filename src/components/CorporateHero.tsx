@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import heroImage from "@/assets/hero-portrait.jpg";
+import qFrame from "@/assets/q-frame.png";
 
 const CorporateHero = () => {
   const textRef = useRef<HTMLDivElement>(null);
