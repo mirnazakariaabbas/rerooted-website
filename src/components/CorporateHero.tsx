@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import heroImage from "@/assets/hero-portrait.jpg";
+import qFrame from "@/assets/q-frame.png";
 
 const CorporateHero = () => {
   const textRef = useRef<HTMLDivElement>(null);
@@ -73,80 +74,26 @@ const CorporateHero = () => {
           </motion.div>
         </div>
 
-        {/* Image — right side with hand-drawn Q frame */}
+        {/* Image — right side with Q frame */}
         <div className="relative flex-[2] flex items-center justify-center">
           <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px]">
-            {/* Hand-drawn Q-shaped frame */}
-            <svg
-              viewBox="0 0 420 480"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute -top-6 -left-6 z-10 w-[calc(100%+48px)] h-[calc(100%+80px)] pointer-events-none"
-            >
-              {/* Organic hand-drawn circle — slightly wobbly */}
-              <path
-                d="M 210 18
-                   C 120 14, 52 58, 34 120
-                   C 14 190, 18 260, 50 310
-                   C 80 358, 140 390, 210 392
-                   C 280 394, 340 368, 370 318
-                   C 398 268, 404 198, 388 138
-                   C 370 72, 308 22, 210 18 Z"
-                stroke="hsl(233 67% 37%)"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-                style={{
-                  filter: "url(#hand-drawn)",
-                }}
-              />
-              {/* Q tail — organic loop swirl */}
-              <path
-                d="M 320 340
-                   C 345 370, 365 400, 348 435
-                   C 332 462, 295 468, 270 448
-                   C 248 430, 245 400, 262 378
-                   C 280 356, 310 348, 320 340"
-                stroke="hsl(233 67% 37%)"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-                style={{
-                  filter: "url(#hand-drawn)",
-                }}
-              />
-              {/* SVG filter for hand-drawn wobble effect */}
-              <defs>
-                <filter id="hand-drawn">
-                  <feTurbulence
-                    type="turbulence"
-                    baseFrequency="0.03"
-                    numOctaves="3"
-                    result="turbulence"
-                    seed="2"
-                  />
-                  <feDisplacementMap
-                    in="SourceGraphic"
-                    in2="turbulence"
-                    scale="3"
-                    xChannelSelector="R"
-                    yChannelSelector="G"
-                  />
-                </filter>
-              </defs>
-            </svg>
+            {/* Q frame image */}
+            <img
+              src={qFrame}
+              alt=""
+              className="absolute -top-[15%] -left-[15%] w-[130%] h-[130%] object-contain pointer-events-none z-10"
+              aria-hidden="true"
+            />
 
-            {/* Circular image with lavender tint */}
-            <div className="relative w-full h-full overflow-hidden rounded-full">
+            {/* Circular photo clipped inside the frame */}
+            <div className="absolute top-[5%] left-[2%] w-[82%] h-[82%] overflow-hidden rounded-full">
               <img
                 src={heroImage}
                 alt="Professional in a modern workspace"
                 className="h-full w-full object-cover"
                 loading="eager"
               />
-              <div className="absolute inset-0 rounded-full bg-accent/30 mix-blend-multiply" />
+              <div className="absolute inset-0 rounded-full bg-accent/20 mix-blend-multiply" />
             </div>
           </div>
         </div>
