@@ -1,9 +1,8 @@
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Phone, ClipboardList, Sprout, Flag, CheckCircle, ChevronDown } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import logoBlue from "@/assets/logo-shorthand-blue.png";
 
 const steps = [
   {
@@ -38,100 +37,123 @@ const steps = [
   },
 ];
 
-/* ── Vine SVG path positions ── */
-// Each node sits at a Y position along the vine; X alternates left/right of center
-const NODE_SPACING = 220;
-const VINE_TOP = 40;
-const nodePositions = steps.map((_, i) => ({
-  y: VINE_TOP + i * NODE_SPACING,
-  side: i % 2 === 0 ? "left" : "right",
-}));
-const VINE_HEIGHT = VINE_TOP + (steps.length - 1) * NODE_SPACING + 80;
+const NODE_SPACING = 260;
+const VINE_TOP = 60;
+const VINE_HEIGHT = VINE_TOP + (steps.length - 1) * NODE_SPACING + 100;
 
-// Build a smooth S-curve path through the node positions
+function getNodePos(index: number, centerX: number, amplitude: number) {
+  const y = VINE_TOP + index * NODE_SPACING;
+  const side = index % 2 === 0 ? "left" : "right";
+  const x = side === "left" ? centerX - amplitude : centerX + amplitude;
+  return { x, y, side };
+}
+
 function buildVinePath(centerX: number, amplitude: number): string {
-  const pts = nodePositions.map((n) => ({
-    x: n.side === "left" ? centerX - amplitude : centerX + amplitude,
-    y: n.y,
-  }));
+  const pts = steps.map((_, i) => getNodePos(i, centerX, amplitude));
 
   let d = `M ${centerX} 0`;
   pts.forEach((pt, i) => {
     const prevY = i === 0 ? 0 : pts[i - 1].y;
-    const cpY1 = prevY + (pt.y - prevY) * 0.5;
     const prevX = i === 0 ? centerX : pts[i - 1].x;
+    const cpY1 = prevY + (pt.y - prevY) * 0.5;
     d += ` C ${prevX} ${cpY1}, ${pt.x} ${pt.y - (pt.y - prevY) * 0.3}, ${pt.x} ${pt.y}`;
   });
-  // extend to bottom
   const lastPt = pts[pts.length - 1];
   d += ` C ${lastPt.x} ${lastPt.y + 40}, ${centerX} ${VINE_HEIGHT - 20}, ${centerX} ${VINE_HEIGHT}`;
   return d;
 }
 
-/* ── Animated step node ── */
+/* ── Step Node ── */
 const StepNode = ({
   step,
   index,
   isMobile,
+  centerX,
+  amplitude,
 }: {
   step: (typeof steps)[number];
   index: number;
   isMobile: boolean;
+  centerX: number;
+  amplitude: number;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const Icon = step.icon;
-  const side = isMobile ? "right" : nodePositions[index].side;
+  const { x: nodeX, y: nodeY, side } = getNodePos(index, centerX, amplitude);
+  const displaySide = isMobile ? "right" : side;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.3 }
+      { threshold: 0.4 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
-  const yPos = nodePositions[index].y;
+  // Icon positioned on the vine
+  const iconSize = 48;
 
   return (
-    <motion.div
-      ref={ref}
-      className="absolute flex items-start gap-4"
-      style={{
-        top: yPos - 30,
-        ...(isMobile
-          ? { left: 50, right: 16 }
-          : side === "left"
-          ? { right: "calc(50% + 40px)", textAlign: "right" as const }
-          : { left: "calc(50% + 40px)" }),
-      }}
-      initial={{ opacity: 0, y: 30 }}
-      animate={visible ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.1 }}
-    >
-      {side === "right" && (
-        <div className="w-[52px] h-[52px] shrink-0 rounded-full flex items-center justify-center bg-secondary text-secondary-foreground shadow-md">
-          <Icon size={22} />
-        </div>
-      )}
-      <div className={`max-w-[260px] ${side === "left" ? "ml-auto" : ""}`}>
+    <div ref={ref} className="absolute" style={{ top: nodeY - iconSize / 2, left: 0, right: 0, height: iconSize + 120 }}>
+      {/* Icon on the vine */}
+      <motion.div
+        className="absolute z-10 rounded-full flex items-center justify-center shadow-lg transition-colors duration-500"
+        style={{
+          width: iconSize,
+          height: iconSize,
+          left: nodeX - iconSize / 2,
+          top: 0,
+        }}
+        initial={false}
+        animate={{
+          backgroundColor: visible ? "hsl(var(--secondary))" : "hsl(var(--muted))",
+          color: visible ? "hsl(var(--secondary-foreground))" : "hsl(var(--muted-foreground))",
+        }}
+        transition={{ duration: 0.5 }}
+      >
+        <Icon size={20} />
+      </motion.div>
+
+      {/* Text card */}
+      <motion.div
+        className="absolute"
+        style={{
+          top: -4,
+          ...(isMobile
+            ? { left: nodeX + iconSize / 2 + 16, right: 8 }
+            : displaySide === "left"
+            ? { right: `calc(100% - ${nodeX - iconSize / 2 - 16}px)`, textAlign: "right" as const }
+            : { left: nodeX + iconSize / 2 + 16 }),
+          maxWidth: 240,
+        }}
+        initial={{ opacity: 0, x: displaySide === "left" ? 20 : -20 }}
+        animate={visible ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
         <p className="text-xs font-semibold text-muted-foreground">{step.timing}</p>
-        <p className="font-bold text-foreground text-sm mb-1">{step.name}</p>
-        <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
-      </div>
-      {side === "left" && (
-        <div className="w-[52px] h-[52px] shrink-0 rounded-full flex items-center justify-center bg-secondary text-secondary-foreground shadow-md">
-          <Icon size={22} />
-        </div>
-      )}
-    </motion.div>
+        <p className="font-bold text-foreground text-sm">{step.name}</p>
+        <AnimatePresence>
+          {visible && (
+            <motion.p
+              className="text-muted-foreground text-sm leading-relaxed mt-1"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
+              {step.desc}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </div>
   );
 };
 
-/* ── Main component ── */
+/* ── Main ── */
 const IntegrationProgram = () => {
   const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -141,26 +163,17 @@ const IntegrationProgram = () => {
   });
 
   const centerX = isMobile ? 30 : 400;
-  const amplitude = isMobile ? 0 : 120;
+  const amplitude = isMobile ? 0 : 80;
   const vinePath = buildVinePath(centerX, amplitude);
   const svgWidth = isMobile ? 60 : 800;
-
   const dashOffset = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section
-      ref={sectionRef}
-      id="program"
-      className="bg-background py-16 px-6 lg:px-12"
-    >
-      {/* Title with inline logo */}
-      <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] text-center flex items-center justify-center gap-3 flex-wrap">
-        <span>The</span>
-        <img src={logoBlue} alt="Re-Rooted" className="h-[40px] md:h-[52px] inline-block" />
-        <span>Journey</span>
+    <section ref={sectionRef} id="program" className="bg-background py-16 px-6 lg:px-12">
+      <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] text-center">
+        The Re-Rooted® Journey
       </h2>
 
-      {/* Keep scrolling */}
       <div className="flex items-center justify-center gap-1 mt-4 mb-12">
         <span className="text-primary text-sm font-semibold tracking-wide">Keep scrolling</span>
         <motion.span
@@ -171,24 +184,39 @@ const IntegrationProgram = () => {
         </motion.span>
       </div>
 
-      {/* Vine timeline */}
       <div className="relative mx-auto" style={{ maxWidth: svgWidth, height: VINE_HEIGHT + 60 }}>
-        {/* SVG vine path */}
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox={`0 0 ${svgWidth} ${VINE_HEIGHT + 20}`}
           fill="none"
           preserveAspectRatio="xMidYMid meet"
         >
-          {/* Background path */}
-          <path d={vinePath} stroke="hsl(var(--border))" strokeWidth="3" strokeLinecap="round" fill="none" />
+          <defs>
+            <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="3" result="turbulence" seed="2" />
+              <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="3" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+          </defs>
+          {/* Background dashed path */}
+          <path
+            d={vinePath}
+            stroke="hsl(var(--border))"
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray="14 8"
+            fill="none"
+            filter="url(#hand-drawn)"
+          />
           {/* Animated fill path */}
           <motion.path
             d={vinePath}
-            stroke="hsl(153, 45%, 45%)"
-            strokeWidth="3"
+            stroke="hsl(var(--secondary))"
+            strokeWidth="6"
             strokeLinecap="round"
+            strokeLinejoin="round"
             fill="none"
+            filter="url(#hand-drawn)"
             pathLength={1}
             style={{
               pathLength: scrollYProgress,
@@ -198,23 +226,18 @@ const IntegrationProgram = () => {
           />
         </svg>
 
-        {/* Step nodes */}
         {steps.map((step, i) => (
-          <StepNode key={i} step={step} index={i} isMobile={isMobile} />
+          <StepNode key={i} step={step} index={i} isMobile={isMobile} centerX={centerX} amplitude={amplitude} />
         ))}
       </div>
 
-      {/* Summary + CTAs */}
       <div className="mt-10 flex flex-col items-center gap-6">
         <p className="text-muted-foreground text-sm text-center">
           Total engagement: 90 days · 6–8 coaching sessions · 2 assessments · 1 HR report
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Button size="lg">Get a program overview</Button>
-          <a
-            href="#contact"
-            className="text-sm font-medium text-primary hover:underline underline-offset-4"
-          >
+          <a href="#contact" className="text-sm font-medium text-primary hover:underline underline-offset-4">
             Or start with a conversation
           </a>
         </div>
