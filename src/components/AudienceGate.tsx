@@ -27,7 +27,7 @@ const AudienceGate = () => {
     <AnimatePresence>
       {gateOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-primary px-6"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-primary px-6 pb-24"
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
           transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
