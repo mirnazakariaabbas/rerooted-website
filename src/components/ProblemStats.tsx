@@ -1,5 +1,6 @@
-import { useRef, useEffect, useState, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useAudience } from "@/contexts/AudienceContext";
 
 /* ── count-up hook ── */
 function useCountUp(end: number, duration = 1500, start = false) {
@@ -19,6 +20,20 @@ function useCountUp(end: number, duration = 1500, start = false) {
   return value;
 }
 
+const contentMap = {
+  corporate: {
+    label: "Why I Built Re-Rooted®",
+    headline: "The Problem Companies Avoid",
+    closingLine: null,
+  },
+  individual: {
+    label: "You're Not Alone",
+    headline: "What nobody told you before you moved",
+    closingLine:
+      "These aren't just numbers — they're people like you, navigating the same challenges you face right now.",
+  },
+};
+
 /* ── stat card ── */
 const StatCard = ({
   value,
@@ -32,21 +47,24 @@ const StatCard = ({
   inView: boolean;
 }) => (
   <motion.div
-    className="rounded-2xl bg-[hsl(260,30%,95%)] p-6"
+    className="rounded-2xl bg-card p-6"
     initial={{ opacity: 0, x: 60 }}
     animate={inView ? { opacity: 1, x: 0 } : {}}
     transition={{ duration: 0.6, delay: 0.3 + index * 0.3, ease: "easeOut" }}
   >
-    <p className="text-[hsl(153,45%,45%)] font-extrabold text-4xl leading-tight">
+    <p className="text-secondary font-extrabold text-4xl leading-tight">
       {value}
     </p>
-    <p className="text-[hsl(0,0%,10%)] font-normal text-base mt-1">{label}</p>
+    <p className="text-foreground font-normal text-base mt-1">{label}</p>
   </motion.div>
 );
 
 const ProblemStats = () => {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
+  const { audience } = useAudience();
+  const key = audience === "individual" ? "individual" : "corporate";
+  const c = contentMap[key];
 
   const bigStat = useCountUp(98, 1500, inView);
   const smallStat1 = useCountUp(20, 1500, inView);
@@ -54,35 +72,43 @@ const ProblemStats = () => {
   return (
     <section
       ref={ref}
-      className="relative w-full bg-[hsl(233,67%,37%)] py-20 md:py-28 overflow-hidden"
+      className="relative w-full bg-primary py-20 md:py-28 overflow-hidden"
     >
       <div className="container mx-auto px-6 lg:px-12">
         {/* label */}
-        <motion.p
-          className="text-[hsl(153,45%,45%)] text-xs font-semibold uppercase tracking-[3px] mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          Why I Built Re-Rooted®
-        </motion.p>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={key + "-label"}
+            className="text-secondary text-xs font-semibold uppercase tracking-[3px] mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {c.label}
+          </motion.p>
+        </AnimatePresence>
 
         {/* headline */}
-        <motion.h2
-          className="text-[hsl(0,0%,100%)] font-extrabold text-3xl md:text-[44px] leading-tight mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          The Problem Companies Avoid
-        </motion.h2>
+        <AnimatePresence mode="wait">
+          <motion.h2
+            key={key + "-headline"}
+            className="text-primary-foreground font-extrabold text-3xl md:text-[44px] leading-tight mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {c.headline}
+          </motion.h2>
+        </AnimatePresence>
 
         {/* columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
           {/* left – big stat */}
           <div>
             <motion.p
-              className="text-[hsl(153,45%,45%)] font-black text-[80px] md:text-[120px] leading-none"
+              className="text-secondary font-black text-[80px] md:text-[120px] leading-none"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -90,7 +116,7 @@ const ProblemStats = () => {
               {bigStat}%
             </motion.p>
             <motion.p
-              className="text-[hsl(0,0%,100%)] font-normal text-lg mt-2"
+              className="text-primary-foreground font-normal text-lg mt-2"
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.5 }}
@@ -116,9 +142,25 @@ const ProblemStats = () => {
           </div>
         </div>
 
+        {/* closing line (individual only) */}
+        <AnimatePresence>
+          {c.closingLine && (
+            <motion.p
+              key="closing"
+              className="text-primary-foreground/80 text-base mt-10 max-w-2xl"
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+            >
+              {c.closingLine}
+            </motion.p>
+          )}
+        </AnimatePresence>
+
         {/* source */}
         <motion.p
-          className="text-[hsl(0,0%,100%)]/50 text-xs mt-12"
+          className="text-primary-foreground/50 text-xs mt-12"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 1.2 }}

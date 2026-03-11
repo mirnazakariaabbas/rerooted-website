@@ -4,9 +4,17 @@ import { Menu, X } from "lucide-react";
 import logoShorthand from "@/assets/logo-shorthand-blue.png";
 import { useAudience } from "@/contexts/AudienceContext";
 
-const navLinks = [
+const corporateLinks = [
   { label: "The Program", href: "#program" },
   { label: "The Journey", href: "#journey" },
+  { label: "About", href: "#about" },
+  { label: "Insights", href: "#insights" },
+  { label: "Contact", href: "#contact" },
+];
+
+const individualLinks = [
+  { label: "Your Journey", href: "#journey" },
+  { label: "Support", href: "#program" },
   { label: "About", href: "#about" },
   { label: "Insights", href: "#insights" },
   { label: "Contact", href: "#contact" },
@@ -43,7 +51,9 @@ const AudienceToggle = ({ className = "" }: { className?: string }) => {
 const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { gateOpen } = useAudience();
+  const { gateOpen, audience } = useAudience();
+
+  const navLinks = audience === "individual" ? individualLinks : corporateLinks;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -70,15 +80,26 @@ const StickyNav = () => {
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={audience}
+              className="flex items-center gap-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
             >
-              {link.label}
-            </a>
-          ))}
+              {navLinks.map((link) => (
+                <a
+                  key={link.href + link.label}
+                  href={link.href}
+                  className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </nav>
 
         <div className="flex items-center gap-4">
@@ -110,7 +131,7 @@ const StickyNav = () => {
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
-                  key={link.href}
+                  key={link.href + link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
                   className="text-base font-medium text-foreground/80 transition-colors hover:text-foreground"
