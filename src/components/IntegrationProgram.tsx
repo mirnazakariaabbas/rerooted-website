@@ -185,7 +185,7 @@ const IntegrationProgram = () => {
           {/* Animated fill path */}
           <motion.path
             d={vinePath}
-            stroke="hsl(var(--re-green))"
+            stroke="hsl(153, 45%, 45%)"
             strokeWidth="3"
             strokeLinecap="round"
             fill="none"
