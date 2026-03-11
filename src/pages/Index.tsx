@@ -1,13 +1,24 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import AudienceGate from "@/components/AudienceGate";
+import CorporateHero from "@/components/CorporateHero";
+import StickyNav from "@/components/StickyNav";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <AudienceGate />
+      <StickyNav />
+
+      <main id="top">
+        <CorporateHero />
+
+        {/* Placeholder sections for future phases */}
+        <section id="program" className="min-h-[50vh] bg-card" />
+        <section id="journey" className="min-h-[50vh] bg-background" />
+        <section id="about" className="min-h-[50vh] bg-card" />
+        <section id="insights" className="min-h-[50vh] bg-background" />
+        <section id="contact" className="min-h-[50vh] bg-card" />
+      </main>
+    </>
   );
 };
 
