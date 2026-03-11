@@ -36,7 +36,7 @@ const AudienceGate = () => {
           <motion.img
             src={logoWhite}
             alt="Re-Rooted® logo"
-            className="mb-8 h-20 w-auto md:h-28"
+            className="mb-8 h-32 w-auto md:h-44"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
@@ -94,7 +94,7 @@ const AudienceGate = () => {
                 animate={{ opacity: hoveredButton === "individual" ? 1 : 0, y: hoveredButton === "individual" ? 0 : 4 }}
                 transition={{ duration: 0.25 }}
               >
-                Take control and confidently navigate your relocation journey
+                Take control of your relocation journey
               </motion.p>
             </div>
           </motion.div>

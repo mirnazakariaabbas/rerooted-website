@@ -19,7 +19,7 @@ const StickyNav = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setVisible(window.scrollY > window.innerHeight * 0.9);
+      setVisible(window.scrollY > window.innerHeight * 0.6);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
