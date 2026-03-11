@@ -94,7 +94,7 @@ const AudienceGate = () => {
                 animate={{ opacity: hoveredButton === "individual" ? 1 : 0, y: hoveredButton === "individual" ? 0 : 4 }}
                 transition={{ duration: 0.25 }}
               >
-                Take control and confidently navigate your relocation journey
+                Take control of your relocation journey
               </motion.p>
             </div>
           </motion.div>
