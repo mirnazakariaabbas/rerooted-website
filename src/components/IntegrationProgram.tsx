@@ -151,7 +151,7 @@ const IntegrationProgram = () => {
     <section
       ref={sectionRef}
       id="program"
-      className="bg-[hsl(var(--warm-bg))] py-16 px-6 lg:px-12"
+      className="bg-background py-16 px-6 lg:px-12"
     >
       {/* Title with inline logo */}
       <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] text-center flex items-center justify-center gap-3 flex-wrap">
