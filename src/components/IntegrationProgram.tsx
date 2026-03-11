@@ -113,7 +113,7 @@ const StepNode = ({
       transition={{ duration: 0.6, delay: 0.1 }}
     >
       {side === "right" && (
-        <div className="w-[52px] h-[52px] shrink-0 rounded-full flex items-center justify-center bg-[hsl(var(--re-green))] text-[hsl(0,0%,100%)] shadow-md">
+        <div className="w-[52px] h-[52px] shrink-0 rounded-full flex items-center justify-center bg-secondary text-secondary-foreground shadow-md">
           <Icon size={22} />
         </div>
       )}
