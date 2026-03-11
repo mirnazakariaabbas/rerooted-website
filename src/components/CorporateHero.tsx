@@ -74,27 +74,15 @@ const CorporateHero = () => {
           </motion.div>
         </div>
 
-        {/* Image — right side with Q frame */}
-        <div className="relative flex-[2] flex items-center justify-center">
-          <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px]">
-            {/* Q frame image */}
+        {/* Image — right side */}
+        <div className="flex-[2] flex items-center justify-center">
+          <div className="w-[320px] h-[320px] md:w-[400px] md:h-[400px] overflow-hidden rounded-full">
             <img
-              src={qFrame}
-              alt=""
-              className="absolute -top-[15%] -left-[15%] w-[130%] h-[130%] object-contain pointer-events-none z-10"
-              aria-hidden="true"
+              src={heroImage}
+              alt="Professional in a modern workspace"
+              className="h-full w-full object-cover"
+              loading="eager"
             />
-
-            {/* Circular photo clipped inside the frame */}
-            <div className="absolute top-[5%] left-[2%] w-[82%] h-[82%] overflow-hidden rounded-full">
-              <img
-                src={heroImage}
-                alt="Professional in a modern workspace"
-                className="h-full w-full object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 rounded-full bg-accent/20 mix-blend-multiply" />
-            </div>
           </div>
         </div>
       </div>
