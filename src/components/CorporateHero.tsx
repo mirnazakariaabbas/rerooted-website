@@ -9,7 +9,7 @@ const CorporateHero = () => {
 
   return (
     <section className="relative flex min-h-screen items-center bg-background">
-      <div className="container mx-auto flex flex-col items-center gap-12 px-6 py-20 lg:flex-row lg:gap-16 lg:px-12">
+      <div className="container mx-auto flex flex-col items-center gap-12 px-6 py-20 md:flex-row md:gap-16 md:px-12">
         {/* Text — left side */}
         <div ref={textRef} className="flex-[3]">
           <motion.h1
