@@ -31,8 +31,8 @@ const StatCard = ({
 }) => (
   <motion.div
     className="rounded-2xl bg-card p-6"
-    initial={{ opacity: 0, x: 60 }}
-    animate={inView ? { opacity: 1, x: 0 } : {}}
+    initial={{ opacity: 0, y: 60 }}
+    animate={inView ? { opacity: 1, y: 0 } : {}}
     transition={{ duration: 0.6, delay: 0.3 + index * 0.3, ease: "easeOut" }}
   >
     <p className="text-secondary font-extrabold text-4xl leading-tight">{value}</p>
