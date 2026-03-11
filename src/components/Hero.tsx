@@ -71,7 +71,12 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
           </motion.div>
         </div>
 
-        <div className="flex-[2] flex items-center justify-center">
+        <motion.div
+          className="flex-[2] flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+        >
           <div className="w-[320px] h-[320px] md:w-[400px] md:h-[400px] overflow-hidden rounded-full">
             <img
               src={heroImage}
@@ -80,7 +85,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
               loading="eager"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

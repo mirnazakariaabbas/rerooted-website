@@ -78,9 +78,9 @@ const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
           <div>
             <motion.p
               className="text-secondary font-black text-[80px] md:text-[120px] leading-none"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              initial={{ opacity: 0, y: 80 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             >
               {bigStat}%
             </motion.p>

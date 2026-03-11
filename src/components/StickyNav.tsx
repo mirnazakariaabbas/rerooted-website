@@ -51,7 +51,7 @@ const AudienceToggle = ({ className = "" }: { className?: string }) => {
 const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { gateOpen, audience } = useAudience();
+  const { gateOpen, setGateOpen, audience } = useAudience();
 
   const navLinks = audience === "individual" ? individualLinks : corporateLinks;
 
