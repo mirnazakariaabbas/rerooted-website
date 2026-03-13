@@ -37,51 +37,19 @@ const steps = [
   },
 ];
 
-const NODE_SPACING = 260;
-const VINE_TOP = 60;
-const VINE_HEIGHT = VINE_TOP + (steps.length - 1) * NODE_SPACING + 100;
-
-function getNodePos(index: number, centerX: number, amplitude: number) {
-  const y = VINE_TOP + index * NODE_SPACING;
-  const side = index % 2 === 0 ? "left" : "right";
-  const x = side === "left" ? centerX - amplitude : centerX + amplitude;
-  return { x, y, side };
-}
-
-function buildVinePath(centerX: number, amplitude: number): string {
-  const pts = steps.map((_, i) => getNodePos(i, centerX, amplitude));
-
-  let d = `M ${centerX} 0`;
-  pts.forEach((pt, i) => {
-    const prevY = i === 0 ? 0 : pts[i - 1].y;
-    const prevX = i === 0 ? centerX : pts[i - 1].x;
-    const cpY1 = prevY + (pt.y - prevY) * 0.5;
-    d += ` C ${prevX} ${cpY1}, ${pt.x} ${pt.y - (pt.y - prevY) * 0.3}, ${pt.x} ${pt.y}`;
-  });
-  const lastPt = pts[pts.length - 1];
-  d += ` C ${lastPt.x} ${lastPt.y + 40}, ${centerX} ${VINE_HEIGHT - 20}, ${centerX} ${VINE_HEIGHT}`;
-  return d;
-}
-
-/* ── Step Node ── */
 const StepNode = ({
   step,
   index,
   isMobile,
-  centerX,
-  amplitude,
 }: {
   step: (typeof steps)[number];
   index: number;
   isMobile: boolean;
-  centerX: number;
-  amplitude: number;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const Icon = step.icon;
-  const { x: nodeX, y: nodeY, side } = getNodePos(index, centerX, amplitude);
-  const displaySide = isMobile ? "right" : side;
+  const side = isMobile ? "right" : index % 2 === 0 ? "left" : "right";
 
   useEffect(() => {
     const el = ref.current;
@@ -94,20 +62,16 @@ const StepNode = ({
     return () => obs.disconnect();
   }, []);
 
-  // Icon positioned on the vine
-  const iconSize = 48;
-
   return (
-    <div ref={ref} className="absolute" style={{ top: nodeY - iconSize / 2, left: 0, right: 0, height: iconSize + 120 }}>
-      {/* Icon on the vine */}
+    <div
+      ref={ref}
+      className={`relative flex items-start gap-4 ${
+        side === "left" ? "flex-row-reverse text-right" : "flex-row"
+      }`}
+    >
+      {/* Icon on the line */}
       <motion.div
-        className="absolute z-10 rounded-full flex items-center justify-center shadow-lg transition-colors duration-500"
-        style={{
-          width: iconSize,
-          height: iconSize,
-          left: nodeX - iconSize / 2,
-          top: 0,
-        }}
+        className="relative z-10 shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-colors duration-500"
         initial={false}
         animate={{
           backgroundColor: visible ? "hsl(var(--secondary))" : "hsl(var(--muted))",
@@ -120,17 +84,8 @@ const StepNode = ({
 
       {/* Text card */}
       <motion.div
-        className="absolute"
-        style={{
-          top: -4,
-          ...(isMobile
-            ? { left: nodeX + iconSize / 2 + 16, right: 8 }
-            : displaySide === "left"
-            ? { right: `calc(100% - ${nodeX - iconSize / 2 - 16}px)`, textAlign: "right" as const }
-            : { left: nodeX + iconSize / 2 + 16 }),
-          maxWidth: 240,
-        }}
-        initial={{ opacity: 0, x: displaySide === "left" ? 20 : -20 }}
+        className="flex-1 max-w-xs pb-12"
+        initial={{ opacity: 0, x: side === "left" ? 20 : -20 }}
         animate={visible ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
@@ -153,7 +108,6 @@ const StepNode = ({
   );
 };
 
-/* ── Main ── */
 const IntegrationProgram = () => {
   const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -162,11 +116,7 @@ const IntegrationProgram = () => {
     offset: ["start end", "end center"],
   });
 
-  const centerX = isMobile ? 30 : 400;
-  const amplitude = isMobile ? 0 : 80;
-  const vinePath = buildVinePath(centerX, amplitude);
-  const svgWidth = isMobile ? 60 : 800;
-  const dashOffset = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section ref={sectionRef} id="program" className="bg-background py-16 px-6 lg:px-12">
@@ -184,51 +134,51 @@ const IntegrationProgram = () => {
         </motion.span>
       </div>
 
-      <div className="relative mx-auto" style={{ maxWidth: svgWidth, height: VINE_HEIGHT + 60 }}>
-        <svg
-          className="absolute inset-0 w-full h-full"
-          viewBox={`0 0 ${svgWidth} ${VINE_HEIGHT + 20}`}
-          fill="none"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <defs>
-            <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
-              <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="3" result="turbulence" seed="2" />
-              <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="3" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
-          </defs>
-          {/* Background dashed path */}
-          <path
-            d={vinePath}
-            stroke="hsl(var(--border))"
-            strokeWidth="6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeDasharray="14 8"
-            fill="none"
-            filter="url(#hand-drawn)"
-          />
-          {/* Animated fill path */}
-          <motion.path
-            d={vinePath}
-            stroke="hsl(var(--secondary))"
-            strokeWidth="6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-            filter="url(#hand-drawn)"
-            pathLength={1}
-            style={{
-              pathLength: scrollYProgress,
-              strokeDasharray: 1,
-              strokeDashoffset: dashOffset,
-            }}
-          />
-        </svg>
+      <div className="relative max-w-lg mx-auto">
+        {/* Straight vertical line - background */}
+        <div
+          className="absolute bg-border"
+          style={{
+            width: 4,
+            top: 0,
+            bottom: 0,
+            left: isMobile ? 23 : "50%",
+            transform: isMobile ? "none" : "translateX(-50%)",
+            borderRadius: 2,
+          }}
+        />
+        {/* Animated fill line */}
+        <motion.div
+          className="absolute bg-secondary origin-top"
+          style={{
+            width: 4,
+            top: 0,
+            bottom: 0,
+            left: isMobile ? 23 : "50%",
+            transform: isMobile ? "none" : "translateX(-50%)",
+            borderRadius: 2,
+            scaleY: lineScaleY,
+          }}
+        />
 
-        {steps.map((step, i) => (
-          <StepNode key={i} step={step} index={i} isMobile={isMobile} centerX={centerX} amplitude={amplitude} />
-        ))}
+        {/* Steps */}
+        <div className={`relative ${isMobile ? "pl-0" : ""}`}>
+          {steps.map((step, i) => (
+            <div
+              key={i}
+              className={`flex ${
+                isMobile
+                  ? ""
+                  : i % 2 === 0
+                  ? "justify-end pr-[calc(50%+8px)]"
+                  : "justify-start pl-[calc(50%+8px)]"
+              }`}
+              style={isMobile ? { paddingLeft: 0 } : {}}
+            >
+              <StepNode step={step} index={i} isMobile={isMobile} />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="mt-10 flex flex-col items-center gap-6">
