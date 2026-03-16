@@ -88,21 +88,26 @@ const DesktopTimeline = () => {
             {steps.map((step, i) => {
               const Icon = step.icon;
               const reached = i <= active;
+              const isActive = i === active;
               return (
                 <button
                   key={i}
                   onClick={() => jumpTo(i)}
                   className="flex flex-col items-center gap-2 cursor-pointer group z-10"
                 >
-                  <div
+                  <motion.div
+                    animate={{
+                      scale: isActive ? 1.3 : 1,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className={`w-[60px] h-[60px] rounded-full flex items-center justify-center border-2 transition-colors duration-300 ${
                       reached
                         ? "bg-[hsl(153,45%,45%)] border-[hsl(153,45%,45%)] text-[hsl(0,0%,100%)]"
                         : "bg-card border-border text-muted-foreground"
-                    }`}
+                    } ${isActive ? "shadow-lg ring-2 ring-[hsl(153,45%,45%)]/30" : ""}`}
                   >
-                    <Icon size={24} />
-                  </div>
+                    <Icon size={isActive ? 28 : 24} />
+                  </motion.div>
                   <span className="text-[11px] font-semibold text-muted-foreground">
                     {step.timing}
                   </span>
