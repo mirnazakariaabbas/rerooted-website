@@ -88,21 +88,26 @@ const DesktopTimeline = () => {
             {steps.map((step, i) => {
               const Icon = step.icon;
               const reached = i <= active;
+              const isActive = i === active;
               return (
                 <button
                   key={i}
                   onClick={() => jumpTo(i)}
                   className="flex flex-col items-center gap-2 cursor-pointer group z-10"
                 >
-                  <div
+                  <motion.div
+                    animate={{
+                      scale: isActive ? 1.3 : 1,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className={`w-[60px] h-[60px] rounded-full flex items-center justify-center border-2 transition-colors duration-300 ${
                       reached
                         ? "bg-[hsl(153,45%,45%)] border-[hsl(153,45%,45%)] text-[hsl(0,0%,100%)]"
                         : "bg-card border-border text-muted-foreground"
-                    }`}
+                    } ${isActive ? "shadow-lg ring-2 ring-[hsl(153,45%,45%)]/30" : ""}`}
                   >
-                    <Icon size={24} />
-                  </div>
+                    <Icon size={isActive ? 28 : 24} />
+                  </motion.div>
                   <span className="text-[11px] font-semibold text-muted-foreground">
                     {step.timing}
                   </span>
@@ -120,18 +125,24 @@ const DesktopTimeline = () => {
         </div>
 
         {/* content area */}
-        <div className="w-full max-w-2xl mx-auto min-h-[120px] text-center">
+        <div className="w-full max-w-2xl mx-auto min-h-[160px] text-center">
           <AnimatePresence mode="wait">
-            <motion.p
+            <motion.div
               key={active}
-              className="text-muted-foreground text-base md:text-lg leading-relaxed"
-              initial={{ opacity: 0, y: 12 }}
+              className="bg-card rounded-xl border border-border shadow-sm px-8 py-6"
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
             >
-              {steps[active].desc}
-            </motion.p>
+              <span className="inline-block text-[11px] font-semibold text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full mb-2">
+                {steps[active].timing}
+              </span>
+              <h3 className="text-foreground font-bold text-lg mb-2">{steps[active].name}</h3>
+              <p className="text-muted-foreground text-base leading-relaxed">
+                {steps[active].desc}
+              </p>
+            </motion.div>
           </AnimatePresence>
         </div>
 
