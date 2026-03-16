@@ -12,6 +12,7 @@ const Index = () => {
 
   return (
     <>
+      <BackgroundScribbles />
       <AudienceGate />
       <StickyNav />
 
