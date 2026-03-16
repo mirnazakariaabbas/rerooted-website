@@ -115,7 +115,7 @@ const DesktopNode = ({
   threshold,
   isIndividual,
 }: {
-  stage: (typeof individualStages)[number];
+  stage: Stage;
   position: { x: number; y: number };
   scrollProgress: ReturnType<typeof useScroll>["scrollYProgress"];
   threshold: number;
