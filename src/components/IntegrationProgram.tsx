@@ -125,18 +125,24 @@ const DesktopTimeline = () => {
         </div>
 
         {/* content area */}
-        <div className="w-full max-w-2xl mx-auto min-h-[120px] text-center">
+        <div className="w-full max-w-2xl mx-auto min-h-[160px] text-center">
           <AnimatePresence mode="wait">
-            <motion.p
+            <motion.div
               key={active}
-              className="text-muted-foreground text-base md:text-lg leading-relaxed"
-              initial={{ opacity: 0, y: 12 }}
+              className="bg-card rounded-xl border border-border shadow-sm px-8 py-6"
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
             >
-              {steps[active].desc}
-            </motion.p>
+              <span className="inline-block text-[11px] font-semibold text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full mb-2">
+                {steps[active].timing}
+              </span>
+              <h3 className="text-foreground font-bold text-lg mb-2">{steps[active].name}</h3>
+              <p className="text-muted-foreground text-base leading-relaxed">
+                {steps[active].desc}
+              </p>
+            </motion.div>
           </AnimatePresence>
         </div>
 
