@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import AudienceGate from "@/components/AudienceGate";
 import StickyNav from "@/components/StickyNav";
+import BackgroundScribbles from "@/components/BackgroundScribbles";
 import CorporateHome from "@/pages/CorporateHome";
 import IndividualHome from "@/pages/IndividualHome";
 import { useAudience } from "@/contexts/AudienceContext";
