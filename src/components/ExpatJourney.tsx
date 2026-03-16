@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAudience } from "@/contexts/AudienceContext";
 
+type Stage = { name: string; desc: string; quote?: string };
+
 const corporateStages = [
   {
     name: "Pre-Rooted",
