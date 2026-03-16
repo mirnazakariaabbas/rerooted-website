@@ -215,7 +215,7 @@ const MobileNode = ({
   index,
   isIndividual,
 }: {
-  stage: (typeof individualStages)[number];
+  stage: Stage;
   index: number;
   isIndividual: boolean;
 }) => {
