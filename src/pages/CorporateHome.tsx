@@ -1,6 +1,9 @@
 import Hero from "@/components/Hero";
 import ProblemStats from "@/components/ProblemStats";
 import IntegrationProgram from "@/components/IntegrationProgram";
+import ExpatJourney from "@/components/ExpatJourney";
+import AboutSection from "@/components/AboutSection";
+import GroundingPillars from "@/components/GroundingPillars";
 
 const CorporateHome = () => (
   <main id="top">
@@ -29,9 +32,11 @@ const CorporateHome = () => (
       headline="The Problem Companies Avoid"
     />
     <IntegrationProgram />
+    <ExpatJourney />
+    <AboutSection />
+    <GroundingPillars />
 
     {/* Placeholder sections for future phases */}
-    <section id="about" className="min-h-[50vh] bg-card" />
     <section id="insights" className="min-h-[50vh] bg-background" />
     <section id="contact" className="min-h-[50vh] bg-card" />
   </main>
