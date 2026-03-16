@@ -14,7 +14,7 @@ const corporateLinks = [
 
 const individualLinks = [
   { label: "Your Journey", href: "#journey" },
-  { label: "Support", href: "#program" },
+  { label: "Support", href: "#support" },
   { label: "About", href: "#about" },
   { label: "Insights", href: "#insights" },
   { label: "Contact", href: "#contact" },

@@ -1,13 +1,14 @@
 import Hero from "@/components/Hero";
 import ProblemStats from "@/components/ProblemStats";
-import IntegrationProgram from "@/components/IntegrationProgram";
 import ExpatJourney from "@/components/ExpatJourney";
+import IndividualSupport from "@/components/IndividualSupport";
 import AboutSection from "@/components/AboutSection";
 import GroundingPillars from "@/components/GroundingPillars";
 
 const IndividualHome = () => (
   <main id="top">
     <Hero
+      variant="individual"
       headline1="You are moving countries,"
       headline2="Now what?"
       body={
@@ -31,8 +32,8 @@ const IndividualHome = () => (
       headline="What nobody told you before you moved"
       closingLine="These aren't just numbers — they're people like you, navigating the same challenges you face right now."
     />
-    <IntegrationProgram />
     <ExpatJourney />
+    <IndividualSupport />
     <AboutSection />
     <GroundingPillars />
 
