@@ -155,7 +155,7 @@ const DesktopNode = ({
         animate={visible ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.2, duration: 0.4 }}
       >
-        {"quote" in stage && stage.quote && (
+        {stage.quote && (
           <p className="text-accent italic text-xs mb-1.5">{stage.quote}</p>
         )}
         <p className="text-foreground font-bold text-sm mb-1">{stage.name}</p>
