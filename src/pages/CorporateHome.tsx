@@ -8,6 +8,7 @@ import GroundingPillars from "@/components/GroundingPillars";
 const CorporateHome = () => (
   <main id="top">
     <Hero
+      variant="corporate"
       headline1="Relocation is not a moment."
       headline2="It's a journey."
       body={

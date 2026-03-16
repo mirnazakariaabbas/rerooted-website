@@ -8,11 +8,15 @@ interface HeroProps {
   body: ReactNode;
   cta1: { label: string; href: string };
   cta2: { label: string; href: string };
+  variant?: "corporate" | "individual";
 }
 
-const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
+const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }: HeroProps) => {
   const textRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(textRef, { once: true, margin: "-100px" });
+  const isIndividual = variant === "individual";
+
+  const delayBase = isIndividual ? 0.15 : 0;
 
   return (
     <section className="relative flex min-h-screen items-center bg-background">
@@ -26,7 +30,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
               className="block"
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: isIndividual ? 0.9 : 0.8, ease: "easeOut" }}
             >
               {headline1}
             </motion.span>
@@ -34,18 +38,20 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
               className="block"
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+              transition={{ duration: isIndividual ? 0.9 : 0.8, delay: 0.6 + delayBase, ease: "easeOut" }}
             >
               {headline2}
             </motion.span>
           </h1>
 
           <motion.div
-            className="mt-8 max-w-xl space-y-4 text-lg text-foreground/90"
+            className={`mt-8 max-w-xl text-foreground/90 ${
+              isIndividual ? "space-y-5 text-lg md:text-xl" : "space-y-4 text-lg"
+            }`}
             style={{ fontWeight: 400 }}
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: isIndividual ? 0.7 : 0.6, delay: 0.4 + delayBase }}
           >
             {body}
           </motion.div>
@@ -54,17 +60,23 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
             className="mt-10 flex flex-wrap items-center gap-5"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            transition={{ duration: isIndividual ? 0.7 : 0.6, delay: 0.7 + delayBase }}
           >
             <a
               href={cta1.href}
-              className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+              className={`inline-flex items-center px-7 py-3.5 text-base font-semibold transition-colors ${
+                isIndividual
+                  ? "rounded-xl bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                  : "rounded-lg bg-primary text-primary-foreground hover:bg-primary/90"
+              }`}
             >
               {cta1.label}
             </a>
             <a
               href={cta2.href}
-              className="text-base font-semibold text-primary underline-offset-4 transition-colors hover:underline"
+              className={`text-base font-semibold underline-offset-4 transition-colors hover:underline ${
+                isIndividual ? "text-secondary" : "text-primary"
+              }`}
             >
               {cta2.label}
             </a>
@@ -75,7 +87,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2 }: HeroProps) => {
           className="flex-[2] flex items-center justify-center"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          transition={{ duration: isIndividual ? 0.9 : 0.8, delay: 0.3 + delayBase, ease: "easeOut" }}
         >
           <div className="w-[320px] h-[320px] md:w-[400px] md:h-[400px] overflow-hidden rounded-full">
             <img

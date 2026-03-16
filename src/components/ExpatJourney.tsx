@@ -1,8 +1,11 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAudience } from "@/contexts/AudienceContext";
 
-const stages = [
+type Stage = { name: string; desc: string; quote?: string };
+
+const corporateStages = [
   {
     name: "Pre-Rooted",
     desc: "Preparing to leave. Building readiness before the move begins. Mindset, expectations, cultural preparation.",
@@ -21,8 +24,31 @@ const stages = [
   },
 ];
 
+const individualStages = [
+  {
+    name: "Pre-Rooted",
+    quote: "\u201CI haven\u2019t left yet, but I already feel the distance.\u201D",
+    desc: "You\u2019re preparing to leave. The excitement is real \u2014 but so is the anxiety. We help you build readiness before the move begins.",
+  },
+  {
+    name: "Rooting In",
+    quote: "\u201CEverything is new. Nothing feels natural.\u201D",
+    desc: "You just arrived. The culture, the language, the loneliness \u2014 it\u2019s a lot. We help you find ground in an unfamiliar place.",
+  },
+  {
+    name: "Thrive",
+    quote: "\u201CI\u2019m settled, but am I really living?\u201D",
+    desc: "You\u2019ve survived the hardest part. Now it\u2019s time to grow \u2014 to perform, connect, contribute, and build a life that\u2019s truly yours.",
+  },
+  {
+    name: "Rooting Back",
+    quote: "\u201CI came home, but home doesn\u2019t feel like home anymore.\u201D",
+    desc: "You\u2019re returning. But you\u2019ve changed \u2014 and so has everything you left behind. We help you re-integrate with grace.",
+  },
+];
+
 /* ─── Desktop: looping SVG path with scroll-draw ─── */
-const DesktopJourney = () => {
+const DesktopJourney = ({ isIndividual }: { isIndividual: boolean }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -30,8 +56,8 @@ const DesktopJourney = () => {
   });
 
   const pathLength = useTransform(scrollYProgress, [0.1, 0.7], [0, 1]);
+  const stages = isIndividual ? individualStages : corporateStages;
 
-  // Node positions along the SVG (x, y)
   const nodePositions = [
     { x: 120, y: 180 },
     { x: 420, y: 100 },
@@ -39,32 +65,24 @@ const DesktopJourney = () => {
     { x: 920, y: 120 },
   ];
 
-  // Thresholds for when each node appears
   const thresholds = [0.15, 0.3, 0.5, 0.65];
 
   return (
     <div ref={sectionRef} className="relative max-w-5xl mx-auto mt-12">
-      {/* SVG Path */}
       <svg
         viewBox="0 0 1040 320"
         fill="none"
         className="w-full h-auto"
         preserveAspectRatio="xMidYMid meet"
       >
-        {/* Hand-drawn looping path connecting nodes */}
         <motion.path
           d="M 120 180 C 180 80, 280 40, 420 100 C 500 130, 480 220, 520 240 C 560 260, 600 180, 680 220 C 740 250, 780 160, 820 130 C 860 100, 880 110, 920 120"
           stroke="hsl(var(--primary))"
           strokeWidth="3"
           strokeLinecap="round"
           fill="none"
-          style={{
-            pathLength,
-            strokeDasharray: 1,
-            strokeDashoffset: 0,
-          }}
+          style={{ pathLength, strokeDasharray: 1, strokeDashoffset: 0 }}
         />
-        {/* Loop decoration between node 2 and 3 */}
         <motion.path
           d="M 420 100 C 460 60, 500 50, 510 90 C 520 130, 480 140, 470 110"
           stroke="hsl(var(--primary))"
@@ -72,15 +90,10 @@ const DesktopJourney = () => {
           strokeLinecap="round"
           fill="none"
           opacity="0.5"
-          style={{
-            pathLength,
-            strokeDasharray: 1,
-            strokeDashoffset: 0,
-          }}
+          style={{ pathLength, strokeDasharray: 1, strokeDashoffset: 0 }}
         />
       </svg>
 
-      {/* Stage nodes overlaid on the SVG */}
       {stages.map((stage, i) => (
         <DesktopNode
           key={i}
@@ -88,6 +101,7 @@ const DesktopJourney = () => {
           position={nodePositions[i]}
           scrollProgress={scrollYProgress}
           threshold={thresholds[i]}
+          isIndividual={isIndividual}
         />
       ))}
     </div>
@@ -99,11 +113,13 @@ const DesktopNode = ({
   position,
   scrollProgress,
   threshold,
+  isIndividual,
 }: {
-  stage: (typeof stages)[number];
+  stage: Stage;
   position: { x: number; y: number };
   scrollProgress: ReturnType<typeof useScroll>["scrollYProgress"];
   threshold: number;
+  isIndividual: boolean;
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -114,7 +130,6 @@ const DesktopNode = ({
     return unsub;
   }, [scrollProgress, threshold, visible]);
 
-  // Convert SVG coords to percentage positions
   const left = `${(position.x / 1040) * 100}%`;
   const top = `${(position.y / 320) * 100}%`;
 
@@ -126,7 +141,6 @@ const DesktopNode = ({
       animate={visible ? { opacity: 1, scale: 1 } : {}}
       transition={{ type: "spring", stiffness: 200, damping: 18 }}
     >
-      {/* Circle node */}
       <div className="w-14 h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md group-hover:scale-110 group-hover:shadow-lg transition-all duration-200">
         <span className="text-xs font-bold text-center leading-tight px-1">
           {stage.name.split(" ").length > 1
@@ -135,22 +149,26 @@ const DesktopNode = ({
         </span>
       </div>
 
-      {/* Description card below node */}
       <motion.div
         className="mt-3 w-48 text-center"
         initial={{ opacity: 0, y: 10 }}
         animate={visible ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.2, duration: 0.4 }}
       >
+        {stage.quote && (
+          <p className="text-accent italic text-xs mb-1.5">{stage.quote}</p>
+        )}
         <p className="text-foreground font-bold text-sm mb-1">{stage.name}</p>
         <p className="text-muted-foreground text-xs leading-relaxed mb-1.5">
           {stage.desc}
         </p>
         <a
           href="#"
-          className="text-secondary text-xs font-semibold hover:underline underline-offset-2"
+          className={`text-xs font-semibold hover:underline underline-offset-2 ${
+            isIndividual ? "text-secondary" : "text-secondary"
+          }`}
         >
-          Learn more →
+          {isIndividual ? "This is me →" : "Learn more →"}
         </a>
       </motion.div>
     </motion.div>
@@ -158,7 +176,7 @@ const DesktopNode = ({
 };
 
 /* ─── Mobile: vertical path with stacked stages ─── */
-const MobileJourney = () => {
+const MobileJourney = ({ isIndividual }: { isIndividual: boolean }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -166,33 +184,26 @@ const MobileJourney = () => {
   });
 
   const pathLength = useTransform(scrollYProgress, [0.05, 0.8], [0, 1]);
+  const stages = isIndividual ? individualStages : corporateStages;
 
   return (
     <div ref={sectionRef} className="relative max-w-sm mx-auto mt-10">
-      {/* Vertical SVG line */}
       <svg
         className="absolute left-[28px] top-0 h-full w-[4px]"
         preserveAspectRatio="none"
       >
         <motion.line
-          x1="2"
-          y1="0"
-          x2="2"
-          y2="100%"
+          x1="2" y1="0" x2="2" y2="100%"
           stroke="hsl(var(--primary))"
           strokeWidth="3"
           strokeLinecap="round"
-          style={{
-            pathLength,
-            strokeDasharray: 1,
-            strokeDashoffset: 0,
-          }}
+          style={{ pathLength, strokeDasharray: 1, strokeDashoffset: 0 }}
         />
       </svg>
 
       <div className="flex flex-col gap-10">
         {stages.map((stage, i) => (
-          <MobileNode key={i} stage={stage} index={i} />
+          <MobileNode key={i} stage={stage} index={i} isIndividual={isIndividual} />
         ))}
       </div>
     </div>
@@ -202,9 +213,11 @@ const MobileJourney = () => {
 const MobileNode = ({
   stage,
   index,
+  isIndividual,
 }: {
-  stage: (typeof stages)[number];
+  stage: Stage;
   index: number;
+  isIndividual: boolean;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -213,9 +226,7 @@ const MobileNode = ({
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) setVisible(true);
-      },
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
       { threshold: 0.3 }
     );
     obs.observe(el);
@@ -243,6 +254,9 @@ const MobileNode = ({
         animate={visible ? { opacity: 1 } : {}}
         transition={{ delay: 0.3, duration: 0.4 }}
       >
+        {stage.quote && (
+          <p className="text-accent italic text-sm mb-1">{stage.quote}</p>
+        )}
         <p className="font-bold text-foreground text-sm mb-1">{stage.name}</p>
         <p className="text-muted-foreground text-sm leading-relaxed mb-1.5">
           {stage.desc}
@@ -251,7 +265,7 @@ const MobileNode = ({
           href="#"
           className="text-secondary text-xs font-semibold hover:underline underline-offset-2"
         >
-          Learn more →
+          {isIndividual ? "This is me →" : "Learn more →"}
         </a>
       </motion.div>
     </motion.div>
@@ -261,20 +275,31 @@ const MobileNode = ({
 /* ─── Export ─── */
 const ExpatJourney = () => {
   const mobile = useIsMobile();
+  const { audience } = useAudience();
+  const isIndividual = audience === "individual";
 
   return (
-    <section id="journey" className="bg-background py-20 px-6 lg:px-12">
+    <section id="journey" className={`bg-background px-6 lg:px-12 ${isIndividual ? "py-24" : "py-20"}`}>
       <div className="max-w-5xl mx-auto text-center mb-4">
         <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] leading-tight mb-4">
-          We meet your people wherever they are
+          {isIndividual ? "Where are you right now?" : "We meet your people wherever they are"}
         </h2>
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-          The expat journey isn't linear. People move forward, loop back, and start again.{" "}
-          <strong className="text-foreground">Re-Rooted®</strong> supports the full cycle — not just the move, the person.
+          {isIndividual ? (
+            <>
+              The expat journey isn't a straight line. You move forward, loop back, and start again.
+              Find the stage that feels like yours right now — that's where we begin.
+            </>
+          ) : (
+            <>
+              The expat journey isn't linear. People move forward, loop back, and start again.{" "}
+              <strong className="text-foreground">Re-Rooted®</strong> supports the full cycle — not just the move, the person.
+            </>
+          )}
         </p>
       </div>
 
-      {mobile ? <MobileJourney /> : <DesktopJourney />}
+      {mobile ? <MobileJourney isIndividual={isIndividual} /> : <DesktopJourney isIndividual={isIndividual} />}
     </section>
   );
 };
