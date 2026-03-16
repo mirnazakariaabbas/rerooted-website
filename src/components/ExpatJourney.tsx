@@ -25,23 +25,23 @@ const corporateStages = [
 const individualStages = [
   {
     name: "Pre-Rooted",
-    quote: ""I haven't left yet, but I already feel the distance."",
-    desc: "You're preparing to leave. The excitement is real — but so is the anxiety. We help you build readiness before the move begins.",
+    quote: "\u201CI haven\u2019t left yet, but I already feel the distance.\u201D",
+    desc: "You\u2019re preparing to leave. The excitement is real \u2014 but so is the anxiety. We help you build readiness before the move begins.",
   },
   {
     name: "Rooting In",
-    quote: ""Everything is new. Nothing feels natural."",
-    desc: "You just arrived. The culture, the language, the loneliness — it's a lot. We help you find ground in an unfamiliar place.",
+    quote: "\u201CEverything is new. Nothing feels natural.\u201D",
+    desc: "You just arrived. The culture, the language, the loneliness \u2014 it\u2019s a lot. We help you find ground in an unfamiliar place.",
   },
   {
     name: "Thrive",
-    quote: ""I'm settled, but am I really living?"",
-    desc: "You've survived the hardest part. Now it's time to grow — to perform, connect, contribute, and build a life that's truly yours.",
+    quote: "\u201CI\u2019m settled, but am I really living?\u201D",
+    desc: "You\u2019ve survived the hardest part. Now it\u2019s time to grow \u2014 to perform, connect, contribute, and build a life that\u2019s truly yours.",
   },
   {
     name: "Rooting Back",
-    quote: ""I came home, but home doesn't feel like home anymore."",
-    desc: "You're returning. But you've changed — and so has everything you left behind. We help you re-integrate with grace.",
+    quote: "\u201CI came home, but home doesn\u2019t feel like home anymore.\u201D",
+    desc: "You\u2019re returning. But you\u2019ve changed \u2014 and so has everything you left behind. We help you re-integrate with grace.",
   },
 ];
 
