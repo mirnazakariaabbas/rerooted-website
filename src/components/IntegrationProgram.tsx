@@ -135,10 +135,10 @@ const DesktopTimeline = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ type: "spring", stiffness: 260, damping: 22 }}
             >
+              <h3 className="text-foreground font-bold text-lg mb-1">{steps[active].name}</h3>
               <span className="inline-block text-[11px] font-semibold text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full mb-2">
                 {steps[active].timing}
               </span>
-              <h3 className="text-foreground font-bold text-lg mb-2">{steps[active].name}</h3>
               <p className="text-muted-foreground text-base leading-relaxed">
                 {steps[active].desc}
               </p>
