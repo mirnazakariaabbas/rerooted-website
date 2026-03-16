@@ -254,7 +254,7 @@ const MobileNode = ({
         animate={visible ? { opacity: 1 } : {}}
         transition={{ delay: 0.3, duration: 0.4 }}
       >
-        {"quote" in stage && stage.quote && (
+        {stage.quote && (
           <p className="text-accent italic text-sm mb-1">{stage.quote}</p>
         )}
         <p className="font-bold text-foreground text-sm mb-1">{stage.name}</p>
