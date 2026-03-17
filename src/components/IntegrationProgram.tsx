@@ -49,13 +49,16 @@ const DesktopTimeline = () => {
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ["start start", "end end"] });
   const [scrollActive, setScrollActive] = useState(0);
   const [clickedStep, setClickedStep] = useState<number | null>(null);
+  const isProgrammaticScroll = useRef(false);
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const idx = Math.min(Math.floor(v * 5), 4);
-    setScrollActive(idx);
-    // Clear click override once scroll catches up
-    if (clickedStep !== null && idx === clickedStep) {
-      setClickedStep(null);
+    if (!isProgrammaticScroll.current) {
+      setScrollActive(idx);
+      // Only clear click override on manual scroll
+      if (clickedStep !== null) {
+        setClickedStep(null);
+      }
     }
   });
 
@@ -63,11 +66,16 @@ const DesktopTimeline = () => {
 
   const jumpTo = (idx: number) => {
     setClickedStep(idx);
+    isProgrammaticScroll.current = true;
     if (!outerRef.current) return;
     const top = outerRef.current.offsetTop;
     const h = outerRef.current.scrollHeight - window.innerHeight;
     const target = top + (idx / 5) * h + 1;
     window.scrollTo({ top: target, behavior: "smooth" });
+    setTimeout(() => {
+      isProgrammaticScroll.current = false;
+      setScrollActive(idx);
+    }, 800);
   };
 
   // Progress fill based on active step position (0=0%, 4=100%)
