@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import {
   motion,
   useScroll,
@@ -6,7 +6,7 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
-import { Phone, ClipboardList, Sprout, Flag, CheckCircle, ChevronDown } from "lucide-react";
+import { Phone, ClipboardList, Sprout, Flag, CheckCircle } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 
@@ -55,104 +55,95 @@ const DesktopTimeline = () => {
   });
 
   const jumpTo = (idx: number) => {
-    setActive(idx);
     if (!outerRef.current) return;
+    const rect = outerRef.current.getBoundingClientRect();
     const top = outerRef.current.offsetTop;
     const h = outerRef.current.scrollHeight - window.innerHeight;
     const target = top + (idx / 5) * h + 1;
     window.scrollTo({ top: target, behavior: "smooth" });
   };
 
+  /* progress line fill (0 → 100%) mapped from scroll */
   const fillWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <div ref={outerRef} className="relative h-[500vh]" id="program">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center bg-[hsl(40,33%,97%)] px-6 lg:px-12">
         {/* heading */}
-        <h2 className="text-foreground font-extrabold text-4xl md:text-5xl mb-2 text-center">
+        <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] mb-16 text-center">
           The Re-Rooted® Journey
         </h2>
-        {/* Keep Scrolling hint */}
-        <motion.div
-          className="flex items-center gap-1.5 mb-6"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-        >
-          <span className="text-primary text-sm font-semibold">Keep Scrolling</span>
-          <ChevronDown className="w-4 h-4 text-primary" />
-        </motion.div>
 
-        {/* unified card: timeline + description */}
-        <div className="w-full max-w-4xl mx-auto bg-card rounded-xl border border-border shadow-sm px-8 py-8">
-          {/* timeline row */}
-          <div className="relative mb-8">
-            {/* bg line */}
-            <div className="absolute top-[30px] left-[30px] right-[30px] h-[3px] bg-border rounded-full" />
-            {/* filled line */}
-            <motion.div
-              className="absolute top-[30px] left-[30px] h-[3px] rounded-full bg-[hsl(153,45%,45%)]"
-              style={{ width: fillWidth }}
-            />
+        {/* timeline */}
+        <div className="relative w-full max-w-4xl mx-auto mb-12">
+          {/* bg line */}
+          <div className="absolute top-[30px] left-[30px] right-[30px] h-[3px] bg-border rounded-full" />
+          {/* filled line */}
+          <motion.div
+            className="absolute top-[30px] left-[30px] h-[3px] rounded-full bg-[hsl(153,45%,45%)]"
+            style={{ width: fillWidth }}
+          />
 
-            <div className="relative flex justify-between">
-              {steps.map((step, i) => {
-                const Icon = step.icon;
-                const reached = i <= active;
-                const isActive = i === active;
-                return (
-                  <button
-                    key={i}
-                    onClick={() => jumpTo(i)}
-                    className="flex flex-col items-center gap-2 cursor-pointer group z-10"
+          <div className="relative flex justify-between">
+            {steps.map((step, i) => {
+              const Icon = step.icon;
+              const reached = i <= active;
+              const isActive = i === active;
+              return (
+                <button
+                  key={i}
+                  onClick={() => jumpTo(i)}
+                  className="flex flex-col items-center gap-2 cursor-pointer group z-10"
+                >
+                  <motion.div
+                    animate={{
+                      scale: isActive ? 1.3 : 1,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className={`w-[60px] h-[60px] rounded-full flex items-center justify-center border-2 transition-colors duration-300 ${
+                      reached
+                        ? "bg-[hsl(153,45%,45%)] border-[hsl(153,45%,45%)] text-[hsl(0,0%,100%)]"
+                        : "bg-card border-border text-muted-foreground"
+                    } ${isActive ? "shadow-lg ring-2 ring-[hsl(153,45%,45%)]/30" : ""}`}
                   >
-                    <motion.div
-                      animate={{ scale: isActive ? 1.3 : 1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className={`w-[60px] h-[60px] rounded-full flex items-center justify-center border-2 transition-colors duration-300 ${
-                        reached
-                          ? "bg-[hsl(153,45%,45%)] border-[hsl(153,45%,45%)] text-[hsl(0,0%,100%)]"
-                          : "bg-card border-border text-muted-foreground"
-                      } ${isActive ? "shadow-lg ring-2 ring-[hsl(153,45%,45%)]/30" : ""}`}
-                    >
-                      <Icon size={isActive ? 28 : 24} />
-                    </motion.div>
-                    <span className="text-[11px] font-semibold text-muted-foreground">
-                      {step.timing}
-                    </span>
-                    <span
-                      className={`text-xs font-semibold transition-colors ${
-                        reached ? "text-foreground" : "text-muted-foreground"
-                      }`}
-                    >
-                      {step.name}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+                    <Icon size={isActive ? 28 : 24} />
+                  </motion.div>
+                  <span className="text-[11px] font-semibold text-muted-foreground">
+                    {step.timing}
+                  </span>
+                  <span
+                    className={`text-xs font-semibold transition-colors ${
+                      reached ? "text-foreground" : "text-muted-foreground"
+                    }`}
+                  >
+                    {step.name}
+                  </span>
+                </button>
+              );
+            })}
           </div>
+        </div>
 
-          {/* description area inside the card */}
-          <div className="min-h-[120px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ type: "spring", stiffness: 260, damping: 22 }}
-              >
-                <h3 className="text-foreground font-bold text-lg mb-1">{steps[active].name}</h3>
-                <span className="inline-block text-[11px] font-semibold text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full mb-2">
-                  {steps[active].timing}
-                </span>
-                <p className="text-muted-foreground text-base leading-relaxed">
-                  {steps[active].desc}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+        {/* content area */}
+        <div className="w-full max-w-2xl mx-auto min-h-[160px] text-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              className="bg-card rounded-xl border border-border shadow-sm px-8 py-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
+            >
+              <h3 className="text-foreground font-bold text-lg mb-1">{steps[active].name}</h3>
+              <span className="inline-block text-[11px] font-semibold text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full mb-2">
+                {steps[active].timing}
+              </span>
+              <p className="text-muted-foreground text-base leading-relaxed">
+                {steps[active].desc}
+              </p>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* summary + CTAs – visible when at step 5 */}
@@ -187,64 +178,20 @@ const DesktopTimeline = () => {
 
 /* ───────────── MOBILE – vertical timeline ───────────── */
 const MobileTimeline = () => {
-  const [active, setActive] = useState<number | null>(null);
-
   return (
     <section id="program" className="bg-[hsl(40,33%,97%)] py-16 px-6">
-      <h2 className="text-foreground font-extrabold text-4xl mb-2 text-center">
+      <h2 className="text-foreground font-extrabold text-3xl mb-10 text-center">
         The Re-Rooted® Journey
       </h2>
-      <motion.div
-        className="flex items-center justify-center gap-1.5 mb-8"
-        animate={{ y: [0, 6, 0] }}
-        transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-      >
-        <span className="text-primary text-sm font-semibold">Keep Scrolling</span>
-        <ChevronDown className="w-4 h-4 text-primary" />
-      </motion.div>
 
-      <div className="relative max-w-md mx-auto bg-card rounded-xl border border-border shadow-sm p-6">
+      <div className="relative max-w-md mx-auto">
         {/* vertical line */}
-        <div className="absolute left-[53px] top-6 bottom-6 w-[3px] bg-border" />
+        <div className="absolute left-[29px] top-0 bottom-0 w-[3px] bg-border" />
 
         {steps.map((step, i) => {
           const Icon = step.icon;
-          const isActive = active === i;
           return (
-            <button
-              key={i}
-              onClick={() => setActive(isActive ? null : i)}
-              className="relative flex gap-4 mb-6 last:mb-0 pl-0 w-full text-left"
-            >
-              <div
-                className={`w-[60px] h-[60px] shrink-0 rounded-full flex items-center justify-center z-10 transition-all duration-300 ${
-                  isActive
-                    ? "bg-[hsl(153,45%,45%)] text-[hsl(0,0%,100%)] scale-110 shadow-lg"
-                    : "bg-muted text-muted-foreground"
-                }`}
-              >
-                <Icon size={22} />
-              </div>
-              <div className="pt-2 flex-1">
-                <p className="text-xs font-semibold text-muted-foreground">{step.timing}</p>
-                <p className={`font-bold text-sm mb-1 transition-colors ${isActive ? "text-foreground" : "text-muted-foreground"}`}>
-                  {step.name}
-                </p>
-                <AnimatePresence>
-                  {isActive && (
-                    <motion.p
-                      className="text-muted-foreground text-sm leading-relaxed"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {step.desc}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-              </div>
-            </button>
+            <MobileStep key={i} step={step} index={i} Icon={Icon} />
           );
         })}
       </div>
@@ -263,6 +210,49 @@ const MobileTimeline = () => {
         </a>
       </div>
     </section>
+  );
+};
+
+const MobileStep = ({
+  step,
+  index,
+  Icon,
+}: {
+  step: (typeof steps)[number];
+  index: number;
+  Icon: (typeof steps)[number]["icon"];
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold: 0.4 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="relative flex gap-4 mb-8 pl-0"
+      initial={{ opacity: 0, x: 30 }}
+      animate={visible ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.1 }}
+    >
+      <div className="w-[60px] h-[60px] shrink-0 rounded-full flex items-center justify-center bg-[hsl(153,45%,45%)] text-[hsl(0,0%,100%)] z-10">
+        <Icon size={22} />
+      </div>
+      <div className="pt-2">
+        <p className="text-xs font-semibold text-muted-foreground">{step.timing}</p>
+        <p className="font-bold text-foreground text-sm mb-1">{step.name}</p>
+        <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
+      </div>
+    </motion.div>
   );
 };
 
