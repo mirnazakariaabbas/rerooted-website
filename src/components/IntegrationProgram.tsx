@@ -47,24 +47,31 @@ const steps = [
 const DesktopTimeline = () => {
   const outerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ["start start", "end end"] });
-  const [active, setActive] = useState(0);
+  const [scrollActive, setScrollActive] = useState(0);
+  const [clickedStep, setClickedStep] = useState<number | null>(null);
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const idx = Math.min(Math.floor(v * 5), 4);
-    setActive(idx);
+    setScrollActive(idx);
+    // Clear click override once scroll catches up
+    if (clickedStep !== null && idx === clickedStep) {
+      setClickedStep(null);
+    }
   });
 
+  const active = clickedStep !== null ? clickedStep : scrollActive;
+
   const jumpTo = (idx: number) => {
+    setClickedStep(idx);
     if (!outerRef.current) return;
-    const rect = outerRef.current.getBoundingClientRect();
     const top = outerRef.current.offsetTop;
     const h = outerRef.current.scrollHeight - window.innerHeight;
     const target = top + (idx / 5) * h + 1;
     window.scrollTo({ top: target, behavior: "smooth" });
   };
 
-  /* progress line fill (0 → 100%) mapped from scroll */
-  const fillWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  // Progress fill based on active step position (0=0%, 4=100%)
+  const fillPercent = `${(active / 4) * 100}%`;
 
   return (
     <div ref={outerRef} className="relative h-[500vh]" id="program">
@@ -79,9 +86,9 @@ const DesktopTimeline = () => {
           {/* bg line */}
           <div className="absolute top-[30px] left-[30px] right-[30px] h-[3px] bg-border rounded-full" />
           {/* filled line */}
-          <motion.div
-            className="absolute top-[30px] left-[30px] h-[3px] rounded-full bg-[hsl(153,45%,45%)]"
-            style={{ width: fillWidth }}
+          <div
+            className="absolute top-[30px] left-[30px] h-[3px] rounded-full bg-[hsl(153,45%,45%)] transition-all duration-500"
+            style={{ width: fillPercent }}
           />
 
           <div className="relative flex justify-between">
