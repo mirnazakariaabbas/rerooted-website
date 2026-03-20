@@ -37,7 +37,7 @@ const LeafPattern = () => (
 /* Photo circle placeholder */
 const PhotoCircle = ({ label }: { label: string }) => (
   <div
-    className="w-14 h-14 rounded-full flex items-center justify-center text-[8px] font-medium uppercase tracking-wider shrink-0"
+    className="w-14 h-14 rounded-full flex items-center justify-center text-[8px] font-medium uppercase tracking-wider shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer"
     style={{ border: "3px solid #BCADD4", boxShadow: "0 0 0 4px #F3F0F7", background: "#e8e4ed", color: "#8a7fa0" }}
   >
     Photo
