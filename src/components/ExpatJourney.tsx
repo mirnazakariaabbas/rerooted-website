@@ -23,14 +23,6 @@ const corporateStages: Stage[] = [
   { name: "Rooting Back", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", side: "right" },
 ];
 
-/* Decorative root lines for right-side (white) cards */
-const RootLines = () => (
-  <svg className="absolute bottom-2 right-2 w-10 h-12 pointer-events-none" viewBox="0 0 40 48" fill="none">
-    <path d="M32 4 C28 16, 20 24, 12 36" stroke="#3DA776" strokeWidth="1.2" strokeLinecap="round" opacity="0.4" />
-    <path d="M36 8 C34 20, 28 30, 22 42" stroke="#3DA776" strokeWidth="1" strokeLinecap="round" opacity="0.35" />
-    <path d="M28 10 C24 18, 16 28, 8 44" stroke="#3DA776" strokeWidth="0.8" strokeLinecap="round" opacity="0.3" />
-  </svg>
-);
 
 /* Leaf pattern for Thriving card (index 2) */
 const LeafPattern = () => (
