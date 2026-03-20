@@ -151,10 +151,13 @@ const DesktopJourney = ({ isIndividual }: { isIndividual: boolean }) => {
   for (let i = 0; i < stopYs.length; i++) {
     const y = stopYs[i];
     const prevY = i === 0 ? 0 : stopYs[i - 1];
-    const swing = stages[i].side === "left" ? -100 : 100;
-    const cp1Y = prevY + (y - prevY) * 0.3;
-    const cp2Y = prevY + (y - prevY) * 0.7;
-    pathD += ` C ${cx + swing} ${cp1Y}, ${cx + swing} ${cp2Y}, ${cx} ${y}`;
+    // Target swing: where this stop's card is
+    const targetSwing = stages[i].side === "left" ? -120 : 120;
+    // Opposite swing: curve away first, then toward the target — creates S-shape
+    const oppositeSwing = -targetSwing;
+    const cp1Y = prevY + (y - prevY) * 0.25;
+    const cp2Y = prevY + (y - prevY) * 0.75;
+    pathD += ` C ${cx + oppositeSwing * 0.6} ${cp1Y}, ${cx + targetSwing} ${cp2Y}, ${cx} ${y}`;
   }
   pathD += ` L ${cx} ${totalH}`;
 
