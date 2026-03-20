@@ -51,11 +51,10 @@ const StageCard = ({ stage, index }: { stage: Stage; index: number }) => {
 
   return (
     <div
-      className="relative rounded-xl overflow-hidden"
+      className="relative rounded-xl overflow-hidden transition-transform duration-200 hover:scale-105 cursor-pointer"
       style={{ maxWidth: 270, padding: 20, background: bg, border: "1px solid #BCADD4" }}
     >
       {index === 2 && <LeafPattern />}
-      {!isLeft && <RootLines />}
       <div className="relative z-10">
         <p className="font-medium uppercase tracking-[0.07em]" style={{ color: "#1F299C", fontSize: 13 }}>
           {stage.name}
