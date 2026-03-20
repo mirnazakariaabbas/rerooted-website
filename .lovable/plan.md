@@ -1,21 +1,43 @@
 
 
-## Plan: Enhance ExpatJourney Timeline
+## Plan: Card Redesign — Image on Top of Card
 
-Three fixes to `src/components/ExpatJourney.tsx`:
+Redesign each stage card in `src/components/ExpatJourney.tsx` to include a large image area on top, similar to the reference screenshot. The card becomes a vertical stack: image → title → description.
 
-### 1. More curved S-path (road-like)
-The current SVG path barely curves because the bezier control points only offset by 20px in a narrow 56px-wide viewBox. Fix: widen the SVG viewBox to ~300px and make the path swing wide left and right (±100px from center) with proper S-curve control points — two control points per segment spaced apart vertically so the curve is smooth and road-like, not just a slight wobble.
+### Card Layout (reference style)
 
-### 2. Hover scale on stage card + photo
-Wrap each `DesktopStageRow` card and photo circle in a group that scales up on hover. Use `transition-transform duration-200 hover:scale-110` on the photo circle and `hover:scale-105` on the card. This gives tactile feedback when hovering over any stage.
+```text
+┌─────────────────────┐
+│                     │
+│   [  IMAGE AREA  ]  │  ← Rectangular image placeholder, fills card width
+│                     │
+├─────────────────────┤
+│  STAGE NAME         │  ← ALL-CAPS title
+│                     │
+│  Description text   │  ← Body copy
+│  goes here...       │
+└─────────────────────┘
+```
 
-### 3. Remove green root lines from Re-Rooted and Rooting Back cards
-The `RootLines` SVG component renders green decorative lines inside right-side (white) cards. Remove the `{!isLeft && <RootLines />}` line from `StageCard` to eliminate those lines entirely.
+### Changes to `src/components/ExpatJourney.tsx`
+
+1. **Remove separate `PhotoCircle`** from the center path position in `DesktopStageRow` — the photo now lives inside the card itself
+2. **Redesign `StageCard`**:
+   - Add a rectangular image placeholder at the top of the card (aspect ratio ~16:10, rounded top corners, grey bg with "Photo" text)
+   - Below: stage name (ALL-CAPS, deep blue), green accent bar, description text
+   - Card max-width increases slightly (~300px) to accommodate the image
+   - Card has `overflow-hidden` with `rounded-xl` so image clips to top corners
+   - Keep existing background colors (lavender for left, white for right)
+   - Keep hover:scale-105
+3. **Remove `PhotoCircle` component** (no longer needed)
+4. **Update `DesktopStageRow`**: Remove center photo circle column; card connects directly to path position
+5. **Update `MobileJourney`**: Remove photo circle above card; image is now inside card
+6. **SVG path stays the same** — the dotted lavender S-curve path remains behind the cards
+7. **Keep the Thriving leaf pattern** on card index 2
 
 ### Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/ExpatJourney.tsx` | Wider S-curve path, hover scale on cards/photos, remove RootLines from cards |
+| `src/components/ExpatJourney.tsx` | Merge photo into card as top image area, remove PhotoCircle |
 
