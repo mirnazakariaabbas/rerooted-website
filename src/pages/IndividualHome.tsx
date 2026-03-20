@@ -4,6 +4,9 @@ import ExpatJourney from "@/components/ExpatJourney";
 import IndividualSupport from "@/components/IndividualSupport";
 import AboutSection from "@/components/AboutSection";
 import GroundingPillars from "@/components/GroundingPillars";
+import BlogPreview from "@/components/BlogPreview";
+import ContactCTA from "@/components/ContactCTA";
+import Footer from "@/components/Footer";
 
 const IndividualHome = () => (
   <main id="top">
@@ -36,10 +39,9 @@ const IndividualHome = () => (
     <IndividualSupport />
     <AboutSection />
     <GroundingPillars />
-
-    {/* Placeholder sections for future phases */}
-    <section id="insights" className="min-h-[50vh] bg-background" />
-    <section id="contact" className="min-h-[50vh] bg-card" />
+    <BlogPreview />
+    <ContactCTA />
+    <Footer />
   </main>
 );
 
