@@ -4,6 +4,9 @@ import IntegrationProgram from "@/components/IntegrationProgram";
 import ExpatJourney from "@/components/ExpatJourney";
 import AboutSection from "@/components/AboutSection";
 import GroundingPillars from "@/components/GroundingPillars";
+import BlogPreview from "@/components/BlogPreview";
+import ContactCTA from "@/components/ContactCTA";
+import Footer from "@/components/Footer";
 
 const CorporateHome = () => (
   <main id="top">
@@ -36,10 +39,9 @@ const CorporateHome = () => (
     <ExpatJourney />
     <AboutSection />
     <GroundingPillars />
-
-    {/* Placeholder sections for future phases */}
-    <section id="insights" className="min-h-[50vh] bg-background" />
-    <section id="contact" className="min-h-[50vh] bg-card" />
+    <BlogPreview />
+    <ContactCTA />
+    <Footer />
   </main>
 );
 
