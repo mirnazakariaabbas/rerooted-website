@@ -23,14 +23,6 @@ const corporateStages: Stage[] = [
   { name: "Rooting Back", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", side: "right" },
 ];
 
-/* Decorative root lines for right-side (white) cards */
-const RootLines = () => (
-  <svg className="absolute bottom-2 right-2 w-10 h-12 pointer-events-none" viewBox="0 0 40 48" fill="none">
-    <path d="M32 4 C28 16, 20 24, 12 36" stroke="#3DA776" strokeWidth="1.2" strokeLinecap="round" opacity="0.4" />
-    <path d="M36 8 C34 20, 28 30, 22 42" stroke="#3DA776" strokeWidth="1" strokeLinecap="round" opacity="0.35" />
-    <path d="M28 10 C24 18, 16 28, 8 44" stroke="#3DA776" strokeWidth="0.8" strokeLinecap="round" opacity="0.3" />
-  </svg>
-);
 
 /* Leaf pattern for Thriving card (index 2) */
 const LeafPattern = () => (
@@ -45,7 +37,7 @@ const LeafPattern = () => (
 /* Photo circle placeholder */
 const PhotoCircle = ({ label }: { label: string }) => (
   <div
-    className="w-14 h-14 rounded-full flex items-center justify-center text-[8px] font-medium uppercase tracking-wider shrink-0"
+    className="w-14 h-14 rounded-full flex items-center justify-center text-[8px] font-medium uppercase tracking-wider shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer"
     style={{ border: "3px solid #BCADD4", boxShadow: "0 0 0 4px #F3F0F7", background: "#e8e4ed", color: "#8a7fa0" }}
   >
     Photo
@@ -59,11 +51,10 @@ const StageCard = ({ stage, index }: { stage: Stage; index: number }) => {
 
   return (
     <div
-      className="relative rounded-xl overflow-hidden"
+      className="relative rounded-xl overflow-hidden transition-transform duration-200 hover:scale-105 cursor-pointer"
       style={{ maxWidth: 270, padding: 20, background: bg, border: "1px solid #BCADD4" }}
     >
       {index === 2 && <LeafPattern />}
-      {!isLeft && <RootLines />}
       <div className="relative z-10">
         <p className="font-medium uppercase tracking-[0.07em]" style={{ color: "#1F299C", fontSize: 13 }}>
           {stage.name}
@@ -141,41 +132,41 @@ const DesktopJourney = ({ isIndividual }: { isIndividual: boolean }) => {
     return () => ro.disconnect();
   }, []);
 
-  // Generate SVG path that curves through the center, synced to the row layout
-  // Each row is ~160px min-height with gap-6 (24px), so stops are evenly distributed
   const rowH = 160;
   const gap = 24;
   const totalRows = stages.length;
   const totalH = containerH || (totalRows * rowH + (totalRows - 1) * gap);
-  const cx = 28; // center x in 56-wide viewBox (matching the photo circle column)
-  const vbW = 56;
+  const vbW = 300;
+  const cx = vbW / 2; // center at 150
 
   const stopYs = stages.map((_, i) => {
     const rowTop = i * (rowH + gap);
     return rowTop + rowH / 2;
   });
 
+  // Build a wide S-curve path
   let pathD = `M ${cx} 0`;
   for (let i = 0; i < stopYs.length; i++) {
     const y = stopYs[i];
     const prevY = i === 0 ? 0 : stopYs[i - 1];
-    const midY = (prevY + y) / 2;
-    const curveX = stages[i].side === "left" ? cx - 20 : cx + 20;
-    pathD += ` C ${curveX} ${midY}, ${curveX} ${midY}, ${cx} ${y}`;
+    // Swing wide: left cards curve left, right cards curve right
+    const swing = stages[i].side === "left" ? -100 : 100;
+    const cp1Y = prevY + (y - prevY) * 0.3;
+    const cp2Y = prevY + (y - prevY) * 0.7;
+    pathD += ` C ${cx + swing} ${cp1Y}, ${cx + swing} ${cp2Y}, ${cx} ${y}`;
   }
-  // Tail
   pathD += ` L ${cx} ${totalH}`;
 
   return (
     <div ref={containerRef} className="relative max-w-3xl mx-auto mt-8">
       {/* SVG path behind */}
       <svg
-        className="absolute left-1/2 -translate-x-[28px] top-0 pointer-events-none"
+        className="absolute left-1/2 top-0 pointer-events-none"
         width={vbW}
         height={totalH}
         viewBox={`0 0 ${vbW} ${totalH}`}
         fill="none"
-        style={{ zIndex: 0 }}
+        style={{ zIndex: 0, marginLeft: -(vbW / 2) }}
       >
         <path
           d={pathD}
