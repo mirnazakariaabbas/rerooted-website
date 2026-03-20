@@ -23,44 +23,53 @@ const corporateStages: Stage[] = [
   { name: "Rooting Back", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", side: "right" },
 ];
 
-
 /* Leaf pattern for Thriving card (index 2) */
 const LeafPattern = () => (
-  <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 270 120" fill="none" preserveAspectRatio="xMidYMid slice">
+  <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200" fill="none" preserveAspectRatio="xMidYMid slice">
     <ellipse cx="60" cy="30" rx="18" ry="8" fill="#3DA776" opacity="0.05" transform="rotate(-30 60 30)" />
-    <ellipse cx="200" cy="80" rx="14" ry="6" fill="#3DA776" opacity="0.04" transform="rotate(20 200 80)" />
-    <ellipse cx="130" cy="55" rx="20" ry="7" fill="#3DA776" opacity="0.05" transform="rotate(-15 130 55)" />
-    <ellipse cx="40" cy="90" rx="12" ry="5" fill="#3DA776" opacity="0.04" transform="rotate(35 40 90)" />
+    <ellipse cx="240" cy="140" rx="14" ry="6" fill="#3DA776" opacity="0.04" transform="rotate(20 240 140)" />
+    <ellipse cx="150" cy="80" rx="20" ry="7" fill="#3DA776" opacity="0.05" transform="rotate(-15 150 80)" />
+    <ellipse cx="40" cy="160" rx="12" ry="5" fill="#3DA776" opacity="0.04" transform="rotate(35 40 160)" />
   </svg>
 );
 
-/* Photo circle placeholder */
-const PhotoCircle = ({ label }: { label: string }) => (
-  <div
-    className="w-14 h-14 rounded-full flex items-center justify-center text-[8px] font-medium uppercase tracking-wider shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer"
-    style={{ border: "3px solid #BCADD4", boxShadow: "0 0 0 4px #F3F0F7", background: "#e8e4ed", color: "#8a7fa0" }}
-  >
-    Photo
-  </div>
-);
-
-/* Stage card */
+/* Stage card with image on top */
 const StageCard = ({ stage, index }: { stage: Stage; index: number }) => {
   const isLeft = stage.side === "left";
   const bg = isLeft ? "#F3F0F7" : "#FFFFFF";
 
+  const stageLabels = ["PRE-ROOTED", "RE-ROOTED", "THRIVING", "ROOTING BACK"];
+  const photoLabel = stageLabels[index] || stage.name.toUpperCase();
+
   return (
     <div
       className="relative rounded-xl overflow-hidden transition-transform duration-200 hover:scale-105 cursor-pointer"
-      style={{ maxWidth: 270, padding: 20, background: bg, border: "1px solid #BCADD4" }}
+      style={{ maxWidth: 300, background: bg, border: "1px solid #BCADD4" }}
     >
-      {index === 2 && <LeafPattern />}
-      <div className="relative z-10">
-        <p className="font-medium uppercase tracking-[0.07em]" style={{ color: "#1F299C", fontSize: 13 }}>
-          {stage.name}
-        </p>
-        <div className="mt-1.5 mb-2.5 rounded-sm" style={{ width: 28, height: 3, background: "#3DA776" }} />
-        <p style={{ color: "#4a4a5a", fontSize: 12, lineHeight: 1.55 }}>{stage.desc}</p>
+      {/* Image area */}
+      {/* <!-- {photoLabel} photo --> */}
+      <div
+        className="w-full flex items-center justify-center"
+        style={{
+          aspectRatio: "16 / 10",
+          background: "#e8e4ed",
+        }}
+      >
+        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: "#8a7fa0" }}>
+          Photo
+        </span>
+      </div>
+
+      {/* Content area */}
+      <div className="relative p-5">
+        {index === 2 && <LeafPattern />}
+        <div className="relative z-10">
+          <p className="font-medium uppercase tracking-[0.07em]" style={{ color: "#1F299C", fontSize: 13 }}>
+            {stage.name}
+          </p>
+          <div className="mt-1.5 mb-2.5 rounded-sm" style={{ width: 28, height: 3, background: "#3DA776" }} />
+          <p style={{ color: "#4a4a5a", fontSize: 12, lineHeight: 1.55 }}>{stage.desc}</p>
+        </div>
       </div>
     </div>
   );
@@ -97,20 +106,14 @@ const DesktopStageRow = ({ stage, index }: { stage: Stage; index: number }) => {
 
   return (
     <FadeInOnScroll delay={index * 0.15}>
-      <div className="flex items-center" style={{ minHeight: 160 }}>
+      <div className="flex items-center" style={{ minHeight: 220 }}>
         {/* Left column */}
-        <div className="flex-1 flex justify-end pr-6">
+        <div className="flex-1 flex justify-end pr-10">
           {isLeft ? <StageCard stage={stage} index={index} /> : <div />}
         </div>
 
-        {/* Center: photo circle */}
-        <div className="relative z-10 shrink-0">
-          {/* <!-- {stage.name} photo --> */}
-          <PhotoCircle label={stage.name} />
-        </div>
-
         {/* Right column */}
-        <div className="flex-1 flex justify-start pl-6">
+        <div className="flex-1 flex justify-start pl-10">
           {!isLeft ? <StageCard stage={stage} index={index} /> : <div />}
         </div>
       </div>
@@ -122,7 +125,7 @@ const DesktopStageRow = ({ stage, index }: { stage: Stage; index: number }) => {
 const DesktopJourney = ({ isIndividual }: { isIndividual: boolean }) => {
   const stages = isIndividual ? individualStages : corporateStages;
   const containerRef = useRef<HTMLDivElement>(null);
-  const [containerH, setContainerH] = useState(700);
+  const [containerH, setContainerH] = useState(900);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -132,24 +135,22 @@ const DesktopJourney = ({ isIndividual }: { isIndividual: boolean }) => {
     return () => ro.disconnect();
   }, []);
 
-  const rowH = 160;
+  const rowH = 220;
   const gap = 24;
   const totalRows = stages.length;
   const totalH = containerH || (totalRows * rowH + (totalRows - 1) * gap);
   const vbW = 300;
-  const cx = vbW / 2; // center at 150
+  const cx = vbW / 2;
 
   const stopYs = stages.map((_, i) => {
     const rowTop = i * (rowH + gap);
     return rowTop + rowH / 2;
   });
 
-  // Build a wide S-curve path
   let pathD = `M ${cx} 0`;
   for (let i = 0; i < stopYs.length; i++) {
     const y = stopYs[i];
     const prevY = i === 0 ? 0 : stopYs[i - 1];
-    // Swing wide: left cards curve left, right cards curve right
     const swing = stages[i].side === "left" ? -100 : 100;
     const cp1Y = prevY + (y - prevY) * 0.3;
     const cp2Y = prevY + (y - prevY) * 0.7;
@@ -206,8 +207,7 @@ const MobileJourney = ({ isIndividual }: { isIndividual: boolean }) => {
         {stages.map((stage, i) => (
           <FadeInOnScroll key={i} delay={i * 0.12}>
             <div className="flex flex-col items-center relative z-10">
-              <PhotoCircle label={stage.name} />
-              <div className="mt-3 w-full" style={{ maxWidth: "90vw" }}>
+              <div className="w-full" style={{ maxWidth: "90vw" }}>
                 <StageCard stage={stage} index={i} />
               </div>
             </div>
