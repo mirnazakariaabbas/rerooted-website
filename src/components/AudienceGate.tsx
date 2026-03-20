@@ -19,6 +19,7 @@ const AudienceGate = () => {
   }, [gateOpen]);
 
   const handleSelect = (choice: "organization" | "individual") => {
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     setAudience(choice);
     setGateOpen(false);
   };
