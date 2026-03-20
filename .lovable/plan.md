@@ -1,49 +1,74 @@
 
-Goal: make clicking any journey step work reliably in any order, including backward jumps and jumps to the last step.
 
-What I found
-- The bug is in `src/components/IntegrationProgram.tsx` desktop timeline logic.
-- The current scroll target math uses `idx / 5`, but there are 5 steps indexed `0..4`. That means clicks are not scrolling to the true position for the selected step, especially for jumps like `1 -> 5`, `3 -> 5`, `5 -> 3`, and `4 -> 2`.
-- The current `setTimeout(800)` programmatic-scroll release is also brittle, because the UI depends on a guessed scroll duration instead of the actual selected position being reached.
+## Plan: Rebuild ExpatJourney as Vertical Winding Timeline
 
-Plan
+Replace the current ExpatJourney component with a completely new vertical S-curve timeline design. Both corporate and individual versions get this new visual treatment, with audience-specific headings and copy preserved.
 
-1. Fix the step-to-scroll-position mapping
-- Update the target calculation to use the full step range:
-  - progress = `idx / (steps.length - 1)`
-- This will align each clicked node with the same progress scale used by the active-step logic.
+### Design Summary
 
-2. Make one source of truth for the selected step
-- Keep the immediate click selection behavior so the green fill, active node, and description update instantly.
-- Continue deriving all visual states from one `active` step value.
+```text
+Desktop layout:
+                    ┌─────────┐
+   ┌──────────┐     │  photo  │
+   │ PRE-ROOT │─────│    ○    │
+   │  (left)  │     │         │
+   └──────────┘     │    :    │
+                    │    :    │
+                    │    ○    │──┌──────────┐
+                    │         │  │ RE-ROOT  │
+                    │    :    │  │  (right) │
+                    │    :    │  └──────────┘
+   ┌──────────┐     │    ○    │
+   │ THRIVING │─────│         │
+   │  (left)  │     │    :    │
+   └──────────┘     │    :    │
+                    │    ○    │──┌──────────┐
+                    │         │  │ROOT BACK │
+                    └─────────┘  │  (right) │
+                                 └──────────┘
 
-3. Improve programmatic scroll handling
-- Keep the “ignore scroll updates while auto-scrolling” idea.
-- Replace the fragile fixed-duration assumption with logic that releases programmatic mode only after the scroll has effectively reached the clicked target, or at minimum uses the corrected target position consistently.
-- This prevents intermediate scroll events from taking over too early.
+Path: Dotted lavender S-curves connecting stops
+```
 
-4. Keep manual scrolling behavior intact
-- After a click-driven scroll completes, manual scrolling should again control the timeline.
-- This preserves the sticky-scroll experience without breaking click-to-select.
+### Component: `src/components/ExpatJourney.tsx` — Full Rewrite
 
-5. Verify the exact failing combinations
-- Specifically confirm these now work:
-  - `4 -> 2`
-  - `1 -> 5`
-  - `5 -> 3`
-  - `3 -> 5`
-- Also verify random forward/backward jumps across all five steps.
+**Path**: SVG `<path>` with cubic bezier S-curves down the center. Color `#BCADD4`, stroke-width 7px, `stroke-dasharray="12 10"`, round linecaps. No scroll-draw animation (static dotted path).
 
-Technical details
-- File to update: `src/components/IntegrationProgram.tsx`
-- Likely code areas:
-  - `jumpTo(idx)` target math
-  - programmatic scroll guard/reset logic
-  - active step synchronization between click state and scroll state
+**Photo circles**: 56px diameter at each stop on the path. 3px `#BCADD4` border, white inner ring via box-shadow. Placeholder `<img>` tags with comments for each stop.
 
-Expected result
-- Users can click any step at any time, forward or backward.
-- The green path fills to the clicked step.
-- The correct node highlights.
-- The description immediately changes to the clicked step.
-- No combinations should fail anymore.
+**Cards**: Alternating left/right, max-width 270px, border-radius 12px, padding 20px.
+- Left cards (1, 3): bg `#F3F0F7`, 1px border `#BCADD4`
+- Right cards (2, 4): bg white, 1px border `#BCADD4`
+- Content: ALL-CAPS title (`#1F299C`, weight 500, 13px, letter-spacing 0.07em), green accent bar (28×3px `#3DA776`), body text (`#4a4a5a`, 12px)
+- Thriving card: faint leaf pattern bg at 5% opacity in `#3DA776`
+- Right cards: faint root SVG lines in bottom-right, `#3DA776` at 40% opacity
+
+**Stage copy** (individual version uses the user's new copy):
+1. Pre-Rooted — "The stage before your move — preparing, dreaming, and gathering roots to carry with you."
+2. Re-Rooted — "You've arrived. Learning to feel at home in your new place, street by street."
+3. Thriving — "Blooming where you've been planted — building community, routines, and belonging."
+4. Rooting Back — "Finding ways to give back, stay connected to your origins, and grow new roots for others."
+
+**Corporate version**: Same visual layout, different headline ("We meet your people wherever they are") and stage descriptions (current corporate copy preserved).
+
+**Mobile** (below 640px): Single centered column. Path becomes straight vertical dotted line behind cards. All cards full-width (max-width 90vw), centered. Photo circles centered above each card.
+
+**Animation**: Cards fade + rise on scroll (IntersectionObserver), staggered per stop.
+
+### Files Changed
+
+| File | Action |
+|------|--------|
+| `src/components/ExpatJourney.tsx` | Full rewrite — new vertical S-curve timeline |
+
+### What stays the same
+- Section `id="journey"` preserved for nav anchoring
+- Audience context still read for headline/copy switching
+- Both `CorporateHome.tsx` and `IndividualHome.tsx` keep `<ExpatJourney />` import unchanged
+
+### What's removed
+- Old horizontal SVG looping path (desktop)
+- Old click-to-select node/card interaction
+- "Keep Scrolling" indicator
+- AnimatePresence description area
+
