@@ -50,16 +50,13 @@ const DesktopTimeline = () => {
   const [scrollActive, setScrollActive] = useState(0);
   const [clickedStep, setClickedStep] = useState<number | null>(null);
   const isProgrammaticScroll = useRef(false);
+  const programmaticTimeout = useRef<ReturnType<typeof setTimeout>>();
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(Math.floor(v * 5), 4);
-    if (!isProgrammaticScroll.current) {
-      setScrollActive(idx);
-      // Only clear click override on manual scroll
-      if (clickedStep !== null) {
-        setClickedStep(null);
-      }
-    }
+    if (isProgrammaticScroll.current) return;
+    const idx = Math.min(Math.floor(v * steps.length), steps.length - 1);
+    setScrollActive(idx);
+    setClickedStep(null);
   });
 
   const active = clickedStep !== null ? clickedStep : scrollActive;
@@ -67,19 +64,20 @@ const DesktopTimeline = () => {
   const jumpTo = (idx: number) => {
     setClickedStep(idx);
     isProgrammaticScroll.current = true;
+    if (programmaticTimeout.current) clearTimeout(programmaticTimeout.current);
     if (!outerRef.current) return;
     const top = outerRef.current.offsetTop;
     const h = outerRef.current.scrollHeight - window.innerHeight;
-    const target = top + (idx / 5) * h + 1;
+    const progress = idx / (steps.length - 1);
+    const target = top + progress * h;
     window.scrollTo({ top: target, behavior: "smooth" });
-    setTimeout(() => {
+    programmaticTimeout.current = setTimeout(() => {
       isProgrammaticScroll.current = false;
       setScrollActive(idx);
-    }, 800);
+    }, 1000);
   };
 
-  // Progress fill based on active step position (0=0%, 4=100%)
-  const fillPercent = `${(active / 4) * 100}%`;
+  const fillPercent = `${(active / (steps.length - 1)) * 100}%`;
 
   return (
     <div ref={outerRef} className="relative h-[500vh]" id="program">
