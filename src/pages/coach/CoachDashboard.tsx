@@ -463,4 +463,52 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
   );
 };
 
+/* ─── Add Note Dialog ─── */
+const AddNoteDialog = ({ coachId, coacheeId, coacheeName }: { coachId: string; coacheeId: string; coacheeName: string }) => {
+  const [open, setOpen] = useState(false);
+  const [notes, setNotes] = useState('');
+  const [sessionDate, setSessionDate] = useState(new Date().toISOString().split('T')[0]);
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    if (!notes.trim()) return;
+    setSaving(true);
+    const { error } = await (supabase as any).from('coaching_notes').insert({
+      coach_id: coachId,
+      coachee_id: coacheeId,
+      session_date: sessionDate,
+      notes: notes.trim(),
+    });
+    setSaving(false);
+    if (error) { toast.error('Failed to save note'); return; }
+    toast.success('Note saved');
+    setNotes('');
+    setOpen(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="sm"><FileText className="h-3 w-3 mr-1" />Add Note</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader><DialogTitle>Add Note for {coacheeName}</DialogTitle></DialogHeader>
+        <div className="space-y-4 mt-2">
+          <div>
+            <label className="text-xs font-medium text-muted-foreground">Session Date</label>
+            <Input type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} />
+          </div>
+          <div>
+            <label className="text-xs font-medium text-muted-foreground">Notes</label>
+            <Textarea value={notes} onChange={e => setNotes(e.target.value)} rows={4} placeholder="Session observations, progress, action items..." />
+          </div>
+          <Button onClick={handleSave} disabled={saving || !notes.trim()} className="w-full">
+            {saving ? 'Saving...' : 'Save Note'}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 export default CoachDashboard;
