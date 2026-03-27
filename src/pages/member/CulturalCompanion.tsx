@@ -67,6 +67,9 @@ const CulturalCompanion = () => {
     staleTime: 5 * 60 * 1000,
   });
 
+  const comparison = CULTURAL_COMPARISONS.find(c => c.homeCountry === homeCountry && c.hostCountry === hostCountry);
+  const swap = () => { setHomeCountry(hostCountry); setHostCountry(homeCountry); };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
