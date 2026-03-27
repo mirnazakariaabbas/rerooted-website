@@ -32,7 +32,7 @@ export default function CompetitiveAnalysisPage() {
   const { data: competitors = [], isLoading } = useQuery({
     queryKey: ['competitors'],
     queryFn: async () => {
-      const { data, error } = await supabase.from('competitors').select('*').order('created_at', { ascending: false });
+      const { data, error } = await (supabase as any).from('competitors').select('*').order('created_at', { ascending: false });
       if (error) throw error;
       return (data || []) as Competitor[];
     },
@@ -42,7 +42,7 @@ export default function CompetitiveAnalysisPage() {
 
   const addCompetitor = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from('competitors').insert({ name: newName, website: newWebsite || null });
+      const { error } = await (supabase as any).from('competitors').insert({ name: newName, website: newWebsite || null });
       if (error) throw error;
     },
     onSuccess: () => {

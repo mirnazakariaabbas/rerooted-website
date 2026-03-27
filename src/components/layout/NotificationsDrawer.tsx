@@ -26,7 +26,7 @@ export function NotificationsDrawer({ open, onOpenChange }: { open: boolean; onO
     queryKey: ['notifications', user?.id],
     queryFn: async () => {
       if (!user) return [];
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from('notifications')
         .select('*')
         .eq('user_id', user.id)
@@ -39,7 +39,7 @@ export function NotificationsDrawer({ open, onOpenChange }: { open: boolean; onO
 
   const markRead = useMutation({
     mutationFn: async (id: string) => {
-      await supabase.from('notifications').update({ is_read: true }).eq('id', id);
+      await (supabase as any).from('notifications').update({ is_read: true }).eq('id', id);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
   });
@@ -47,7 +47,7 @@ export function NotificationsDrawer({ open, onOpenChange }: { open: boolean; onO
   const markAllRead = useMutation({
     mutationFn: async () => {
       if (!user) return;
-      await supabase.from('notifications').update({ is_read: true }).eq('user_id', user.id).eq('is_read', false);
+      await (supabase as any).from('notifications').update({ is_read: true }).eq('user_id', user.id).eq('is_read', false);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
   });
