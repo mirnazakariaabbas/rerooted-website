@@ -1,22 +1,28 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AudienceProvider } from "@/contexts/AudienceContext";
 import { AuthProvider } from "@/contexts/AuthContext";
-import Index from "./pages/Index.tsx";
-import Auth from "./pages/Auth.tsx";
-import ResetPassword from "./pages/ResetPassword.tsx";
-import NotFound from "./pages/NotFound.tsx";
-import MemberLayout from "./components/layout/MemberLayout.tsx";
-import MemberHome from "./pages/member/MemberHome.tsx";
-import CulturalCompanion from "./pages/member/CulturalCompanion.tsx";
-import CoachPage from "./pages/member/CoachPage.tsx";
-import AssessmentPage from "./pages/member/AssessmentPage.tsx";
-import ProfilePage from "./pages/member/ProfilePage.tsx";
-import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
-import CoachDashboard from "./pages/coach/CoachDashboard.tsx";
+import Index from "./pages/Index";
+import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
+import MemberLayout from "./components/layout/MemberLayout";
+import MemberHome from "./pages/member/MemberHome";
+import CulturalCompanion from "./pages/member/CulturalCompanion";
+import CoachPage from "./pages/member/CoachPage";
+import AssessmentPage from "./pages/member/AssessmentPage";
+import ProfilePage from "./pages/member/ProfilePage";
+import CoachDashboard from "./pages/coach/CoachDashboard";
+import AdminHome from "./pages/admin/AdminHome";
+import ContactsPage from "./pages/admin/users/ContactsPage";
+import MembersPage from "./pages/admin/users/MembersPage";
+import OrganizationsPage from "./pages/admin/users/OrganizationsPage";
+import CoachesPage from "./pages/admin/users/CoachesPage";
+import AutomatedEmailsPage from "./pages/admin/content/AutomatedEmailsPage";
+import PlaceholderPage from "./pages/admin/PlaceholderPage";
 
 const queryClient = new QueryClient();
 
@@ -33,13 +39,29 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/app" element={<MemberLayout />}>
+                <Route index element={<Navigate to="/app/home" replace />} />
                 <Route path="home" element={<MemberHome />} />
                 <Route path="cultural" element={<CulturalCompanion />} />
                 <Route path="coach" element={<CoachPage />} />
                 <Route path="assessment" element={<AssessmentPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="admin" element={<AdminDashboard />} />
+                <Route path="profile" element={<ProfilePage />} />
                 <Route path="coach-dashboard" element={<CoachDashboard />} />
+                {/* Admin routes */}
+                <Route path="admin">
+                  <Route index element={<Navigate to="/app/admin/dashboard" replace />} />
+                  <Route path="dashboard" element={<AdminHome />} />
+                  <Route path="users/contacts" element={<ContactsPage />} />
+                  <Route path="users/members" element={<MembersPage />} />
+                  <Route path="users/organizations" element={<OrganizationsPage />} />
+                  <Route path="users/coaches" element={<CoachesPage />} />
+                  <Route path="users/admins" element={<PlaceholderPage title="Admin Users" description="Manage admin access levels and approvals. Coming in Phase 2." />} />
+                  <Route path="content/emails" element={<AutomatedEmailsPage />} />
+                  <Route path="content/newsletter" element={<PlaceholderPage title="Newsletter" description="Compose and send newsletters to subscribers. Coming in Phase 2." />} />
+                  <Route path="system/security" element={<PlaceholderPage title="Security Metrics" description="View login analytics, failed attempts, and security events. Coming in Phase 2." />} />
+                  <Route path="system/audit" element={<PlaceholderPage title="Audit Log" description="Complete, immutable log of all admin actions. Coming in Phase 2." />} />
+                  <Route path="intelligence/seo" element={<PlaceholderPage title="SEO Analytics" description="Comprehensive SEO dashboard for re-rooted.com. Coming in Phase 3." />} />
+                  <Route path="intelligence/competitors" element={<PlaceholderPage title="Competitive Analysis" description="AI-powered competitive intelligence. Coming in Phase 3." />} />
+                </Route>
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
