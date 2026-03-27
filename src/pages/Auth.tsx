@@ -105,7 +105,7 @@ const Auth = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full"
+        className="max-w-md w-full -mt-16"
       >
         {/* Logo + Slogan group — pushed upward */}
         <div className="text-center">
