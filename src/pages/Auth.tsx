@@ -109,11 +109,11 @@ const Auth = () => {
       >
         {/* Logo + Slogan group — pushed upward */}
         <div className="text-center">
-          <button onClick={() => navigate("/")} className="cursor-pointer mx-auto block h-60 w-full max-w-lg overflow-hidden md:h-80">
+          <button onClick={() => navigate("/")} className="cursor-pointer mx-auto block h-40 w-full max-w-lg overflow-hidden md:h-52">
             <img src={logoWhite} alt="Re-Rooted®" className="h-60 w-full object-center md:h-80 object-cover" />
           </button>
           <p
-            className="-mt-2 text-lg font-light italic tracking-wide text-primary-foreground/80"
+            className="-mt-4 text-lg font-light italic tracking-wide text-primary-foreground/80"
             style={{ fontWeight: 300 }}
           >
             The human side of relocation
@@ -237,7 +237,7 @@ const Auth = () => {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-primary-foreground/70">
+        <p className="text-center text-sm text-primary-foreground/70 mt-8">
           {mode === "signin" ? "Don't have an account?" : "Already have an account?"}{" "}
           <button
             onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
