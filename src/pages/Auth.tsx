@@ -109,8 +109,8 @@ const Auth = () => {
       >
         {/* Logo */}
         <div className="text-center">
-          <button onClick={() => navigate("/")} className="cursor-pointer">
-            <img src={logoWhite} alt="Re-Rooted®" className="h-28 mx-auto object-contain" />
+          <button onClick={() => navigate("/")} className="cursor-pointer inline-block h-52 w-[28rem] overflow-hidden md:h-72 md:w-[38rem]">
+            <img src={logoWhite} alt="Re-Rooted®" className="h-80 w-full object-contain object-center md:h-[27.5rem]" />
           </button>
           <p
             className="mt-1 text-lg font-light italic tracking-wide text-primary-foreground/80"
