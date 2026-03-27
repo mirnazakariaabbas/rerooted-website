@@ -1,7 +1,8 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, Globe, Heart, BarChart3, User, Shield } from 'lucide-react';
+import { Home, Globe, Heart, BarChart3, User, Shield, Briefcase } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAdmin } from '@/hooks/useAdmin';
+import { useCoachRole } from '@/hooks/useCoachRole';
 
 const memberTabs = [
   { path: '/app/home', label: 'Home', icon: Home },
@@ -12,11 +13,18 @@ const memberTabs = [
 ];
 
 const adminTab = { path: '/app/admin', label: 'Admin', icon: Shield };
+const coachTab = { path: '/app/coach-dashboard', label: 'Dashboard', icon: Briefcase };
 
 const BottomNav = () => {
   const location = useLocation();
   const { isAdmin } = useAdmin();
-  const tabs = isAdmin ? [adminTab, ...memberTabs] : memberTabs;
+  const { isCoach } = useCoachRole();
+
+  const tabs = [
+    ...(isAdmin ? [adminTab] : []),
+    ...(isCoach ? [coachTab] : []),
+    ...memberTabs,
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border/50 z-50">

@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAdmin } from '@/hooks/useAdmin';
+import { useCoachRole } from '@/hooks/useCoachRole';
 import { UserProvider, useUser } from '@/contexts/UserContext';
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
 import BottomNav from '@/components/layout/BottomNav';
@@ -26,9 +27,10 @@ const PendingApproval = () => {
 const MemberContent = () => {
   const { user, profileLoading, approvalStatus } = useUser();
   const { isAdmin, loading: adminLoading } = useAdmin();
+  const { isCoach, loading: coachLoading } = useCoachRole();
   const location = useLocation();
 
-  if (profileLoading || adminLoading) {
+  if (profileLoading || adminLoading || coachLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <p className="text-muted-foreground">Loading...</p>
@@ -36,17 +38,22 @@ const MemberContent = () => {
     );
   }
 
-  // Block non-admins from admin routes (defense-in-depth)
+  // Block non-admins from admin routes
   if (!isAdmin && location.pathname.startsWith('/app/admin')) {
     return <Navigate to="/app/home" replace />;
   }
 
-  // Admin users skip the approval gate
-  if (!isAdmin && approvalStatus !== 'approved') {
+  // Block non-coaches from coach dashboard
+  if (!isCoach && location.pathname.startsWith('/app/coach-dashboard')) {
+    return <Navigate to="/app/home" replace />;
+  }
+
+  // Admin and coach users skip the approval gate
+  if (!isAdmin && !isCoach && approvalStatus !== 'approved') {
     return <PendingApproval />;
   }
 
-  if (!isAdmin && !user.onboardingComplete) {
+  if (!isAdmin && !isCoach && !user.onboardingComplete) {
     return <OnboardingFlow />;
   }
 
