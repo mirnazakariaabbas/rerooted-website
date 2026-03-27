@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Heart, Calendar, Check } from 'lucide-react';
+import { Heart, Calendar, Check, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { addDays, format, startOfDay, getDay } from 'date-fns';
 
@@ -233,9 +234,51 @@ const CoachPage = () => {
               )}
             </CardContent>
           </Card>
+          {/* Session Notes Section */}
+          <CoachNotes userId={user?.id} />
         </div>
       )}
     </motion.div>
+  );
+};
+
+const CoachNotes = ({ userId }: { userId?: string }) => {
+  const { data: notes = [] } = useQuery({
+    queryKey: ['my-coach-notes', userId],
+    queryFn: async () => {
+      if (!userId) return [];
+      const { data } = await (supabase as any)
+        .from('coaching_notes')
+        .select('id, session_date, notes, created_at')
+        .eq('coachee_id', userId)
+        .order('session_date', { ascending: false })
+        .limit(10);
+      return data || [];
+    },
+    enabled: !!userId,
+  });
+
+  if (notes.length === 0) return null;
+
+  return (
+    <Card className="border border-border">
+      <CardContent className="py-6">
+        <div className="flex items-center gap-2 mb-4">
+          <FileText className="h-5 w-5 text-primary" />
+          <h3 className="text-lg font-black tracking-tight">Coach's Notes</h3>
+        </div>
+        <div className="space-y-3">
+          {notes.map((n: any) => (
+            <div key={n.id} className="p-3 rounded-lg bg-muted">
+              <Badge variant="outline" className="text-[10px] mb-1.5">
+                {new Date(n.session_date).toLocaleDateString()}
+              </Badge>
+              <p className="text-sm text-foreground">{n.notes}</p>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
