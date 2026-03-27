@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import logoWhite from "@/assets/logo-white.png";
 
-type Mode = "signin" | "signup";
+type Mode = "signin" | "signup" | "forgot";
 type UserType = "individual" | "organization";
 
 const STORAGE_KEY = "rerooted_remember";
@@ -23,7 +23,7 @@ const Auth = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [pending, setPending] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const { signUp, signIn } = useAuth();
+  const { signUp, signIn, resetPassword } = useAuth();
   const navigate = useNavigate();
 
   // Load remembered credentials
@@ -48,6 +48,18 @@ const Auth = () => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ email, password }));
     } else {
       localStorage.removeItem(STORAGE_KEY);
+    }
+
+    if (mode === "forgot") {
+      const { error } = await resetPassword(email);
+      setSubmitting(false);
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success("Password reset link sent! Check your email.");
+        setMode("signin");
+      }
+      return;
     }
 
     if (mode === "signup") {
@@ -123,12 +135,14 @@ const Auth = () => {
         {/* Welcome text + form — separated */}
         <div className="mt-10 text-center">
           <h1 className="text-2xl font-bold text-primary-foreground">
-            {mode === "signin" ? "Welcome back" : "Request access"}
+            {mode === "signin" ? "Welcome back" : mode === "signup" ? "Request access" : "Reset password"}
           </h1>
           <p className="mt-1 text-sm text-primary-foreground/70">
             {mode === "signin"
               ? "Sign in to access your dashboard"
-              : "Sign up and an admin will approve your account"}
+              : mode === "signup"
+              ? "Sign up and an admin will approve your account"
+              : "Enter your email and we'll send you a reset link"}
           </p>
         </div>
 
