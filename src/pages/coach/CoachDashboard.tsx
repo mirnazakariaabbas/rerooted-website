@@ -10,8 +10,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'sonner';
-import { Users, BookOpen, Calendar, Clock, UserCircle, Plus, Trash2 } from 'lucide-react';
+import { Users, BookOpen, Calendar, Clock, UserCircle, Plus, Trash2, FileText } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -109,27 +110,33 @@ const CoacheesTab = ({ coachId }: { coachId: string }) => {
   }
 
   return (
-    <div className="rounded-md border overflow-x-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>From → To</TableHead>
-            <TableHead>Stage</TableHead>
-            <TableHead>Score</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {coachees.map(c => (
-            <TableRow key={c.id}>
-              <TableCell className="font-medium">{c.full_name || '—'}</TableCell>
-              <TableCell className="text-sm">{c.country_from || '?'} → {c.country_to || '?'}</TableCell>
-              <TableCell><Badge variant="secondary" className="text-xs">{c.stage || '—'}</Badge></TableCell>
-              <TableCell className="text-sm">{c.score != null ? `${c.score}%` : '—'}</TableCell>
+    <div className="space-y-6">
+      <div className="rounded-md border overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>From → To</TableHead>
+              <TableHead>Stage</TableHead>
+              <TableHead>Score</TableHead>
+              <TableHead>Notes</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {coachees.map(c => (
+              <TableRow key={c.id}>
+                <TableCell className="font-medium">{c.full_name || '—'}</TableCell>
+                <TableCell className="text-sm">{c.country_from || '?'} → {c.country_to || '?'}</TableCell>
+                <TableCell><Badge variant="secondary" className="text-xs">{c.stage || '—'}</Badge></TableCell>
+                <TableCell className="text-sm">{c.score != null ? `${c.score}%` : '—'}</TableCell>
+                <TableCell>
+                  <AddNoteDialog coachId={coachId} coacheeId={c.id} coacheeName={c.full_name || 'Unknown'} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };
