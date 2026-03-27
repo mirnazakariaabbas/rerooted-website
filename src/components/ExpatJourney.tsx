@@ -25,6 +25,13 @@ const corporateStages: Stage[] = [
 
 const DEEP_BLUE = "#1F299C";
 
+const journeyImages = [
+  "/journey-1.jpg",
+  "/journey-2.jpg",
+  "/journey-3.jpg",
+  "/journey-4.jpg",
+];
+
 /* Leaf pattern for Thriving card (index 2) */
 const LeafPattern = () => (
   <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200" fill="none" preserveAspectRatio="xMidYMid slice">
@@ -45,13 +52,15 @@ const StageCard = ({ stage, index }: { stage: Stage; index: number }) => {
       className="relative rounded-xl overflow-hidden transition-transform duration-200 hover:scale-105 cursor-pointer"
       style={{ maxWidth: 300, background: bg, border: `1px solid rgba(31, 41, 156, 0.3)` }}
     >
-      <div
-        className="w-full flex items-center justify-center"
-        style={{ aspectRatio: "16 / 10", background: "#e8e4ed" }}
-      >
-        <span className="text-xs font-medium uppercase tracking-wider" style={{ color: "#8a7fa0" }}>
-          Photo
-        </span>
+      <div className="w-full overflow-hidden" style={{ aspectRatio: "16 / 10" }}>
+        <img
+          src={journeyImages[index]}
+          alt={stage.name}
+          className="w-full h-full object-cover"
+          loading="lazy"
+          width={800}
+          height={512}
+        />
       </div>
       <div className="relative p-5">
         {index === 2 && <LeafPattern />}
