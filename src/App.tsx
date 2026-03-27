@@ -7,6 +7,7 @@ import { AudienceProvider } from "@/contexts/AudienceContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index.tsx";
 import Auth from "./pages/Auth.tsx";
+import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import MemberLayout from "./components/layout/MemberLayout.tsx";
 import MemberHome from "./pages/member/MemberHome.tsx";
@@ -28,6 +29,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/app" element={<MemberLayout />}>
                 <Route path="home" element={<MemberHome />} />
                 <Route path="cultural" element={<CulturalCompanion />} />
