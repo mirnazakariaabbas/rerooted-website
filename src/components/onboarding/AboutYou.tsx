@@ -29,8 +29,8 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
   ];
 
   return (
-    <div className="flex-1 flex flex-col px-8 pt-10">
-      <h2 className="text-2xl font-serif mb-2">A little about you</h2>
+    <div className="flex-1 flex flex-col px-6 lg:px-12 pt-10">
+      <h2 className="text-3xl font-black tracking-tight mb-2">A little about you</h2>
       <p className="text-muted-foreground mb-8">Optional — you can always update this later.</p>
       <div className="space-y-6 flex-1">
         <div className="space-y-2">
@@ -46,7 +46,7 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
                 onClick={() => setFamily(opt.value)}
                 className={cn(
                   'flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all text-sm',
-                  family === opt.value ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-primary/30'
+                  family === opt.value ? 'border-primary bg-muted' : 'border-border hover:border-primary/30'
                 )}
               >
                 <span className="text-xl">{opt.icon}</span>
@@ -64,7 +64,7 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
                 onClick={() => setHasChildren(opt.v)}
                 className={cn(
                   'p-3 rounded-xl border-2 transition-all text-sm font-medium',
-                  hasChildren === opt.v ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-primary/30'
+                  hasChildren === opt.v ? 'border-primary bg-muted' : 'border-border hover:border-primary/30'
                 )}
               >
                 {opt.l}
@@ -79,7 +79,6 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
       </div>
       <div className="py-6 space-y-3">
         <Button onClick={handleNext} size="lg" className="w-full rounded-full py-6">Continue</Button>
-        
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
 import { CULTURAL_COMPARISONS } from '@/data/cultural-comparisons';
 import { COUNTRIES } from '@/data/countries';
@@ -48,9 +49,14 @@ const CulturalCompanion = () => {
   const swap = () => { setHomeCountry(hostCountry); setHostCountry(homeCountry); };
 
   return (
-    <div className="pb-20 px-5 pt-6 max-w-lg mx-auto">
-      <h1 className="text-2xl font-serif mb-4">Your Cultural Companion</h1>
-      <div className="flex items-center gap-2 mb-6 flex-wrap">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+    >
+      <h1 className="text-3xl font-black tracking-tight mb-4">Your Cultural Companion</h1>
+      <div className="flex items-center gap-2 mb-8 flex-wrap">
         <CountryPicker value={homeCountry} onChange={setHomeCountry} />
         <button onClick={swap} className="p-1.5 rounded-full hover:bg-muted transition-colors">
           <ArrowRightLeft className="h-4 w-4 text-muted-foreground" />
@@ -60,15 +66,15 @@ const CulturalCompanion = () => {
 
       {comparison ? (
         <>
-          <Card className="mb-6 border-0 shadow-md bg-primary/5">
-            <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Overview</CardTitle></CardHeader>
+          <Card className="mb-8 border border-border bg-muted">
+            <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Overview</CardTitle></CardHeader>
             <CardContent><p className="text-sm leading-relaxed text-foreground/80">{comparison.overview}</p></CardContent>
           </Card>
           <div className="space-y-2">
             {comparison.dimensions.map(dim => {
               const expanded = expandedDim === dim.name;
               return (
-                <Card key={dim.name} className="border-0 shadow-sm overflow-hidden">
+                <Card key={dim.name} className="border border-border overflow-hidden">
                   <button className="w-full text-left p-4 flex items-center justify-between" onClick={() => setExpandedDim(expanded ? null : dim.name)}>
                     <span className="font-medium text-sm">{dim.name}</span>
                     {expanded ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
@@ -96,7 +102,7 @@ const CulturalCompanion = () => {
                         </div>
                       </div>
                       <p className="text-sm text-foreground/80 mb-3">{dim.explanation}</p>
-                      <div className="bg-muted/50 rounded-lg p-3">
+                      <div className="bg-muted rounded-lg p-3">
                         <p className="text-xs italic text-foreground/70">💡 {dim.practicalTip}</p>
                       </div>
                     </CardContent>
@@ -107,7 +113,7 @@ const CulturalCompanion = () => {
           </div>
         </>
       ) : (
-        <Card className="border-dashed">
+        <Card className="border-dashed border border-border">
           <CardContent className="py-12 text-center">
             <p className="text-muted-foreground mb-2">No comparison data available yet</p>
             <p className="text-sm text-muted-foreground">
@@ -116,7 +122,7 @@ const CulturalCompanion = () => {
           </CardContent>
         </Card>
       )}
-    </div>
+    </motion.div>
   );
 };
 

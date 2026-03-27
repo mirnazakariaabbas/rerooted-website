@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -20,27 +21,32 @@ const DimensionDetail = ({ dimension, onBack }: DimensionDetailProps) => {
   };
 
   return (
-    <div className="pb-20 px-5 pt-6 max-w-lg mx-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+    >
       <button onClick={onBack} className="flex items-center gap-1 text-sm text-muted-foreground mb-6 hover:text-foreground transition-colors">
         <ArrowLeft className="h-4 w-4" /> Back
       </button>
       <div className="flex items-center gap-3 mb-4">
         <span className="text-4xl">{dimension.icon}</span>
         <div>
-          <h1 className="text-2xl font-serif">{dimension.name}</h1>
+          <h1 className="text-3xl font-black tracking-tight">{dimension.name}</h1>
           <p className="text-sm text-muted-foreground">{dimension.shortDescription}</p>
         </div>
       </div>
-      <Card className="mb-6 border-0 shadow-sm">
+      <Card className="mb-8 border border-border">
         <CardContent className="p-5">
           {dimension.fullContent.split('\n\n').map((p, i) => (
             <p key={i} className="text-sm leading-relaxed text-foreground/80 mb-3 last:mb-0">{p}</p>
           ))}
         </CardContent>
       </Card>
-      <Card className="mb-6 border-0 shadow-sm bg-primary/5">
+      <Card className="mb-8 border border-border bg-muted">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base font-serif">Reflection Prompts</CardTitle>
+          <CardTitle className="text-base font-black tracking-tight">Reflection Prompts</CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="space-y-3">
@@ -50,9 +56,9 @@ const DimensionDetail = ({ dimension, onBack }: DimensionDetailProps) => {
           </ul>
         </CardContent>
       </Card>
-      <Card className="mb-6 border-0 shadow-sm">
+      <Card className="mb-8 border border-border">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base font-serif">Practical Tips</CardTitle>
+          <CardTitle className="text-base font-black tracking-tight">Practical Tips</CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="space-y-3">
@@ -68,7 +74,7 @@ const DimensionDetail = ({ dimension, onBack }: DimensionDetailProps) => {
       <Button onClick={markProgress} className="w-full rounded-full" variant={status === 'explored' ? 'secondary' : 'default'}>
         {status === 'not-started' ? 'Mark as In Progress' : status === 'in-progress' ? 'Mark as Explored' : '✓ Explored'}
       </Button>
-    </div>
+    </motion.div>
   );
 };
 
