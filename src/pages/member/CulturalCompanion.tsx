@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { CULTURAL_COMPARISONS } from '@/data/cultural-comparisons';
 import { COUNTRIES } from '@/data/countries';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { Search, ChevronDown, ChevronUp, ArrowRightLeft } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw } from 'lucide-react';
 
 const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
   const [search, setSearch] = useState('');
@@ -39,14 +42,30 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
   );
 };
 
+const categoryIcons: Record<string, React.ElementType> = {
+  daily_life: Coffee,
+  social: UsersIcon,
+  workplace: Briefcase,
+};
+
 const CulturalCompanion = () => {
   const { user } = useUser();
   const [homeCountry, setHomeCountry] = useState(user.countryFrom || 'Egypt');
   const [hostCountry, setHostCountry] = useState(user.countryTo || 'Switzerland');
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
+  const [tipsKey, setTipsKey] = useState(0);
 
-  const comparison = CULTURAL_COMPARISONS.find(c => c.homeCountry === homeCountry && c.hostCountry === hostCountry);
-  const swap = () => { setHomeCountry(hostCountry); setHostCountry(homeCountry); };
+  const { data: aiTips, isLoading: tipsLoading, refetch: refetchTips } = useQuery({
+    queryKey: ['cultural-tips', homeCountry, hostCountry, tipsKey],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('cultural-tips', {
+        body: { countryFrom: homeCountry, countryTo: hostCountry },
+      });
+      if (error) throw error;
+      return data?.tips || [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
 
   return (
     <motion.div
@@ -73,7 +92,10 @@ const CulturalCompanion = () => {
           <div className="space-y-2">
             {comparison.dimensions.map(dim => {
               const expanded = expandedDim === dim.name;
-              return (
+  const comparison = CULTURAL_COMPARISONS.find(c => c.homeCountry === homeCountry && c.hostCountry === hostCountry);
+  const swap = () => { setHomeCountry(hostCountry); setHostCountry(homeCountry); };
+
+  return (
                 <Card key={dim.name} className="border border-border overflow-hidden">
                   <button className="w-full text-left p-4 flex items-center justify-between" onClick={() => setExpandedDim(expanded ? null : dim.name)}>
                     <span className="font-medium text-sm">{dim.name}</span>
