@@ -101,11 +101,11 @@ const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-primary px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-primary px-4 py-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full"
+        className="max-w-md w-full flex flex-col items-center"
       >
         {/* Logo + Slogan group — pushed upward */}
         <div className="text-center">
