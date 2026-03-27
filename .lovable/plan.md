@@ -1,35 +1,40 @@
 
 
-## Plan: Create Test Accounts for All Access Levels
+## Plan: Admin CRM Dashboard
 
-We'll create 4 test users via a backend function, each with a different role/type so you can test the full UX.
+### Overview
+Admin-only dashboard at `/app/admin` with 5 tabs plus coach assignment capability. Admins are auto-redirected here instead of member home.
 
-### Test Accounts
+### New Files
 
-| Role | Email | Password | User Type | Approval |
-|------|-------|----------|-----------|----------|
-| Admin | admin1@test.com | Admin123! | individual | approved |
-| Org Member | orgmember1@test.com | Member123! | organization | approved |
-| Individual Member | member1@test.com | Member123! | individual | approved |
-| Employee (pending) | employee1@test.com | Employee123! | organization | pending |
+1. **`src/pages/admin/AdminDashboard.tsx`** — Main page with shadcn Tabs: Users, Coaches, Invitations, Bookings, Contacts.
 
-### Steps
+2. **`src/pages/admin/tabs/UsersTab.tsx`** — Table of all profiles (name, email, user_type, approval_status, stage, created_at). Actions: approve/reject users, **assign a coach** via a Select dropdown that lists all coaches and inserts/updates `coach_assignments`.
 
-1. **Temporarily enable auto-confirm** on email signups so test users can sign in immediately without email verification
+3. **`src/pages/admin/tabs/CoachesTab.tsx`** — CRUD table for coaches (name, bio, email, specialties, photo_url). Add/edit via Dialog form, delete with confirmation.
 
-2. **Create an edge function** (`create-test-users`) that uses the Supabase service role to:
-   - Create all 4 auth users via `supabase.auth.admin.createUser()`
-   - The existing `handle_new_user` trigger will auto-create profiles
-   - Update profiles to set `approval_status = 'approved'` for the first 3
-   - Insert an `admin` role into `user_roles` for the admin account
+4. **`src/pages/admin/tabs/InvitationsTab.tsx`** — Table of invitations with status. Action: send new invitation (insert email + invited_by).
 
-3. **Invoke the edge function** once to seed the data
+5. **`src/pages/admin/tabs/BookingsTab.tsx`** — Table of meeting_bookings joined with profile and coach names. Status management.
 
-4. **Disable auto-confirm** after accounts are created (restore normal signup flow)
+6. **`src/pages/admin/tabs/ContactsTab.tsx`** — Table of contact_submissions. Mark as read/replied. Expandable message view.
 
-5. **Delete the edge function** after use (it's a one-time seed script)
+### Modified Files
 
-### Technical Detail
+7. **`src/App.tsx`** — Add route `/app/admin` element `<AdminDashboard />` inside MemberLayout group.
 
-The edge function uses `SUPABASE_SERVICE_ROLE_KEY` (already configured) to bypass RLS and create users with confirmed emails directly. The `handle_new_user` trigger populates the `profiles` table automatically with the `user_type` from signup metadata.
+8. **`src/components/layout/MemberLayout.tsx`** — Use `useAdmin()` hook. If admin and on `/app/home`, redirect to `/app/admin`. Skip pending-approval gate for admins.
+
+9. **`src/components/layout/BottomNav.tsx`** — Show Shield icon linking to `/app/admin` when user is admin.
+
+### Coach Assignment Detail (UsersTab)
+- Each user row has an "Assign Coach" action that opens a Dialog/Popover with a Select of all coaches (fetched from `coaches` table).
+- On selection, upsert into `coach_assignments` (user_id, coach_id).
+- Display currently assigned coach name in the users table.
+- Uses existing RLS: "Admins can manage assignments" policy on `coach_assignments`.
+
+### Technical Notes
+- All queries use `supabase.from('table').select(...)` — existing RLS policies grant admins full access.
+- No new migrations needed — all tables, policies, and functions already exist.
+- Uses shadcn Table, Tabs, Badge, Button, Dialog, Select components.
 
