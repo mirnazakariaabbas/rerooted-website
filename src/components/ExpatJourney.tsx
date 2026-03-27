@@ -23,13 +23,15 @@ const corporateStages: Stage[] = [
   { name: "Rooting Back", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", side: "right" },
 ];
 
+const DEEP_BLUE = "#1F299C";
+
 /* Leaf pattern for Thriving card (index 2) */
 const LeafPattern = () => (
   <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 200" fill="none" preserveAspectRatio="xMidYMid slice">
-    <ellipse cx="60" cy="30" rx="18" ry="8" fill="#3DA776" opacity="0.05" transform="rotate(-30 60 30)" />
-    <ellipse cx="240" cy="140" rx="14" ry="6" fill="#3DA776" opacity="0.04" transform="rotate(20 240 140)" />
-    <ellipse cx="150" cy="80" rx="20" ry="7" fill="#3DA776" opacity="0.05" transform="rotate(-15 150 80)" />
-    <ellipse cx="40" cy="160" rx="12" ry="5" fill="#3DA776" opacity="0.04" transform="rotate(35 40 160)" />
+    <ellipse cx="60" cy="30" rx="18" ry="8" fill={DEEP_BLUE} opacity="0.05" transform="rotate(-30 60 30)" />
+    <ellipse cx="240" cy="140" rx="14" ry="6" fill={DEEP_BLUE} opacity="0.04" transform="rotate(20 240 140)" />
+    <ellipse cx="150" cy="80" rx="20" ry="7" fill={DEEP_BLUE} opacity="0.05" transform="rotate(-15 150 80)" />
+    <ellipse cx="40" cy="160" rx="12" ry="5" fill={DEEP_BLUE} opacity="0.04" transform="rotate(35 40 160)" />
   </svg>
 );
 
@@ -38,36 +40,26 @@ const StageCard = ({ stage, index }: { stage: Stage; index: number }) => {
   const isLeft = stage.side === "left";
   const bg = isLeft ? "#F3F0F7" : "#FFFFFF";
 
-  const stageLabels = ["PRE-ROOTED", "RE-ROOTED", "THRIVING", "ROOTING BACK"];
-  const photoLabel = stageLabels[index] || stage.name.toUpperCase();
-
   return (
     <div
       className="relative rounded-xl overflow-hidden transition-transform duration-200 hover:scale-105 cursor-pointer"
-      style={{ maxWidth: 300, background: bg, border: "1px solid #BCADD4" }}
+      style={{ maxWidth: 300, background: bg, border: `1px solid rgba(31, 41, 156, 0.3)` }}
     >
-      {/* Image area */}
-      {/* <!-- {photoLabel} photo --> */}
       <div
         className="w-full flex items-center justify-center"
-        style={{
-          aspectRatio: "16 / 10",
-          background: "#e8e4ed",
-        }}
+        style={{ aspectRatio: "16 / 10", background: "#e8e4ed" }}
       >
         <span className="text-xs font-medium uppercase tracking-wider" style={{ color: "#8a7fa0" }}>
           Photo
         </span>
       </div>
-
-      {/* Content area */}
       <div className="relative p-5">
         {index === 2 && <LeafPattern />}
         <div className="relative z-10">
-          <p className="font-medium uppercase tracking-[0.07em]" style={{ color: "#1F299C", fontSize: 13 }}>
+          <p className="font-medium uppercase tracking-[0.07em]" style={{ color: DEEP_BLUE, fontSize: 13 }}>
             {stage.name}
           </p>
-          <div className="mt-1.5 mb-2.5 rounded-sm" style={{ width: 28, height: 3, background: "#3DA776" }} />
+          <div className="mt-1.5 mb-2.5 rounded-sm" style={{ width: 28, height: 3, background: DEEP_BLUE }} />
           <p style={{ color: "#4a4a5a", fontSize: 12, lineHeight: 1.55 }}>{stage.desc}</p>
         </div>
       </div>
@@ -107,12 +99,9 @@ const DesktopStageRow = ({ stage, index }: { stage: Stage; index: number }) => {
   return (
     <FadeInOnScroll delay={index * 0.15}>
       <div className="flex items-center" style={{ minHeight: 220 }}>
-        {/* Left column */}
         <div className="flex-1 flex justify-end pr-10">
           {isLeft ? <StageCard stage={stage} index={index} /> : <div />}
         </div>
-
-        {/* Right column */}
         <div className="flex-1 flex justify-start pl-10">
           {!isLeft ? <StageCard stage={stage} index={index} /> : <div />}
         </div>
@@ -139,31 +128,46 @@ const DesktopJourney = ({ isIndividual }: { isIndividual: boolean }) => {
   const gap = 24;
   const totalRows = stages.length;
   const totalH = containerH || (totalRows * rowH + (totalRows - 1) * gap);
-  const vbW = 300;
+  const vbW = 400;
   const cx = vbW / 2;
+  const swing = 140; // wide sweeps
 
+  // Each stop lands at the card's side position, not center
   const stopYs = stages.map((_, i) => {
     const rowTop = i * (rowH + gap);
     return rowTop + rowH / 2;
   });
 
+  const stopXs = stages.map((s) => (s.side === "left" ? cx - swing : cx + swing));
+
+  // Build a smooth S-curve path that goes from top-center through each stop
   let pathD = `M ${cx} 0`;
+
   for (let i = 0; i < stopYs.length; i++) {
-    const y = stopYs[i];
+    const targetX = stopXs[i];
+    const targetY = stopYs[i];
+    const prevX = i === 0 ? cx : stopXs[i - 1];
     const prevY = i === 0 ? 0 : stopYs[i - 1];
-    // Target swing: where this stop's card is
-    const targetSwing = stages[i].side === "left" ? -120 : 120;
-    // Opposite swing: curve away first, then toward the target — creates S-shape
-    const oppositeSwing = -targetSwing;
-    const cp1Y = prevY + (y - prevY) * 0.25;
-    const cp2Y = prevY + (y - prevY) * 0.75;
-    pathD += ` C ${cx + oppositeSwing * 0.6} ${cp1Y}, ${cx + targetSwing} ${cp2Y}, ${cx} ${y}`;
+
+    // Control points: first CP keeps previous X direction, second CP aligns with target
+    const midY = (prevY + targetY) / 2;
+    const cp1x = prevX;
+    const cp1y = midY;
+    const cp2x = targetX;
+    const cp2y = midY;
+
+    pathD += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${targetX} ${targetY}`;
   }
-  pathD += ` L ${cx} ${totalH}`;
+
+  // Gentle fade-out curve from last stop toward center-bottom
+  const lastX = stopXs[stopXs.length - 1];
+  const lastY = stopYs[stopYs.length - 1];
+  const endY = totalH;
+  const midFadeY = (lastY + endY) / 2;
+  pathD += ` C ${lastX} ${midFadeY}, ${cx} ${midFadeY}, ${cx} ${endY}`;
 
   return (
     <div ref={containerRef} className="relative max-w-3xl mx-auto mt-8">
-      {/* SVG path behind */}
       <svg
         className="absolute left-1/2 top-0 pointer-events-none"
         width={vbW}
@@ -174,15 +178,15 @@ const DesktopJourney = ({ isIndividual }: { isIndividual: boolean }) => {
       >
         <path
           d={pathD}
-          stroke="#BCADD4"
+          stroke={DEEP_BLUE}
           strokeWidth="7"
           strokeDasharray="12 10"
           strokeLinecap="round"
           fill="none"
+          opacity="0.6"
         />
       </svg>
 
-      {/* Stage rows */}
       <div className="relative flex flex-col gap-6" style={{ zIndex: 1 }}>
         {stages.map((stage, i) => (
           <DesktopStageRow key={i} stage={stage} index={i} />
@@ -202,8 +206,9 @@ const MobileJourney = ({ isIndividual }: { isIndividual: boolean }) => {
         className="absolute left-1/2 -translate-x-1/2 top-0 h-full"
         style={{
           width: 7,
-          backgroundImage: "repeating-linear-gradient(to bottom, #BCADD4 0px, #BCADD4 12px, transparent 12px, transparent 22px)",
+          backgroundImage: `repeating-linear-gradient(to bottom, ${DEEP_BLUE} 0px, ${DEEP_BLUE} 12px, transparent 12px, transparent 22px)`,
           borderRadius: 4,
+          opacity: 0.5,
         }}
       />
       <div className="flex flex-col gap-12">
