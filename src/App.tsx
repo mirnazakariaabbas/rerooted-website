@@ -26,6 +26,12 @@ import NewsletterPage from "./pages/admin/content/NewsletterPage";
 import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
 import SecurityMetricsPage from "./pages/admin/system/SecurityMetricsPage";
 import AuditLogPage from "./pages/admin/system/AuditLogPage";
+import ActiveSessionsPage from "./pages/admin/system/ActiveSessionsPage";
+import IpAllowlistPage from "./pages/admin/system/IpAllowlistPage";
+import RssMentionsPage from "./pages/admin/content/RssMentionsPage";
+import SubscribersPage from "./pages/admin/users/SubscribersPage";
+import LinkedInContactsPage from "./pages/admin/users/LinkedInContactsPage";
+import RoleHistoryPage from "./pages/admin/users/RoleHistoryPage";
 import PlaceholderPage from "./pages/admin/PlaceholderPage";
 
 const queryClient = new QueryClient();
@@ -59,12 +65,18 @@ const App = () => (
                   <Route path="users/organizations" element={<OrganizationsPage />} />
                   <Route path="users/coaches" element={<CoachesPage />} />
                   <Route path="users/admins" element={<AdminUsersPage />} />
+                  <Route path="users/subscribers" element={<SubscribersPage />} />
+                  <Route path="users/linkedin" element={<LinkedInContactsPage />} />
+                  <Route path="users/history" element={<RoleHistoryPage />} />
                   <Route path="content/emails" element={<AutomatedEmailsPage />} />
                   <Route path="content/newsletter" element={<NewsletterPage />} />
+                  <Route path="content/rss" element={<RssMentionsPage />} />
                   <Route path="system/security" element={<SecurityMetricsPage />} />
                   <Route path="system/audit" element={<AuditLogPage />} />
-                  <Route path="intelligence/seo" element={<PlaceholderPage title="SEO Analytics" description="Comprehensive SEO dashboard for re-rooted.com. Coming in Phase 3." />} />
-                  <Route path="intelligence/competitors" element={<PlaceholderPage title="Competitive Analysis" description="AI-powered competitive intelligence. Coming in Phase 3." />} />
+                  <Route path="system/sessions" element={<ActiveSessionsPage />} />
+                  <Route path="system/ip-allowlist" element={<IpAllowlistPage />} />
+                  <Route path="intelligence/seo" element={<PlaceholderPage title="SEO Analytics" description="Comprehensive SEO dashboard for re-rooted.com. Coming in Phase 4." />} />
+                  <Route path="intelligence/competitors" element={<PlaceholderPage title="Competitive Analysis" description="AI-powered competitive intelligence. Coming in Phase 4." />} />
                 </Route>
               </Route>
               <Route path="*" element={<NotFound />} />
