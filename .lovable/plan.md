@@ -1,12 +1,17 @@
 
 
-## Plan: Push Auth Content Upward
+## Plan: Crop Logo, Tighten Slogan, Space Out Bottom Link
 
 **File**: `src/pages/Auth.tsx`
 
-Shift the entire card upward within the vertically-centered flex container by adding negative top margin or switching from `items-center` to `items-start` with top padding. The simplest approach: add a negative margin-top (e.g. `-mt-16` or `-mt-20`) to the inner `motion.div` wrapper, which keeps `items-center` centering but nudges everything upward.
+### Changes
 
-### Change
+1. **Crop logo vertically** — Reduce the logo button container height from `h-60 md:h-80` to `h-40 md:h-52`. Keep image at `h-60 md:h-80` with `object-cover` so it crops the whitespace above/below the logo mark.
 
-In the outer `motion.div` (around line 108), add `-mt-16` to its className to shift the content block upward while preserving horizontal width.
+2. **Logo + slogan closer** — Change the slogan's margin from `-mt-2` to `-mt-4` to pull it tighter against the cropped logo.
+
+3. **"Don't have an account?" more distance from Sign In button** — Add `mt-6` to the `<p>` element on line 240 (currently no explicit top margin, inheriting from `space-y-5` in the form). Wrap the form and the bottom text so the bottom link gets extra spacing — or simply add a `mt-8` class to the `<p>` tag.
+
+### Result
+More compact logo area, slogan tucked closer, and clear breathing room before "Don't have an account?" link.
 
