@@ -1,0 +1,167 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '@/contexts/UserContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useAdmin } from '@/hooks/useAdmin';
+import { COUNTRIES } from '@/data/countries';
+import { STAGE_LABELS, JourneyStage, calculateStage } from '@/types/user';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Button } from '@/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { CalendarIcon, Search, ChevronDown, Shield } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+
+const CountrySelect = ({ value, onChange, label }: { value: string; onChange: (v: string) => void; label: string }) => {
+  const [search, setSearch] = useState('');
+  const [open, setOpen] = useState(false);
+  const filtered = COUNTRIES.filter(c => c.toLowerCase().includes(search.toLowerCase()));
+
+  return (
+    <div className="space-y-1.5">
+      <Label className="text-sm">{label}</Label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="outline" className="w-full justify-between font-normal h-10 text-sm">
+            {value || 'Select'} <ChevronDown className="h-3 w-3" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[280px] p-0" align="start">
+          <div className="flex items-center border-b px-3">
+            <Search className="mr-2 h-4 w-4 text-muted-foreground" />
+            <Input placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} className="border-0 focus-visible:ring-0 h-9 text-sm" />
+          </div>
+          <div className="max-h-[200px] overflow-y-auto p-1">
+            {filtered.map(c => (
+              <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-muted" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
+                {c}
+              </button>
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+};
+
+const ProfilePage = () => {
+  const { user, updateUser } = useUser();
+  const { signOut } = useAuth();
+  const { isAdmin } = useAdmin();
+  const navigate = useNavigate();
+  const [isReturning, setIsReturning] = useState(user.stage === 'rooting-back');
+
+  const handleArrivalDateChange = (d: Date) => {
+    const stage = calculateStage(d.toISOString(), isReturning);
+    updateUser({ arrivalDate: d.toISOString(), stage });
+  };
+
+  const handleReturningToggle = (returning: boolean) => {
+    setIsReturning(returning);
+    if (user.arrivalDate) {
+      const stage = calculateStage(user.arrivalDate, returning);
+      updateUser({ stage });
+    }
+  };
+
+  return (
+    <div className="pb-20 px-5 pt-6 max-w-lg mx-auto">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-serif">Profile</h1>
+        {isAdmin && (
+          <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => navigate('/admin')}>
+            <Shield className="h-3.5 w-3.5" /> Admin
+          </Button>
+        )}
+      </div>
+
+      <Card className="mb-4 border-0 shadow-sm">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Personal Details</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-1.5">
+            <Label className="text-sm">Name</Label>
+            <Input value={user.name} onChange={e => updateUser({ name: e.target.value })} className="h-10 text-sm" />
+          </div>
+          <CountrySelect label="Home country" value={user.countryFrom} onChange={v => updateUser({ countryFrom: v })} />
+          <CountrySelect label="Host country" value={user.countryTo} onChange={v => updateUser({ countryTo: v })} />
+          <div className="space-y-1.5">
+            <Label className="text-sm">Arrival date</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className={cn('w-full justify-start font-normal h-10 text-sm', !user.arrivalDate && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {user.arrivalDate ? format(new Date(user.arrivalDate), 'PPP') : 'Pick a date'}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar mode="single" selected={user.arrivalDate ? new Date(user.arrivalDate) : undefined} onSelect={d => d && handleArrivalDateChange(d)} className="p-3 pointer-events-auto" />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-4 border-0 shadow-sm">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Journey Stage</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
+          <div className="p-3 rounded-lg border border-primary bg-primary/5">
+            <p className="font-medium text-sm">Stage {STAGE_LABELS[user.stage].number} — {STAGE_LABELS[user.stage].name}</p>
+            <p className="text-xs text-muted-foreground mt-1">{STAGE_LABELS[user.stage].tagline}</p>
+          </div>
+          <div className="flex items-center justify-between">
+            <Label className="text-sm">Planning to return home?</Label>
+            <Switch checked={isReturning} onCheckedChange={handleReturningToggle} />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-4 border-0 shadow-sm">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Family</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-1.5">
+            <Label className="text-sm">Relocating</Label>
+            <div className="grid grid-cols-3 gap-2">
+              {(['alone', 'with-partner', 'with-family'] as const).map(opt => (
+                <button key={opt} onClick={() => updateUser({ familySetup: opt })} className={cn('p-2 rounded-lg border text-xs transition-all capitalize', user.familySetup === opt ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30')}>
+                  {opt.replace('-', ' ')}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <Label className="text-sm">Children</Label>
+            <Switch checked={user.hasChildren} onCheckedChange={v => updateUser({ hasChildren: v })} />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-sm">Primary language</Label>
+            <Input value={user.primaryLanguage} onChange={e => updateUser({ primaryLanguage: e.target.value })} className="h-10 text-sm" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-4 border-0 shadow-sm">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Notifications</CardTitle></CardHeader>
+        <CardContent className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label className="text-sm">Weekly reflections</Label>
+            <Switch checked={user.notifyReflections} onCheckedChange={v => updateUser({ notifyReflections: v })} />
+          </div>
+          <div className="flex items-center justify-between">
+            <Label className="text-sm">Check-in reminders</Label>
+            <Switch checked={user.notifyCheckins} onCheckedChange={v => updateUser({ notifyCheckins: v })} />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Button variant="outline" className="w-full mt-4 text-destructive border-destructive/30 hover:bg-destructive/5" onClick={signOut}>
+        Sign Out
+      </Button>
+    </div>
+  );
+};
+
+export default ProfilePage;
