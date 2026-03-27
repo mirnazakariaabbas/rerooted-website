@@ -8,6 +8,12 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index.tsx";
 import Auth from "./pages/Auth.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import MemberLayout from "./components/layout/MemberLayout.tsx";
+import MemberHome from "./pages/member/MemberHome.tsx";
+import CulturalCompanion from "./pages/member/CulturalCompanion.tsx";
+import CoachPage from "./pages/member/CoachPage.tsx";
+import AssessmentPage from "./pages/member/AssessmentPage.tsx";
+import ProfilePage from "./pages/member/ProfilePage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +28,13 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/app" element={<MemberLayout />}>
+                <Route path="home" element={<MemberHome />} />
+                <Route path="cultural" element={<CulturalCompanion />} />
+                <Route path="coach" element={<CoachPage />} />
+                <Route path="assessment" element={<AssessmentPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+              </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
