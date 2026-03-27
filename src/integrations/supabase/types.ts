@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_access_requests: {
+        Row: {
+          created_at: string
+          id: string
+          requested_role: string
+          review_reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          user_email: string | null
+          user_id: string
+          user_name: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          requested_role?: string
+          review_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          user_email?: string | null
+          user_id: string
+          user_name?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          requested_role?: string
+          review_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          user_email?: string | null
+          user_id?: string
+          user_name?: string | null
+        }
+        Relationships: []
+      }
       assessments: {
         Row: {
           answers: Json | null
@@ -38,6 +77,54 @@ export type Database = {
           id?: string
           score?: number | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      audit_log: {
+        Row: {
+          action_type: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          new_value: Json | null
+          old_value: Json | null
+          record_id: string | null
+          record_name: string | null
+          record_type: string | null
+          section: string | null
+          user_id: string | null
+          user_name: string | null
+          user_role: string | null
+        }
+        Insert: {
+          action_type: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          new_value?: Json | null
+          old_value?: Json | null
+          record_id?: string | null
+          record_name?: string | null
+          record_type?: string | null
+          section?: string | null
+          user_id?: string | null
+          user_name?: string | null
+          user_role?: string | null
+        }
+        Update: {
+          action_type?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          new_value?: Json | null
+          old_value?: Json | null
+          record_id?: string | null
+          record_name?: string | null
+          record_type?: string | null
+          section?: string | null
+          user_id?: string | null
+          user_name?: string | null
+          user_role?: string | null
         }
         Relationships: []
       }
@@ -306,6 +393,63 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      newsletters: {
+        Row: {
+          body_html: string
+          click_count: number | null
+          created_at: string
+          created_by: string | null
+          from_name: string | null
+          id: string
+          open_count: number | null
+          recipient_count: number | null
+          recipient_segment: string | null
+          reply_to: string | null
+          scheduled_at: string | null
+          sent_at: string | null
+          status: string
+          subject: string
+          unsubscribe_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          body_html?: string
+          click_count?: number | null
+          created_at?: string
+          created_by?: string | null
+          from_name?: string | null
+          id?: string
+          open_count?: number | null
+          recipient_count?: number | null
+          recipient_segment?: string | null
+          reply_to?: string | null
+          scheduled_at?: string | null
+          sent_at?: string | null
+          status?: string
+          subject: string
+          unsubscribe_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          body_html?: string
+          click_count?: number | null
+          created_at?: string
+          created_by?: string | null
+          from_name?: string | null
+          id?: string
+          open_count?: number | null
+          recipient_count?: number | null
+          recipient_segment?: string | null
+          reply_to?: string | null
+          scheduled_at?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          unsubscribe_count?: number | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       organizations: {
         Row: {
