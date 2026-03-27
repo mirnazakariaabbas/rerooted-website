@@ -70,33 +70,74 @@ export type Database = {
           },
         ]
       }
+      coach_availability: {
+        Row: {
+          coach_id: string
+          created_at: string
+          day_of_week: number
+          end_time: string
+          id: string
+          start_time: string
+        }
+        Insert: {
+          coach_id: string
+          created_at?: string
+          day_of_week: number
+          end_time: string
+          id?: string
+          start_time: string
+        }
+        Update: {
+          coach_id?: string
+          created_at?: string
+          day_of_week?: number
+          end_time?: string
+          id?: string
+          start_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coach_availability_coach_id_fkey"
+            columns: ["coach_id"]
+            isOneToOne: false
+            referencedRelation: "coaches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       coaches: {
         Row: {
           bio: string | null
+          certification_level: string
           created_at: string
           email: string | null
           id: string
           name: string
           photo_url: string | null
           specialties: Json | null
+          user_id: string | null
         }
         Insert: {
           bio?: string | null
+          certification_level?: string
           created_at?: string
           email?: string | null
           id?: string
           name: string
           photo_url?: string | null
           specialties?: Json | null
+          user_id?: string | null
         }
         Update: {
           bio?: string | null
+          certification_level?: string
           created_at?: string
           email?: string | null
           id?: string
           name?: string
           photo_url?: string | null
           specialties?: Json | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -311,7 +352,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "moderator" | "user"
+      app_role: "admin" | "moderator" | "user" | "coach"
       approval_status: "pending" | "approved" | "rejected"
       user_type: "individual" | "organization"
     }
@@ -441,7 +482,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "moderator", "user"],
+      app_role: ["admin", "moderator", "user", "coach"],
       approval_status: ["pending", "approved", "rejected"],
       user_type: ["individual", "organization"],
     },
