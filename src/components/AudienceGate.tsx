@@ -8,6 +8,7 @@ import logoWhite from "@/assets/logo-white.png";
 const AudienceGate = () => {
   const { gateOpen, setGateOpen, setAudience } = useAudience();
   const [hoveredButton, setHoveredButton] = useState<"org" | "individual" | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (gateOpen) {
