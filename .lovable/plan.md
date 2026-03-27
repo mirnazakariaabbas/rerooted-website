@@ -1,40 +1,23 @@
 
 
-## Plan: Admin CRM Dashboard
+## Plan: Fix Admin Route Protection and Home Tab
 
-### Overview
-Admin-only dashboard at `/app/admin` with 5 tabs plus coach assignment capability. Admins are auto-redirected here instead of member home.
+### Issues Found
 
-### New Files
+1. **Home tab broken for admins**: In `MemberLayout.tsx` line 40-42, when an admin navigates to `/app/home`, they are immediately redirected back to `/app/admin`. This makes the Home tab in BottomNav non-functional for admins.
 
-1. **`src/pages/admin/AdminDashboard.tsx`** — Main page with shadcn Tabs: Users, Coaches, Invitations, Bookings, Contacts.
+2. **Admin dashboard access**: The `AdminDashboard` component already checks `useAdmin()` and redirects non-admins to `/app/home`. However, adding a second guard in `MemberLayout` provides defense-in-depth.
 
-2. **`src/pages/admin/tabs/UsersTab.tsx`** — Table of all profiles (name, email, user_type, approval_status, stage, created_at). Actions: approve/reject users, **assign a coach** via a Select dropdown that lists all coaches and inserts/updates `coach_assignments`.
+### Changes
 
-3. **`src/pages/admin/tabs/CoachesTab.tsx`** — CRUD table for coaches (name, bio, email, specialties, photo_url). Add/edit via Dialog form, delete with confirmation.
+**`src/components/layout/MemberLayout.tsx`**
+- Remove the automatic redirect from `/app/home` to `/app/admin` for admins (lines 39-42). Admins should be able to access all member pages including Home.
+- Add a guard that blocks non-admin users from accessing `/app/admin` — if path starts with `/app/admin` and user is not admin, redirect to `/app/home`.
 
-4. **`src/pages/admin/tabs/InvitationsTab.tsx`** — Table of invitations with status. Action: send new invitation (insert email + invited_by).
+**`src/components/layout/BottomNav.tsx`**
+- No changes needed. The admin tab (Shield icon) already only shows for admins.
 
-5. **`src/pages/admin/tabs/BookingsTab.tsx`** — Table of meeting_bookings joined with profile and coach names. Status management.
-
-6. **`src/pages/admin/tabs/ContactsTab.tsx`** — Table of contact_submissions. Mark as read/replied. Expandable message view.
-
-### Modified Files
-
-7. **`src/App.tsx`** — Add route `/app/admin` element `<AdminDashboard />` inside MemberLayout group.
-
-8. **`src/components/layout/MemberLayout.tsx`** — Use `useAdmin()` hook. If admin and on `/app/home`, redirect to `/app/admin`. Skip pending-approval gate for admins.
-
-9. **`src/components/layout/BottomNav.tsx`** — Show Shield icon linking to `/app/admin` when user is admin.
-
-### Coach Assignment Detail (UsersTab)
-- Each user row has an "Assign Coach" action that opens a Dialog/Popover with a Select of all coaches (fetched from `coaches` table).
-- On selection, upsert into `coach_assignments` (user_id, coach_id).
-- Display currently assigned coach name in the users table.
-- Uses existing RLS: "Admins can manage assignments" policy on `coach_assignments`.
-
-### Technical Notes
-- All queries use `supabase.from('table').select(...)` — existing RLS policies grant admins full access.
-- No new migrations needed — all tables, policies, and functions already exist.
-- Uses shadcn Table, Tabs, Badge, Button, Dialog, Select components.
+### Result
+- Non-admin users cannot access `/app/admin` (double protection: MemberLayout + AdminDashboard).
+- Admin users can freely navigate between admin dashboard and all member pages including Home.
 
