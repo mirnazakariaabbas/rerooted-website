@@ -36,9 +36,9 @@ const MemberContent = () => {
     );
   }
 
-  // Redirect admins to admin dashboard when they land on /app/home
-  if (isAdmin && location.pathname === '/app/home') {
-    return <Navigate to="/app/admin" replace />;
+  // Block non-admins from admin routes (defense-in-depth)
+  if (!isAdmin && location.pathname.startsWith('/app/admin')) {
+    return <Navigate to="/app/home" replace />;
   }
 
   // Admin users skip the approval gate
