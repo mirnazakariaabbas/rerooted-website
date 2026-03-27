@@ -110,7 +110,7 @@ const Auth = () => {
         {/* Logo + Slogan group — pushed upward */}
         <div className="text-center">
           <button onClick={() => navigate("/")} className="cursor-pointer mx-auto block h-60 w-full max-w-lg overflow-hidden md:h-80">
-            <img src={logoWhite} alt="Re-Rooted®" className="h-[22rem] w-full object-contain object-center md:h-[30rem]" />
+            <img src={logoWhite} alt="Re-Rooted®" className="h-60 w-full object-center md:h-80 object-cover" />
           </button>
           <p
             className="-mt-2 text-lg font-light italic tracking-wide text-primary-foreground/80"
