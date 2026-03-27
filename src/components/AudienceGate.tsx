@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { LogIn } from "lucide-react";
 import { useAudience } from "@/contexts/AudienceContext";
 import logoWhite from "@/assets/logo-white.png";
 
 const AudienceGate = () => {
   const { gateOpen, setGateOpen, setAudience } = useAudience();
   const [hoveredButton, setHoveredButton] = useState<"org" | "individual" | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (gateOpen) {
@@ -33,6 +36,18 @@ const AudienceGate = () => {
           exit={{ y: "-100%" }}
           transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
         >
+          {/* Login button — top right */}
+          <motion.button
+            onClick={() => navigate("/auth")}
+            className="absolute right-6 top-6 flex items-center gap-2 rounded-full border-2 border-primary-foreground/60 px-5 py-2 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:border-primary-foreground hover:bg-primary-foreground hover:text-primary cursor-pointer md:right-10 md:top-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.4, duration: 0.5 }}
+          >
+            <LogIn className="h-4 w-4" />
+            Login
+          </motion.button>
+
           {/* Logo */}
           <motion.div
             className="mb-2 h-52 w-[28rem] overflow-hidden md:h-72 md:w-[38rem]"
