@@ -32,6 +32,8 @@ import RssMentionsPage from "./pages/admin/content/RssMentionsPage";
 import SubscribersPage from "./pages/admin/users/SubscribersPage";
 import LinkedInContactsPage from "./pages/admin/users/LinkedInContactsPage";
 import RoleHistoryPage from "./pages/admin/users/RoleHistoryPage";
+import SeoAnalyticsPage from "./pages/admin/intelligence/SeoAnalyticsPage";
+import CompetitiveAnalysisPage from "./pages/admin/intelligence/CompetitiveAnalysisPage";
 import PlaceholderPage from "./pages/admin/PlaceholderPage";
 
 const queryClient = new QueryClient();
@@ -75,8 +77,8 @@ const App = () => (
                   <Route path="system/audit" element={<AuditLogPage />} />
                   <Route path="system/sessions" element={<ActiveSessionsPage />} />
                   <Route path="system/ip-allowlist" element={<IpAllowlistPage />} />
-                  <Route path="intelligence/seo" element={<PlaceholderPage title="SEO Analytics" description="Comprehensive SEO dashboard for re-rooted.com. Coming in Phase 4." />} />
-                  <Route path="intelligence/competitors" element={<PlaceholderPage title="Competitive Analysis" description="AI-powered competitive intelligence. Coming in Phase 4." />} />
+                  <Route path="intelligence/seo" element={<SeoAnalyticsPage />} />
+                  <Route path="intelligence/competitors" element={<CompetitiveAnalysisPage />} />
                 </Route>
               </Route>
               <Route path="*" element={<NotFound />} />

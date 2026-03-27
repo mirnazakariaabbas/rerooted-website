@@ -7,6 +7,7 @@ import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/layout/AppSidebar';
 import { TopBar } from '@/components/layout/TopBar';
+import { OnboardingTour } from '@/components/onboarding/OnboardingTour';
 import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -70,6 +71,7 @@ const MemberContent = () => {
           </main>
         </div>
       </div>
+      <OnboardingTour />
     </SidebarProvider>
   );
 };

@@ -267,6 +267,36 @@ export type Database = {
         }
         Relationships: []
       }
+      competitors: {
+        Row: {
+          analysis: Json | null
+          created_at: string
+          id: string
+          last_analyzed_at: string | null
+          logo_url: string | null
+          name: string
+          website: string | null
+        }
+        Insert: {
+          analysis?: Json | null
+          created_at?: string
+          id?: string
+          last_analyzed_at?: string | null
+          logo_url?: string | null
+          name: string
+          website?: string | null
+        }
+        Update: {
+          analysis?: Json | null
+          created_at?: string
+          id?: string
+          last_analyzed_at?: string | null
+          logo_url?: string | null
+          name?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           audience_type: string | null
@@ -567,6 +597,39 @@ export type Database = {
           subject?: string
           unsubscribe_count?: number | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          link: string | null
+          message: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message?: string | null
+          title: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message?: string | null
+          title?: string
+          type?: string
+          user_id?: string
         }
         Relationships: []
       }
