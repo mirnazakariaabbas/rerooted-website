@@ -1,5 +1,6 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAdmin } from '@/hooks/useAdmin';
 import { UserProvider, useUser } from '@/contexts/UserContext';
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
 import BottomNav from '@/components/layout/BottomNav';
@@ -24,8 +25,10 @@ const PendingApproval = () => {
 
 const MemberContent = () => {
   const { user, profileLoading, approvalStatus } = useUser();
+  const { isAdmin, loading: adminLoading } = useAdmin();
+  const location = useLocation();
 
-  if (profileLoading) {
+  if (profileLoading || adminLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <p className="text-muted-foreground">Loading...</p>
@@ -33,11 +36,17 @@ const MemberContent = () => {
     );
   }
 
-  if (approvalStatus !== 'approved') {
+  // Redirect admins to admin dashboard when they land on /app/home
+  if (isAdmin && location.pathname === '/app/home') {
+    return <Navigate to="/app/admin" replace />;
+  }
+
+  // Admin users skip the approval gate
+  if (!isAdmin && approvalStatus !== 'approved') {
     return <PendingApproval />;
   }
 
-  if (!user.onboardingComplete) {
+  if (!isAdmin && !user.onboardingComplete) {
     return <OnboardingFlow />;
   }
 
