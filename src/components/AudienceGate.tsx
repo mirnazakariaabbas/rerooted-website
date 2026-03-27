@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { LogIn } from "lucide-react";
 import { useAudience } from "@/contexts/AudienceContext";
 import logoWhite from "@/assets/logo-white.png";
 
