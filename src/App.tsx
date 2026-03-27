@@ -15,6 +15,7 @@ import CulturalCompanion from "./pages/member/CulturalCompanion.tsx";
 import CoachPage from "./pages/member/CoachPage.tsx";
 import AssessmentPage from "./pages/member/AssessmentPage.tsx";
 import ProfilePage from "./pages/member/ProfilePage.tsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +36,8 @@ const App = () => (
                 <Route path="cultural" element={<CulturalCompanion />} />
                 <Route path="coach" element={<CoachPage />} />
                 <Route path="assessment" element={<AssessmentPage />} />
-                <Route path="profile" element={<ProfilePage />} />
+              <Route path="profile" element={<ProfilePage />} />
+                <Route path="admin" element={<AdminDashboard />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
