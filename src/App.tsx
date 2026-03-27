@@ -16,6 +16,7 @@ import CoachPage from "./pages/member/CoachPage.tsx";
 import AssessmentPage from "./pages/member/AssessmentPage.tsx";
 import ProfilePage from "./pages/member/ProfilePage.tsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
+import CoachDashboard from "./pages/coach/CoachDashboard.tsx";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +38,8 @@ const App = () => (
                 <Route path="coach" element={<CoachPage />} />
                 <Route path="assessment" element={<AssessmentPage />} />
               <Route path="profile" element={<ProfilePage />} />
-                <Route path="admin" element={<AdminDashboard />} />
+              <Route path="admin" element={<AdminDashboard />} />
+                <Route path="coach-dashboard" element={<CoachDashboard />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
