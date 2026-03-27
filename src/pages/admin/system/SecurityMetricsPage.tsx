@@ -193,7 +193,7 @@ const SecurityMetricsPage = () => {
                   <p className="text-sm font-medium">IP Allowlist</p>
                   <p className="text-xs text-muted-foreground">Restrict portal access by IP</p>
                 </div>
-                <Badge variant="outline" className="text-xs">Phase 3</Badge>
+                <Badge variant="outline" className="text-xs text-success">Active</Badge>
               </div>
             </div>
           </div>
