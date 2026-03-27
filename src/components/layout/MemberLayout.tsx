@@ -4,7 +4,9 @@ import { useAdmin } from '@/hooks/useAdmin';
 import { useCoachRole } from '@/hooks/useCoachRole';
 import { UserProvider, useUser } from '@/contexts/UserContext';
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
-import BottomNav from '@/components/layout/BottomNav';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/layout/AppSidebar';
+import { TopBar } from '@/components/layout/TopBar';
 import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -14,7 +16,7 @@ const PendingApproval = () => {
     <div className="min-h-screen flex items-center justify-center bg-background px-6">
       <div className="max-w-md text-center space-y-6">
         <Clock className="h-16 w-16 text-primary mx-auto" />
-        <h1 className="text-2xl font-serif font-bold text-foreground">Account Pending Approval</h1>
+        <h1 className="text-2xl font-display font-bold text-foreground">Account Pending Approval</h1>
         <p className="text-muted-foreground">
           Your account is being reviewed by an administrator. You'll receive access once approved.
         </p>
@@ -58,10 +60,17 @@ const MemberContent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Outlet />
-      <BottomNav />
-    </div>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full">
+        <AppSidebar />
+        <div className="flex-1 flex flex-col min-w-0">
+          <TopBar />
+          <main className="flex-1 overflow-auto">
+            <Outlet />
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 
