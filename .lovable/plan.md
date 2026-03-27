@@ -1,17 +1,35 @@
 
 
-## Plan: Crop Logo, Tighten Slogan, Space Out Bottom Link
+## Plan: Create Test Accounts for All Access Levels
 
-**File**: `src/pages/Auth.tsx`
+We'll create 4 test users via a backend function, each with a different role/type so you can test the full UX.
 
-### Changes
+### Test Accounts
 
-1. **Crop logo vertically** — Reduce the logo button container height from `h-60 md:h-80` to `h-40 md:h-52`. Keep image at `h-60 md:h-80` with `object-cover` so it crops the whitespace above/below the logo mark.
+| Role | Email | Password | User Type | Approval |
+|------|-------|----------|-----------|----------|
+| Admin | admin1@test.com | Admin123! | individual | approved |
+| Org Member | orgmember1@test.com | Member123! | organization | approved |
+| Individual Member | member1@test.com | Member123! | individual | approved |
+| Employee (pending) | employee1@test.com | Employee123! | organization | pending |
 
-2. **Logo + slogan closer** — Change the slogan's margin from `-mt-2` to `-mt-4` to pull it tighter against the cropped logo.
+### Steps
 
-3. **"Don't have an account?" more distance from Sign In button** — Add `mt-6` to the `<p>` element on line 240 (currently no explicit top margin, inheriting from `space-y-5` in the form). Wrap the form and the bottom text so the bottom link gets extra spacing — or simply add a `mt-8` class to the `<p>` tag.
+1. **Temporarily enable auto-confirm** on email signups so test users can sign in immediately without email verification
 
-### Result
-More compact logo area, slogan tucked closer, and clear breathing room before "Don't have an account?" link.
+2. **Create an edge function** (`create-test-users`) that uses the Supabase service role to:
+   - Create all 4 auth users via `supabase.auth.admin.createUser()`
+   - The existing `handle_new_user` trigger will auto-create profiles
+   - Update profiles to set `approval_status = 'approved'` for the first 3
+   - Insert an `admin` role into `user_roles` for the admin account
+
+3. **Invoke the edge function** once to seed the data
+
+4. **Disable auto-confirm** after accounts are created (restore normal signup flow)
+
+5. **Delete the edge function** after use (it's a one-time seed script)
+
+### Technical Detail
+
+The edge function uses `SUPABASE_SERVICE_ROLE_KEY` (already configured) to bypass RLS and create users with confirmed emails directly. The `handle_new_user` trigger populates the `profiles` table automatically with the `user_type` from signup metadata.
 
