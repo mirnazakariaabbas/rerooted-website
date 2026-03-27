@@ -177,6 +177,74 @@ export type Database = {
         }
         Relationships: []
       }
+      contacts: {
+        Row: {
+          country: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          first_name: string
+          gdpr_consent: boolean | null
+          gdpr_consent_date: string | null
+          id: string
+          job_title: string | null
+          journey_stage: string | null
+          language: string | null
+          last_name: string
+          notes: Json | null
+          organization_id: string | null
+          phone: string | null
+          source: Database["public"]["Enums"]["contact_source"]
+          tags: Json | null
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          first_name: string
+          gdpr_consent?: boolean | null
+          gdpr_consent_date?: string | null
+          id?: string
+          job_title?: string | null
+          journey_stage?: string | null
+          language?: string | null
+          last_name?: string
+          notes?: Json | null
+          organization_id?: string | null
+          phone?: string | null
+          source?: Database["public"]["Enums"]["contact_source"]
+          tags?: Json | null
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          first_name?: string
+          gdpr_consent?: boolean | null
+          gdpr_consent_date?: string | null
+          id?: string
+          job_title?: string | null
+          journey_stage?: string | null
+          language?: string | null
+          last_name?: string
+          notes?: Json | null
+          organization_id?: string | null
+          phone?: string | null
+          source?: Database["public"]["Enums"]["contact_source"]
+          tags?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contacts_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invitations: {
         Row: {
           created_at: string
@@ -235,6 +303,50 @@ export type Database = {
             columns: ["coach_id"]
             isOneToOne: false
             referencedRelation: "coaches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          country: string | null
+          created_at: string
+          id: string
+          industry: string | null
+          name: string
+          notes: string | null
+          primary_contact_id: string | null
+          status: string
+          website: string | null
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          name: string
+          notes?: string | null
+          primary_contact_id?: string | null
+          status?: string
+          website?: string | null
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          name?: string
+          notes?: string | null
+          primary_contact_id?: string | null
+          status?: string
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organizations_primary_contact_id_fkey"
+            columns: ["primary_contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
             referencedColumns: ["id"]
           },
         ]
@@ -354,6 +466,13 @@ export type Database = {
     Enums: {
       app_role: "admin" | "moderator" | "user" | "coach"
       approval_status: "pending" | "approved" | "rejected"
+      contact_source:
+        | "contact_form"
+        | "csv_import"
+        | "linkedin_import"
+        | "manual_entry"
+        | "referral"
+        | "event"
       user_type: "individual" | "organization"
     }
     CompositeTypes: {
@@ -484,6 +603,14 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "moderator", "user", "coach"],
       approval_status: ["pending", "approved", "rejected"],
+      contact_source: [
+        "contact_form",
+        "csv_import",
+        "linkedin_import",
+        "manual_entry",
+        "referral",
+        "event",
+      ],
       user_type: ["individual", "organization"],
     },
   },
