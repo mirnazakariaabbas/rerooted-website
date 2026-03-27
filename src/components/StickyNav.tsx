@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import logoShorthand from "@/assets/logo-shorthand-blue.png";
 import { useAudience } from "@/contexts/AudienceContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const corporateLinks = [
   { label: "The Program", href: "#program" },
@@ -52,6 +54,8 @@ const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { gateOpen, setGateOpen, audience } = useAudience();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const navLinks = audience === "individual" ? individualLinks : corporateLinks;
 
