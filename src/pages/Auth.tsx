@@ -208,33 +208,44 @@ const Auth = () => {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password" className="text-primary-foreground/90">
-              Password
-            </Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="••••••••"
-              minLength={6}
-              className="border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground placeholder:text-primary-foreground/40 focus:border-primary-foreground/60"
-            />
-          </div>
+          {mode !== "forgot" && (
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-primary-foreground/90">
+                Password
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="••••••••"
+                minLength={6}
+                className="border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground placeholder:text-primary-foreground/40 focus:border-primary-foreground/60"
+              />
+            </div>
+          )}
 
           {mode === "signin" && (
-            <div className="flex items-center gap-2">
-              <Checkbox
-                id="remember"
-                checked={rememberMe}
-                onCheckedChange={(checked) => setRememberMe(checked === true)}
-                className="border-primary-foreground/40 data-[state=checked]:bg-primary-foreground data-[state=checked]:text-primary"
-              />
-              <Label htmlFor="remember" className="text-sm text-primary-foreground/70 cursor-pointer">
-                Remember me
-              </Label>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="remember"
+                  checked={rememberMe}
+                  onCheckedChange={(checked) => setRememberMe(checked === true)}
+                  className="border-primary-foreground/40 data-[state=checked]:bg-primary-foreground data-[state=checked]:text-primary"
+                />
+                <Label htmlFor="remember" className="text-sm text-primary-foreground/70 cursor-pointer">
+                  Remember me
+                </Label>
+              </div>
+              <button
+                type="button"
+                onClick={() => setMode("forgot")}
+                className="text-sm text-primary-foreground/70 hover:text-primary-foreground hover:underline cursor-pointer"
+              >
+                Forgot password?
+              </button>
             </div>
           )}
 
@@ -247,18 +258,25 @@ const Auth = () => {
               ? "Please wait..."
               : mode === "signin"
               ? "Sign In"
-              : "Request Access"}
+              : mode === "signup"
+              ? "Request Access"
+              : "Send Reset Link"}
           </Button>
         </form>
 
         <p className="text-center text-sm text-primary-foreground/70 mt-8">
-          {mode === "signin" ? "Don't have an account?" : "Already have an account?"}{" "}
-          <button
-            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            className="text-primary-foreground font-medium hover:underline cursor-pointer"
-          >
-            {mode === "signin" ? "Request access here" : "Sign in"}
-          </button>
+          {mode === "signin" ? (
+            <>
+              Don't have an account?{" "}
+              <button onClick={() => setMode("signup")} className="text-primary-foreground font-medium hover:underline cursor-pointer">
+                Request access here
+              </button>
+            </>
+          ) : (
+            <button onClick={() => setMode("signin")} className="text-primary-foreground font-medium hover:underline cursor-pointer">
+              Back to sign in
+            </button>
+          )}
         </p>
       </motion.div>
     </div>
