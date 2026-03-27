@@ -8,6 +8,7 @@ import {
   Users, Building2, GraduationCap, UserCog, UsersRound,
   Mail, FileText, Settings, ChevronDown,
   LogOut, TrendingUp, Search as SearchIcon,
+  Monitor, ShieldCheck, Rss, Linkedin, History, UserCheck,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -42,16 +43,22 @@ const systemUserNav = [
   { path: '/app/admin/users/organizations', label: 'Organizations', icon: Building2 },
   { path: '/app/admin/users/coaches', label: 'Coaches', icon: GraduationCap },
   { path: '/app/admin/users/admins', label: 'Admin Users', icon: UserCog },
+  { path: '/app/admin/users/subscribers', label: 'Subscribers', icon: UserCheck },
+  { path: '/app/admin/users/linkedin', label: 'LinkedIn Contacts', icon: Linkedin },
+  { path: '/app/admin/users/history', label: 'Role History', icon: History },
 ];
 
 const contentNav = [
   { path: '/app/admin/content/emails', label: 'Automated Emails', icon: Mail },
   { path: '/app/admin/content/newsletter', label: 'Newsletter', icon: FileText },
+  { path: '/app/admin/content/rss', label: 'RSS Monitor', icon: Rss },
 ];
 
 const systemAdminNav = [
   { path: '/app/admin/system/security', label: 'Security Metrics', icon: Shield },
   { path: '/app/admin/system/audit', label: 'Audit Log', icon: Settings },
+  { path: '/app/admin/system/sessions', label: 'Active Sessions', icon: Monitor },
+  { path: '/app/admin/system/ip-allowlist', label: 'IP Allowlist', icon: ShieldCheck },
 ];
 
 const intelligenceNav = [
