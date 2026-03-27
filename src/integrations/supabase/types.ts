@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      active_sessions: {
+        Row: {
+          id: string
+          ip_address: string | null
+          is_active: boolean
+          last_active_at: string
+          started_at: string
+          user_agent: string | null
+          user_email: string | null
+          user_id: string
+          user_name: string | null
+          user_role: string | null
+        }
+        Insert: {
+          id?: string
+          ip_address?: string | null
+          is_active?: boolean
+          last_active_at?: string
+          started_at?: string
+          user_agent?: string | null
+          user_email?: string | null
+          user_id: string
+          user_name?: string | null
+          user_role?: string | null
+        }
+        Update: {
+          id?: string
+          ip_address?: string | null
+          is_active?: boolean
+          last_active_at?: string
+          started_at?: string
+          user_agent?: string | null
+          user_email?: string | null
+          user_id?: string
+          user_name?: string | null
+          user_role?: string | null
+        }
+        Relationships: []
+      }
       admin_access_requests: {
         Row: {
           created_at: string
@@ -356,6 +395,86 @@ export type Database = {
         }
         Relationships: []
       }
+      ip_allowlist: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          ip_address: string
+          is_active: boolean
+          label: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          ip_address: string
+          is_active?: boolean
+          label?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          ip_address?: string
+          is_active?: boolean
+          label?: string | null
+        }
+        Relationships: []
+      }
+      linkedin_contacts: {
+        Row: {
+          company: string | null
+          connected_on: string | null
+          converted_to_contact_id: string | null
+          email: string | null
+          first_name: string
+          id: string
+          imported_at: string
+          imported_by: string | null
+          last_name: string | null
+          linkedin_url: string | null
+          position: string | null
+          tags: Json | null
+        }
+        Insert: {
+          company?: string | null
+          connected_on?: string | null
+          converted_to_contact_id?: string | null
+          email?: string | null
+          first_name: string
+          id?: string
+          imported_at?: string
+          imported_by?: string | null
+          last_name?: string | null
+          linkedin_url?: string | null
+          position?: string | null
+          tags?: Json | null
+        }
+        Update: {
+          company?: string | null
+          connected_on?: string | null
+          converted_to_contact_id?: string | null
+          email?: string | null
+          first_name?: string
+          id?: string
+          imported_at?: string
+          imported_by?: string | null
+          last_name?: string | null
+          linkedin_url?: string | null
+          position?: string | null
+          tags?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "linkedin_contacts_converted_to_contact_id_fkey"
+            columns: ["converted_to_contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       meeting_bookings: {
         Row: {
           coach_id: string
@@ -573,6 +692,117 @@ export type Database = {
           response?: string | null
           shared_with_coach?: boolean | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      role_version_history: {
+        Row: {
+          changed_by: string | null
+          changed_by_name: string | null
+          created_at: string
+          id: string
+          new_role: string
+          old_role: string | null
+          reason: string | null
+          user_email: string | null
+          user_id: string
+          user_name: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          changed_by_name?: string | null
+          created_at?: string
+          id?: string
+          new_role: string
+          old_role?: string | null
+          reason?: string | null
+          user_email?: string | null
+          user_id: string
+          user_name?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          changed_by_name?: string | null
+          created_at?: string
+          id?: string
+          new_role?: string
+          old_role?: string | null
+          reason?: string | null
+          user_email?: string | null
+          user_id?: string
+          user_name?: string | null
+        }
+        Relationships: []
+      }
+      rss_mentions: {
+        Row: {
+          article_title: string
+          article_url: string
+          discovered_at: string
+          id: string
+          is_read: boolean
+          published_at: string | null
+          snippet: string | null
+          source_name: string
+          source_url: string
+        }
+        Insert: {
+          article_title: string
+          article_url: string
+          discovered_at?: string
+          id?: string
+          is_read?: boolean
+          published_at?: string | null
+          snippet?: string | null
+          source_name: string
+          source_url: string
+        }
+        Update: {
+          article_title?: string
+          article_url?: string
+          discovered_at?: string
+          id?: string
+          is_read?: boolean
+          published_at?: string | null
+          snippet?: string | null
+          source_name?: string
+          source_url?: string
+        }
+        Relationships: []
+      }
+      subscribers: {
+        Row: {
+          email: string
+          first_name: string | null
+          id: string
+          is_active: boolean
+          last_name: string | null
+          source: string | null
+          subscribed_at: string
+          tags: Json | null
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          email: string
+          first_name?: string | null
+          id?: string
+          is_active?: boolean
+          last_name?: string | null
+          source?: string | null
+          subscribed_at?: string
+          tags?: Json | null
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          email?: string
+          first_name?: string | null
+          id?: string
+          is_active?: boolean
+          last_name?: string | null
+          source?: string | null
+          subscribed_at?: string
+          tags?: Json | null
+          unsubscribed_at?: string | null
         }
         Relationships: []
       }
