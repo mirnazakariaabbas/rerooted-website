@@ -94,6 +94,7 @@ const CulturalCompanion = () => {
           </Card>
           <div className="space-y-2">
             {comparison.dimensions.map(dim => {
+              const expanded = expandedDim === dim.name;
               return (
                 <Card key={dim.name} className="border border-border overflow-hidden">
                   <button className="w-full text-left p-4 flex items-center justify-between" onClick={() => setExpandedDim(expanded ? null : dim.name)}>
