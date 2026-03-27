@@ -79,7 +79,7 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
       </div>
       <div className="py-6 space-y-3">
         <Button onClick={handleNext} size="lg" className="w-full rounded-full py-6">Continue</Button>
-        <Button onClick={onNext} variant="ghost" className="w-full text-muted-foreground">Skip for now</Button>
+        
       </div>
     </div>
   );
