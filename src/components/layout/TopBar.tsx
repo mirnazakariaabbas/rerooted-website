@@ -31,6 +31,8 @@ const routeLabels: Record<string, string> = {
   '/app/admin/system/audit': 'Audit Log',
   '/app/admin/intelligence/seo': 'SEO Analytics',
   '/app/admin/intelligence/competitors': 'Competitive Analysis',
+  '/app/admin/analytics': 'Engagement Analytics',
+  '/app/progress': 'Progress',
 };
 
 function getBreadcrumbs(pathname: string) {

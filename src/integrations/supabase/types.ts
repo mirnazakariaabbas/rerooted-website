@@ -267,6 +267,41 @@ export type Database = {
         }
         Relationships: []
       }
+      coaching_notes: {
+        Row: {
+          coach_id: string
+          coachee_id: string
+          created_at: string
+          id: string
+          notes: string
+          session_date: string
+        }
+        Insert: {
+          coach_id: string
+          coachee_id: string
+          created_at?: string
+          id?: string
+          notes?: string
+          session_date?: string
+        }
+        Update: {
+          coach_id?: string
+          coachee_id?: string
+          created_at?: string
+          id?: string
+          notes?: string
+          session_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coaching_notes_coach_id_fkey"
+            columns: ["coach_id"]
+            isOneToOne: false
+            referencedRelation: "coaches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       competitors: {
         Row: {
           analysis: Json | null

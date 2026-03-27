@@ -14,6 +14,7 @@ import MemberHome from "./pages/member/MemberHome";
 import CulturalCompanion from "./pages/member/CulturalCompanion";
 import CoachPage from "./pages/member/CoachPage";
 import AssessmentPage from "./pages/member/AssessmentPage";
+import ProgressPage from "./pages/member/ProgressPage";
 import ProfilePage from "./pages/member/ProfilePage";
 import CoachDashboard from "./pages/coach/CoachDashboard";
 import AdminHome from "./pages/admin/AdminHome";
@@ -26,6 +27,7 @@ import NewsletterPage from "./pages/admin/content/NewsletterPage";
 import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
 import SecurityMetricsPage from "./pages/admin/system/SecurityMetricsPage";
 import AuditLogPage from "./pages/admin/system/AuditLogPage";
+import EngagementAnalyticsPage from "./pages/admin/analytics/EngagementAnalyticsPage";
 import ActiveSessionsPage from "./pages/admin/system/ActiveSessionsPage";
 import IpAllowlistPage from "./pages/admin/system/IpAllowlistPage";
 import RssMentionsPage from "./pages/admin/content/RssMentionsPage";
@@ -56,6 +58,7 @@ const App = () => (
                 <Route path="cultural" element={<CulturalCompanion />} />
                 <Route path="coach" element={<CoachPage />} />
                 <Route path="assessment" element={<AssessmentPage />} />
+                <Route path="progress" element={<ProgressPage />} />
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="coach-dashboard" element={<CoachDashboard />} />
                 {/* Admin routes */}
@@ -79,6 +82,7 @@ const App = () => (
                   <Route path="system/ip-allowlist" element={<IpAllowlistPage />} />
                   <Route path="intelligence/seo" element={<SeoAnalyticsPage />} />
                   <Route path="intelligence/competitors" element={<CompetitiveAnalysisPage />} />
+                  <Route path="analytics" element={<EngagementAnalyticsPage />} />
                 </Route>
               </Route>
               <Route path="*" element={<NotFound />} />

@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { CULTURAL_COMPARISONS } from '@/data/cultural-comparisons';
 import { COUNTRIES } from '@/data/countries';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { Search, ChevronDown, ChevronUp, ArrowRightLeft } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw } from 'lucide-react';
 
 const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
   const [search, setSearch] = useState('');
@@ -39,11 +42,30 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
   );
 };
 
+const categoryIcons: Record<string, React.ElementType> = {
+  daily_life: Coffee,
+  social: UsersIcon,
+  workplace: Briefcase,
+};
+
 const CulturalCompanion = () => {
   const { user } = useUser();
   const [homeCountry, setHomeCountry] = useState(user.countryFrom || 'Egypt');
   const [hostCountry, setHostCountry] = useState(user.countryTo || 'Switzerland');
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
+  const [tipsKey, setTipsKey] = useState(0);
+
+  const { data: aiTips, isLoading: tipsLoading, refetch: refetchTips } = useQuery({
+    queryKey: ['cultural-tips', homeCountry, hostCountry, tipsKey],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('cultural-tips', {
+        body: { countryFrom: homeCountry, countryTo: hostCountry },
+      });
+      if (error) throw error;
+      return data?.tips || [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
 
   const comparison = CULTURAL_COMPARISONS.find(c => c.homeCountry === homeCountry && c.hostCountry === hostCountry);
   const swap = () => { setHomeCountry(hostCountry); setHostCountry(homeCountry); };
@@ -63,6 +85,45 @@ const CulturalCompanion = () => {
         </button>
         <CountryPicker value={hostCountry} onChange={setHostCountry} />
       </div>
+
+      {/* AI-Powered Tips */}
+      <Card className="mb-8 border border-border bg-primary/5">
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <CardTitle className="text-base font-black tracking-tight">AI Cultural Tips</CardTitle>
+            </div>
+            <Button variant="ghost" size="sm" onClick={() => setTipsKey(k => k + 1)} disabled={tipsLoading}>
+              <RefreshCw className={`h-3 w-3 mr-1 ${tipsLoading ? 'animate-spin' : ''}`} /> New Tips
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {tipsLoading ? (
+            <p className="text-sm text-muted-foreground">Generating personalized tips...</p>
+          ) : aiTips && aiTips.length > 0 ? (
+            <div className="space-y-3">
+              {aiTips.map((tip: any, i: number) => {
+                const Icon = categoryIcons[tip.category] || Coffee;
+                return (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <Icon className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-foreground">{tip.title}</p>
+                      <p className="text-sm text-foreground/80">{tip.explanation}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">Select countries to get personalized cultural tips.</p>
+          )}
+        </CardContent>
+      </Card>
 
       {comparison ? (
         <>
