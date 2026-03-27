@@ -1,19 +1,12 @@
 
 
-## Plan: Enlarge Logo + Adjust Spacing on Auth Page
+## Plan: Push Auth Content Upward
 
 **File**: `src/pages/Auth.tsx`
 
-### Changes
+Shift the entire card upward within the vertically-centered flex container by adding negative top margin or switching from `items-center` to `items-start` with top padding. The simplest approach: add a negative margin-top (e.g. `-mt-16` or `-mt-20`) to the inner `motion.div` wrapper, which keeps `items-center` centering but nudges everything upward.
 
-1. **Logo 1.5x bigger** — Increase container height from `h-40 md:h-52` to `h-60 md:h-80` and image from `h-60 md:h-80` to `h-[22rem] md:h-[30rem]`
+### Change
 
-2. **Group logo + slogan together, push upward** — Remove `space-y-8` from the outer wrapper. Instead, split the layout into two groups:
-   - **Top group** (logo + slogan): tightly paired with minimal gap, pushed toward the top using negative margin or reduced spacing
-   - **Bottom group** (welcome text + form): separated from the top group with `mt-8` or similar
-
-3. **Add clear separation** — Insert `mt-10` before the "Welcome back" heading to create visible breathing room between logo/slogan block and the form content
-
-### Result
-Logo and tagline sit as a prominent header near the top; form fields sit below with clear visual separation.
+In the outer `motion.div` (around line 108), add `-mt-16` to its className to shift the content block upward while preserving horizontal width.
 
