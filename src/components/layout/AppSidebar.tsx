@@ -35,6 +35,7 @@ const memberNav = [
   { path: '/app/cultural', label: 'Cultural Companion', icon: Globe },
   { path: '/app/coach', label: 'My Coach', icon: Heart },
   { path: '/app/assessment', label: 'Assessment', icon: BarChart3 },
+  { path: '/app/progress', label: 'Progress', icon: TrendingUp },
   { path: '/app/profile', label: 'Profile', icon: User },
 ];
 
@@ -65,6 +66,10 @@ const systemAdminNav = [
 const intelligenceNav = [
   { path: '/app/admin/intelligence/seo', label: 'SEO Analytics', icon: TrendingUp },
   { path: '/app/admin/intelligence/competitors', label: 'Competitive Analysis', icon: SearchIcon },
+];
+
+const analyticsNav = [
+  { path: '/app/admin/analytics', label: 'Engagement', icon: BarChart3 },
 ];
 
 const coachNav = [
@@ -207,6 +212,7 @@ export function AppSidebar() {
             <NavGroup label="User Management" items={systemUserNav} collapsed={collapsed} />
             <NavGroup label="Content Manager" items={contentNav} collapsed={collapsed} />
             <NavGroup label="System Admin" items={systemAdminNav} collapsed={collapsed} />
+            <NavGroup label="Analytics" items={analyticsNav} collapsed={collapsed} />
             <NavGroup label="Intelligence" items={intelligenceNav} collapsed={collapsed} />
           </>
         )}
