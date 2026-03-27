@@ -105,20 +105,24 @@ const Auth = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full space-y-8"
+        className="max-w-md w-full"
       >
-        {/* Logo */}
+        {/* Logo + Slogan group — pushed upward */}
         <div className="text-center">
-          <button onClick={() => navigate("/")} className="cursor-pointer mx-auto block h-40 w-full max-w-md overflow-hidden md:h-52">
-            <img src={logoWhite} alt="Re-Rooted®" className="h-60 w-full object-contain object-center md:h-80" />
+          <button onClick={() => navigate("/")} className="cursor-pointer mx-auto block h-60 w-full max-w-lg overflow-hidden md:h-80">
+            <img src={logoWhite} alt="Re-Rooted®" className="h-[22rem] w-full object-contain object-center md:h-[30rem]" />
           </button>
           <p
-            className="mt-1 text-lg font-light italic tracking-wide text-primary-foreground/80"
+            className="-mt-2 text-lg font-light italic tracking-wide text-primary-foreground/80"
             style={{ fontWeight: 300 }}
           >
             The human side of relocation
           </p>
-          <h1 className="mt-6 text-2xl font-bold text-primary-foreground">
+        </div>
+
+        {/* Welcome text + form — separated */}
+        <div className="mt-10 text-center">
+          <h1 className="text-2xl font-bold text-primary-foreground">
             {mode === "signin" ? "Welcome back" : "Request access"}
           </h1>
           <p className="mt-1 text-sm text-primary-foreground/70">
