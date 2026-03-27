@@ -1,144 +1,135 @@
 
 
-## Plan: Coach Certification Tags, Full Edit, Coach Role & Dashboard
+## Plan: Phase 1 — Re-Rooted Admin Platform (New Shell + Core Sections)
 
-This is a large feature spanning database changes, admin UI updates, a new "coach" role, and an entirely new coach dashboard. Here is the breakdown.
+### What We're Building
 
----
+Replace the entire `/app` layout with a new sidebar-based shell matching the spec's premium SaaS aesthetic. Build the Phase 1 features: dashboard home, contacts, members, and automated email templates.
 
-### 1. Database Changes (Migration)
+### Architecture Change
 
-**Add `certification_level` column to `coaches` table:**
-```sql
-ALTER TABLE public.coaches ADD COLUMN certification_level text NOT NULL DEFAULT 'non-certified';
-```
-Valid values: `ACC`, `PCC`, `MCC`, `Non-certified` (enforced in UI, not via enum to keep flexibility).
+The current `/app` uses a `MemberLayout` with a bottom nav. We'll replace this with a new `AppShell` component that uses the shadcn Sidebar, switching the bottom nav to a collapsible left sidebar. All user types (member, coach, admin) use this shell — the sidebar content adapts based on role.
 
-**Add `user_id` column to `coaches` table** to link a coach record to a signed-up user:
-```sql
-ALTER TABLE public.coaches ADD COLUMN user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL;
-```
-
-**Add `coach` to the `app_role` enum:**
-```sql
-ALTER TYPE public.app_role ADD VALUE 'coach';
-```
-
-**Add `coach_availability` table** for built-in scheduling:
-```sql
-CREATE TABLE public.coach_availability (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  coach_id uuid NOT NULL REFERENCES public.coaches(id) ON DELETE CASCADE,
-  day_of_week int NOT NULL CHECK (day_of_week BETWEEN 0 AND 6),
-  start_time time NOT NULL,
-  end_time time NOT NULL,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-ALTER TABLE public.coach_availability ENABLE ROW LEVEL SECURITY;
+```text
+Current:                        New:
+┌────────────────────┐          ┌──────┬─────────────────┐
+│      Content       │          │      │  Top Bar         │
+│                    │          │ Side │  (breadcrumbs,   │
+│                    │          │ bar  │   search, bell)  │
+│                    │          │      ├─────────────────┤
+│                    │          │      │                  │
+├────────────────────┤          │      │    Content       │
+│    Bottom Nav      │          │      │                  │
+└────────────────────┘          └──────┴─────────────────┘
 ```
 
-**RLS policies for `coach_availability`:**
-- Admins can manage all rows
-- Coaches can manage their own availability (via `coaches.user_id`)
-- Authenticated users can read all availability (for booking)
+### Brand & Styling Updates
 
-**RLS policies for coaches table** — add policy so coaches can read/update their own record (where `user_id = auth.uid()`).
+1. **`src/index.css`** — Update CSS variables:
+   - Card: `#F3F0F7` (Very Light Lavender)
+   - Body text: `#1A1A1A`, Muted: `#6B6B6B`
+   - Sidebar background: Deep Blue `#1F299C`, sidebar text: white
+   - Destructive: `#D94F4F`, Warning: add `--warning` variable
 
-**Add RLS policy on `reflections`** so coaches can read reflections shared with them (where `shared_with_coach = true` and the user is assigned to that coach).
+2. **`tailwind.config.ts`** — Add Manrope to font family. Add `warning` color token.
 
----
+3. **`index.html`** — Add Manrope Google Font link.
 
-### 2. Admin CoachesTab Updates
+### Layout Components (New/Rewritten)
 
-**File: `src/pages/admin/tabs/CoachesTab.tsx`**
+4. **`src/components/layout/AppShell.tsx`** — New. Uses `SidebarProvider` + `Sidebar` from shadcn. Contains:
+   - Sidebar with Re-Rooted logo on Deep Blue background
+   - Bucket sections (System, System Admin, Content, Intelligence) with expand/collapse
+   - Active state: green left border + light lavender bg
+   - Bottom: user avatar, name, role badge
+   - Role-based visibility (members see Home/Cultural/Coach/Assessment/Profile; admins see all buckets; coaches see Dashboard + member tabs)
+   - Top bar: breadcrumbs, notification bell, user avatar dropdown
 
-- Add `certification_level` field to the add/edit dialog as a Select dropdown with options: ACC, PCC, MCC, Non-certified
-- Display certification level as a colored Badge in the table
-- Add `photo_url` field (URL input) to the dialog
-- Ensure all coach fields are fully editable: name, email, bio, specialties, certification_level, photo_url
-- Show `user_id` link status in the table (whether a coach account has signed up)
+5. **`src/components/layout/TopBar.tsx`** — New. Breadcrumb nav, global search trigger (Cmd+K), notification bell, user dropdown.
 
----
+6. **`src/components/layout/MemberLayout.tsx`** — Rewrite to use `AppShell` instead of `BottomNav`.
 
-### 3. Coach Signup & Role Assignment Flow
+7. **`src/components/layout/BottomNav.tsx`** — Remove (replaced by sidebar).
 
-When admin adds a coach with an email:
-- If the email does not belong to an existing user, display a "Not yet signed up" status in the admin table
-- The admin can click "Send Invite" which triggers an invitation email telling the coach to sign up at the platform
-- When the coach signs up (same auth system), a database function or admin action links the `coaches.user_id` to their `auth.users.id` and adds a `coach` role to `user_roles`
+### Routing Updates
 
-**Implementation:**
-- **Edge function `invite-coach`**: Sends an email to the coach's email address with a signup link. Uses Lovable AI for email content (no external API key needed). Records the invitation in the `invitations` table.
-- **Admin UI**: "Send Invite" button per coach row (when `user_id` is null)
-- **Linking logic**: After a coach signs up, the admin can manually link them from the Users tab, OR we add a trigger/function that auto-links when a new user signs up with an email matching `coaches.email`
+8. **`src/App.tsx`** — Restructure routes under `/app`:
+   - Member routes: `/app/home`, `/app/cultural`, `/app/coach`, `/app/assessment`, `/app/profile`
+   - Admin routes: `/app/admin/dashboard`, `/app/admin/users/contacts`, `/app/admin/users/members`, `/app/admin/users/organizations`, `/app/admin/users/coaches`, `/app/admin/users/admins`, `/app/admin/users/employees`, `/app/admin/users/subscribers`, `/app/admin/users/linkedin`, `/app/admin/users/history`, `/app/admin/system/*`, `/app/admin/content/*`, `/app/admin/intelligence/*`
+   - Coach: `/app/coach-dashboard`
 
-**Auto-link function (migration):**
-```sql
-CREATE OR REPLACE FUNCTION public.link_coach_on_signup()
-RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path TO 'public' AS $$
-BEGIN
-  UPDATE public.coaches SET user_id = NEW.id
-  WHERE email = NEW.email AND user_id IS NULL;
+### Dashboard Home Screen
 
-  IF FOUND THEN
-    INSERT INTO public.user_roles (user_id, role) VALUES (NEW.id, 'coach')
-    ON CONFLICT (user_id, role) DO NOTHING;
-  END IF;
-  RETURN NEW;
-END;
-$$;
+9. **`src/pages/admin/AdminHome.tsx`** — New. Command center with:
+   - 4 metric cards (Total Contacts, Members, Coaches, Emails Sent) — fetched from DB counts
+   - 3 secondary cards (Pending Approvals, New Submissions, placeholder RSS)
+   - Recent Activity Feed (last 15 actions — placeholder for now)
+   - Quick Action buttons (+Add Contact, View Pending Approvals)
 
-CREATE TRIGGER on_auth_user_created_link_coach
-AFTER INSERT ON auth.users
-FOR EACH ROW EXECUTE FUNCTION public.link_coach_on_signup();
-```
+### Contacts Section (Full CRUD)
 
----
+10. **Database migration** — Create `contacts` table:
+    - `id`, `first_name`, `last_name`, `email`, `phone`, `organization_id`, `source` (enum: contact_form, csv_import, linkedin_import, manual_entry, referral, event), `journey_stage`, `gdpr_consent`, `gdpr_consent_date`, `tags` (jsonb), `created_at`, `created_by`
+    - RLS: admins full access, read-only admins can SELECT
 
-### 4. Coach Dashboard
+11. **`src/pages/admin/users/ContactsPage.tsx`** — New. Full data table with:
+    - Search, sort, filter by source/stage/tags
+    - Row click opens right-side Sheet (drawer) with tabs: Details, Notes & Activity, Tags
+    - CSV import with column mapping wizard
+    - Manual add modal
+    - Convert to Member button
+    - Delete with confirmation
 
-**New route:** `/app/coach-dashboard` (visible only to users with `coach` role)
+### Members Section
 
-**New files:**
-- `src/hooks/useCoachRole.ts` — Hook similar to `useAdmin` but checks for `coach` role
-- `src/pages/coach/CoachDashboard.tsx` — Main coach dashboard page with tabs
+12. **`src/pages/admin/users/MembersPage.tsx`** — New. Replaces current UsersTab with richer table:
+    - Columns: Name, Email, Member Since, Status, Journey Stage, Assigned Coach, Last Login
+    - Profile drawer with tabs: Profile, Coaching (match history + reassign), Activity Log, Documents
+    - Status badges: Active, Inactive, Churned
 
-**Dashboard tabs:**
-1. **My Coachees** — List of assigned members (from `coach_assignments`), showing name, country, stage, assessment score
-2. **Shared Journal** — Reflections from coachees where `shared_with_coach = true`, grouped by coachee
-3. **Availability** — Weekly time slot editor (day + start/end time), CRUD on `coach_availability`
-4. **Upcoming Sessions** — View of `meeting_bookings` for their assigned members
-5. **My Profile** — View/edit their own coach bio, specialties, certification, photo
+### Organizations Section
 
-**Layout changes:**
-- `BottomNav.tsx` — Add a "Dashboard" tab (Briefcase icon) visible only when user has `coach` role, linking to `/app/coach-dashboard`
-- `MemberLayout.tsx` — Allow coach role users to access `/app/coach-dashboard`; block non-coaches from accessing it
-- `App.tsx` — Add route for `/app/coach-dashboard`
+13. **Database migration** — Create `organizations` table:
+    - `id`, `name`, `industry`, `country`, `website`, `primary_contact_id`, `status`, `notes`, `created_at`
+    - RLS: admins full access
 
----
+14. **`src/pages/admin/users/OrganizationsPage.tsx`** — New. Table + drawer with org details, linked members, activity log.
 
-### 5. Member Booking Flow Update
+### Admin CoachesTab Enhancement
 
-**File: `src/pages/member/CoachPage.tsx`**
+15. **`src/pages/admin/users/CoachesPage.tsx`** — Evolve existing CoachesTab into full page with certifications inline table, clients sub-tab, activity log.
 
-- After showing coach info, add a "Book a Session" section
-- Fetch available time slots from `coach_availability` for the assigned coach
-- Show available slots for the next 2 weeks
-- When member selects a slot, insert into `meeting_bookings`
+### Automated Emails (Placeholder/Template Library)
 
----
+16. **`src/pages/admin/content/AutomatedEmailsPage.tsx`** — New. Card grid showing pre-defined email trigger templates (Welcome, Contact Form, Coach Match, etc.) with Active/Inactive toggle. Template editor view with subject, body preview, variable insertion. All using mock data for now — actual email sending infrastructure to be wired in Phase 2.
 
-### Summary of New/Modified Files
+### Files Summary
 
-| File | Action |
-|------|--------|
-| Migration (SQL) | Add certification_level, user_id to coaches; create coach_availability; add coach to app_role; auto-link trigger; new RLS policies |
-| `src/pages/admin/tabs/CoachesTab.tsx` | Add certification dropdown, photo URL, send invite button |
-| `src/hooks/useCoachRole.ts` | New — check coach role |
-| `src/pages/coach/CoachDashboard.tsx` | New — coach dashboard with 5 tabs |
-| `src/components/layout/BottomNav.tsx` | Add coach dashboard tab |
-| `src/components/layout/MemberLayout.tsx` | Guard coach dashboard route |
-| `src/App.tsx` | Add coach-dashboard route |
-| `src/pages/member/CoachPage.tsx` | Add booking UI with availability slots |
-| Edge function `invite-coach` | New — send coach invitation email |
+| Action | File |
+|--------|------|
+| Update | `index.html`, `src/index.css`, `tailwind.config.ts` |
+| Create | `AppShell.tsx`, `TopBar.tsx`, `AdminHome.tsx` |
+| Create | `ContactsPage.tsx`, `MembersPage.tsx`, `OrganizationsPage.tsx`, `CoachesPage.tsx`, `AutomatedEmailsPage.tsx` |
+| Rewrite | `MemberLayout.tsx`, `App.tsx` |
+| Remove | `BottomNav.tsx` (replaced), `AdminDashboard.tsx` (replaced by new routing) |
+| Migration | `contacts` table, `organizations` table |
+
+### What's Deferred to Phase 2+
+
+- Admin Users / Employees / Subscribers / LinkedIn sections
+- System Administration (security metrics, sessions, IP allowlist, audit log)
+- Newsletter composer
+- RSS Mention Monitor
+- Intelligence bucket (Competitive Analysis, SEO)
+- Notifications system, Global search (Cmd+K), Dark mode
+- Role Version History
+- Onboarding tooltips
+
+### Technical Notes
+
+- Uses shadcn `Sidebar` component with `collapsible="icon"` for mini-collapse
+- All tables use shadcn Table (Tanstack Table integration deferred to Phase 2 for sorting/filtering power)
+- Drawer/detail panels use shadcn `Sheet` (right-side slide-in)
+- Framer Motion entrance animations maintained
+- Existing member pages (MemberHome, CulturalCompanion, CoachPage, AssessmentPage, ProfilePage) and CoachDashboard remain functionally identical but now render inside the new sidebar shell instead of bottom nav
 
