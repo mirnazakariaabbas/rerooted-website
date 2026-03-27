@@ -109,8 +109,25 @@ const StickyNav = () => {
           </AnimatePresence>
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <AudienceToggle className="hidden md:inline-flex" />
+
+          {user ? (
+            <button
+              onClick={() => signOut()}
+              className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 cursor-pointer"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate("/auth")}
+              className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 cursor-pointer"
+            >
+              <LogIn className="h-3.5 w-3.5" />
+              Login
+            </button>
+          )}
 
           <button
             className="md:hidden"
@@ -147,6 +164,21 @@ const StickyNav = () => {
                 </a>
               ))}
               <AudienceToggle className="mt-2 w-fit" />
+              {user ? (
+                <button
+                  onClick={() => { signOut(); setMobileOpen(false); }}
+                  className="mt-2 w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground cursor-pointer"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <button
+                  onClick={() => { navigate("/auth"); setMobileOpen(false); }}
+                  className="mt-2 w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground cursor-pointer"
+                >
+                  Login
+                </button>
+              )}
             </div>
           </motion.nav>
         )}
