@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAdmin } from '@/hooks/useAdmin';
@@ -69,18 +70,23 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="pb-20 px-5 pt-6 max-w-lg mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-serif">Profile</h1>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+    >
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-black tracking-tight">Profile</h1>
         {isAdmin && (
-          <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => navigate('/admin')}>
+          <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => navigate('/app/admin')}>
             <Shield className="h-3.5 w-3.5" /> Admin
           </Button>
         )}
       </div>
 
-      <Card className="mb-4 border-0 shadow-sm">
-        <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Personal Details</CardTitle></CardHeader>
+      <Card className="mb-4 border border-border">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Personal Details</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-1.5">
             <Label className="text-sm">Name</Label>
@@ -105,10 +111,10 @@ const ProfilePage = () => {
         </CardContent>
       </Card>
 
-      <Card className="mb-4 border-0 shadow-sm">
-        <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Journey Stage</CardTitle></CardHeader>
+      <Card className="mb-4 border border-border">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Journey Stage</CardTitle></CardHeader>
         <CardContent className="space-y-4">
-          <div className="p-3 rounded-lg border border-primary bg-primary/5">
+          <div className="p-3 rounded-lg border border-primary bg-muted">
             <p className="font-medium text-sm">Stage {STAGE_LABELS[user.stage].number} — {STAGE_LABELS[user.stage].name}</p>
             <p className="text-xs text-muted-foreground mt-1">{STAGE_LABELS[user.stage].tagline}</p>
           </div>
@@ -119,14 +125,14 @@ const ProfilePage = () => {
         </CardContent>
       </Card>
 
-      <Card className="mb-4 border-0 shadow-sm">
-        <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Family</CardTitle></CardHeader>
+      <Card className="mb-4 border border-border">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Family</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-1.5">
             <Label className="text-sm">Relocating</Label>
             <div className="grid grid-cols-3 gap-2">
               {(['alone', 'with-partner', 'with-family'] as const).map(opt => (
-                <button key={opt} onClick={() => updateUser({ familySetup: opt })} className={cn('p-2 rounded-lg border text-xs transition-all capitalize', user.familySetup === opt ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30')}>
+                <button key={opt} onClick={() => updateUser({ familySetup: opt })} className={cn('p-2 rounded-lg border text-xs transition-all capitalize', user.familySetup === opt ? 'border-primary bg-muted' : 'border-border hover:border-primary/30')}>
                   {opt.replace('-', ' ')}
                 </button>
               ))}
@@ -143,8 +149,8 @@ const ProfilePage = () => {
         </CardContent>
       </Card>
 
-      <Card className="mb-4 border-0 shadow-sm">
-        <CardHeader className="pb-2"><CardTitle className="text-base font-serif">Notifications</CardTitle></CardHeader>
+      <Card className="mb-4 border border-border">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Notifications</CardTitle></CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between">
             <Label className="text-sm">Weekly reflections</Label>
@@ -160,7 +166,7 @@ const ProfilePage = () => {
       <Button variant="outline" className="w-full mt-4 text-destructive border-destructive/30 hover:bg-destructive/5" onClick={signOut}>
         Sign Out
       </Button>
-    </div>
+    </motion.div>
   );
 };
 

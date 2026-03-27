@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useUser } from '@/contexts/UserContext';
 import { STAGE_LABELS } from '@/types/user';
@@ -53,14 +54,19 @@ const MemberHome = () => {
   }
 
   return (
-    <div className="pb-20 px-5 pt-6 max-w-lg mx-auto">
-      <div className="mb-8">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+    >
+      <div className="mb-10">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-serif mb-1">{greeting}</h1>
+          <h1 className="text-3xl font-black tracking-tight mb-1">{greeting}</h1>
           <img src={logoShorthand} alt="Re-Rooted" className="h-20" />
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-          <Badge variant="secondary" className="font-serif text-xs">
+          <Badge variant="secondary" className="text-xs font-medium">
             Stage {stageInfo.number} — {stageInfo.name}
           </Badge>
           {user.countryFrom && user.countryTo && (
@@ -71,21 +77,21 @@ const MemberHome = () => {
         </div>
       </div>
 
-      <Card className="mb-6 border-0 shadow-md bg-primary/5">
+      <Card className="mb-8 border border-border bg-muted">
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg font-serif">Where You Are</CardTitle>
+          <CardTitle className="text-lg font-black tracking-tight">Where You Are</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm leading-relaxed text-foreground/80">{STAGE_DESCRIPTIONS[user.stage]}</p>
         </CardContent>
       </Card>
 
-      <div className="mb-6">
-        <h2 className="text-lg font-serif mb-4">Your Focus Areas</h2>
+      <div className="mb-8">
+        <h2 className="text-lg font-black tracking-tight mb-4">Your Focus Areas</h2>
         {isComingSoon ? (
-          <Card className="border-dashed">
+          <Card className="border-dashed border border-border">
             <CardContent className="py-8 text-center">
-              <p className="text-muted-foreground font-serif text-lg mb-2">Coming Soon</p>
+              <p className="text-muted-foreground font-bold text-lg mb-2">Coming Soon</p>
               <p className="text-sm text-muted-foreground">Full coaching content for the {stageInfo.name} stage is being developed.</p>
             </CardContent>
           </Card>
@@ -93,7 +99,7 @@ const MemberHome = () => {
           <div className="space-y-3">
             {dimensions.map(dim => (
               <button key={dim.id} onClick={() => setSelectedDimension(dim.id)} className="w-full text-left">
-                <Card className="hover:shadow-md transition-shadow border-0 shadow-sm">
+                <Card className="hover:bg-muted/50 transition-colors border border-border">
                   <CardContent className="p-4 flex items-center gap-3">
                     <span className="text-2xl">{dim.icon}</span>
                     <div className="flex-1 min-w-0">
@@ -109,15 +115,15 @@ const MemberHome = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-6">
-        <Card className="cursor-pointer hover:shadow-md transition-shadow border-0 shadow-sm" onClick={() => navigate('/app/cultural')}>
+      <div className="grid grid-cols-2 gap-3 mb-8">
+        <Card className="cursor-pointer hover:bg-muted/50 transition-colors border border-border" onClick={() => navigate('/app/cultural')}>
           <CardContent className="p-4 flex flex-col items-center text-center gap-2">
             <Globe className="h-6 w-6 text-primary" />
             <span className="text-xs font-medium">Cultural Companion</span>
             <ArrowRight className="h-3 w-3 text-muted-foreground" />
           </CardContent>
         </Card>
-        <Card className="cursor-pointer hover:shadow-md transition-shadow border-0 shadow-sm" onClick={() => navigate('/app/assessment')}>
+        <Card className="cursor-pointer hover:bg-muted/50 transition-colors border border-border" onClick={() => navigate('/app/assessment')}>
           <CardContent className="p-4 flex flex-col items-center text-center gap-2">
             <BarChart3 className="h-6 w-6 text-primary" />
             <span className="text-xs font-medium">Integration Score</span>
@@ -126,9 +132,9 @@ const MemberHome = () => {
         </Card>
       </div>
 
-      <Card className="border-0 shadow-sm">
+      <Card className="border border-border">
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-serif text-muted-foreground">Weekly Reflection</CardTitle>
+          <CardTitle className="text-sm font-bold text-muted-foreground">Weekly Reflection</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm italic mb-3 text-foreground/80">"{weeklyPrompt}"</p>
@@ -140,7 +146,7 @@ const MemberHome = () => {
           <Button onClick={handleReflection} disabled={!reflectionText.trim()} size="sm" variant="secondary" className="w-full">Save to journal</Button>
         </CardContent>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

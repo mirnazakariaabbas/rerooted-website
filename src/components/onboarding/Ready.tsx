@@ -6,7 +6,7 @@ interface ReadyProps {
 }
 
 const Ready = ({ onComplete }: ReadyProps) => (
-  <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
+  <div className="flex-1 flex flex-col items-center justify-center px-6 lg:px-12 text-center">
     <motion.div
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
@@ -15,7 +15,7 @@ const Ready = ({ onComplete }: ReadyProps) => (
     >
       🌿
     </motion.div>
-    <h1 className="text-3xl font-serif leading-tight mb-4">
+    <h1 className="text-3xl font-black tracking-tight leading-tight mb-4">
       You're not starting over.
       <br />
       <span className="text-primary">You're rooting in.</span>
@@ -24,7 +24,7 @@ const Ready = ({ onComplete }: ReadyProps) => (
       Your journey is unique. Re-Rooted will meet you where you are — with guidance,
       reflection, and the quiet reminder that you're not alone in this.
     </p>
-    <Button onClick={onComplete} size="lg" className="rounded-full px-10 py-6 text-base font-medium shadow-lg">
+    <Button onClick={onComplete} size="lg" className="rounded-full px-10 py-6 text-base font-medium">
       Open Re-Rooted
     </Button>
   </div>

@@ -41,7 +41,7 @@ const CountrySearch = ({ value, onChange, label }: { value: string; onChange: (v
                 key={country}
                 className={cn(
                   'w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors',
-                  value === country && 'bg-primary/10 text-primary font-medium'
+                  value === country && 'bg-muted text-primary font-medium'
                 )}
                 onClick={() => { onChange(country); setOpen(false); setSearch(''); }}
               >
@@ -71,8 +71,8 @@ const YourMove = ({ onNext }: YourMoveProps) => {
   };
 
   return (
-    <div className="flex-1 flex flex-col px-8 pt-10">
-      <h2 className="text-2xl font-serif mb-2 text-foreground">Your Move</h2>
+    <div className="flex-1 flex flex-col px-6 lg:px-12 pt-10">
+      <h2 className="text-3xl font-black tracking-tight mb-2 text-foreground">Your Move</h2>
       <p className="text-muted-foreground mb-8">Tell us about your relocation journey.</p>
       <div className="space-y-6 flex-1">
         <CountrySearch label="Where are you moving from?" value={from} onChange={setFrom} />
@@ -91,7 +91,7 @@ const YourMove = ({ onNext }: YourMoveProps) => {
             </PopoverContent>
           </Popover>
         </div>
-        <div className="flex items-center justify-between p-4 rounded-xl border border-border bg-card">
+        <div className="flex items-center justify-between p-4 rounded-xl border border-border bg-muted">
           <div>
             <p className="text-sm font-medium">Are you planning to return to your home country?</p>
             <p className="text-xs text-muted-foreground">Or to a previous home</p>

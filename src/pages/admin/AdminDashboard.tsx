@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAdmin } from '@/hooks/useAdmin';
 import { Navigate } from 'react-router-dom';
@@ -23,13 +24,18 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <div className="px-4 pt-6 pb-4">
-        <h1 className="text-2xl font-serif font-bold text-foreground">Admin Dashboard</h1>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen bg-background pb-24"
+    >
+      <div className="px-6 pt-8 pb-4 lg:px-12 max-w-2xl mx-auto">
+        <h1 className="text-3xl font-black tracking-tight text-foreground">Admin Dashboard</h1>
         <p className="text-sm text-muted-foreground mt-1">Manage users, coaches, and platform activity</p>
       </div>
 
-      <Tabs defaultValue="users" className="px-4">
+      <Tabs defaultValue="users" className="px-6 lg:px-12 max-w-2xl mx-auto">
         <TabsList className="w-full grid grid-cols-5 mb-4">
           <TabsTrigger value="users" className="text-xs">Users</TabsTrigger>
           <TabsTrigger value="coaches" className="text-xs">Coaches</TabsTrigger>
@@ -44,7 +50,7 @@ const AdminDashboard = () => {
         <TabsContent value="bookings"><BookingsTab /></TabsContent>
         <TabsContent value="contacts"><ContactsTab /></TabsContent>
       </Tabs>
-    </div>
+    </motion.div>
   );
 };
 
