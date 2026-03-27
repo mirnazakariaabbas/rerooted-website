@@ -1,27 +1,64 @@
 
 
-## Plan: Two Fixes
+## Plan: Fix Journey Path Curve + Blue Color Scheme
 
-### 1. Scroll to top after gate selection
-**File**: `src/components/AudienceGate.tsx`
+### What changes
 
-In `handleSelect`, add `window.scrollTo({ top: 0, behavior: "instant" })` before closing the gate. This ensures that when the user clicks the logo (which opens the gate) and then re-selects an audience, the page resets to the top instead of staying at the previous scroll position.
-
-### 2. Fix S-curve path for stages 3 and 4
 **File**: `src/components/ExpatJourney.tsx`
 
-The current path logic always curves the same direction as the card side (`left → -100`, `right → +100`). But for a proper S-curve "road" that winds back and forth, the curve between two stops needs to swing in the **opposite** direction first before arriving at the next stop. The current bezier control points all use the same offset, making the last two segments look flat or kinked instead of curving smoothly.
+### 1. Smooth, wide S-curve path (no edgy segments)
 
-**Fix**: Change the path generation so each segment's control points swing toward the **opposite** side of where the path is heading, creating a true S-curve between every pair of stops. Specifically:
-- The control points for each segment should swing toward the **previous** side (or opposite of the target), then curve into the target stop
-- Use alternating control point offsets: `cp1` swings one way, `cp2` swings the other, so the path snakes naturally through all 4 stops
+The current path logic ends each cubic bezier at the center (`cx`), then starts the next one also from center — this creates sharp direction changes at each stop. Fix:
 
-This will produce consistent, road-like curves for all 4 stages instead of only the first 2.
+- Make each curve segment end at the **card's side** (left or right of center), not back at center
+- The path flows: center → left card → right card → left card → right card, with smooth cubic bezier transitions between each position
+- Use wider control point offsets (~140px from center in a 400px viewBox) for dramatic sweeps
+- Remove the final straight `L` line to bottom — end the path with a gentle fade-out curve
 
-### Files Changed
+This eliminates the "edgy" kinks and creates a true winding road.
+
+### 2. Blue color scheme (path + card accents)
+
+| Element | Current | New |
+|---------|---------|-----|
+| Desktop SVG path stroke | `#BCADD4` (lavender) | `#1F299C` (Deep Blue) |
+| Mobile vertical dotted line | `#BCADD4` | `#1F299C` |
+| Card border | `1px solid #BCADD4` | `1px solid #1F299C` with lower opacity (~0.3) |
+| Green accent bar in cards | `#3DA776` | `#1F299C` |
+| LeafPattern fills | `#3DA776` | `#1F299C` |
+
+Card backgrounds, text colors, and image placeholders stay the same.
+
+### 3. Path rendering approach
+
+```text
+Desktop path flow (wider sweeps):
+
+     ←── Card 1 (left)
+    /
+   /
+  S
+   \
+    \
+     ──→ Card 2 (right)
+         /
+        /
+       S
+      /
+     /
+←── Card 3 (left)
+    \
+     \
+      ──→ Card 4 (right)
+```
+
+- ViewBox width increases to 400px for more horizontal room
+- Each segment uses cubic bezier where cp1 swings opposite and cp2 swings toward target
+- Path endpoints land at the card side positions (not center), so the curve flows naturally between alternating sides
+
+### Files changed
 
 | File | Change |
 |------|--------|
-| `src/components/AudienceGate.tsx` | Add `window.scrollTo({ top: 0 })` in `handleSelect` |
-| `src/components/ExpatJourney.tsx` | Fix bezier control points for consistent S-curve across all 4 stages |
+| `src/components/ExpatJourney.tsx` | Rewrite path math for smooth wide S-curves; change all lavender/green accents to Deep Blue |
 
