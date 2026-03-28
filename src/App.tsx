@@ -37,6 +37,9 @@ import RoleHistoryPage from "./pages/admin/users/RoleHistoryPage";
 import SeoAnalyticsPage from "./pages/admin/intelligence/SeoAnalyticsPage";
 import CompetitiveAnalysisPage from "./pages/admin/intelligence/CompetitiveAnalysisPage";
 import PlaceholderPage from "./pages/admin/PlaceholderPage";
+import Blog from "./pages/Blog";
+import BlogPostPage from "./pages/BlogPost";
+import BlogManagerPage from "./pages/admin/content/BlogManagerPage";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +54,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/app" element={<MemberLayout />}>
                 <Route index element={<Navigate to="/app/home" replace />} />
@@ -76,6 +81,7 @@ const App = () => (
                   <Route path="content/emails" element={<AutomatedEmailsPage />} />
                   <Route path="content/newsletter" element={<NewsletterPage />} />
                   <Route path="content/rss" element={<RssMentionsPage />} />
+                  <Route path="content/blog" element={<BlogManagerPage />} />
                   <Route path="system/security" element={<SecurityMetricsPage />} />
                   <Route path="system/audit" element={<AuditLogPage />} />
                   <Route path="system/sessions" element={<ActiveSessionsPage />} />
