@@ -113,22 +113,13 @@ const StickyNav = () => {
           <AudienceToggle className="hidden md:inline-flex" />
 
           {user ? (
-            <div className="hidden md:flex items-center gap-2">
-              <button
-                onClick={() => navigate("/app/home")}
-                className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 cursor-pointer"
-              >
-                <LayoutDashboard className="h-3.5 w-3.5" />
-                Go to Dashboard
-              </button>
-              <button
-                onClick={() => signOut()}
-                className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-              >
-                <LogOut className="h-3 w-3" />
-                Sign Out
-              </button>
-            </div>
+            <button
+              onClick={() => navigate("/app/home")}
+              className="hidden md:inline-flex items-center justify-center h-9 w-9 rounded-full border border-border bg-card text-foreground/70 transition-colors hover:bg-muted hover:text-foreground cursor-pointer"
+              aria-label="Go to Dashboard"
+            >
+              <UserRound className="h-4.5 w-4.5" />
+            </button>
           ) : (
             <button
               onClick={() => navigate("/auth")}
@@ -175,22 +166,13 @@ const StickyNav = () => {
               ))}
               <AudienceToggle className="mt-2 w-fit" />
               {user ? (
-                <>
-                  <button
-                    onClick={() => { navigate("/app/home"); setMobileOpen(false); }}
-                    className="mt-2 w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground cursor-pointer inline-flex items-center gap-1.5"
-                  >
-                    <LayoutDashboard className="h-4 w-4" />
-                    Go to Dashboard
-                  </button>
-                  <button
-                    onClick={() => { signOut(); setMobileOpen(false); }}
-                    className="w-fit text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex items-center gap-1"
-                  >
-                    <LogOut className="h-3.5 w-3.5" />
-                    Sign Out
-                  </button>
-                </>
+                <button
+                  onClick={() => { navigate("/app/home"); setMobileOpen(false); }}
+                  className="mt-2 w-fit inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted cursor-pointer"
+                >
+                  <UserRound className="h-4 w-4" />
+                  My Account
+                </button>
               ) : (
                 <button
                   onClick={() => { navigate("/auth"); setMobileOpen(false); }}
