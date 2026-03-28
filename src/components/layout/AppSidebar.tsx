@@ -183,13 +183,13 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" className="border-r-0">
       <SidebarHeader className="p-4">
         {!collapsed ? (
-          <div className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <span className="text-lg font-display font-bold text-sidebar-foreground tracking-tight">
               Re-Rooted<span className="text-xs align-super">®</span>
             </span>
-          </div>
+          </a>
         ) : (
-          <span className="text-lg font-display font-bold text-sidebar-foreground text-center block">R</span>
+          <a href="/" className="text-lg font-display font-bold text-sidebar-foreground text-center block hover:opacity-80 transition-opacity">R</a>
         )}
       </SidebarHeader>
 
