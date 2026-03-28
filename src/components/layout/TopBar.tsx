@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Search, Moon, Sun } from 'lucide-react';
+import { Search, Moon, Sun, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Bell } from 'lucide-react';
@@ -64,7 +64,7 @@ export function TopBar() {
   const location = useLocation();
   const breadcrumbs = getBreadcrumbs(location.pathname);
   const { isDark, toggle: toggleDark } = useDarkMode();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const [notifOpen, setNotifOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -151,6 +151,17 @@ export function TopBar() {
                 {unreadCount > 9 ? '9+' : unreadCount}
               </Badge>
             )}
+          </Button>
+
+          {/* Sign Out */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 text-muted-foreground hover:text-foreground"
+            onClick={() => signOut()}
+            title="Sign Out"
+          >
+            <LogOut className="h-4 w-4" />
           </Button>
         </div>
       </header>
