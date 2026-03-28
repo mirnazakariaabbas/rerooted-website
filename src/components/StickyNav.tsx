@@ -54,7 +54,7 @@ const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { gateOpen, setGateOpen, audience } = useAudience();
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const navLinks = audience === "individual" ? individualLinks : corporateLinks;
