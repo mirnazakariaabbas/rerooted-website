@@ -9,7 +9,7 @@ import {
   Mail, FileText, Settings, ChevronDown,
   LogOut, TrendingUp, Search as SearchIcon,
   Monitor, ShieldCheck, Rss, Linkedin, History, UserCheck,
-  HelpCircle,
+  HelpCircle, PenLine,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -54,6 +54,7 @@ const contentNav = [
   { path: '/app/admin/content/emails', label: 'Automated Emails', icon: Mail },
   { path: '/app/admin/content/newsletter', label: 'Newsletter', icon: FileText },
   { path: '/app/admin/content/rss', label: 'RSS Monitor', icon: Rss },
+  { path: '/app/admin/content/blog', label: 'Blog', icon: PenLine },
 ];
 
 const systemAdminNav = [
