@@ -1,19 +1,11 @@
 
 
-## Plan: Add "Go to App" Button for Signed-In Users on Public Site
-
-### What Changes
+## Plan: Replace Dashboard Button with Person Icon
 
 **File: `src/components/StickyNav.tsx`**
 
-Replace the "Sign Out" button (shown when user is authenticated) with a **"Go to Dashboard"** button that navigates to `/app/home`. Optionally keep a smaller sign-out option alongside it.
-
-- Desktop: Replace the current "Sign Out" button with a styled "Go to Dashboard" button using the `LayoutDashboard` icon from Lucide. Add a small ghost "Sign Out" link next to it.
-- Mobile: Same treatment in the mobile menu — "Go to Dashboard" as primary action, "Sign Out" as secondary text link below.
-
-### Technical Detail
-
-- Use `navigate('/app/home')` on click — the existing auth-guarded routing will handle role-based redirects if needed.
-- Import `LayoutDashboard` from `lucide-react`.
-- No new files, no database changes. Single file edit.
+- Replace the "Go to Dashboard" button + "Sign Out" link (both desktop and mobile) with a single circular person icon button using `UserRound` from lucide-react
+- On click, navigate to `/app/home`
+- Style as a small rounded-full button matching the nav aesthetic
+- Remove `LogOut` import since sign-out is no longer in the nav
 
