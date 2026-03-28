@@ -9,7 +9,7 @@ import {
   Mail, FileText, Settings, ChevronDown,
   LogOut, TrendingUp, Search as SearchIcon,
   Monitor, ShieldCheck, Rss, Linkedin, History, UserCheck,
-  HelpCircle, PenLine, MessageSquareQuote, Layout,
+  HelpCircle, PenLine, MessageSquareQuote, Layout, MessageCircle,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -36,6 +36,7 @@ const memberNav = [
   { path: '/app/coach', label: 'My Coach', icon: Heart },
   { path: '/app/assessment', label: 'Assessment', icon: BarChart3 },
   { path: '/app/progress', label: 'Progress', icon: TrendingUp },
+  { path: '/app/messages', label: 'Messages', icon: MessageCircle },
   { path: '/app/profile', label: 'Profile', icon: User },
 ];
 
@@ -57,6 +58,7 @@ const contentNav = [
   { path: '/app/admin/content/blog', label: 'Blog', icon: PenLine },
   { path: '/app/admin/content/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
   { path: '/app/admin/content/pages', label: 'Page Content', icon: Layout },
+  { path: '/app/admin/content/messages', label: 'Messages', icon: MessageCircle },
 ];
 
 const systemAdminNav = [

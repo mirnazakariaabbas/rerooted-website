@@ -42,6 +42,8 @@ import BlogPostPage from "./pages/BlogPost";
 import BlogManagerPage from "./pages/admin/content/BlogManagerPage";
 import TestimonialsPage from "./pages/admin/content/TestimonialsPage";
 import PageContentPage from "./pages/admin/content/PageContentPage";
+import MessagesPage from "./pages/member/MessagesPage";
+import MessagesOverviewPage from "./pages/admin/content/MessagesOverviewPage";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +69,7 @@ const App = () => (
                 <Route path="assessment" element={<AssessmentPage />} />
                 <Route path="progress" element={<ProgressPage />} />
                 <Route path="profile" element={<ProfilePage />} />
+                <Route path="messages" element={<MessagesPage />} />
                 <Route path="coach-dashboard" element={<CoachDashboard />} />
                 {/* Admin routes */}
                 <Route path="admin">
@@ -86,6 +89,7 @@ const App = () => (
                   <Route path="content/blog" element={<BlogManagerPage />} />
                   <Route path="content/testimonials" element={<TestimonialsPage />} />
                   <Route path="content/pages" element={<PageContentPage />} />
+                  <Route path="content/messages" element={<MessagesOverviewPage />} />
                   <Route path="system/security" element={<SecurityMetricsPage />} />
                   <Route path="system/audit" element={<AuditLogPage />} />
                   <Route path="system/sessions" element={<ActiveSessionsPage />} />
