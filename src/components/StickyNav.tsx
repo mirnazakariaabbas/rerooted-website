@@ -113,12 +113,22 @@ const StickyNav = () => {
           <AudienceToggle className="hidden md:inline-flex" />
 
           {user ? (
-            <button
-              onClick={() => signOut()}
-              className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 cursor-pointer"
-            >
-              Sign Out
-            </button>
+            <div className="hidden md:flex items-center gap-2">
+              <button
+                onClick={() => navigate("/app/home")}
+                className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 cursor-pointer"
+              >
+                <LayoutDashboard className="h-3.5 w-3.5" />
+                Go to Dashboard
+              </button>
+              <button
+                onClick={() => signOut()}
+                className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              >
+                <LogOut className="h-3 w-3" />
+                Sign Out
+              </button>
+            </div>
           ) : (
             <button
               onClick={() => navigate("/auth")}
