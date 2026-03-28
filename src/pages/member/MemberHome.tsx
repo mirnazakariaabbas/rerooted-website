@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { differenceInMonths } from 'date-fns';
 import { ArrowRight, Globe, BarChart3 } from 'lucide-react';
 import DimensionDetail from '@/components/home/DimensionDetail';
+import AnnouncementBanner from '@/components/AnnouncementBanner';
 import logoShorthand from '@/assets/logo-shorthand-blue.png';
 
 const MemberHome = () => {
@@ -60,6 +61,7 @@ const MemberHome = () => {
       transition={{ duration: 0.4 }}
       className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
     >
+      <AnnouncementBanner />
       <div className="mb-10">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-black tracking-tight mb-1">{greeting}</h1>
