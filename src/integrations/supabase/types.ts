@@ -760,6 +760,39 @@ export type Database = {
           },
         ]
       }
+      page_content: {
+        Row: {
+          body: string | null
+          id: string
+          image_url: string | null
+          page_key: string
+          section_key: string
+          title: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          body?: string | null
+          id?: string
+          image_url?: string | null
+          page_key: string
+          section_key: string
+          title?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          body?: string | null
+          id?: string
+          image_url?: string | null
+          page_key?: string
+          section_key?: string
+          title?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           approval_status: Database["public"]["Enums"]["approval_status"]
@@ -949,6 +982,45 @@ export type Database = {
           subscribed_at?: string
           tags?: Json | null
           unsubscribed_at?: string | null
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          client_name: string
+          company: string | null
+          created_at: string
+          display_order: number
+          id: string
+          is_featured: boolean
+          photo_url: string | null
+          quote: string
+          rating: number | null
+          role: string | null
+        }
+        Insert: {
+          client_name: string
+          company?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_featured?: boolean
+          photo_url?: string | null
+          quote: string
+          rating?: number | null
+          role?: string | null
+        }
+        Update: {
+          client_name?: string
+          company?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_featured?: boolean
+          photo_url?: string | null
+          quote?: string
+          rating?: number | null
+          role?: string | null
         }
         Relationships: []
       }
