@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LogIn, LayoutDashboard, LogOut } from "lucide-react";
+import { Menu, X, LogIn, UserRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import logoShorthand from "@/assets/logo-shorthand-blue.png";
 import { useAudience } from "@/contexts/AudienceContext";
