@@ -92,6 +92,39 @@ export type Database = {
         }
         Relationships: []
       }
+      announcements: {
+        Row: {
+          audience: string
+          body: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          published_at: string | null
+          title: string
+        }
+        Insert: {
+          audience?: string
+          body?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          published_at?: string | null
+          title: string
+        }
+        Update: {
+          audience?: string
+          body?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          published_at?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       assessments: {
         Row: {
           answers: Json | null
@@ -920,6 +953,62 @@ export type Database = {
           title?: string | null
           updated_at?: string
           updated_by?: string | null
+        }
+        Relationships: []
+      }
+      peer_group_members: {
+        Row: {
+          group_id: string
+          id: string
+          joined_at: string
+          user_id: string
+        }
+        Insert: {
+          group_id: string
+          id?: string
+          joined_at?: string
+          user_id: string
+        }
+        Update: {
+          group_id?: string
+          id?: string
+          joined_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "peer_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "peer_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      peer_groups: {
+        Row: {
+          auto_match_criteria: Json | null
+          created_at: string
+          description: string | null
+          group_type: string
+          id: string
+          name: string
+        }
+        Insert: {
+          auto_match_criteria?: Json | null
+          created_at?: string
+          description?: string | null
+          group_type?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          auto_match_criteria?: Json | null
+          created_at?: string
+          description?: string | null
+          group_type?: string
+          id?: string
+          name?: string
         }
         Relationships: []
       }
