@@ -9,7 +9,7 @@ import {
   Mail, FileText, Settings, ChevronDown,
   LogOut, TrendingUp, Search as SearchIcon,
   Monitor, ShieldCheck, Rss, Linkedin, History, UserCheck,
-  HelpCircle, PenLine,
+  HelpCircle, PenLine, MessageSquareQuote, Layout,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -55,6 +55,8 @@ const contentNav = [
   { path: '/app/admin/content/newsletter', label: 'Newsletter', icon: FileText },
   { path: '/app/admin/content/rss', label: 'RSS Monitor', icon: Rss },
   { path: '/app/admin/content/blog', label: 'Blog', icon: PenLine },
+  { path: '/app/admin/content/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
+  { path: '/app/admin/content/pages', label: 'Page Content', icon: Layout },
 ];
 
 const systemAdminNav = [
