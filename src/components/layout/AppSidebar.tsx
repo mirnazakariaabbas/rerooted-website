@@ -9,7 +9,7 @@ import {
   Mail, FileText, Settings, ChevronDown,
   LogOut, TrendingUp, Search as SearchIcon,
   Monitor, ShieldCheck, Rss, Linkedin, History, UserCheck,
-  HelpCircle, PenLine, MessageSquareQuote, Layout, MessageCircle, MessagesSquare,
+  HelpCircle, PenLine, MessageSquareQuote, Layout, MessageCircle, MessagesSquare, UsersRound as GroupIcon, Megaphone,
 } from 'lucide-react';
 import {
   Sidebar,
