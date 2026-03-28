@@ -101,6 +101,8 @@ const App = () => (
                   <Route path="content/messages" element={<MessagesOverviewPage />} />
                   <Route path="content/forum" element={<ForumModerationPage />} />
                   <Route path="content/announcements" element={<AnnouncementsPage />} />
+                  <Route path="content/calendar" element={<ContentCalendarPage />} />
+                  <Route path="content/social-drafts" element={<SocialDraftsPage />} />
                   <Route path="system/security" element={<SecurityMetricsPage />} />
                   <Route path="system/audit" element={<AuditLogPage />} />
                   <Route path="system/sessions" element={<ActiveSessionsPage />} />
