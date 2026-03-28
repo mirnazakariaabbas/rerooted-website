@@ -38,6 +38,7 @@ const memberNav = [
   { path: '/app/progress', label: 'Progress', icon: TrendingUp },
   { path: '/app/messages', label: 'Messages', icon: MessageCircle },
   { path: '/app/community', label: 'Community', icon: MessagesSquare },
+  { path: '/app/groups', label: 'Groups', icon: GroupIcon },
   { path: '/app/profile', label: 'Profile', icon: User },
 ];
 
@@ -61,6 +62,7 @@ const contentNav = [
   { path: '/app/admin/content/pages', label: 'Page Content', icon: Layout },
   { path: '/app/admin/content/messages', label: 'Messages', icon: MessageCircle },
   { path: '/app/admin/content/forum', label: 'Forum Moderation', icon: MessagesSquare },
+  { path: '/app/admin/content/announcements', label: 'Announcements', icon: Megaphone },
 ];
 
 const systemAdminNav = [
