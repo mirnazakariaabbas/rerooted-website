@@ -48,6 +48,9 @@ import CommunityPage from "./pages/member/CommunityPage";
 import ForumModerationPage from "./pages/admin/content/ForumModerationPage";
 import PeerGroupsPage from "./pages/member/PeerGroupsPage";
 import AnnouncementsPage from "./pages/admin/content/AnnouncementsPage";
+import ContentCalendarPage from "./pages/admin/content/ContentCalendarPage";
+import SocialDraftsPage from "./pages/admin/content/SocialDraftsPage";
+import MarketingAnalyticsPage from "./pages/admin/analytics/MarketingAnalyticsPage";
 
 const queryClient = new QueryClient();
 
@@ -98,6 +101,8 @@ const App = () => (
                   <Route path="content/messages" element={<MessagesOverviewPage />} />
                   <Route path="content/forum" element={<ForumModerationPage />} />
                   <Route path="content/announcements" element={<AnnouncementsPage />} />
+                  <Route path="content/calendar" element={<ContentCalendarPage />} />
+                  <Route path="content/social-drafts" element={<SocialDraftsPage />} />
                   <Route path="system/security" element={<SecurityMetricsPage />} />
                   <Route path="system/audit" element={<AuditLogPage />} />
                   <Route path="system/sessions" element={<ActiveSessionsPage />} />
@@ -105,6 +110,7 @@ const App = () => (
                   <Route path="intelligence/seo" element={<SeoAnalyticsPage />} />
                   <Route path="intelligence/competitors" element={<CompetitiveAnalysisPage />} />
                   <Route path="analytics" element={<EngagementAnalyticsPage />} />
+                  <Route path="analytics/marketing" element={<MarketingAnalyticsPage />} />
                 </Route>
               </Route>
               <Route path="*" element={<NotFound />} />

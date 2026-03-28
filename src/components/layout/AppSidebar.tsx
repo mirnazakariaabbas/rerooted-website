@@ -10,6 +10,7 @@ import {
   LogOut, TrendingUp, Search as SearchIcon,
   Monitor, ShieldCheck, Rss, Linkedin, History, UserCheck,
   HelpCircle, PenLine, MessageSquareQuote, Layout, MessageCircle, MessagesSquare, UsersRound as GroupIcon, Megaphone,
+  CalendarDays, Sparkles, LineChart,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -63,6 +64,8 @@ const contentNav = [
   { path: '/app/admin/content/messages', label: 'Messages', icon: MessageCircle },
   { path: '/app/admin/content/forum', label: 'Forum Moderation', icon: MessagesSquare },
   { path: '/app/admin/content/announcements', label: 'Announcements', icon: Megaphone },
+  { path: '/app/admin/content/calendar', label: 'Content Calendar', icon: CalendarDays },
+  { path: '/app/admin/content/social-drafts', label: 'AI Social Drafts', icon: Sparkles },
 ];
 
 const systemAdminNav = [
@@ -79,6 +82,7 @@ const intelligenceNav = [
 
 const analyticsNav = [
   { path: '/app/admin/analytics', label: 'Engagement', icon: BarChart3 },
+  { path: '/app/admin/analytics/marketing', label: 'Marketing', icon: LineChart },
 ];
 
 const coachNav = [

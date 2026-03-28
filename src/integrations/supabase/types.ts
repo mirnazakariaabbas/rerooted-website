@@ -517,6 +517,51 @@ export type Database = {
           },
         ]
       }
+      content_calendar: {
+        Row: {
+          assigned_to: string | null
+          content_type: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          notes: string | null
+          scheduled_date: string | null
+          status: string
+          tags: Json | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          content_type?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          notes?: string | null
+          scheduled_date?: string | null
+          status?: string
+          tags?: Json | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          content_type?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          notes?: string | null
+          scheduled_date?: string | null
+          status?: string
+          tags?: Json | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       forum_categories: {
         Row: {
           created_at: string
