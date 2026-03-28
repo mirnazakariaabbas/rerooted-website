@@ -175,12 +175,22 @@ const StickyNav = () => {
               ))}
               <AudienceToggle className="mt-2 w-fit" />
               {user ? (
-                <button
-                  onClick={() => { signOut(); setMobileOpen(false); }}
-                  className="mt-2 w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground cursor-pointer"
-                >
-                  Sign Out
-                </button>
+                <>
+                  <button
+                    onClick={() => { navigate("/app/home"); setMobileOpen(false); }}
+                    className="mt-2 w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground cursor-pointer inline-flex items-center gap-1.5"
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    Go to Dashboard
+                  </button>
+                  <button
+                    onClick={() => { signOut(); setMobileOpen(false); }}
+                    className="w-fit text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex items-center gap-1"
+                  >
+                    <LogOut className="h-3.5 w-3.5" />
+                    Sign Out
+                  </button>
+                </>
               ) : (
                 <button
                   onClick={() => { navigate("/auth"); setMobileOpen(false); }}
