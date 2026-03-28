@@ -48,6 +48,9 @@ import CommunityPage from "./pages/member/CommunityPage";
 import ForumModerationPage from "./pages/admin/content/ForumModerationPage";
 import PeerGroupsPage from "./pages/member/PeerGroupsPage";
 import AnnouncementsPage from "./pages/admin/content/AnnouncementsPage";
+import ContentCalendarPage from "./pages/admin/content/ContentCalendarPage";
+import SocialDraftsPage from "./pages/admin/content/SocialDraftsPage";
+import MarketingAnalyticsPage from "./pages/admin/analytics/MarketingAnalyticsPage";
 
 const queryClient = new QueryClient();
 
