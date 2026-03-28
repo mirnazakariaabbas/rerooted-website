@@ -5,6 +5,7 @@ import ExpatJourney from "@/components/ExpatJourney";
 import AboutSection from "@/components/AboutSection";
 import GroundingPillars from "@/components/GroundingPillars";
 import BlogPreview from "@/components/BlogPreview";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import ContactCTA from "@/components/ContactCTA";
 import Footer from "@/components/Footer";
 
@@ -40,6 +41,7 @@ const CorporateHome = () => (
     <AboutSection />
     <GroundingPillars />
     <BlogPreview />
+    <TestimonialsCarousel />
     <ContactCTA />
     <Footer />
   </main>
