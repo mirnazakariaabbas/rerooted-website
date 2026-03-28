@@ -40,6 +40,8 @@ import PlaceholderPage from "./pages/admin/PlaceholderPage";
 import Blog from "./pages/Blog";
 import BlogPostPage from "./pages/BlogPost";
 import BlogManagerPage from "./pages/admin/content/BlogManagerPage";
+import TestimonialsPage from "./pages/admin/content/TestimonialsPage";
+import PageContentPage from "./pages/admin/content/PageContentPage";
 
 const queryClient = new QueryClient();
 
@@ -82,6 +84,8 @@ const App = () => (
                   <Route path="content/newsletter" element={<NewsletterPage />} />
                   <Route path="content/rss" element={<RssMentionsPage />} />
                   <Route path="content/blog" element={<BlogManagerPage />} />
+                  <Route path="content/testimonials" element={<TestimonialsPage />} />
+                  <Route path="content/pages" element={<PageContentPage />} />
                   <Route path="system/security" element={<SecurityMetricsPage />} />
                   <Route path="system/audit" element={<AuditLogPage />} />
                   <Route path="system/sessions" element={<ActiveSessionsPage />} />
