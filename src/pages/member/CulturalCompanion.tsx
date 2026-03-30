@@ -3,13 +3,12 @@ import { motion } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { CULTURAL_COMPARISONS } from '@/data/cultural-comparisons';
 import { COUNTRIES } from '@/data/countries';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw } from 'lucide-react';
 
@@ -48,6 +47,15 @@ const categoryIcons: Record<string, React.ElementType> = {
   workplace: Briefcase,
 };
 
+const ComparisonSkeleton = () => (
+  <div className="space-y-4">
+    <Skeleton className="h-24 w-full rounded-lg" />
+    {Array.from({ length: 5 }).map((_, i) => (
+      <Skeleton key={i} className="h-14 w-full rounded-lg" />
+    ))}
+  </div>
+);
+
 const CulturalCompanion = () => {
   const { user } = useUser();
   const [homeCountry, setHomeCountry] = useState(user.countryFrom || 'Egypt');
@@ -55,7 +63,7 @@ const CulturalCompanion = () => {
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
   const [tipsKey, setTipsKey] = useState(0);
 
-  const { data: aiTips, isLoading: tipsLoading, refetch: refetchTips } = useQuery<any[]>({
+  const { data: aiTips, isLoading: tipsLoading } = useQuery<any[]>({
     queryKey: ['cultural-tips', homeCountry, hostCountry, tipsKey],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('cultural-tips', {
@@ -68,7 +76,22 @@ const CulturalCompanion = () => {
     gcTime: 0,
   });
 
-  const comparison = CULTURAL_COMPARISONS.find(c => c.homeCountry === homeCountry && c.hostCountry === hostCountry);
+  const { data: comparisonResult, isLoading: comparisonLoading, error: comparisonError } = useQuery({
+    queryKey: ['cultural-comparison', homeCountry, hostCountry],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('cultural-comparison', {
+        body: { countryA: homeCountry, countryB: hostCountry },
+      });
+      if (error) throw error;
+      return data as { comparison: { summary: string; dimensions: any[] }; swapped: boolean };
+    },
+    enabled: homeCountry !== hostCountry,
+    staleTime: Infinity,
+  });
+
+  const comparison = comparisonResult?.comparison;
+  const swapped = comparisonResult?.swapped ?? false;
+
   const swap = () => { setHomeCountry(hostCountry); setHostCountry(homeCountry); };
 
   return (
@@ -126,18 +149,36 @@ const CulturalCompanion = () => {
         </CardContent>
       </Card>
 
-      {comparison ? (
+      {/* Cultural Comparison */}
+      {homeCountry === hostCountry ? (
+        <Card className="border-dashed border border-border">
+          <CardContent className="py-12 text-center">
+            <p className="text-muted-foreground">Select two different countries to see a cultural comparison.</p>
+          </CardContent>
+        </Card>
+      ) : comparisonLoading ? (
+        <ComparisonSkeleton />
+      ) : comparisonError ? (
+        <Card className="border border-destructive/30">
+          <CardContent className="py-8 text-center">
+            <p className="text-destructive text-sm">Failed to load comparison. Please try again.</p>
+          </CardContent>
+        </Card>
+      ) : comparison ? (
         <>
           <Card className="mb-8 border border-border bg-muted">
             <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Overview</CardTitle></CardHeader>
-            <CardContent><p className="text-sm leading-relaxed text-foreground/80">{comparison.overview}</p></CardContent>
+            <CardContent><p className="text-sm leading-relaxed text-foreground/80">{comparison.summary}</p></CardContent>
           </Card>
           <div className="space-y-2">
-            {comparison.dimensions.map(dim => {
-              const expanded = expandedDim === dim.name;
+            {comparison.dimensions.map((dim: any) => {
+              const expanded = expandedDim === dim.id;
+              // If swapped, score_a in DB is actually hostCountry and score_b is homeCountry
+              const homeScore = swapped ? dim.score_b : dim.score_a;
+              const hostScore = swapped ? dim.score_a : dim.score_b;
               return (
-                <Card key={dim.name} className="border border-border overflow-hidden">
-                  <button className="w-full text-left p-4 flex items-center justify-between" onClick={() => setExpandedDim(expanded ? null : dim.name)}>
+                <Card key={dim.id} className="border border-border overflow-hidden">
+                  <button className="w-full text-left p-4 flex items-center justify-between" onClick={() => setExpandedDim(expanded ? null : dim.id)}>
                     <span className="font-medium text-sm">{dim.name}</span>
                     {expanded ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
                   </button>
@@ -147,25 +188,25 @@ const CulturalCompanion = () => {
                         <div>
                           <div className="flex justify-between text-xs mb-1">
                             <span className="font-medium">{homeCountry}</span>
-                            <span className="text-muted-foreground">{dim.homeDescription}</span>
+                            <span className="text-muted-foreground">{homeScore}/10 · {dim.scale_low} → {dim.scale_high}</span>
                           </div>
                           <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-accent rounded-full transition-all" style={{ width: `${dim.homeScore * 10}%` }} />
+                            <div className="h-full bg-accent rounded-full transition-all" style={{ width: `${homeScore * 10}%` }} />
                           </div>
                         </div>
                         <div>
                           <div className="flex justify-between text-xs mb-1">
                             <span className="font-medium">{hostCountry}</span>
-                            <span className="text-muted-foreground">{dim.hostDescription}</span>
+                            <span className="text-muted-foreground">{hostScore}/10</span>
                           </div>
                           <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${dim.hostScore * 10}%` }} />
+                            <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${hostScore * 10}%` }} />
                           </div>
                         </div>
                       </div>
                       <p className="text-sm text-foreground/80 mb-3">{dim.explanation}</p>
                       <div className="bg-muted rounded-lg p-3">
-                        <p className="text-xs italic text-foreground/70">💡 {dim.practicalTip}</p>
+                        <p className="text-xs italic text-foreground/70">💡 {dim.tip}</p>
                       </div>
                     </CardContent>
                   )}
@@ -173,17 +214,11 @@ const CulturalCompanion = () => {
               );
             })}
           </div>
+          <p className="text-xs text-muted-foreground mt-6 text-center">
+            Cultural profiles use the Culture Map framework (Erin Meyer) as a guide. Scores are AI-assisted and intended as a practical starting point.
+          </p>
         </>
-      ) : (
-        <Card className="border-dashed border border-border">
-          <CardContent className="py-12 text-center">
-            <p className="text-muted-foreground mb-2">No comparison data available yet</p>
-            <p className="text-sm text-muted-foreground">
-              Try: Egypt → Switzerland, India → UK, USA → Japan, Brazil → Germany
-            </p>
-          </CardContent>
-        </Card>
-      )}
+      ) : null}
     </motion.div>
   );
 };
