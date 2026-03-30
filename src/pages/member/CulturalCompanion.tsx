@@ -55,7 +55,7 @@ const CulturalCompanion = () => {
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
   const [tipsKey, setTipsKey] = useState(0);
 
-  const { data: aiTips, isLoading: tipsLoading, refetch: refetchTips } = useQuery({
+  const { data: aiTips, isLoading: tipsLoading, refetch: refetchTips } = useQuery<any[]>({
     queryKey: ['cultural-tips', homeCountry, hostCountry, tipsKey],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('cultural-tips', {
@@ -64,7 +64,8 @@ const CulturalCompanion = () => {
       if (error) throw error;
       return data?.tips || [];
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
+    gcTime: 0,
   });
 
   const comparison = CULTURAL_COMPARISONS.find(c => c.homeCountry === homeCountry && c.hostCountry === hostCountry);
