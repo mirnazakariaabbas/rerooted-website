@@ -1,5 +1,5 @@
 import { useAudience } from "@/contexts/AudienceContext";
-import logoWhite from "@/assets/logo-white.png";
+import logoWhite from "@/assets/logo-wordmark-white.png";
 import { Linkedin } from "lucide-react";
 
 const corporateLinks = [
