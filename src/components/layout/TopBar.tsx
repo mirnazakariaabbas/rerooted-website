@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Search, Moon, Sun, LogOut } from 'lucide-react';
+import { Moon, Sun, LogOut, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Bell } from 'lucide-react';
 import { NotificationsDrawer } from '@/components/layout/NotificationsDrawer';
-import { GlobalSearch } from '@/components/layout/GlobalSearch';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQuery } from '@tanstack/react-query';
@@ -66,19 +64,6 @@ export function TopBar() {
   const { isDark, toggle: toggleDark } = useDarkMode();
   const { user, signOut } = useAuth();
   const [notifOpen, setNotifOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-
-  // Cmd+K shortcut
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setSearchOpen(true);
-      }
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, []);
 
   // Unread notification count
   const { data: unreadCount = 0 } = useQuery({
@@ -119,20 +104,6 @@ export function TopBar() {
         </nav>
 
         <div className="flex items-center gap-1">
-          {/* Search trigger */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-9 gap-2 text-muted-foreground hover:text-foreground"
-            onClick={() => setSearchOpen(true)}
-          >
-            <Search className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Search</span>
-            <kbd className="hidden sm:inline-flex h-5 items-center gap-0.5 rounded border border-border bg-muted px-1.5 text-[10px] text-muted-foreground">
-              ⌘K
-            </kbd>
-          </Button>
-
           {/* Dark mode toggle */}
           <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground" onClick={toggleDark}>
             {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -167,7 +138,6 @@ export function TopBar() {
       </header>
 
       <NotificationsDrawer open={notifOpen} onOpenChange={setNotifOpen} />
-      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   );
 }

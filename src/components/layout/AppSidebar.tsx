@@ -9,7 +9,7 @@ import {
   Mail, FileText, Settings, ChevronDown,
   LogOut, TrendingUp, Search as SearchIcon,
   Monitor, ShieldCheck, Rss, Linkedin, History, UserCheck,
-  HelpCircle, PenLine, MessageSquareQuote, Layout, MessageCircle, MessagesSquare, UsersRound as GroupIcon, Megaphone,
+  HelpCircle, PenLine, MessageSquareQuote, Layout, MessageCircle, Megaphone,
   CalendarDays, Sparkles, LineChart,
 } from 'lucide-react';
 import {
@@ -38,8 +38,6 @@ const memberNav = [
   { path: '/app/assessment', label: 'Assessment', icon: BarChart3 },
   { path: '/app/progress', label: 'Progress', icon: TrendingUp },
   { path: '/app/messages', label: 'Messages', icon: MessageCircle },
-  { path: '/app/community', label: 'Community', icon: MessagesSquare },
-  { path: '/app/groups', label: 'Groups', icon: GroupIcon },
   { path: '/app/profile', label: 'Profile', icon: User },
 ];
 
@@ -62,7 +60,7 @@ const contentNav = [
   { path: '/app/admin/content/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
   { path: '/app/admin/content/pages', label: 'Page Content', icon: Layout },
   { path: '/app/admin/content/messages', label: 'Messages', icon: MessageCircle },
-  { path: '/app/admin/content/forum', label: 'Forum Moderation', icon: MessagesSquare },
+  
   { path: '/app/admin/content/announcements', label: 'Announcements', icon: Megaphone },
   { path: '/app/admin/content/calendar', label: 'Content Calendar', icon: CalendarDays },
   { path: '/app/admin/content/social-drafts', label: 'AI Social Drafts', icon: Sparkles },
