@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import logoWhite from "@/assets/logo-white.png";
+import logoWhite from "@/assets/logo-wordmark-white.png";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");

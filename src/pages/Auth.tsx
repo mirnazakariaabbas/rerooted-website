@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
-import logoWhite from "@/assets/logo-white.png";
+import logoWhite from "@/assets/logo-wordmark-white.png";
 
 type Mode = "signin" | "signup" | "forgot";
 type UserType = "individual" | "organization";
