@@ -64,7 +64,8 @@ const CulturalCompanion = () => {
       if (error) throw error;
       return data?.tips || [];
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
+    cacheTime: 0,
   });
 
   const comparison = CULTURAL_COMPARISONS.find(c => c.homeCountry === homeCountry && c.hostCountry === hostCountry);
