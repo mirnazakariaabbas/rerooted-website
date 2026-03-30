@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import logoWordmarkWhite from '@/assets/logo-wordmark-white.png';
 import { NavLink } from '@/components/NavLink';
 import { useAdmin } from '@/hooks/useAdmin';
 import { useCoachRole } from '@/hooks/useCoachRole';
