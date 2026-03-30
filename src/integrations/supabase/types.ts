@@ -562,6 +562,30 @@ export type Database = {
         }
         Relationships: []
       }
+      cultural_comparisons: {
+        Row: {
+          comparison_data: Json
+          country_a: string
+          country_b: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          comparison_data: Json
+          country_a: string
+          country_b: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          comparison_data?: Json
+          country_a?: string
+          country_b?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: []
+      }
       forum_categories: {
         Row: {
           created_at: string
