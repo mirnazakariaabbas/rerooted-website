@@ -110,45 +110,6 @@ const CulturalCompanion = () => {
         <CountryPicker value={hostCountry} onChange={setHostCountry} />
       </div>
 
-      {/* AI-Powered Tips */}
-      <Card className="mb-8 border border-border bg-primary/5">
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <CardTitle className="text-base font-black tracking-tight">AI Cultural Tips</CardTitle>
-            </div>
-            <Button variant="ghost" size="sm" onClick={() => setTipsKey(k => k + 1)} disabled={tipsLoading}>
-              <RefreshCw className={`h-3 w-3 mr-1 ${tipsLoading ? 'animate-spin' : ''}`} /> New Tips
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {tipsLoading ? (
-            <p className="text-sm text-muted-foreground">Generating personalized tips...</p>
-          ) : aiTips && aiTips.length > 0 ? (
-            <div className="space-y-3">
-              {aiTips.map((tip: any, i: number) => {
-                const Icon = categoryIcons[tip.category] || Coffee;
-                return (
-                  <div key={i} className="flex items-start gap-3">
-                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Icon className="h-4 w-4 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-foreground">{tip.title}</p>
-                      <p className="text-sm text-foreground/80">{tip.explanation}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">Select countries to get personalized cultural tips.</p>
-          )}
-        </CardContent>
-      </Card>
-
       {/* Cultural Comparison */}
       {homeCountry === hostCountry ? (
         <Card className="border-dashed border border-border">
