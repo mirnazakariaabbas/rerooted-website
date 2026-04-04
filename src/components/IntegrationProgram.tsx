@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { Phone, ClipboardList, Sprout, Flag, CheckCircle } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const steps = [
