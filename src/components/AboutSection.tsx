@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useAudience } from "@/contexts/AudienceContext";
 
 const AboutSection = () => {
