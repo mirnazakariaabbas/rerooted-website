@@ -12,17 +12,17 @@ type Stage = {
 };
 
 const individualStages: Stage[] = [
-  { name: "Pre-Rooted", desc: "The stage before your move — preparing, dreaming, and gathering roots to carry with you.", side: "left" },
-  { name: "Re-Rooted", desc: "You've arrived. Learning to feel at home in your new place, street by street.", side: "right" },
-  { name: "Thriving", desc: "Blooming where you've been planted — building community, routines, and belonging.", side: "left" },
-  { name: "Rooting Back", desc: "Finding ways to give back, stay connected to your origins, and grow new roots for others.", side: "right" },
+  { name: "Pre-Rooted", desc: "The stage before your move — preparing, dreaming, and gathering roots to carry with you.", side: "left", route: "/journey/pre-rooted" },
+  { name: "Re-Rooted", desc: "You've arrived. Learning to feel at home in your new place, street by street.", side: "right", route: "/journey/rooting-in" },
+  { name: "Thriving", desc: "Blooming where you've been planted — building community, routines, and belonging.", side: "left", route: "/journey/thrive" },
+  { name: "Rooting Back", desc: "Finding ways to give back, stay connected to your origins, and grow new roots for others.", side: "right", route: "/journey/rooting-back" },
 ];
 
 const corporateStages: Stage[] = [
-  { name: "Pre-Rooted", desc: "Preparing to leave. Building readiness before the move begins. Mindset, expectations, cultural preparation.", side: "left" },
-  { name: "Rooting In", desc: "Just arrived. Finding ground in an unfamiliar place. Values, culture, language, relationships, social life, family.", side: "right" },
-  { name: "Thrive", desc: "Settled and growing. Moving beyond survival mode. Performing, connecting, contributing, building a meaningful life.", side: "left" },
-  { name: "Rooting Back", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", side: "right" },
+  { name: "Pre-Rooted", desc: "Preparing to leave. Building readiness before the move begins. Mindset, expectations, cultural preparation.", side: "left", route: "/journey/pre-rooted" },
+  { name: "Rooting In", desc: "Just arrived. Finding ground in an unfamiliar place. Values, culture, language, relationships, social life, family.", side: "right", route: "/journey/rooting-in" },
+  { name: "Thrive", desc: "Settled and growing. Moving beyond survival mode. Performing, connecting, contributing, building a meaningful life.", side: "left", route: "/journey/thrive" },
+  { name: "Rooting Back", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", side: "right", route: "/journey/rooting-back" },
 ];
 
 const DEEP_BLUE = "#1F299C";
