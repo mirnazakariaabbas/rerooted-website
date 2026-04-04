@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAudience } from "@/contexts/AudienceContext";
 
