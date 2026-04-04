@@ -16,8 +16,19 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
   const textRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(textRef, { once: true, margin: "-100px" });
   const isIndividual = variant === "individual";
+  const navigate = useNavigate();
 
   const delayBase = isIndividual ? 0.15 : 0;
+
+  const handleCtaClick = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate(href);
+    }
+  };
 
   return (
     <section className="relative flex min-h-screen items-center bg-background">
