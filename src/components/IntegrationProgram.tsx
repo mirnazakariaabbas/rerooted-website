@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { Phone, ClipboardList, Sprout, Flag, CheckCircle } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const steps = [
@@ -42,6 +43,22 @@ const steps = [
     desc: "Optional follow-up sessions. Employee has tools and habits for continued integration. HR has data for the next assignment.",
   },
 ];
+
+const ProgramCTAs = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
+      <Button size="lg" onClick={() => navigate("/services")}>Get a program overview</Button>
+      <a
+        href="/contact"
+        onClick={(e) => { e.preventDefault(); navigate("/contact"); }}
+        className="text-sm font-medium text-primary hover:underline underline-offset-4"
+      >
+        Or start with a conversation
+      </a>
+    </div>
+  );
+};
 
 /* ───────────── DESKTOP – sticky scroll ───────────── */
 const DesktopTimeline = () => {
@@ -172,15 +189,7 @@ const DesktopTimeline = () => {
               <p className="text-muted-foreground text-sm text-center">
                 Total engagement: 90 days · 6–8 coaching sessions · 2 assessments · 1 HR report
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <Button size="lg">Get a program overview</Button>
-                <a
-                  href="#contact"
-                  className="text-sm font-medium text-primary hover:underline underline-offset-4"
-                >
-                  Or start with a conversation
-                </a>
-              </div>
+              <ProgramCTAs />
             </motion.div>
           )}
         </AnimatePresence>
@@ -213,15 +222,7 @@ const MobileTimeline = () => {
       <p className="text-muted-foreground text-sm text-center mt-10 max-w-md mx-auto">
         Total engagement: 90 days · 6–8 coaching sessions · 2 assessments · 1 HR report
       </p>
-      <div className="flex flex-col items-center gap-3 mt-6">
-        <Button size="lg">Get a program overview</Button>
-        <a
-          href="#contact"
-          className="text-sm font-medium text-primary hover:underline underline-offset-4"
-        >
-          Or start with a conversation
-        </a>
-      </div>
+      <ProgramCTAs />
     </section>
   );
 };

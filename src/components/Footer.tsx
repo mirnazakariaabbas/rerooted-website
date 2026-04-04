@@ -1,34 +1,51 @@
 import { useAudience } from "@/contexts/AudienceContext";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoWhite from "@/assets/logo-wordmark-white.png";
 import { Linkedin } from "lucide-react";
 
-const corporateLinks = [
-  { label: "The Program", href: "#program" },
-  { label: "The Journey", href: "#journey" },
-  { label: "About", href: "#about" },
-  { label: "Insights", href: "#insights" },
-  { label: "Contact", href: "#contact" },
+type FooterLink = { label: string; href: string; type: "route" | "hash" };
+
+const corporateLinks: FooterLink[] = [
+  { label: "The Program", href: "/services", type: "route" },
+  { label: "The Journey", href: "#journey", type: "hash" },
+  { label: "About", href: "/about", type: "route" },
+  { label: "Insights", href: "/blog", type: "route" },
+  { label: "Contact", href: "/contact", type: "route" },
 ];
 
-const individualLinks = [
-  { label: "Your Journey", href: "#journey" },
-  { label: "Support", href: "#support" },
-  { label: "About", href: "#about" },
-  { label: "Insights", href: "#insights" },
-  { label: "Contact", href: "#contact" },
+const individualLinks: FooterLink[] = [
+  { label: "Your Journey", href: "#journey", type: "hash" },
+  { label: "Support", href: "#support", type: "hash" },
+  { label: "About", href: "/about", type: "route" },
+  { label: "Insights", href: "/blog", type: "route" },
+  { label: "Contact", href: "/contact", type: "route" },
 ];
 
 const Footer = () => {
   const { audience, setAudience } = useAudience();
   const isOrg = audience === "organization" || audience === null;
   const links = isOrg ? corporateLinks : individualLinks;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === "/";
+
+  const handleClick = (link: FooterLink) => {
+    if (link.type === "route") {
+      navigate(link.href);
+    } else {
+      if (isHomePage) {
+        const el = document.querySelector(link.href);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate("/" + link.href);
+      }
+    }
+  };
 
   return (
     <footer style={{ backgroundColor: "#1A1A1A" }} className="px-6 py-12 md:py-16 lg:px-12">
       <div className="container mx-auto">
-        {/* 3-column grid */}
         <div className="grid gap-10 text-center md:grid-cols-3 md:text-left">
-          {/* Left: logo + copyright */}
           <div className="flex flex-col items-center md:items-start">
             <img src={logoWhite} alt="Re-Rooted®" className="h-10 w-auto" />
             <p className="mt-4 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
@@ -36,31 +53,29 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Center: nav links */}
           <nav className="flex flex-col items-center gap-3 md:items-start">
             {links.map((l) => (
-              <a
+              <button
                 key={l.href + l.label}
-                href={l.href}
-                className="text-sm transition-colors hover:text-white"
+                onClick={() => handleClick(l)}
+                className="text-sm transition-colors hover:text-white cursor-pointer bg-transparent border-none"
                 style={{ color: "rgba(255,255,255,0.7)" }}
               >
                 {l.label}
-              </a>
+              </button>
             ))}
           </nav>
 
-          {/* Right: CTA + LinkedIn */}
           <div className="flex flex-col items-center gap-4 md:items-end">
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="text-sm font-semibold transition-colors hover:opacity-80"
               style={{ color: "#3DA776" }}
             >
               {isOrg
                 ? "Ready to talk? Get in touch →"
                 : "Ready to talk? Reach out →"}
-            </a>
+            </Link>
             <a
               href="https://linkedin.com"
               target="_blank"
@@ -74,11 +89,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Audience toggle pill */}
         <div className="mt-10 flex justify-center">
           <button
             onClick={() => setAudience(isOrg ? "individual" : "organization")}
-            className="cursor-pointer text-xs transition-colors hover:text-white"
+            className="cursor-pointer text-xs transition-colors hover:text-white bg-transparent border-none"
             style={{ color: "rgba(255,255,255,0.5)" }}
           >
             Viewing: {isOrg ? "For Organizations" : "For Individuals"} |{" "}

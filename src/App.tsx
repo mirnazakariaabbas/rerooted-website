@@ -39,6 +39,13 @@ import CompetitiveAnalysisPage from "./pages/admin/intelligence/CompetitiveAnaly
 import PlaceholderPage from "./pages/admin/PlaceholderPage";
 import Blog from "./pages/Blog";
 import BlogPostPage from "./pages/BlogPost";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import ContactPage from "./pages/Contact";
+import PreRooted from "./pages/journey/PreRooted";
+import RootingIn from "./pages/journey/RootingIn";
+import Thrive from "./pages/journey/Thrive";
+import RootingBack from "./pages/journey/RootingBack";
 import BlogManagerPage from "./pages/admin/content/BlogManagerPage";
 import TestimonialsPage from "./pages/admin/content/TestimonialsPage";
 import PageContentPage from "./pages/admin/content/PageContentPage";
@@ -65,6 +72,13 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/journey/pre-rooted" element={<PreRooted />} />
+              <Route path="/journey/rooting-in" element={<RootingIn />} />
+              <Route path="/journey/thrive" element={<Thrive />} />
+              <Route path="/journey/rooting-back" element={<RootingBack />} />
               <Route path="/app" element={<MemberLayout />}>
                 <Route index element={<Navigate to="/app/home" replace />} />
                 <Route path="home" element={<MemberHome />} />

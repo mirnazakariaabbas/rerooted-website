@@ -1,25 +1,27 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, LogIn, UserRound } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import logoShorthand from "@/assets/logo-shorthand-blue.png";
 import { useAudience } from "@/contexts/AudienceContext";
 import { useAuth } from "@/contexts/AuthContext";
 
-const corporateLinks = [
-  { label: "The Program", href: "#program" },
-  { label: "The Journey", href: "#journey" },
-  { label: "About", href: "#about" },
-  { label: "Insights", href: "#insights" },
-  { label: "Contact", href: "#contact" },
+type NavLink = { label: string; href: string; type: "route" | "hash" };
+
+const corporateLinks: NavLink[] = [
+  { label: "The Program", href: "/services", type: "route" },
+  { label: "The Journey", href: "#journey", type: "hash" },
+  { label: "About", href: "/about", type: "route" },
+  { label: "Insights", href: "/blog", type: "route" },
+  { label: "Contact", href: "/contact", type: "route" },
 ];
 
-const individualLinks = [
-  { label: "Your Journey", href: "#journey" },
-  { label: "Support", href: "#support" },
-  { label: "About", href: "#about" },
-  { label: "Insights", href: "#insights" },
-  { label: "Contact", href: "#contact" },
+const individualLinks: NavLink[] = [
+  { label: "Your Journey", href: "#journey", type: "hash" },
+  { label: "Support", href: "#support", type: "hash" },
+  { label: "About", href: "/about", type: "route" },
+  { label: "Insights", href: "/blog", type: "route" },
+  { label: "Contact", href: "/contact", type: "route" },
 ];
 
 const AudienceToggle = ({ className = "" }: { className?: string }) => {
@@ -56,8 +58,26 @@ const StickyNav = () => {
   const { gateOpen, setGateOpen, audience } = useAudience();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navLinks = audience === "individual" ? individualLinks : corporateLinks;
+
+  const isHomePage = location.pathname === "/";
+
+  const handleNavClick = (link: NavLink) => {
+    setMobileOpen(false);
+    if (link.type === "route") {
+      navigate(link.href);
+    } else {
+      // Hash link — if on homepage, scroll. Otherwise navigate to homepage with hash.
+      if (isHomePage) {
+        const el = document.querySelector(link.href);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate("/" + link.href);
+      }
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -97,13 +117,13 @@ const StickyNav = () => {
               transition={{ duration: 0.25 }}
             >
               {navLinks.map((link) => (
-                <a
+                <button
                   key={link.href + link.label}
-                  href={link.href}
-                  className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+                  onClick={() => handleNavClick(link)}
+                  className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground cursor-pointer bg-transparent border-none"
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
             </motion.div>
           </AnimatePresence>
@@ -155,14 +175,13 @@ const StickyNav = () => {
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <button
                   key={link.href + link.label}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-base font-medium text-foreground/80 transition-colors hover:text-foreground"
+                  onClick={() => handleNavClick(link)}
+                  className="text-left text-base font-medium text-foreground/80 transition-colors hover:text-foreground cursor-pointer bg-transparent border-none"
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
               <AudienceToggle className="mt-2 w-fit" />
               {user ? (

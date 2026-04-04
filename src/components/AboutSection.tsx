@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useAudience } from "@/contexts/AudienceContext";
 
 const AboutSection = () => {
@@ -86,12 +87,12 @@ const AboutSection = () => {
             )}
           </div>
 
-          <a
-            href="#"
+          <Link
+            to="/about"
             className="inline-block mt-6 text-secondary font-semibold hover:underline underline-offset-4"
           >
             {isIndividual ? "Hear my story →" : "Read the full story →"}
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

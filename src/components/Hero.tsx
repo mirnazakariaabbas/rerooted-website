@@ -1,5 +1,6 @@
 import { useRef, ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-portrait.jpg";
 
 interface HeroProps {
@@ -15,8 +16,19 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
   const textRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(textRef, { once: true, margin: "-100px" });
   const isIndividual = variant === "individual";
+  const navigate = useNavigate();
 
   const delayBase = isIndividual ? 0.15 : 0;
+
+  const handleCtaClick = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate(href);
+    }
+  };
 
   return (
     <section className="relative flex min-h-screen items-center bg-background">
@@ -64,6 +76,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
           >
             <a
               href={cta1.href}
+              onClick={handleCtaClick(cta1.href)}
               className={`inline-flex items-center px-7 py-3.5 text-base font-semibold transition-colors ${
                 isIndividual
                   ? "rounded-xl bg-secondary text-secondary-foreground hover:bg-secondary/90"
@@ -74,6 +87,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
             </a>
             <a
               href={cta2.href}
+              onClick={handleCtaClick(cta2.href)}
               className={`text-base font-semibold underline-offset-4 transition-colors hover:underline ${
                 isIndividual ? "text-secondary" : "text-primary"
               }`}
