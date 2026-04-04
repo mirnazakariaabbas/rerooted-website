@@ -72,6 +72,13 @@ const StageCard = ({ stage, index }: { stage: Stage; index: number }) => {
           </p>
           <div className="mt-1.5 mb-2.5 rounded-sm" style={{ width: 28, height: 3, background: DEEP_BLUE }} />
           <p style={{ color: "#4a4a5a", fontSize: 12, lineHeight: 1.55 }}>{stage.desc}</p>
+          <Link
+            to={stage.route}
+            className="inline-block mt-2 text-xs font-semibold hover:underline underline-offset-2"
+            style={{ color: "#3DA776" }}
+          >
+            Learn more →
+          </Link>
         </div>
       </div>
     </div>
