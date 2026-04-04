@@ -173,15 +173,7 @@ const DesktopTimeline = () => {
               <p className="text-muted-foreground text-sm text-center">
                 Total engagement: 90 days · 6–8 coaching sessions · 2 assessments · 1 HR report
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <Button size="lg">Get a program overview</Button>
-                <a
-                  href="#contact"
-                  className="text-sm font-medium text-primary hover:underline underline-offset-4"
-                >
-                  Or start with a conversation
-                </a>
-              </div>
+              <ProgramCTAs />
             </motion.div>
           )}
         </AnimatePresence>
