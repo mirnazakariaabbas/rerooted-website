@@ -39,6 +39,13 @@ import CompetitiveAnalysisPage from "./pages/admin/intelligence/CompetitiveAnaly
 import PlaceholderPage from "./pages/admin/PlaceholderPage";
 import Blog from "./pages/Blog";
 import BlogPostPage from "./pages/BlogPost";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import ContactPage from "./pages/Contact";
+import PreRooted from "./pages/journey/PreRooted";
+import RootingIn from "./pages/journey/RootingIn";
+import Thrive from "./pages/journey/Thrive";
+import RootingBack from "./pages/journey/RootingBack";
 import BlogManagerPage from "./pages/admin/content/BlogManagerPage";
 import TestimonialsPage from "./pages/admin/content/TestimonialsPage";
 import PageContentPage from "./pages/admin/content/PageContentPage";
