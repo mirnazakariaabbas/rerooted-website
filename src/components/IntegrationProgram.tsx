@@ -206,15 +206,7 @@ const MobileTimeline = () => {
       <p className="text-muted-foreground text-sm text-center mt-10 max-w-md mx-auto">
         Total engagement: 90 days · 6–8 coaching sessions · 2 assessments · 1 HR report
       </p>
-      <div className="flex flex-col items-center gap-3 mt-6">
-        <Button size="lg">Get a program overview</Button>
-        <a
-          href="#contact"
-          className="text-sm font-medium text-primary hover:underline underline-offset-4"
-        >
-          Or start with a conversation
-        </a>
-      </div>
+      <ProgramCTAs />
     </section>
   );
 };

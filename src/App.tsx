@@ -72,6 +72,13 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/journey/pre-rooted" element={<PreRooted />} />
+              <Route path="/journey/rooting-in" element={<RootingIn />} />
+              <Route path="/journey/thrive" element={<Thrive />} />
+              <Route path="/journey/rooting-back" element={<RootingBack />} />
               <Route path="/app" element={<MemberLayout />}>
                 <Route index element={<Navigate to="/app/home" replace />} />
                 <Route path="home" element={<MemberHome />} />
