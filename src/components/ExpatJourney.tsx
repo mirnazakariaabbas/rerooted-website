@@ -8,6 +8,7 @@ type Stage = {
   name: string;
   desc: string;
   side: "left" | "right";
+  route: string;
 };
 
 const individualStages: Stage[] = [
