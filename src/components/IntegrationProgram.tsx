@@ -44,6 +44,22 @@ const steps = [
   },
 ];
 
+const ProgramCTAs = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
+      <Button size="lg" onClick={() => navigate("/services")}>Get a program overview</Button>
+      <a
+        href="/contact"
+        onClick={(e) => { e.preventDefault(); navigate("/contact"); }}
+        className="text-sm font-medium text-primary hover:underline underline-offset-4"
+      >
+        Or start with a conversation
+      </a>
+    </div>
+  );
+};
+
 /* ───────────── DESKTOP – sticky scroll ───────────── */
 const DesktopTimeline = () => {
   const outerRef = useRef<HTMLDivElement>(null);

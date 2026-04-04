@@ -127,7 +127,7 @@ const BlogPreview = () => {
 
         <p className="mt-10 text-center">
           <a
-            href="#"
+            href="/blog"
             className="text-sm font-semibold transition-colors hover:opacity-80"
             style={{ color: "#3DA776" }}
           >

@@ -30,7 +30,7 @@ const CorporateHome = () => (
         </>
       }
       cta1={{ label: "See how it works", href: "#program" }}
-      cta2={{ label: "Start a conversation", href: "#contact" }}
+      cta2={{ label: "Start a conversation", href: "/contact" }}
     />
     <ProblemStats
       label="Why I Built Re-Rooted®"
