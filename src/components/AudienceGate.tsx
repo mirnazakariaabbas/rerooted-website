@@ -95,7 +95,7 @@ const AudienceGate = () => {
                 onClick={() => handleSelect("organization")}
                 onMouseEnter={() => setHoveredButton("org")}
                 onMouseLeave={() => setHoveredButton(null)}
-                className="rounded-lg border-2 border-primary-foreground bg-primary-foreground px-10 py-5 text-lg font-semibold tracking-wide text-primary shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-transparent hover:text-primary-foreground md:text-xl"
+                className="rounded-lg border-2 border-primary-foreground bg-transparent px-10 py-5 text-lg font-semibold tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary-foreground hover:text-primary md:text-xl"
                 animate={{ scale: [1, 1.03, 1] }}
                 transition={{ delay: 1.8, duration: 0.8, ease: "easeInOut" }}
               >
@@ -116,7 +116,7 @@ const AudienceGate = () => {
                 onClick={() => handleSelect("individual")}
                 onMouseEnter={() => setHoveredButton("individual")}
                 onMouseLeave={() => setHoveredButton(null)}
-                className="rounded-lg border-2 border-primary-foreground bg-primary-foreground px-10 py-5 text-lg font-semibold tracking-wide text-primary shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-transparent hover:text-primary-foreground md:text-xl"
+                className="rounded-lg border-2 border-primary-foreground bg-transparent px-10 py-5 text-lg font-semibold tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary-foreground hover:text-primary md:text-xl"
                 animate={{ scale: [1, 1.03, 1] }}
                 transition={{ delay: 2.0, duration: 0.8, ease: "easeInOut" }}
               >
