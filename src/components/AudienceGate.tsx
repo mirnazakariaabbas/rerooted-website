@@ -122,9 +122,14 @@ const AudienceGate = () => {
               >
                 I'm an individual
               </motion.button>
-              <p className="mt-3 h-6 max-w-[280px] text-center text-sm text-primary-foreground/60">
+              <motion.p
+                className="mt-3 h-6 max-w-[280px] text-center text-sm text-primary-foreground/80"
+                initial={false}
+                animate={{ opacity: hoveredButton === "individual" ? 1 : 0, y: hoveredButton === "individual" ? 0 : 4 }}
+                transition={{ duration: 0.25 }}
+              >
                 Take control of your relocation journey
-              </p>
+              </motion.p>
             </div>
           </motion.div>
 
