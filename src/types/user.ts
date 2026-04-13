@@ -27,7 +27,7 @@ export interface ReflectionEntry {
 export interface AssessmentResult {
   completedAt: string;
   score: number;
-  answers: Record<string, number>;
+  answers: Record<string, number | number[]>;
 }
 
 export interface DimensionProgress {
