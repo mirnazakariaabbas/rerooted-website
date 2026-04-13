@@ -132,6 +132,14 @@ const AssessmentPage = () => {
     );
   }
 
+  if (profileLoading) {
+    return (
+      <div className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto flex items-center justify-center min-h-[40vh]">
+        <div className="animate-pulse text-muted-foreground text-sm">Loading your assessment…</div>
+      </div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
