@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const AssessmentPage = () => {
-  const { user, assessment, setAssessment, reflections } = useUser();
+  const { user, assessment, setAssessment, reflections, profileLoading } = useUser();
   const [taking, setTaking] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number | number[]>>({});
