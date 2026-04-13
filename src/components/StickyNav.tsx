@@ -85,7 +85,7 @@ const StickyNav = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (gateOpen) return null;
+  if (gateOpen && isHomePage) return null;
 
   return (
     <motion.header

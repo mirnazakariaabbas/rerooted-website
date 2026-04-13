@@ -101,7 +101,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 flex justify-center">
+        <div className="mt-6 flex justify-center">
           <button
             onClick={() => setAudience(isOrg ? "individual" : "organization")}
             className="cursor-pointer text-xs transition-colors hover:text-white bg-transparent border-none"
