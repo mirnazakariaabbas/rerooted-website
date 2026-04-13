@@ -104,7 +104,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     setUser(prev => {
       const next = { ...prev, ...updates };
       if (authUser) {
-        const dbUpdates: Record<string, unknown> = {};
+        const dbUpdates: { [K in keyof import('@/integrations/supabase/types').Database['public']['Tables']['profiles']['Update']]?: import('@/integrations/supabase/types').Database['public']['Tables']['profiles']['Update'][K] } = {};
         if ('name' in updates) dbUpdates.full_name = updates.name;
         if ('countryFrom' in updates) dbUpdates.country_from = updates.countryFrom;
         if ('countryTo' in updates) dbUpdates.country_to = updates.countryTo;
