@@ -73,49 +73,53 @@ const AudienceGate = () => {
             The human side of relocation
           </motion.p>
 
+          {/* Prompt */}
+          <motion.p
+            className="mb-6 text-lg font-semibold tracking-wide text-primary-foreground md:text-xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.0, duration: 0.5 }}
+          >
+            Choose your path
+          </motion.p>
+
           {/* Buttons */}
           <motion.div
-            className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6"
+            className="flex flex-col items-center gap-6 sm:flex-row sm:gap-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
           >
             <div className="flex flex-col items-center">
-              <button
+              <motion.button
                 onClick={() => handleSelect("organization")}
                 onMouseEnter={() => setHoveredButton("org")}
                 onMouseLeave={() => setHoveredButton(null)}
-                className="rounded-lg border-2 border-primary-foreground px-8 py-4 text-base font-semibold tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary-foreground hover:text-primary md:px-10 md:text-lg"
+                className="rounded-lg border-2 border-primary-foreground bg-primary-foreground px-10 py-5 text-lg font-semibold tracking-wide text-primary shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-transparent hover:text-primary-foreground md:text-xl"
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ delay: 1.8, duration: 0.8, ease: "easeInOut" }}
               >
                 I'm an organization
-              </button>
-              <motion.p
-                className="mt-3 h-6 max-w-[280px] text-center text-sm text-primary-foreground/80"
-                initial={false}
-                animate={{ opacity: hoveredButton === "org" ? 1 : 0, y: hoveredButton === "org" ? 0 : 4 }}
-                transition={{ duration: 0.25 }}
-              >
+              </motion.button>
+              <p className="mt-3 h-6 max-w-[280px] text-center text-sm text-primary-foreground/60">
                 Maximize the return on your international relocation assignments
-              </motion.p>
+              </p>
             </div>
 
             <div className="flex flex-col items-center">
-              <button
+              <motion.button
                 onClick={() => handleSelect("individual")}
                 onMouseEnter={() => setHoveredButton("individual")}
                 onMouseLeave={() => setHoveredButton(null)}
-                className="rounded-lg border-2 border-primary-foreground px-8 py-4 text-base font-semibold tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary-foreground hover:text-primary md:px-10 md:text-lg"
+                className="rounded-lg border-2 border-primary-foreground bg-primary-foreground px-10 py-5 text-lg font-semibold tracking-wide text-primary shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-transparent hover:text-primary-foreground md:text-xl"
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ delay: 2.0, duration: 0.8, ease: "easeInOut" }}
               >
                 I'm an individual
-              </button>
-              <motion.p
-                className="mt-3 h-6 max-w-[280px] text-center text-sm text-primary-foreground/80"
-                initial={false}
-                animate={{ opacity: hoveredButton === "individual" ? 1 : 0, y: hoveredButton === "individual" ? 0 : 4 }}
-                transition={{ duration: 0.25 }}
-              >
+              </motion.button>
+              <p className="mt-3 h-6 max-w-[280px] text-center text-sm text-primary-foreground/60">
                 Take control of your relocation journey
-              </motion.p>
+              </p>
             </div>
           </motion.div>
 
