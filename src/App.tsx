@@ -55,6 +55,10 @@ import AnnouncementsPage from "./pages/admin/content/AnnouncementsPage";
 import ContentCalendarPage from "./pages/admin/content/ContentCalendarPage";
 import SocialDraftsPage from "./pages/admin/content/SocialDraftsPage";
 import MarketingAnalyticsPage from "./pages/admin/analytics/MarketingAnalyticsPage";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import FAQ from "./pages/FAQ";
+import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -75,6 +79,9 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/faq" element={<FAQ />} />
               <Route path="/journey/pre-rooted" element={<PreRooted />} />
               <Route path="/journey/rooting-in" element={<RootingIn />} />
               <Route path="/journey/thrive" element={<Thrive />} />
@@ -124,6 +131,7 @@ const App = () => (
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <CookieBanner />
           </BrowserRouter>
         </AudienceProvider>
       </AuthProvider>

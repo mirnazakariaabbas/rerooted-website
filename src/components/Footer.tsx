@@ -11,6 +11,9 @@ const corporateLinks: FooterLink[] = [
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
   { label: "Contact", href: "/contact", type: "route" },
+  { label: "FAQ", href: "/faq", type: "route" },
+  { label: "Privacy Policy", href: "/privacy", type: "route" },
+  { label: "Terms & Conditions", href: "/terms", type: "route" },
 ];
 
 const individualLinks: FooterLink[] = [
@@ -19,6 +22,9 @@ const individualLinks: FooterLink[] = [
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
   { label: "Contact", href: "/contact", type: "route" },
+  { label: "FAQ", href: "/faq", type: "route" },
+  { label: "Privacy Policy", href: "/privacy", type: "route" },
+  { label: "Terms & Conditions", href: "/terms", type: "route" },
 ];
 
 const Footer = () => {
@@ -50,6 +56,12 @@ const Footer = () => {
             <img src={logoWhite} alt="Re-Rooted®" className="h-10 w-auto" />
             <p className="mt-4 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
               © 2026 Re-Rooted®. All rights reserved.
+            </p>
+            <p className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <strong>Re-Rooted®</strong> is a registered trademark.
+            </p>
+            <p className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+              Coaching is not therapy, counseling, or medical treatment.
             </p>
           </div>
 
