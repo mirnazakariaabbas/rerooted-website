@@ -91,7 +91,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         setAssessmentState({
           completedAt: assess.completed_at || assess.created_at,
           score: assess.score || 0,
-          answers: (assess.answers as Record<string, number>) || {},
+          answers: (assess.answers as Record<string, number | number[]>) || {},
         });
       }
 
