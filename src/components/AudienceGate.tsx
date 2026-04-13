@@ -101,9 +101,14 @@ const AudienceGate = () => {
               >
                 I'm an organization
               </motion.button>
-              <p className="mt-3 h-6 max-w-[280px] text-center text-sm text-primary-foreground/60">
+              <motion.p
+                className="mt-3 h-6 max-w-[280px] text-center text-sm text-primary-foreground/80"
+                initial={false}
+                animate={{ opacity: hoveredButton === "org" ? 1 : 0, y: hoveredButton === "org" ? 0 : 4 }}
+                transition={{ duration: 0.25 }}
+              >
                 Maximize the return on your international relocation assignments
-              </p>
+              </motion.p>
             </div>
 
             <div className="flex flex-col items-center">
