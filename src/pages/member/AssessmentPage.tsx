@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const AssessmentPage = () => {
-  const { user, assessment, setAssessment, reflections } = useUser();
+  const { user, assessment, setAssessment, reflections, profileLoading } = useUser();
   const [taking, setTaking] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number | number[]>>({});
@@ -128,6 +128,14 @@ const AssessmentPage = () => {
             </Button>
           )}
         </div>
+      </div>
+    );
+  }
+
+  if (profileLoading) {
+    return (
+      <div className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto flex items-center justify-center min-h-[40vh]">
+        <div className="animate-pulse text-muted-foreground text-sm">Loading your assessment…</div>
       </div>
     );
   }
