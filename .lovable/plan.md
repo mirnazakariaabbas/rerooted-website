@@ -1,46 +1,31 @@
 
 
-## Plan: Privacy Policy, Terms & Conditions, FAQ Pages + Footer Updates + Cookie Banner + Stats Disclaimer
+## Plan: Fix Footer Layout, Add Scroll-to-Top, Fix Nav Bar
 
-### New Files
+Three issues to address:
 
-**1. `src/pages/Privacy.tsx`** — Route: `/privacy`
-- Warm White (#FAF9F6) background, max-w-[720px] centered
-- All 13 sections from the spec rendered as styled headings (weight 700) and body text (weight 400, #1A1A1A)
-- "Last updated: April 2026"
-- StickyNav + Footer, Framer Motion fade-in
+### 1. Add ScrollToTop component
+**New file: `src/components/ScrollToTop.tsx`**
+- Uses `useLocation` to detect route changes, calls `window.scrollTo({ top: 0, left: 0 })` on every pathname change
+- Ensures clicking footer links takes users to the top of the new page
 
-**2. `src/pages/Terms.tsx`** — Route: `/terms`
-- Same layout as Privacy. All 11 sections from the spec.
-- StickyNav + Footer, fade-in
+**Modified: `src/App.tsx`**
+- Import and render `<ScrollToTop />` inside `<BrowserRouter>`, before `<Routes>`
 
-**3. `src/pages/FAQ.tsx`** — Route: `/faq`
-- Warm White background, centered content
-- 4 grouped headings (About Re-Rooted, For Organizations, For Individuals, About Coaching)
-- Each question as an accordion item using the existing `Accordion` component from `src/components/ui/accordion.tsx`
-- StickyNav + Footer, fade-in
+### 2. Redesign Footer to be more compact
+**Modified: `src/components/Footer.tsx`**
+- Reduce vertical padding from `py-12 md:py-16` to `py-8 md:py-10`
+- Reduce internal gaps from `gap-10` to `gap-6`
+- Move logo higher (reduce `mt` on text below it)
+- Split the nav links into a **2-column grid** (`grid grid-cols-2 gap-x-8 gap-y-2`) instead of a single column
+- Reduce bottom toggle section margin from `mt-10` to `mt-6`
+- Keep the CTA + LinkedIn in the third column as-is
 
-**4. `src/components/CookieBanner.tsx`**
-- Slim bar fixed to bottom of screen, #1A1A1A background, white text
-- "Accept" button (green), "Manage preferences" text link opening a modal with toggles (Essential always on, Analytics toggle, Marketing toggle)
-- "Learn more" links to `/privacy`
-- On accept/save, stores choice in `localStorage` (cookie consent key) and hides banner
-- Only shows on first visit (checks localStorage)
+### 3. Fix nav bar not showing on Contact page
+The Contact page already imports `<StickyNav />`. The nav hides itself when `gateOpen` is true. The issue is likely that navigating from a page where the gate was dismissed doesn't persist. Will verify the `StickyNav` renders on inner pages — the `gateOpen` state check (`if (gateOpen) return null`) may be triggering incorrectly. Will ensure the gate state defaults to closed on inner pages (non-homepage routes).
 
-### Modified Files
+**Modified: `src/components/StickyNav.tsx`**
+- Add a check: if user is NOT on the homepage (`/`), always show the nav regardless of `gateOpen` state. The gate is only relevant on the homepage.
 
-**5. `src/App.tsx`**
-- Add routes: `/privacy`, `/terms`, `/faq`
-- Import and render `<CookieBanner />` at the app level (outside Routes, always visible)
-
-**6. `src/components/Footer.tsx`**
-- Add 3 new links to both corporate and individual link arrays: Privacy Policy (`/privacy`), Terms & Conditions (`/terms`), FAQ (`/faq`)
-- Add below copyright: `"Re-Rooted® is a registered trademark."` (same style as copyright, xs text, opacity 0.5)
-- Add coaching disclaimer: `"Coaching is not therapy, counseling, or medical treatment."` (xs text, opacity 0.4)
-
-**7. `src/components/ProblemStats.tsx`**
-- Add a second footnote line below the existing source citation: `"Statistics are drawn from published research and may reflect varied methodologies."`
-- Style: white text, opacity 0.4, font-size 11px (text-[11px]), font-light
-
-### No database changes required. All pages are static content.
+### No database changes needed.
 
