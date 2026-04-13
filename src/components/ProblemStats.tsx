@@ -119,6 +119,15 @@ const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
         >
           Source: Black &amp; Gregersen, HBR; Cigna Global (11,922 respondents)
         </motion.p>
+        <motion.p
+          className="text-primary-foreground/40 font-light mt-1"
+          style={{ fontSize: "11px" }}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 1.3 }}
+        >
+          Statistics are drawn from published research and may reflect varied methodologies.
+        </motion.p>
       </div>
     </section>
   );
