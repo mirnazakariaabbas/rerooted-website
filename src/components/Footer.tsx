@@ -49,12 +49,12 @@ const Footer = () => {
   };
 
   return (
-    <footer style={{ backgroundColor: "#1A1A1A" }} className="px-6 py-12 md:py-16 lg:px-12">
+    <footer style={{ backgroundColor: "#1A1A1A" }} className="px-6 py-8 md:py-10 lg:px-12">
       <div className="container mx-auto">
-        <div className="grid gap-10 text-center md:grid-cols-3 md:text-left">
+        <div className="grid gap-6 text-center md:grid-cols-3 md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <img src={logoWhite} alt="Re-Rooted®" className="h-10 w-auto" />
-            <p className="mt-4 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <p className="mt-3 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
               © 2026 Re-Rooted®. All rights reserved.
             </p>
             <p className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
@@ -65,7 +65,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <nav className="flex flex-col items-center gap-3 md:items-start">
+          <nav className="grid grid-cols-2 gap-x-8 gap-y-2 items-start justify-items-center md:justify-items-start">
             {links.map((l) => (
               <button
                 key={l.href + l.label}
