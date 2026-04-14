@@ -154,6 +154,38 @@ const AssessmentPage = () => {
     if (currentIdx > 0) setCurrentIdx(i => i - 1);
   };
 
+  if (showResume && !taking) {
+    const savedQuestion = visibleQuestions[Math.min(currentIdx, visibleQuestions.length - 1)];
+    const answeredCount = Object.keys(answers).length;
+    return (
+      <div className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto">
+        <h1 className="text-3xl font-black tracking-tight mb-8">Relocation Complexity Score</h1>
+        <Card className="border border-border">
+          <CardContent className="py-10 text-center">
+            <div className="text-4xl mb-4">📝</div>
+            <h2 className="text-xl font-black tracking-tight mb-2">Resume Assessment?</h2>
+            <p className="text-sm text-muted-foreground mb-2 max-w-sm mx-auto">
+              You have an assessment in progress — {answeredCount} of {visibleQuestions.length} questions answered.
+            </p>
+            {savedQuestion && (
+              <p className="text-xs text-muted-foreground mb-6">
+                Next up: <span className="font-medium text-foreground">{savedQuestion.category}</span>
+              </p>
+            )}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button onClick={handleResume} className="rounded-full px-8">
+                Continue Where I Left Off
+              </Button>
+              <Button onClick={handleStartFresh} variant="outline" className="rounded-full px-8">
+                Start Over
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   if (taking && visibleQuestions.length > 0) {
     const q = visibleQuestions[Math.min(currentIdx, visibleQuestions.length - 1)];
     const progress = ((currentIdx + 1) / visibleQuestions.length) * 100;
