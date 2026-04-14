@@ -75,13 +75,12 @@ const AssessmentPage = () => {
 
   // Restore in-progress state from sessionStorage
   const saved = useMemo(() => loadProgress(), []);
-  const [taking, setTaking] = useState(saved?.taking ?? false);
+  const [taking, setTaking] = useState(false);
+  const [showResume, setShowResume] = useState(saved?.taking ?? false);
   const [currentIdx, setCurrentIdx] = useState(saved?.currentIdx ?? 0);
   const [answers, setAnswers] = useState<Record<string, number | number[]>>(saved?.answers ?? {});
 
   // For visible-question computation, we need the value-based answers for conditional logic
-  // But single-select answers are stored as values already; multi-select are stored as indices.
-  // We need to convert multi indices to values for conditional checks.
   const answersAsValues = useMemo(() => convertMultiIndicesToValues(answers), [answers]);
   const visibleQuestions = useMemo(() => getVisibleQuestions(answersAsValues), [answersAsValues]);
 
@@ -89,10 +88,23 @@ const AssessmentPage = () => {
   useEffect(() => {
     if (taking) {
       saveProgress({ taking, currentIdx, answers });
-    } else {
+    } else if (!showResume) {
       clearProgress();
     }
-  }, [taking, currentIdx, answers]);
+  }, [taking, currentIdx, answers, showResume]);
+
+  const handleResume = () => {
+    setShowResume(false);
+    setTaking(true);
+  };
+
+  const handleStartFresh = () => {
+    setShowResume(false);
+    setAnswers({});
+    setCurrentIdx(0);
+    clearProgress();
+    setTaking(true);
+  };
 
   const handleSingleAnswer = (questionId: string, value: number) => {
     const newAnswers = { ...answers, [questionId]: value };
@@ -141,6 +153,38 @@ const AssessmentPage = () => {
   const goBack = () => {
     if (currentIdx > 0) setCurrentIdx(i => i - 1);
   };
+
+  if (showResume && !taking) {
+    const savedQuestion = visibleQuestions[Math.min(currentIdx, visibleQuestions.length - 1)];
+    const answeredCount = Object.keys(answers).length;
+    return (
+      <div className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto">
+        <h1 className="text-3xl font-black tracking-tight mb-8">Relocation Complexity Score</h1>
+        <Card className="border border-border">
+          <CardContent className="py-10 text-center">
+            <div className="text-4xl mb-4">📝</div>
+            <h2 className="text-xl font-black tracking-tight mb-2">Resume Assessment?</h2>
+            <p className="text-sm text-muted-foreground mb-2 max-w-sm mx-auto">
+              You have an assessment in progress — {answeredCount} of {visibleQuestions.length} questions answered.
+            </p>
+            {savedQuestion && (
+              <p className="text-xs text-muted-foreground mb-6">
+                Next up: <span className="font-medium text-foreground">{savedQuestion.category}</span>
+              </p>
+            )}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button onClick={handleResume} className="rounded-full px-8">
+                Continue Where I Left Off
+              </Button>
+              <Button onClick={handleStartFresh} variant="outline" className="rounded-full px-8">
+                Start Over
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (taking && visibleQuestions.length > 0) {
     const q = visibleQuestions[Math.min(currentIdx, visibleQuestions.length - 1)];
