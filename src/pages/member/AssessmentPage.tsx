@@ -75,13 +75,12 @@ const AssessmentPage = () => {
 
   // Restore in-progress state from sessionStorage
   const saved = useMemo(() => loadProgress(), []);
-  const [taking, setTaking] = useState(saved?.taking ?? false);
+  const [taking, setTaking] = useState(false);
+  const [showResume, setShowResume] = useState(saved?.taking ?? false);
   const [currentIdx, setCurrentIdx] = useState(saved?.currentIdx ?? 0);
   const [answers, setAnswers] = useState<Record<string, number | number[]>>(saved?.answers ?? {});
 
   // For visible-question computation, we need the value-based answers for conditional logic
-  // But single-select answers are stored as values already; multi-select are stored as indices.
-  // We need to convert multi indices to values for conditional checks.
   const answersAsValues = useMemo(() => convertMultiIndicesToValues(answers), [answers]);
   const visibleQuestions = useMemo(() => getVisibleQuestions(answersAsValues), [answersAsValues]);
 
@@ -89,10 +88,23 @@ const AssessmentPage = () => {
   useEffect(() => {
     if (taking) {
       saveProgress({ taking, currentIdx, answers });
-    } else {
+    } else if (!showResume) {
       clearProgress();
     }
-  }, [taking, currentIdx, answers]);
+  }, [taking, currentIdx, answers, showResume]);
+
+  const handleResume = () => {
+    setShowResume(false);
+    setTaking(true);
+  };
+
+  const handleStartFresh = () => {
+    setShowResume(false);
+    setAnswers({});
+    setCurrentIdx(0);
+    clearProgress();
+    setTaking(true);
+  };
 
   const handleSingleAnswer = (questionId: string, value: number) => {
     const newAnswers = { ...answers, [questionId]: value };
