@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
 import {
@@ -18,27 +18,96 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
+const SESSION_KEY = 'assessment-in-progress';
+
+interface InProgressState {
+  taking: boolean;
+  currentIdx: number;
+  answers: Record<string, number | number[]>;
+}
+
+function saveProgress(state: InProgressState) {
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(state));
+  } catch {}
+}
+
+function loadProgress(): InProgressState | null {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return null;
+}
+
+function clearProgress() {
+  try {
+    sessionStorage.removeItem(SESSION_KEY);
+  } catch {}
+}
+
+/**
+ * For multi-select questions, we track selected option INDICES (not values)
+ * to avoid collisions when multiple options share the same value.
+ * When finishing, we convert indices back to values for scoring/storage.
+ */
+function convertMultiIndicesToValues(
+  answers: Record<string, number | number[]>
+): Record<string, number | number[]> {
+  const converted: Record<string, number | number[]> = {};
+  for (const [qId, answer] of Object.entries(answers)) {
+    if (Array.isArray(answer)) {
+      const question = ASSESSMENT_QUESTIONS.find(q => q.id === qId);
+      if (question) {
+        converted[qId] = answer.map(idx => question.options[idx].value);
+      } else {
+        converted[qId] = answer;
+      }
+    } else {
+      converted[qId] = answer;
+    }
+  }
+  return converted;
+}
+
 const AssessmentPage = () => {
   const { user, assessment, setAssessment, reflections, profileLoading } = useUser();
-  const [taking, setTaking] = useState(false);
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, number | number[]>>({});
 
-  const visibleQuestions = useMemo(() => getVisibleQuestions(answers), [answers]);
+  // Restore in-progress state from sessionStorage
+  const saved = useMemo(() => loadProgress(), []);
+  const [taking, setTaking] = useState(saved?.taking ?? false);
+  const [currentIdx, setCurrentIdx] = useState(saved?.currentIdx ?? 0);
+  const [answers, setAnswers] = useState<Record<string, number | number[]>>(saved?.answers ?? {});
+
+  // For visible-question computation, we need the value-based answers for conditional logic
+  // But single-select answers are stored as values already; multi-select are stored as indices.
+  // We need to convert multi indices to values for conditional checks.
+  const answersAsValues = useMemo(() => convertMultiIndicesToValues(answers), [answers]);
+  const visibleQuestions = useMemo(() => getVisibleQuestions(answersAsValues), [answersAsValues]);
+
+  // Persist progress on every change
+  useEffect(() => {
+    if (taking) {
+      saveProgress({ taking, currentIdx, answers });
+    } else {
+      clearProgress();
+    }
+  }, [taking, currentIdx, answers]);
 
   const handleSingleAnswer = (questionId: string, value: number) => {
     const newAnswers = { ...answers, [questionId]: value };
     // Clear dependent answers when the dependency changes
+    const newValues = convertMultiIndicesToValues(newAnswers);
     for (const q of ASSESSMENT_QUESTIONS) {
       if (q.conditional?.questionId === questionId && newAnswers[q.id] !== undefined) {
-        const visible = getVisibleQuestions(newAnswers);
+        const visible = getVisibleQuestions(newValues);
         if (!visible.find(vq => vq.id === q.id)) {
           delete newAnswers[q.id];
         }
       }
     }
     setAnswers(newAnswers);
-    const newVisible = getVisibleQuestions(newAnswers);
+    const newVisible = getVisibleQuestions(convertMultiIndicesToValues(newAnswers));
     if (currentIdx < newVisible.length - 1) {
       setTimeout(() => setCurrentIdx(i => i + 1), 300);
     } else {
@@ -46,11 +115,11 @@ const AssessmentPage = () => {
     }
   };
 
-  const handleMultiToggle = (questionId: string, value: number) => {
+  const handleMultiToggle = (questionId: string, optionIndex: number) => {
     const current = (answers[questionId] as number[] | undefined) ?? [];
-    const updated = current.includes(value)
-      ? current.filter(v => v !== value)
-      : [...current, value];
+    const updated = current.includes(optionIndex)
+      ? current.filter(i => i !== optionIndex)
+      : [...current, optionIndex];
     setAnswers({ ...answers, [questionId]: updated });
   };
 
@@ -63,8 +132,9 @@ const AssessmentPage = () => {
   };
 
   const finishAssessment = (finalAnswers: Record<string, number | number[]>) => {
-    const score = calculateDifficultyScore(finalAnswers);
-    setAssessment({ completedAt: new Date().toISOString(), score, answers: finalAnswers });
+    const valueAnswers = convertMultiIndicesToValues(finalAnswers);
+    const score = calculateDifficultyScore(valueAnswers);
+    setAssessment({ completedAt: new Date().toISOString(), score, answers: valueAnswers });
     setTaking(false);
   };
 
@@ -91,22 +161,22 @@ const AssessmentPage = () => {
           <p className="text-xs text-muted-foreground mb-6">Select all that apply</p>
         )}
         <div className="space-y-3">
-          {q.options.map(opt => (
+          {q.options.map((opt, idx) => (
             isMulti ? (
               <button
-                key={opt.label}
-                onClick={() => handleMultiToggle(q.id, opt.value)}
+                key={idx}
+                onClick={() => handleMultiToggle(q.id, idx)}
                 className={cn(
                   'w-full text-left p-4 rounded-xl border-2 transition-all text-sm flex items-center gap-3',
-                  multiSelected.includes(opt.value) ? 'border-primary bg-muted' : 'border-border hover:border-primary/30'
+                  multiSelected.includes(idx) ? 'border-primary bg-muted' : 'border-border hover:border-primary/30'
                 )}
               >
-                <Checkbox checked={multiSelected.includes(opt.value)} className="pointer-events-none" />
+                <Checkbox checked={multiSelected.includes(idx)} className="pointer-events-none" />
                 {opt.label}
               </button>
             ) : (
               <button
-                key={opt.label}
+                key={idx}
                 onClick={() => handleSingleAnswer(q.id, opt.value)}
                 className={cn(
                   'w-full text-left p-4 rounded-xl border-2 transition-all text-sm',
