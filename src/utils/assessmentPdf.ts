@@ -50,7 +50,14 @@ function getCategoryScore(
     const answer = answers[q.id];
     if (answer === undefined) continue;
     if (Array.isArray(answer)) {
-      const sum = answer.reduce((a, b) => a + b, 0);
+      // Resolve indices to values
+      let values = answer.map(idx =>
+        idx >= 0 && idx < q.options.length ? q.options[idx].value : idx
+      );
+      if (q.ignoreIfAlsoSelected !== undefined && values.length > 1) {
+        values = values.filter(v => v !== q.ignoreIfAlsoSelected);
+      }
+      const sum = values.reduce((a, b) => a + b, 0);
       total += q.multiSelectCap ? Math.min(sum, q.multiSelectCap) : sum;
     } else {
       total += answer;

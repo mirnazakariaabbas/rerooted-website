@@ -304,7 +304,10 @@ const TOTAL_QUESTIONS = 28;
  */
 function questionScore(question: AssessmentQuestion, answer: number | number[]): number {
   if (Array.isArray(answer)) {
-    let values = [...answer];
+    // Resolve indices to values
+    let values = answer.map(idx =>
+      idx >= 0 && idx < question.options.length ? question.options[idx].value : idx
+    );
     // Q2 rule: if "location change only" (value matching ignoreIfAlsoSelected) is selected alongside others, ignore it
     if (question.ignoreIfAlsoSelected !== undefined && values.length > 1) {
       values = values.filter(v => v !== question.ignoreIfAlsoSelected);
