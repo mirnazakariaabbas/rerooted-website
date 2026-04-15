@@ -89,7 +89,7 @@ export function generateAssessmentPdf(
         : assessment.score <= 65
           ? ([188, 173, 212] as const) // Lavender
           : ([232, 168, 56] as const); // Warning
-  doc.setFillColor(...bandColor);
+  doc.setFillColor(bandColor[0], bandColor[1], bandColor[2]);
   doc.roundedRect(margin + 55, y + 8, 60, 8, 2, 2, 'F');
   doc.setFontSize(8);
   doc.setFont('helvetica', 'bold');
