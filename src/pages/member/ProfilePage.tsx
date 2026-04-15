@@ -76,17 +76,18 @@ const ProfilePage = () => {
       transition={{ duration: 0.4 }}
       className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
     >
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-black tracking-tight">Profile</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-3xl font-[900] tracking-tight">Profile</h1>
         {isAdmin && (
-          <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => navigate('/app/admin')}>
+          <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-full" onClick={() => navigate('/app/admin')}>
             <Shield className="h-3.5 w-3.5" /> Admin
           </Button>
         )}
       </div>
+      <p className="text-sm text-muted-foreground mb-10">Manage your personal details and preferences</p>
 
-      <Card className="mb-4 border border-border">
-        <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Personal Details</CardTitle></CardHeader>
+      <Card className="mb-6 border border-border">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Personal Details</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-1.5">
             <Label className="text-sm">Name</Label>
@@ -111,11 +112,11 @@ const ProfilePage = () => {
         </CardContent>
       </Card>
 
-      <Card className="mb-4 border border-border">
-        <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Journey Stage</CardTitle></CardHeader>
+      <Card className="mb-6 border border-border">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Journey Stage</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="p-3 rounded-lg border border-primary bg-muted">
-            <p className="font-medium text-sm">Stage {STAGE_LABELS[user.stage].number} — {STAGE_LABELS[user.stage].name}</p>
+            <p className="font-medium text-sm">Stage {STAGE_LABELS[user.stage].number}: {STAGE_LABELS[user.stage].name}</p>
             <p className="text-xs text-muted-foreground mt-1">{STAGE_LABELS[user.stage].tagline}</p>
           </div>
           <div className="flex items-center justify-between">
@@ -125,8 +126,8 @@ const ProfilePage = () => {
         </CardContent>
       </Card>
 
-      <Card className="mb-4 border border-border">
-        <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Family</CardTitle></CardHeader>
+      <Card className="mb-6 border border-border">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Family</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-1.5">
             <Label className="text-sm">Relocating</Label>
@@ -149,8 +150,8 @@ const ProfilePage = () => {
         </CardContent>
       </Card>
 
-      <Card className="mb-4 border border-border">
-        <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Notifications</CardTitle></CardHeader>
+      <Card className="mb-6 border border-border">
+        <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Notifications</CardTitle></CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between">
             <Label className="text-sm">Weekly reflections</Label>
@@ -163,7 +164,7 @@ const ProfilePage = () => {
         </CardContent>
       </Card>
 
-      <Button variant="outline" className="w-full mt-4 text-destructive border-destructive/30 hover:bg-destructive/5" onClick={signOut}>
+      <Button variant="outline" className="w-full mt-4 rounded-full text-destructive border-destructive/30 hover:bg-destructive/5" onClick={signOut}>
         Sign Out
       </Button>
     </motion.div>

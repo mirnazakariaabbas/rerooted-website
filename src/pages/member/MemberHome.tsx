@@ -64,12 +64,12 @@ const MemberHome = () => {
       <AnnouncementBanner />
       <div className="mb-10">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-black tracking-tight mb-1">{greeting}</h1>
+          <h1 className="text-3xl font-[900] tracking-tight mb-1">{greeting}</h1>
           <img src={logoShorthand} alt="Re-Rooted" className="h-20" />
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <Badge variant="secondary" className="text-xs font-medium">
-            Stage {stageInfo.number} — {stageInfo.name}
+            Stage {stageInfo.number}: {stageInfo.name}
           </Badge>
           {user.countryFrom && user.countryTo && (
             <span className="text-sm text-muted-foreground">
@@ -79,20 +79,20 @@ const MemberHome = () => {
         </div>
       </div>
 
-      <Card className="mb-8 border border-border bg-muted">
+      <Card className="mb-10 border border-border bg-muted">
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg font-black tracking-tight">Where You Are</CardTitle>
+          <CardTitle className="text-lg font-[900] tracking-tight">Where You Are</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm leading-relaxed text-foreground/80">{STAGE_DESCRIPTIONS[user.stage]}</p>
         </CardContent>
       </Card>
 
-      <div className="mb-8">
-        <h2 className="text-lg font-black tracking-tight mb-4">Your Focus Areas</h2>
+      <div className="mb-10">
+        <h2 className="text-lg font-[900] tracking-tight mb-4">Your Focus Areas</h2>
         {isComingSoon ? (
           <Card className="border-dashed border border-border">
-            <CardContent className="py-8 text-center">
+            <CardContent className="py-10 text-center">
               <p className="text-muted-foreground font-bold text-lg mb-2">Coming Soon</p>
               <p className="text-sm text-muted-foreground">Full coaching content for the {stageInfo.name} stage is being developed.</p>
             </CardContent>
@@ -117,18 +117,18 @@ const MemberHome = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-8">
+      <div className="grid grid-cols-2 gap-3 mb-10">
         <Card className="cursor-pointer hover:bg-muted/50 transition-colors border border-border" onClick={() => navigate('/app/cultural')}>
-          <CardContent className="p-4 flex flex-col items-center text-center gap-2">
+          <CardContent className="p-6 flex flex-col items-center text-center gap-2">
             <Globe className="h-6 w-6 text-primary" />
             <span className="text-xs font-medium">Cultural Companion</span>
             <ArrowRight className="h-3 w-3 text-muted-foreground" />
           </CardContent>
         </Card>
         <Card className="cursor-pointer hover:bg-muted/50 transition-colors border border-border" onClick={() => navigate('/app/assessment')}>
-          <CardContent className="p-4 flex flex-col items-center text-center gap-2">
+          <CardContent className="p-6 flex flex-col items-center text-center gap-2">
             <BarChart3 className="h-6 w-6 text-primary" />
-            <span className="text-xs font-medium">Integration Score</span>
+            <span className="text-xs font-medium">Complexity Score</span>
             <ArrowRight className="h-3 w-3 text-muted-foreground" />
           </CardContent>
         </Card>
@@ -145,7 +145,7 @@ const MemberHome = () => {
             <Checkbox id="share-coach" checked={shareWithCoach} onCheckedChange={(checked) => setShareWithCoach(checked === true)} />
             <label htmlFor="share-coach" className="text-xs text-muted-foreground cursor-pointer">Share this entry with my coach</label>
           </div>
-          <Button onClick={handleReflection} disabled={!reflectionText.trim()} size="sm" variant="secondary" className="w-full">Save to journal</Button>
+          <Button onClick={handleReflection} disabled={!reflectionText.trim()} size="sm" variant="secondary" className="w-full rounded-full">Save to journal</Button>
         </CardContent>
       </Card>
     </motion.div>

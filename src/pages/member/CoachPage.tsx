@@ -57,13 +57,9 @@ const CoachPage = () => {
           .single();
 
         if (coachData) {
-          setCoach({
-            ...(coachData as any),
-            specialties: (coachData.specialties as string[]) || [],
-          });
+          setCoach({ ...(coachData as any), specialties: (coachData.specialties as string[]) || [] });
         }
 
-        // Fetch availability
         const { data: slots } = await supabase
           .from('coach_availability')
           .select('*')
@@ -72,7 +68,6 @@ const CoachPage = () => {
           .order('start_time');
         setAvailability(slots || []);
 
-        // Fetch existing bookings for next 2 weeks
         const now = new Date();
         const twoWeeks = addDays(now, 14);
         const { data: bookings } = await supabase
@@ -92,7 +87,6 @@ const CoachPage = () => {
     if (!availability.length) return [];
     const slots: { date: Date; slot: AvailabilitySlot }[] = [];
     const today = startOfDay(new Date());
-
     for (let i = 0; i < 14; i++) {
       const date = addDays(today, i);
       const dayOfWeek = getDay(date);
@@ -102,14 +96,11 @@ const CoachPage = () => {
         const slotDateTime = new Date(date);
         slotDateTime.setHours(h, m, 0, 0);
         if (slotDateTime > new Date()) {
-          // Check if already booked
           const isBooked = existingBookings.some(b => {
             const bTime = new Date(b.scheduled_at);
             return Math.abs(bTime.getTime() - slotDateTime.getTime()) < 60000;
           });
-          if (!isBooked) {
-            slots.push({ date: slotDateTime, slot });
-          }
+          if (!isBooked) slots.push({ date: slotDateTime, slot });
         }
       });
     }
@@ -123,13 +114,9 @@ const CoachPage = () => {
     const [startH, startM] = slot.start_time.split(':').map(Number);
     const [endH] = slot.end_time.split(':').map(Number);
     const duration = (endH * 60 + (endM || 0)) - (startH * 60 + startM);
-
     const { error } = await supabase.from('meeting_bookings').insert({
-      user_id: user.id,
-      coach_id: coachId,
-      scheduled_at: slotDate.toISOString(),
-      duration_minutes: duration > 0 ? duration : 30,
-      status: 'scheduled',
+      user_id: user.id, coach_id: coachId, scheduled_at: slotDate.toISOString(),
+      duration_minutes: duration > 0 ? duration : 30, status: 'scheduled',
     });
     setBooking(false);
     if (error) { toast.error('Failed to book session'); return; }
@@ -137,16 +124,10 @@ const CoachPage = () => {
     setExistingBookings(prev => [...prev, { scheduled_at: slotDate.toISOString() }]);
   };
 
-  const certBadgeColor: Record<string, string> = {
-    ACC: 'bg-blue-100 text-blue-800',
-    PCC: 'bg-green-100 text-green-800',
-    MCC: 'bg-amber-100 text-amber-800',
-  };
-
   if (loading) {
     return (
       <div className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto">
-        <h1 className="text-3xl font-black tracking-tight mb-8">Your Coach</h1>
+        <h1 className="text-3xl font-[900] tracking-tight mb-10">Your Coach</h1>
         <p className="text-sm text-muted-foreground">Loading...</p>
       </div>
     );
@@ -161,12 +142,14 @@ const CoachPage = () => {
       transition={{ duration: 0.4 }}
       className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
     >
-      <h1 className="text-3xl font-black tracking-tight mb-8">Your Coach</h1>
+      <h1 className="text-3xl font-[900] tracking-tight mb-2">Your Coach</h1>
+      <p className="text-sm text-muted-foreground mb-10">Your personal relocation coach and session booking</p>
+
       {!coach ? (
         <Card className="border border-border">
           <CardContent className="py-12 text-center">
             <Heart className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
-            <h2 className="text-lg font-black tracking-tight mb-2">Your coach will be assigned soon</h2>
+            <h2 className="text-lg font-[900] tracking-tight mb-2">Your coach will be assigned soon</h2>
             <p className="text-sm text-muted-foreground max-w-xs mx-auto">
               We're matching you with a coach who understands your journey. You'll be notified once they're assigned.
             </p>
@@ -178,13 +161,13 @@ const CoachPage = () => {
             <CardContent className="pt-8 pb-6 text-center">
               <Avatar className="h-24 w-24 mx-auto mb-4">
                 {coach.photo_url && <AvatarImage src={coach.photo_url} alt={coach.name} />}
-                <AvatarFallback className="text-2xl font-black bg-muted text-primary">
+                <AvatarFallback className="text-2xl font-[900] bg-muted text-primary">
                   {coach.name.split(' ').map(n => n[0]).join('')}
                 </AvatarFallback>
               </Avatar>
-              <h2 className="text-xl font-black tracking-tight mb-1">{coach.name}</h2>
+              <h2 className="text-xl font-[900] tracking-tight mb-1">{coach.name}</h2>
               {coach.certification_level && coach.certification_level !== 'non-certified' && (
-                <Badge className={`text-xs mb-2 ${certBadgeColor[coach.certification_level] || ''}`}>
+                <Badge variant="secondary" className="text-xs mb-2">
                   {coach.certification_level} Certified
                 </Badge>
               )}
@@ -206,12 +189,11 @@ const CoachPage = () => {
             )}
           </Card>
 
-          {/* Booking Section */}
           <Card className="border border-border">
             <CardContent className="py-6">
               <div className="flex items-center gap-2 mb-4">
                 <Calendar className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-black tracking-tight">Book a Session</h3>
+                <h3 className="text-lg font-[900] tracking-tight">Book a Session</h3>
               </div>
               {upcomingSlots.length === 0 ? (
                 <p className="text-sm text-muted-foreground">No available slots in the next two weeks.</p>
@@ -225,7 +207,7 @@ const CoachPage = () => {
                           {s.slot.start_time?.slice(0, 5)} – {s.slot.end_time?.slice(0, 5)}
                         </p>
                       </div>
-                      <Button size="sm" disabled={booking} onClick={() => bookSlot(s.date, s.slot)}>
+                      <Button size="sm" className="rounded-full" disabled={booking} onClick={() => bookSlot(s.date, s.slot)}>
                         <Check className="h-4 w-4 mr-1" />Book
                       </Button>
                     </div>
@@ -234,7 +216,6 @@ const CoachPage = () => {
               )}
             </CardContent>
           </Card>
-          {/* Session Notes Section */}
           <CoachNotes userId={user?.id} />
         </div>
       )}
@@ -265,7 +246,7 @@ const CoachNotes = ({ userId }: { userId?: string }) => {
       <CardContent className="py-6">
         <div className="flex items-center gap-2 mb-4">
           <FileText className="h-5 w-5 text-primary" />
-          <h3 className="text-lg font-black tracking-tight">Coach's Notes</h3>
+          <h3 className="text-lg font-[900] tracking-tight">Coach's Notes</h3>
         </div>
         <div className="space-y-3">
           {notes.map((n: any) => (
