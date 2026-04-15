@@ -338,8 +338,13 @@ export function getVisibleQuestions(answers: Record<string, number | number[]>):
     const depAnswer = answers[q.conditional.questionId];
     if (depAnswer === undefined) return false;
     if (Array.isArray(depAnswer)) {
-      // For multi-select dependency, check if any selected value matches
-      return depAnswer.some(v => q.conditional!.values.includes(v));
+      // Multi-select stores indices — resolve to values for conditional check
+      const depQuestion = ASSESSMENT_QUESTIONS.find(dq => dq.id === q.conditional!.questionId);
+      if (!depQuestion) return false;
+      const values = depAnswer.map(idx =>
+        idx >= 0 && idx < depQuestion.options.length ? depQuestion.options[idx].value : idx
+      );
+      return values.some(v => q.conditional!.values.includes(v));
     }
     return q.conditional.values.includes(depAnswer);
   });
