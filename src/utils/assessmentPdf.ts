@@ -22,7 +22,7 @@ const CATEGORY_BAR_COLORS: Record<string, [number, number, number]> = {
   'Family & Accompanying': [236, 72, 153],
   'Geographic Factors': [217, 119, 6],
   'Social Readiness': [159, 18, 57],
-  'Resilience & Adaptability': [120, 113, 108],
+  'Resilience & Adaptability': [107, 114, 82],
 };
 
 const CATEGORY_MAXIMUMS: Record<string, number> = {
@@ -113,83 +113,83 @@ export function generateAssessmentPdf(
   // ═══════════════════════════════════════════════
 
   // ── Blue header block ──
-  const headerH = 110;
+  const headerH = 112;
   doc.setFillColor(...DEEP_BLUE);
   doc.rect(0, 0, pw, headerH, 'F');
 
   // Logo
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(20);
-  doc.text('Re-Rooted\u00AE', mx, 20);
+  doc.setFontSize(24);
+  doc.text('Re-Rooted\u00AE', mx, 22);
   doc.setFontSize(7);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(200, 200, 230);
-  doc.text('SWITZERLAND', mx + 55, 20);
+  doc.setTextColor(180, 185, 220);
+  doc.text('SWITZERLAND', mx + 64, 22);
 
   // Title
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(22);
-  doc.text('Relocation Complexity Score', mx, 38);
+  doc.setFontSize(26);
+  doc.text('Relocation Complexity Score', mx, 42);
 
   // Meta line
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
-  doc.setTextColor(200, 200, 230);
+  doc.setTextColor(180, 185, 220);
   const metaParts: string[] = [];
   if (user.name) metaParts.push(sanitize(user.name));
   if (user.countryFrom && user.countryTo) {
     metaParts.push(sanitize(`${user.countryFrom} -> ${user.countryTo}`));
   }
   metaParts.push(dateStr);
-  doc.text(metaParts.join('  |  '), mx, 47);
+  doc.text(metaParts.join('  |  '), mx, 52);
 
   // ── Score circle ──
-  const circleX = mx + 25;
-  const circleY = 74;
-  const circleR = 16;
-  doc.setDrawColor(180, 180, 210);
-  doc.setLineWidth(0.8);
+  const circleX = mx + 28;
+  const circleY = 78;
+  const circleR = 20;
+  doc.setDrawColor(160, 165, 200);
+  doc.setLineWidth(0.6);
   doc.circle(circleX, circleY, circleR, 'S');
 
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(28);
-  doc.text(String(assessment.score), circleX, circleY + 1, { align: 'center' });
-  doc.setFontSize(7);
+  doc.setFontSize(34);
+  doc.text(String(assessment.score), circleX, circleY + 2, { align: 'center' });
+  doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(200, 200, 230);
-  doc.text('out of 100', circleX, circleY + 8, { align: 'center' });
+  doc.setTextColor(180, 185, 220);
+  doc.text('out of 100', circleX, circleY + 10, { align: 'center' });
 
   // ── Band label pill ──
-  const bandX = mx + 50;
-  const bandY = circleY - 10;
-  doc.setFillColor(200, 200, 230);
-  doc.roundedRect(bandX, bandY, 48, 7, 2, 2, 'F');
+  const bandX = mx + 58;
+  const bandY = circleY - 12;
+  doc.setFillColor(190, 195, 225);
+  doc.roundedRect(bandX, bandY, 52, 8, 2, 2, 'F');
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8);
+  doc.setFontSize(9);
   doc.setTextColor(...DEEP_BLUE);
-  doc.text(sanitize(band.label), bandX + 24, bandY + 4.8, { align: 'center' });
+  doc.text(sanitize(band.label), bandX + 26, bandY + 5.5, { align: 'center' });
 
   // Recommendation
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(210, 210, 230);
-  const recLines = doc.splitTextToSize(sanitize(band.recommendation), cw - 55);
-  doc.text(recLines, bandX, bandY + 14);
+  doc.setFontSize(9);
+  doc.setTextColor(190, 195, 225);
+  const recLines = doc.splitTextToSize(sanitize(band.recommendation), cw - 62);
+  doc.text(recLines, bandX, bandY + 16);
 
   // ── PRIORITY FOCUS AREAS ──
-  y = headerH + 10;
+  y = headerH + 8;
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8);
+  doc.setFontSize(9);
   doc.setTextColor(...DEEP_BLUE);
   doc.text('PRIORITY FOCUS AREAS', mx, y);
-  y += 6;
+  y += 5;
 
   const priorities = getPriorityDimensions(assessment.score, assessment.answers);
   const colW = (cw - 4) / 2;
-  const pillH = 9;
+  const pillH = 10;
   const pillGap = 2;
 
   priorities.forEach((dimId, i) => {
@@ -202,20 +202,20 @@ export function generateAssessmentPdf(
     doc.setFillColor(...LIGHT_BG);
     doc.roundedRect(px, py, colW, pillH, 3, 3, 'F');
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
+    doc.setFontSize(9);
     doc.setTextColor(...DEEP_BLUE);
-    doc.text(sanitize(dim.name), px + 5, py + 5.8);
+    doc.text(sanitize(dim.name), px + 6, py + 6.5);
   });
 
   const priorityRows = Math.ceil(priorities.length / 2);
-  y += priorityRows * (pillH + pillGap) + 8;
+  y += priorityRows * (pillH + pillGap) + 6;
 
   // ── COMPLEXITY BY CATEGORY ──
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8);
+  doc.setFontSize(9);
   doc.setTextColor(...DEEP_BLUE);
   doc.text('COMPLEXITY BY CATEGORY', mx, y);
-  y += 6;
+  y += 5;
 
   const categoryOrder = Object.keys(CATEGORY_MAXIMUMS);
   const catData = categoryOrder.map((cat) => ({
@@ -225,31 +225,31 @@ export function generateAssessmentPdf(
   }));
   catData.sort((a, b) => b.score / b.max - a.score / a.max);
 
-  const barH = 4;
+  const barH = 5;
   const barMaxW = cw;
   const barRowH = 12;
 
   catData.forEach((cat) => {
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8.5);
+    doc.setFontSize(9.5);
     doc.setTextColor(...TEXT_DARK);
     doc.text(sanitize(cat.name), mx, y);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8.5);
+    doc.setFontSize(9);
     doc.setTextColor(...TEXT_MID);
     doc.text(`${cat.score} / ${cat.max}`, pw - mx, y, { align: 'right' });
     y += 2.5;
 
     // Background bar
     doc.setFillColor(...LIGHT_BG);
-    doc.roundedRect(mx, y, barMaxW, barH, 1.5, 1.5, 'F');
+    doc.roundedRect(mx, y, barMaxW, barH, 2, 2, 'F');
 
     // Filled bar
     const pct = cat.max > 0 ? cat.score / cat.max : 0;
     const fillW = Math.max(barMaxW * pct, 2);
     const color = CATEGORY_BAR_COLORS[cat.name] || DEEP_BLUE;
     doc.setFillColor(...color);
-    doc.roundedRect(mx, y, fillW, barH, 1.5, 1.5, 'F');
+    doc.roundedRect(mx, y, fillW, barH, 2, 2, 'F');
 
     y += barRowH - 2.5;
   });
