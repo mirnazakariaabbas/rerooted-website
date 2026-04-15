@@ -129,7 +129,7 @@ const CulturalCompanion = () => {
       ) : comparison ? (
         <>
           <Card className="mb-8 border border-border bg-muted">
-            <CardHeader className="pb-2"><CardTitle className="text-base font-black tracking-tight">Overview</CardTitle></CardHeader>
+            <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Overview</CardTitle></CardHeader>
             <CardContent><p className="text-sm leading-relaxed text-foreground/80">{comparison.summary}</p></CardContent>
           </Card>
           <div className="space-y-2">
@@ -188,7 +188,7 @@ const CulturalCompanion = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-primary" />
-              <CardTitle className="text-base font-black tracking-tight">AI Cultural Tips</CardTitle>
+              <CardTitle className="text-base font-[900] tracking-tight">AI Cultural Tips</CardTitle>
             </div>
             <Button variant="ghost" size="sm" onClick={() => setTipsKey(k => k + 1)} disabled={tipsLoading}>
               <RefreshCw className={`h-3 w-3 mr-1 ${tipsLoading ? 'animate-spin' : ''}`} /> New Tips
