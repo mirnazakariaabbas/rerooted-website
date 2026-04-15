@@ -262,14 +262,6 @@ const AssessmentPage = () => {
             </CardContent>
           </Card>
 
-          <Button
-            variant="outline"
-            className="w-full rounded-full mb-10 gap-2"
-            onClick={() => generateAssessmentPdf(user, assessment)}
-          >
-            <Download className="h-4 w-4" /> Download PDF Report
-          </Button>
-
           <Card className="mb-10 border border-border">
             <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Priority Focus Areas</CardTitle></CardHeader>
             <CardContent>
@@ -287,26 +279,16 @@ const AssessmentPage = () => {
             </CardContent>
           </Card>
 
-          <Button onClick={() => { setTaking(true); setCurrentIdx(0); setAnswers({}); }} variant="outline" className="w-full rounded-full mb-10">Retake Assessment</Button>
-
-          <Card className="border border-border">
-            <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Reflection Log</CardTitle></CardHeader>
-            <CardContent>
-              {reflections.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-6">Your reflections from the Home tab will appear here.</p>
-              ) : (
-                <div className="space-y-3">
-                  {reflections.slice(-5).reverse().map(r => (
-                    <div key={r.id} className="border-l-2 border-accent pl-3">
-                      <p className="text-xs text-muted-foreground">{new Date(r.date).toLocaleDateString()}</p>
-                      <p className="text-xs italic text-muted-foreground mb-1">"{r.prompt}"</p>
-                      <p className="text-sm">{r.response}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <div className="space-y-3 mb-10">
+            <Button onClick={() => { setTaking(true); setCurrentIdx(0); setAnswers({}); }} variant="outline" className="w-full rounded-full">Retake Assessment</Button>
+            <Button
+              variant="outline"
+              className="w-full rounded-full gap-2"
+              onClick={() => generateAssessmentPdf(user, assessment)}
+            >
+              <Download className="h-4 w-4" /> Download PDF Report
+            </Button>
+          </div>
         </>
       )}
     </motion.div>
