@@ -64,7 +64,7 @@ export function generateAssessmentPdf(
   }
   if (user.countryFrom && user.countryTo) {
     doc.text(
-      `Relocation: ${user.countryFrom} \u2192 ${user.countryTo}`,
+      `Relocation: ${user.countryFrom} to ${user.countryTo}`,
       margin,
       y
     );
@@ -136,7 +136,7 @@ export function generateAssessmentPdf(
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(...TEXT_DARK);
-    doc.text(`${dim.icon}  ${dim.name}`, margin + 4, y);
+    doc.text(`- ${sanitize(dim.name)}`, margin + 4, y);
     y += 6;
   });
   y += 6;
@@ -182,14 +182,14 @@ export function generateAssessmentPdf(
         const opt = q.options.find((o) => o.value === val);
         if (opt) {
           checkPageBreak(5);
-          doc.text(`\u2022 ${opt.label}`, margin + 6, y);
+          doc.text(`- ${sanitize(opt.label)}`, margin + 6, y);
           y += 4;
         }
       });
     } else {
       const opt = q.options.find((o) => o.value === answer);
       if (opt) {
-        doc.text(`\u2192 ${opt.label}`, margin + 6, y);
+        doc.text(`> ${sanitize(opt.label)}`, margin + 6, y);
         y += 4;
       }
     }
