@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
 import {
@@ -17,7 +18,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download, ArrowRight } from 'lucide-react';
 import { generateAssessmentPdf } from '@/utils/assessmentPdf';
 
 const SESSION_KEY = 'assessment-in-progress';
@@ -270,9 +271,9 @@ const AssessmentPage = () => {
                   const dim = ROOTING_IN_DIMENSIONS.find(d => d.id === dimId);
                   if (!dim) return null;
                   return (
-                    <div key={dimId} className="flex items-center gap-2 text-sm p-3 rounded-lg bg-muted">
-                      <span>{dim.icon}</span><span>{dim.name}</span>
-                    </div>
+                    <button key={dimId} onClick={() => navigate('/app/home?dimension=' + dimId)} className="w-full flex items-center gap-2 text-sm p-3 rounded-lg bg-muted hover:bg-muted/70 transition-colors text-left">
+                      <span>{dim.icon}</span><span className="flex-1">{dim.name}</span><ArrowRight className="h-4 w-4 text-muted-foreground" />
+                    </button>
                   );
                 })}
               </div>

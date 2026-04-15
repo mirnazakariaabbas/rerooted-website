@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useUser } from '@/contexts/UserContext';
@@ -19,9 +19,18 @@ import logoShorthand from '@/assets/logo-shorthand-blue.png';
 const MemberHome = () => {
   const { user, reflections, addReflection, dimensionProgress } = useUser();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [reflectionText, setReflectionText] = useState('');
   const [shareWithCoach, setShareWithCoach] = useState(false);
   const [selectedDimension, setSelectedDimension] = useState<string | null>(null);
+
+  useEffect(() => {
+    const dim = searchParams.get('dimension');
+    if (dim) {
+      setSelectedDimension(dim);
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   const stageInfo = STAGE_LABELS[user.stage];
   const monthsAgo = user.arrivalDate ? differenceInMonths(new Date(), new Date(user.arrivalDate)) : 0;
