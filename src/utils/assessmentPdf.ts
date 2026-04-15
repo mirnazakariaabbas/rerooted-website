@@ -227,7 +227,7 @@ export function generateAssessmentPdf(
 
   const barH = 4;
   const barMaxW = cw;
-  const barRowH = 14;
+  const barRowH = 12;
 
   catData.forEach((cat) => {
     doc.setFont('helvetica', 'bold');
