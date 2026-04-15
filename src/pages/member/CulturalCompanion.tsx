@@ -101,7 +101,8 @@ const CulturalCompanion = () => {
       transition={{ duration: 0.4 }}
       className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
     >
-      <h1 className="text-3xl font-black tracking-tight mb-4">Your Cultural Companion</h1>
+      <h1 className="text-3xl font-[900] tracking-tight mb-2">Your Cultural Companion</h1>
+      <p className="text-sm text-muted-foreground mb-6">Explore cultural differences between countries</p>
       <div className="flex items-center gap-2 mb-8 flex-wrap">
         <CountryPicker value={homeCountry} onChange={setHomeCountry} />
         <button onClick={swap} className="p-1.5 rounded-full hover:bg-muted transition-colors">
