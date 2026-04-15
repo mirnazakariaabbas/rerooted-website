@@ -22,7 +22,7 @@ const CATEGORY_BAR_COLORS: Record<string, [number, number, number]> = {
   'Family & Accompanying': [236, 72, 153],
   'Geographic Factors': [217, 119, 6],
   'Social Readiness': [159, 18, 57],
-  'Resilience & Adaptability': [120, 113, 108],
+  'Resilience & Adaptability': [107, 114, 82],
 };
 
 const CATEGORY_MAXIMUMS: Record<string, number> = {
