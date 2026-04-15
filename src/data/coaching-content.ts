@@ -46,7 +46,7 @@ export const ROOTING_IN_DIMENSIONS: CoachingDimension[] = [
   },
   {
     id: 'language-learning',
-    name: 'Language Learning',
+    name: 'Language Confidence',
     shortDescription: 'Building connection through the local language',
     icon: '💬',
     fullContent: `Language is more than vocabulary and grammar — it's the key to belonging. Even basic phrases signal respect, effort, and openness. You don't need to be fluent to be welcomed, but you do need to try.\n\nThe hardest part isn't the learning itself — it's the vulnerability. Speaking a language badly makes you feel small, especially if you're accomplished in your native tongue. But that vulnerability is also what builds the deepest connections.`,
@@ -80,7 +80,7 @@ export const ROOTING_IN_DIMENSIONS: CoachingDimension[] = [
   },
   {
     id: 'social-life',
-    name: 'Building a Social Life',
+    name: 'Social Integration',
     shortDescription: 'Creating meaningful connections in a new place',
     icon: '🤝',
     fullContent: `Making friends as an adult is hard. Making friends as an adult in a foreign country is harder. The social structures that used to support you — school friends, neighbors, colleagues you've known for years — don't exist here yet.\n\nBuilding a social life abroad requires intention. You have to say yes to things that feel awkward. You have to show up consistently. And you have to accept that depth takes time — you can't fast-track trust.`,
@@ -111,6 +111,40 @@ export const ROOTING_IN_DIMENSIONS: CoachingDimension[] = [
       'Maintain home-culture rituals: food, holidays, bedtime stories in your language.',
       'Let them feel sad about what they left. Don\'t rush them into "isn\'t this exciting?"',
       'Connect with other expat families. Kids bond quickly when they share the experience.',
+    ],
+  },
+  {
+    id: 'leadership-transition',
+    name: 'Leadership in Transition',
+    shortDescription: 'Leading effectively while navigating your own cultural shift',
+    icon: '🧭',
+    fullContent: `Leading a team in a new cultural context means recalibrating everything you thought you knew about management. Your leadership style, communication patterns, and decision-making approach were shaped by your home culture. Here, the rules are different.\n\nEffective cross-cultural leadership requires humility, curiosity, and the willingness to adapt without losing your authenticity. It means learning when to lead from the front and when to step back, when directness serves you and when it alienates.`,
+    reflectionPrompts: [
+      'What leadership behavior that worked at home is not landing here?',
+      'How do your team members prefer to receive feedback?',
+      'What assumptions about hierarchy or autonomy have you had to revisit?',
+    ],
+    practicalTips: [
+      'Observe how respected local leaders communicate. Adapt your style without copying theirs.',
+      'Ask your team directly how they prefer to be managed. Don\'t assume.',
+      'Find a leadership peer group of other relocated executives. Shared experience accelerates learning.',
+    ],
+  },
+  {
+    id: 'family-support',
+    name: 'Family Support',
+    shortDescription: 'Supporting your partner and family through the transition',
+    icon: '👨‍👩‍👧',
+    fullContent: `Your relocation doesn't just affect you. Your partner may have left behind their career, their friends, their identity. Your children are navigating new schools, new languages, new social dynamics. The family unit absorbs the stress of the move in ways that aren't always visible.\n\nFamily support means creating space for everyone's experience, not just the person whose job triggered the move. It means honest conversations, shared rituals, and the recognition that each family member is on their own journey.`,
+    reflectionPrompts: [
+      'How is your partner adjusting? Have you asked them recently?',
+      'What family ritual from home have you maintained here?',
+      'Is there a family member whose struggle you might be overlooking?',
+    ],
+    practicalTips: [
+      'Schedule a weekly family check-in. Make it casual but consistent.',
+      'Help your partner build their own social network. Their integration matters as much as yours.',
+      'Acknowledge that the trailing spouse often has the harder adjustment. Validate their experience.',
     ],
   },
 ];
