@@ -1,26 +1,32 @@
 
 
-## Plan: Fix Conditional Logic for Q17 and Q18
+## Plan: Make Priority Focus Areas Clickable Buttons
 
-The issue is clear: Q17 and Q18 currently show when Q15 answer is value 8 ("Relocating alone — partner and/or family staying in home country"), but they should NOT appear in this scenario since the partner is staying behind.
+The Priority Focus Areas in the assessment results are currently static `div` elements. They need to become clickable buttons that navigate the user to the corresponding dimension detail view on the Member Home page.
+
+### Current State
+- MemberHome uses local state (`selectedDimension`) to show `DimensionDetail` when a dimension is clicked
+- The assessment page renders focus areas as plain `div` elements with icon + name
+- Both pages share `ROOTING_IN_DIMENSIONS` data with dimension IDs like `values-harmonization`, `cultural-adaptation`, etc.
 
 ### Change
 
-**`src/data/assessment-questions.ts`** — Update conditional values for Q17 and Q18
+**`src/pages/member/AssessmentPage.tsx`**
 
-- Q17: Change `conditional.values` from `[3, 7, 8]` to `[3, 7]` (remove 8)
-- Q18: Change `conditional.values` from `[3, 7, 8]` to `[3, 7]` (remove 8)
+Replace the static `div` items in the Priority Focus Areas section with clickable buttons that use `useNavigate` to route to `/app/home?dimension={dimId}`.
 
-Q16 is already correct (values `[7, 9]`) and doesn't need changes.
+- Import `useNavigate` from `react-router-dom`
+- Change each focus area `div` to a `button` with an arrow icon, styled consistently with the app
+- On click, navigate to `/app/home?dimension={dimId}`
 
-### Verification
+**`src/pages/member/MemberHome.tsx`**
 
-After fix:
-- "Solo — no partner or dependents" (value 4) → Q16: No, Q17: No, Q18: No
-- "With partner, no children" (value 3) → Q16: No, Q17: Yes, Q18: Yes
-- "With partner and children" (value 7) → Q16: Yes, Q17: Yes, Q18: Yes
-- "Single parent with children" (value 9) → Q16: Yes, Q17: No, Q18: No
-- "Relocating alone — partner/family staying in home country" (value 8) → Q16: No, Q17: No, Q18: No
+Read the `dimension` query parameter on mount. If present, auto-select that dimension to show the `DimensionDetail` view.
 
-No database changes required.
+- Import `useSearchParams` from `react-router-dom`
+- On mount, check for `?dimension=` param and set `selectedDimension` accordingly
+- Clear the param from the URL after consuming it
+
+### Result
+Clicking a priority focus area from the assessment results navigates to the Member Home and opens the relevant dimension detail page.
 
