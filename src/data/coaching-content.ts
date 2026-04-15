@@ -63,7 +63,7 @@ export const ROOTING_IN_DIMENSIONS: CoachingDimension[] = [
   },
   {
     id: 'emotional-cup',
-    name: 'Filling the Emotional Cup',
+    name: 'Emotional Wellbeing',
     shortDescription: 'Protecting and restoring your emotional energy',
     icon: '☕',
     fullContent: `Relocation drains your emotional cup faster than you expect. You're saying goodbye to the familiar, navigating uncertainty, and performing at work — all while processing the emotional weight of starting over.\n\nFilling your emotional cup means deliberately doing things that restore you. Not productive things. Not networking. Things that make you feel like yourself — a walk in nature, cooking a meal from home, calling someone who knows the real you.`,
