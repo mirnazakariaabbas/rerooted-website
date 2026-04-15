@@ -85,9 +85,8 @@ const AssessmentPage = () => {
     const newVisible = getVisibleQuestions(newAnswers);
     if (currentIdx < newVisible.length - 1) {
       setTimeout(() => setCurrentIdx(i => i + 1), 300);
-    } else {
-      finishAssessment(newAnswers);
     }
+    // On last question, don't auto-submit — wait for explicit Submit click
   };
 
   const handleMultiToggle = (questionId: string, optionIndex: number) => {
@@ -199,11 +198,15 @@ const AssessmentPage = () => {
           <Button variant="ghost" size="sm" onClick={goBack} disabled={currentIdx === 0}>
             <ChevronLeft className="h-4 w-4 mr-1" /> Previous
           </Button>
-          {isMulti && (
+          {isMulti ? (
             <Button onClick={handleMultiNext} disabled={multiSelected.length === 0} className="rounded-full px-6">
-              {currentIdx === visibleQuestions.length - 1 ? 'Finish' : 'Next'} <ChevronRight className="h-4 w-4 ml-1" />
+              {currentIdx === visibleQuestions.length - 1 ? 'Submit' : 'Next'} <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
-          )}
+          ) : currentIdx === visibleQuestions.length - 1 && answers[q.id] !== undefined ? (
+            <Button onClick={() => finishAssessment(answers)} className="rounded-full px-6">
+              Submit <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          ) : null}
         </div>
       </div>
     );
