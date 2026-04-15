@@ -44,6 +44,10 @@ function clearProgress() {
   try { sessionStorage.removeItem(SESSION_KEY); } catch {}
 }
 
+/**
+ * Convert multi-select answers from option indices to option values.
+ * Single-select answers are already stored as values and pass through unchanged.
+ */
 function convertMultiIndicesToValues(
   answers: Record<string, number | number[]>
 ): Record<string, number | number[]> {
@@ -123,9 +127,21 @@ const AssessmentPage = () => {
   };
 
   const finishAssessment = (finalAnswers: Record<string, number | number[]>) => {
+    // Store indices for multi-select so we can map back to exact labels later
     const valueAnswers = convertMultiIndicesToValues(finalAnswers);
     const score = calculateDifficultyScore(valueAnswers);
-    setAssessment({ completedAt: new Date().toISOString(), score, answers: valueAnswers });
+    // Store raw indices for multi-select (preserves identity), values for single-select
+    const storedAnswers: Record<string, number | number[]> = {};
+    for (const [qId, answer] of Object.entries(finalAnswers)) {
+      if (Array.isArray(answer)) {
+        // Store as indices (they are already indices from handleMultiToggle)
+        storedAnswers[qId] = answer;
+      } else {
+        // Single-select: store the value directly
+        storedAnswers[qId] = answer;
+      }
+    }
+    setAssessment({ completedAt: new Date().toISOString(), score, answers: storedAnswers });
     setTaking(false);
   };
 
