@@ -179,7 +179,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   },
   {
     id: 'q17', text: "What is the impact on the partner's career?", category: 'Family & Accompanying', type: 'single',
-    conditional: { questionId: 'q15', values: [3, 7, 8] },
+    conditional: { questionId: 'q15', values: [3, 7] },
     options: [
       { label: 'Partner works remotely — minimal career disruption', value: 2 },
       { label: 'Partner choosing a career break', value: 4 },
@@ -189,7 +189,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   },
   {
     id: 'q18', text: 'How does the partner feel about the move?', category: 'Family & Accompanying', type: 'single',
-    conditional: { questionId: 'q15', values: [3, 7, 8] },
+    conditional: { questionId: 'q15', values: [3, 7] },
     options: [
       { label: 'Enthusiastic and has some connections in the host country', value: 1 },
       { label: 'Supportive but has no network or connections there', value: 4 },
