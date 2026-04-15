@@ -50,7 +50,14 @@ function getCategoryScore(
     const answer = answers[q.id];
     if (answer === undefined) continue;
     if (Array.isArray(answer)) {
-      const sum = answer.reduce((a, b) => a + b, 0);
+      // Resolve indices to values
+      let values = answer.map(idx =>
+        idx >= 0 && idx < q.options.length ? q.options[idx].value : idx
+      );
+      if (q.ignoreIfAlsoSelected !== undefined && values.length > 1) {
+        values = values.filter(v => v !== q.ignoreIfAlsoSelected);
+      }
+      const sum = values.reduce((a, b) => a + b, 0);
       total += q.multiSelectCap ? Math.min(sum, q.multiSelectCap) : sum;
     } else {
       total += answer;
@@ -60,31 +67,25 @@ function getCategoryScore(
 }
 
 /**
- * For multi-select answers stored as value arrays, resolve each value to a
- * distinct option label. Handles duplicate values (e.g. Q2 has two options
- * with value 3) by tracking which options have already been matched.
+ * For multi-select answers stored as option indices, resolve each index to its label.
+ * Falls back to value-based matching for legacy data where values were stored instead of indices.
  */
 function resolveMultiLabels(
   questionId: string,
-  values: number[]
+  indices: number[]
 ): string[] {
   const q = ASSESSMENT_QUESTIONS.find((q) => q.id === questionId);
-  if (!q) return values.map(String);
+  if (!q) return indices.map(String);
 
-  const usedIndices = new Set<number>();
-  const labels: string[] = [];
-
-  for (const val of values) {
-    // Find the first option with this value that hasn't been used yet
-    const idx = q.options.findIndex(
-      (o, i) => o.value === val && !usedIndices.has(i)
-    );
-    if (idx !== -1) {
-      usedIndices.add(idx);
-      labels.push(q.options[idx].label);
+  return indices.map((idx) => {
+    // If the index is a valid option index, use it directly
+    if (idx >= 0 && idx < q.options.length) {
+      return q.options[idx].label;
     }
-  }
-  return labels;
+    // Fallback: treat as a value (legacy data)
+    const opt = q.options.find((o) => o.value === idx);
+    return opt ? opt.label : String(idx);
+  });
 }
 
 export function generateAssessmentPdf(

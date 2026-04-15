@@ -44,25 +44,6 @@ function clearProgress() {
   try { sessionStorage.removeItem(SESSION_KEY); } catch {}
 }
 
-function convertMultiIndicesToValues(
-  answers: Record<string, number | number[]>
-): Record<string, number | number[]> {
-  const converted: Record<string, number | number[]> = {};
-  for (const [qId, answer] of Object.entries(answers)) {
-    if (Array.isArray(answer)) {
-      const question = ASSESSMENT_QUESTIONS.find(q => q.id === qId);
-      if (question) {
-        converted[qId] = answer.map(idx => question.options[idx].value);
-      } else {
-        converted[qId] = answer;
-      }
-    } else {
-      converted[qId] = answer;
-    }
-  }
-  return converted;
-}
-
 const bandColors: Record<string, string> = {
   'Standard Support': 'bg-primary text-primary-foreground',
   'Enhanced Support': 'bg-secondary text-secondary-foreground',
@@ -79,8 +60,7 @@ const AssessmentPage = () => {
   const [currentIdx, setCurrentIdx] = useState(saved?.currentIdx ?? 0);
   const [answers, setAnswers] = useState<Record<string, number | number[]>>(saved?.answers ?? {});
 
-  const answersAsValues = useMemo(() => convertMultiIndicesToValues(answers), [answers]);
-  const visibleQuestions = useMemo(() => getVisibleQuestions(answersAsValues), [answersAsValues]);
+  const visibleQuestions = useMemo(() => getVisibleQuestions(answers), [answers]);
 
   useEffect(() => {
     if (taking) {
@@ -95,15 +75,14 @@ const AssessmentPage = () => {
 
   const handleSingleAnswer = (questionId: string, value: number) => {
     const newAnswers = { ...answers, [questionId]: value };
-    const newValues = convertMultiIndicesToValues(newAnswers);
     for (const q of ASSESSMENT_QUESTIONS) {
       if (q.conditional?.questionId === questionId && newAnswers[q.id] !== undefined) {
-        const visible = getVisibleQuestions(newValues);
+        const visible = getVisibleQuestions(newAnswers);
         if (!visible.find(vq => vq.id === q.id)) delete newAnswers[q.id];
       }
     }
     setAnswers(newAnswers);
-    const newVisible = getVisibleQuestions(convertMultiIndicesToValues(newAnswers));
+    const newVisible = getVisibleQuestions(newAnswers);
     if (currentIdx < newVisible.length - 1) {
       setTimeout(() => setCurrentIdx(i => i + 1), 300);
     } else {
@@ -123,9 +102,10 @@ const AssessmentPage = () => {
   };
 
   const finishAssessment = (finalAnswers: Record<string, number | number[]>) => {
-    const valueAnswers = convertMultiIndicesToValues(finalAnswers);
-    const score = calculateDifficultyScore(valueAnswers);
-    setAssessment({ completedAt: new Date().toISOString(), score, answers: valueAnswers });
+    // finalAnswers has indices for multi-select, values for single-select
+    // calculateDifficultyScore now resolves indices internally
+    const score = calculateDifficultyScore(finalAnswers);
+    setAssessment({ completedAt: new Date().toISOString(), score, answers: finalAnswers });
     setTaking(false);
   };
 
