@@ -54,6 +54,7 @@ const bandColors: Record<string, string> = {
 
 const AssessmentPage = () => {
   const { user, assessment, setAssessment, reflections, profileLoading } = useUser();
+  const navigate = useNavigate();
 
   const saved = useMemo(() => loadProgress(), []);
   const [taking, setTaking] = useState(false);
