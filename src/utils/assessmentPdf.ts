@@ -14,6 +14,10 @@ const WARM_WHITE = [250, 249, 246] as const; // #FAF9F6
 const TEXT_DARK = [30, 30, 40] as const;
 const TEXT_MID = [100, 100, 115] as const;
 
+// Strip characters outside the Latin-1 range that Helvetica cannot render
+const sanitize = (str: string) =>
+  str.replace(/[^\x20-\x7E\u00A0-\u00FF]/g, '').trim();
+
 export function generateAssessmentPdf(
   user: UserProfile,
   assessment: AssessmentResult
