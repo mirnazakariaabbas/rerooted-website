@@ -2,7 +2,6 @@ import jsPDF from 'jspdf';
 import {
   ASSESSMENT_QUESTIONS,
   getScoreBand,
-  getScoreInterpretation,
   getPriorityDimensions,
 } from '@/data/assessment-questions';
 import { ROOTING_IN_DIMENSIONS } from '@/data/coaching-content';
@@ -11,10 +10,9 @@ import type { UserProfile, AssessmentResult } from '@/types/user';
 /* ── Palette ── */
 const DEEP_BLUE: [number, number, number] = [31, 41, 156];
 const FRESH_GREEN: [number, number, number] = [61, 167, 118];
-const WARM_WHITE: [number, number, number] = [250, 249, 246];
 const TEXT_DARK: [number, number, number] = [30, 30, 40];
 const TEXT_MID: [number, number, number] = [120, 120, 135];
-const LIGHT_BG: [number, number, number] = [237, 237, 248]; // light lavender for pills/rows
+const LIGHT_BG: [number, number, number] = [237, 237, 248];
 
 const CATEGORY_BAR_COLORS: Record<string, [number, number, number]> = {
   'Assignment Context': [31, 41, 156],
@@ -39,17 +37,20 @@ const CATEGORY_MAXIMUMS: Record<string, number> = {
 };
 
 /* ── Helpers ── */
+// jsPDF built-in fonts only support Latin-1 (cp1252). Replace all
+// characters outside that range with safe ASCII equivalents.
 const sanitize = (str: string) =>
   str
-    .replace(/\u2013/g, '\u2013')   // keep en-dash
-    .replace(/\u2014/g, '\u2014')   // keep em-dash
-    .replace(/\u2019/g, '\u2019')   // keep right single quote
-    .replace(/\u2018/g, '\u2018')   // keep left single quote
+    .replace(/\u2013/g, '-')   // en-dash -> hyphen
+    .replace(/\u2014/g, ' - ') // em-dash -> spaced hyphen
+    .replace(/\u2019/g, "'")   // right single quote
+    .replace(/\u2018/g, "'")   // left single quote
     .replace(/\u201C/g, '"')
     .replace(/\u201D/g, '"')
-    .replace(/\u2022/g, '-')
-    .replace(/\u2192/g, '>')
-    .replace(/\u00B7/g, '\u00B7')
+    .replace(/\u2022/g, '-')   // bullet
+    .replace(/\u2192/g, '->')  // arrow
+    .replace(/\u00B7/g, '-')   // middle dot
+    .replace(/[^\x20-\x7E\u00A0-\u00FF]/g, '') // strip remaining non-Latin-1
     .trim();
 
 function getCategoryScore(
@@ -87,29 +88,16 @@ function resolveMultiLabels(questionId: string, indices: number[]): string[] {
   });
 }
 
-/* ── Draw helpers ── */
-function drawRoundedRect(
-  doc: jsPDF,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  r: number,
-  style: 'F' | 'S' | 'FD' = 'F'
-) {
-  doc.roundedRect(x, y, w, h, r, r, style);
-}
-
 /* ── Main export ── */
 export function generateAssessmentPdf(
   user: UserProfile,
   assessment: AssessmentResult
 ) {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-  const pw = doc.internal.pageSize.getWidth(); // 210
+  const pw = doc.internal.pageSize.getWidth();  // 210
   const ph = doc.internal.pageSize.getHeight(); // 297
-  const mx = 20; // margin x
-  const cw = pw - mx * 2; // content width
+  const mx = 20;
+  const cw = pw - mx * 2;
   let y = 0;
 
   const dateStr = new Date().toLocaleDateString('en-GB', {
@@ -120,94 +108,89 @@ export function generateAssessmentPdf(
 
   const band = getScoreBand(assessment.score);
 
-  const checkPageBreak = (needed: number) => {
-    if (y + needed > ph - 20) {
-      doc.addPage();
-      y = 20;
-    }
-  };
-
   // ═══════════════════════════════════════════════
   // PAGE 1 — Cover / Summary
   // ═══════════════════════════════════════════════
 
-  // ── Blue header block (~40% of page) ──
-  const headerH = 120;
+  // ── Blue header block ──
+  const headerH = 110;
   doc.setFillColor(...DEEP_BLUE);
   doc.rect(0, 0, pw, headerH, 'F');
 
-  // Logo text
+  // Logo
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(22);
-  doc.text('Re-Rooted\u00AE', mx, 22);
+  doc.setFontSize(20);
+  doc.text('Re-Rooted\u00AE', mx, 20);
   doc.setFontSize(7);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(200, 200, 230);
-  doc.text('SWITZERLAND', mx + 60, 22);
+  doc.text('SWITZERLAND', mx + 55, 20);
 
   // Title
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(24);
-  doc.text('Relocation Complexity Score', mx, 42);
+  doc.setFontSize(22);
+  doc.text('Relocation Complexity Score', mx, 38);
 
   // Meta line
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(200, 200, 230);
   const metaParts: string[] = [];
-  if (user.name) metaParts.push(user.name);
-  if (user.countryFrom && user.countryTo) metaParts.push(`${user.countryFrom} \u2192 ${user.countryTo}`);
+  if (user.name) metaParts.push(sanitize(user.name));
+  if (user.countryFrom && user.countryTo) {
+    metaParts.push(sanitize(`${user.countryFrom} -> ${user.countryTo}`));
+  }
   metaParts.push(dateStr);
-  doc.text(metaParts.join('  \u00B7  '), mx, 52);
+  doc.text(metaParts.join('  |  '), mx, 47);
 
   // ── Score circle ──
-  const circleX = mx + 28;
-  const circleY = 82;
-  const circleR = 18;
-  doc.setDrawColor(200, 200, 230);
-  doc.setLineWidth(1);
+  const circleX = mx + 25;
+  const circleY = 74;
+  const circleR = 16;
+  doc.setDrawColor(180, 180, 210);
+  doc.setLineWidth(0.8);
   doc.circle(circleX, circleY, circleR, 'S');
 
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(32);
-  doc.text(String(assessment.score), circleX, circleY + 2, { align: 'center' });
-  doc.setFontSize(8);
+  doc.setFontSize(28);
+  doc.text(String(assessment.score), circleX, circleY + 1, { align: 'center' });
+  doc.setFontSize(7);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(200, 200, 230);
-  doc.text('out of 100', circleX, circleY + 10, { align: 'center' });
+  doc.text('out of 100', circleX, circleY + 8, { align: 'center' });
 
   // ── Band label pill ──
-  const bandLabelX = mx + 56;
-  const bandLabelY = circleY - 12;
+  const bandX = mx + 50;
+  const bandY = circleY - 10;
   doc.setFillColor(200, 200, 230);
-  drawRoundedRect(doc, bandLabelX, bandLabelY, 50, 8, 2, 'F');
+  doc.roundedRect(bandX, bandY, 48, 7, 2, 2, 'F');
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9);
+  doc.setFontSize(8);
   doc.setTextColor(...DEEP_BLUE);
-  doc.text(band.label, bandLabelX + 25, bandLabelY + 5.5, { align: 'center' });
+  doc.text(sanitize(band.label), bandX + 24, bandY + 4.8, { align: 'center' });
 
-  // ── Recommendation text ──
+  // Recommendation
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9);
-  doc.setTextColor(220, 220, 240);
-  const recLines = doc.splitTextToSize(sanitize(band.recommendation), cw - 60);
-  doc.text(recLines, bandLabelX, bandLabelY + 16);
+  doc.setFontSize(8);
+  doc.setTextColor(210, 210, 230);
+  const recLines = doc.splitTextToSize(sanitize(band.recommendation), cw - 55);
+  doc.text(recLines, bandX, bandY + 14);
 
   // ── PRIORITY FOCUS AREAS ──
-  y = headerH + 12;
+  y = headerH + 10;
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9);
+  doc.setFontSize(8);
   doc.setTextColor(...DEEP_BLUE);
   doc.text('PRIORITY FOCUS AREAS', mx, y);
-  y += 7;
+  y += 6;
 
   const priorities = getPriorityDimensions(assessment.score, assessment.answers);
   const colW = (cw - 4) / 2;
-  const pillH = 10;
-  const pillGap = 3;
+  const pillH = 9;
+  const pillGap = 2;
 
   priorities.forEach((dimId, i) => {
     const dim = ROOTING_IN_DIMENSIONS.find((d) => d.id === dimId);
@@ -217,24 +200,23 @@ export function generateAssessmentPdf(
     const px = mx + col * (colW + 4);
     const py = y + row * (pillH + pillGap);
     doc.setFillColor(...LIGHT_BG);
-    drawRoundedRect(doc, px, py, colW, pillH, 3, 'F');
+    doc.roundedRect(px, py, colW, pillH, 3, 3, 'F');
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
+    doc.setFontSize(8);
     doc.setTextColor(...DEEP_BLUE);
-    doc.text(sanitize(dim.name), px + 6, py + 6.5);
+    doc.text(sanitize(dim.name), px + 5, py + 5.8);
   });
 
   const priorityRows = Math.ceil(priorities.length / 2);
-  y += priorityRows * (pillH + pillGap) + 10;
+  y += priorityRows * (pillH + pillGap) + 8;
 
-  // ── COMPLEXITY BY CATEGORY (bar chart) ──
+  // ── COMPLEXITY BY CATEGORY ──
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9);
+  doc.setFontSize(8);
   doc.setTextColor(...DEEP_BLUE);
   doc.text('COMPLEXITY BY CATEGORY', mx, y);
-  y += 8;
+  y += 6;
 
-  // Sort categories by percentage descending
   const categoryOrder = Object.keys(CATEGORY_MAXIMUMS);
   const catData = categoryOrder.map((cat) => ({
     name: cat,
@@ -243,36 +225,33 @@ export function generateAssessmentPdf(
   }));
   catData.sort((a, b) => b.score / b.max - a.score / a.max);
 
-  const barH = 5;
-  const barMaxW = cw - 10;
-  const barRowH = 18;
+  const barH = 4;
+  const barMaxW = cw;
+  const barRowH = 14;
 
   catData.forEach((cat) => {
-    checkPageBreak(barRowH);
-    // Category name
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
+    doc.setFontSize(8.5);
     doc.setTextColor(...TEXT_DARK);
-    doc.text(cat.name, mx, y);
-    // Score right-aligned
+    doc.text(sanitize(cat.name), mx, y);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9);
+    doc.setFontSize(8.5);
     doc.setTextColor(...TEXT_MID);
     doc.text(`${cat.score} / ${cat.max}`, pw - mx, y, { align: 'right' });
-    y += 3;
+    y += 2.5;
 
     // Background bar
     doc.setFillColor(...LIGHT_BG);
-    drawRoundedRect(doc, mx, y, barMaxW, barH, 2, 'F');
+    doc.roundedRect(mx, y, barMaxW, barH, 1.5, 1.5, 'F');
 
     // Filled bar
     const pct = cat.max > 0 ? cat.score / cat.max : 0;
     const fillW = Math.max(barMaxW * pct, 2);
     const color = CATEGORY_BAR_COLORS[cat.name] || DEEP_BLUE;
     doc.setFillColor(...color);
-    drawRoundedRect(doc, mx, y, fillW, barH, 2, 'F');
+    doc.roundedRect(mx, y, fillW, barH, 1.5, 1.5, 'F');
 
-    y += barH + barRowH - barH - 3;
+    y += barRowH - 2.5;
   });
 
   // ═══════════════════════════════════════════════
@@ -282,28 +261,28 @@ export function generateAssessmentPdf(
 
   const drawBreakdownHeader = (continued = false) => {
     doc.setFillColor(...DEEP_BLUE);
-    doc.rect(0, 0, pw, 20, 'F');
+    doc.rect(0, 0, pw, 18, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(14);
-    doc.text('Re-Rooted\u00AE', mx, 13);
-    doc.setFontSize(6);
+    doc.setFontSize(12);
+    doc.text('Re-Rooted\u00AE', mx, 12);
+    doc.setFontSize(5.5);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(200, 200, 230);
-    doc.text('SWITZERLAND', mx + 38, 13);
+    doc.text('SWITZERLAND', mx + 35, 12);
 
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(11);
-    doc.text('Answer Breakdown', pw - mx, 13, { align: 'right' });
+    doc.setFontSize(10);
+    doc.text('Answer Breakdown', pw - mx, 12, { align: 'right' });
 
-    y = 30;
+    y = 26;
     if (continued) {
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
+      doc.setFontSize(8);
       doc.setTextColor(...TEXT_MID);
       doc.text('Answer Breakdown (continued)', mx, y);
-      y += 8;
+      y += 6;
     }
   };
 
@@ -312,7 +291,7 @@ export function generateAssessmentPdf(
   let lastCategory = '';
 
   const checkBreakdownPageBreak = (needed: number) => {
-    if (y + needed > ph - 20) {
+    if (y + needed > ph - 18) {
       doc.addPage();
       drawBreakdownHeader(true);
     }
@@ -324,108 +303,96 @@ export function generateAssessmentPdf(
 
     // Category header
     if (q.category !== lastCategory) {
-      checkBreakdownPageBreak(18);
+      checkBreakdownPageBreak(16);
       const catScore = getCategoryScore(q.category, assessment.answers);
       const catMax = CATEGORY_MAXIMUMS[q.category] ?? 0;
 
-      // Category name in green/blue
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(13);
+      doc.setFontSize(12);
       doc.setTextColor(...FRESH_GREEN);
       doc.text(sanitize(q.category), mx, y);
 
-      // Score right-aligned
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(10);
+      doc.setFontSize(9);
       doc.setTextColor(...TEXT_MID);
       doc.text(`${catScore} / ${catMax}`, pw - mx, y, { align: 'right' });
 
-      // Underline
-      y += 2;
-      doc.setDrawColor(220, 220, 225);
+      y += 1.5;
+      doc.setDrawColor(210, 210, 215);
       doc.setLineWidth(0.3);
       doc.line(mx, y, pw - mx, y);
-      y += 6;
+      y += 5;
       lastCategory = q.category;
     }
 
     // Question text (grey)
-    checkBreakdownPageBreak(14);
+    checkBreakdownPageBreak(12);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8.5);
+    doc.setFontSize(8);
     doc.setTextColor(...TEXT_MID);
     const qLines = doc.splitTextToSize(sanitize(q.text), cw);
     doc.text(qLines, mx, y);
-    y += qLines.length * 3.5 + 1.5;
+    y += qLines.length * 3.5 + 1;
 
-    // Answer (bold black for single, pills for multi)
+    // Answer
     if (Array.isArray(answer)) {
       const labels = resolveMultiLabels(q.id, answer);
-      // Draw as inline pills
       let pillX = mx;
-      const pillY = y;
-      const pillPadX = 5;
-      const pillPadY = 3;
-      const pillFontSize = 8;
-      doc.setFontSize(pillFontSize);
+      doc.setFontSize(7.5);
       doc.setFont('helvetica', 'bold');
 
       labels.forEach((label, li) => {
         const labelStr = sanitize(label);
-        const tw = doc.getTextWidth(labelStr) + pillPadX * 2;
-        const tpH = 7;
-        // Wrap to next line if needed
+        const tw = doc.getTextWidth(labelStr) + 8;
+        const tpH = 6;
         if (pillX + tw > pw - mx && li > 0) {
           pillX = mx;
-          y += tpH + 3;
+          y += tpH + 2;
         }
         doc.setFillColor(...LIGHT_BG);
-        drawRoundedRect(doc, pillX, y - 1, tw, tpH, 2, 'F');
+        doc.roundedRect(pillX, y - 1, tw, tpH, 2, 2, 'F');
         doc.setTextColor(...TEXT_DARK);
-        doc.text(labelStr, pillX + pillPadX, y + 3.5);
+        doc.text(labelStr, pillX + 4, y + 3);
         pillX += tw + 3;
       });
-      y += 10;
+      y += 9;
     } else {
       const opt = q.options.find((o) => o.value === answer);
       if (opt) {
         doc.setFont('helvetica', 'bold');
-        doc.setFontSize(9);
+        doc.setFontSize(8.5);
         doc.setTextColor(...TEXT_DARK);
         const aLines = doc.splitTextToSize(sanitize(opt.label), cw);
         doc.text(aLines, mx, y);
-        y += aLines.length * 4 + 2;
+        y += aLines.length * 3.8 + 1;
       }
     }
     y += 3;
   });
 
   // ═══════════════════════════════════════════════
-  // FOOTERS on all pages
+  // FOOTERS
   // ═══════════════════════════════════════════════
   const totalPages = doc.getNumberOfPages();
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);
-    // Separator line
     doc.setDrawColor(200, 200, 205);
     doc.setLineWidth(0.3);
-    doc.line(mx, ph - 14, pw - mx, ph - 14);
+    doc.line(mx, ph - 13, pw - mx, ph - 13);
 
     doc.setFontSize(7);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(...TEXT_MID);
 
     if (i === totalPages) {
-      doc.text('Re-Rooted\u00AE  \u00B7  The human side of relocation', mx, ph - 9);
-    } else if (i === 1) {
-      doc.text(`Generated by Re-Rooted\u00AE  \u00B7  ${dateStr}`, mx, ph - 9);
+      doc.text('Re-Rooted\u00AE  |  The human side of relocation', mx, ph - 8);
     } else {
-      doc.text(`Generated by Re-Rooted\u00AE  \u00B7  ${dateStr}`, mx, ph - 9);
+      doc.text('Generated by Re-Rooted\u00AE  |  ' + dateStr, mx, ph - 8);
     }
-    doc.text(`Page ${i} of ${totalPages}`, pw - mx, ph - 9, { align: 'right' });
+    doc.text('Page ' + i + ' of ' + totalPages, pw - mx, ph - 8, { align: 'right' });
   }
 
   doc.save(
-    `Re-Rooted-Complexity-Score-${user.name?.replace(/\s+/g, '-') || 'Report'}.pdf`
+    'Re-Rooted-Complexity-Score-' + (user.name?.replace(/\s+/g, '-') || 'Report') + '.pdf'
   );
 }
