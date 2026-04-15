@@ -8,15 +8,84 @@ import {
 import { ROOTING_IN_DIMENSIONS } from '@/data/coaching-content';
 import type { UserProfile, AssessmentResult } from '@/types/user';
 
-const DEEP_BLUE = [31, 41, 156] as const; // #1F299C
-const FRESH_GREEN = [61, 167, 118] as const; // #3DA776
-const WARM_WHITE = [250, 249, 246] as const; // #FAF9F6
+const DEEP_BLUE = [31, 41, 156] as const;
+const FRESH_GREEN = [61, 167, 118] as const;
+const WARM_WHITE = [250, 249, 246] as const;
 const TEXT_DARK = [30, 30, 40] as const;
 const TEXT_MID = [100, 100, 115] as const;
 
-// Strip characters outside the Latin-1 range that Helvetica cannot render
+// Replace characters outside Latin-1 with safe equivalents, preserving hyphens and dashes
 const sanitize = (str: string) =>
-  str.replace(/[^\x20-\x7E\u00A0-\u00FF]/g, '').trim();
+  str
+    .replace(/\u2013/g, '-')   // en-dash → hyphen
+    .replace(/\u2014/g, '-')   // em-dash → hyphen
+    .replace(/\u2019/g, "'")   // right single quote → apostrophe
+    .replace(/\u2018/g, "'")   // left single quote → apostrophe
+    .replace(/\u201C/g, '"')   // left double quote
+    .replace(/\u201D/g, '"')   // right double quote
+    .replace(/\u2022/g, '-')   // bullet → hyphen
+    .replace(/\u2192/g, '>')   // arrow → >
+    .replace(/\u00B7/g, '-')   // middle dot → hyphen
+    .replace(/[^\x20-\x7E\u00A0-\u00FF]/g, '')
+    .trim();
+
+const CATEGORY_MAXIMUMS: Record<string, number> = {
+  'Assignment Context': 60,
+  'Cultural Distance': 30,
+  'Professional Environment': 30,
+  'Language': 20,
+  'Family & Accompanying': 50,
+  'Geographic Factors': 30,
+  'Social Readiness': 20,
+  'Resilience & Adaptability': 40,
+};
+
+function getCategoryScore(
+  category: string,
+  answers: Record<string, number | number[]>
+): number {
+  let total = 0;
+  for (const q of ASSESSMENT_QUESTIONS) {
+    if (q.category !== category) continue;
+    const answer = answers[q.id];
+    if (answer === undefined) continue;
+    if (Array.isArray(answer)) {
+      const sum = answer.reduce((a, b) => a + b, 0);
+      total += q.multiSelectCap ? Math.min(sum, q.multiSelectCap) : sum;
+    } else {
+      total += answer;
+    }
+  }
+  return total;
+}
+
+/**
+ * For multi-select answers stored as value arrays, resolve each value to a
+ * distinct option label. Handles duplicate values (e.g. Q2 has two options
+ * with value 3) by tracking which options have already been matched.
+ */
+function resolveMultiLabels(
+  questionId: string,
+  values: number[]
+): string[] {
+  const q = ASSESSMENT_QUESTIONS.find((q) => q.id === questionId);
+  if (!q) return values.map(String);
+
+  const usedIndices = new Set<number>();
+  const labels: string[] = [];
+
+  for (const val of values) {
+    // Find the first option with this value that hasn't been used yet
+    const idx = q.options.findIndex(
+      (o, i) => o.value === val && !usedIndices.has(i)
+    );
+    if (idx !== -1) {
+      usedIndices.add(idx);
+      labels.push(q.options[idx].label);
+    }
+  }
+  return labels;
+}
 
 export function generateAssessmentPdf(
   user: UserProfile,
@@ -64,7 +133,7 @@ export function generateAssessmentPdf(
   }
   if (user.countryFrom && user.countryTo) {
     doc.text(
-      `Relocation: ${user.countryFrom} to ${user.countryTo}`,
+      sanitize(`Relocation: ${user.countryFrom} to ${user.countryTo}`),
       margin,
       y
     );
@@ -84,15 +153,14 @@ export function generateAssessmentPdf(
   doc.setTextColor(...TEXT_MID);
   doc.text('out of 100', margin + 12, y + 30);
 
-  // Band label
   const bandColor =
     assessment.score <= 25
       ? DEEP_BLUE
       : assessment.score <= 45
         ? FRESH_GREEN
         : assessment.score <= 65
-          ? ([188, 173, 212] as const) // Lavender
-          : ([232, 168, 56] as const); // Warning
+          ? ([188, 173, 212] as const)
+          : ([232, 168, 56] as const);
   doc.setFillColor(bandColor[0], bandColor[1], bandColor[2]);
   doc.roundedRect(margin + 55, y + 8, 60, 8, 2, 2, 'F');
   doc.setFontSize(8);
@@ -115,7 +183,7 @@ export function generateAssessmentPdf(
   );
   doc.setFontSize(9);
   doc.setTextColor(...TEXT_DARK);
-  const interpLines = doc.splitTextToSize(interp, contentWidth);
+  const interpLines = doc.splitTextToSize(sanitize(interp), contentWidth);
   checkPageBreak(interpLines.length * 4 + 8);
   doc.text(interpLines, margin, y);
   y += interpLines.length * 4 + 10;
@@ -154,13 +222,19 @@ export function generateAssessmentPdf(
     const answer = assessment.answers[q.id];
     if (answer === undefined) return;
 
-    // Category header
+    // Category header with subtotal
     if (q.category !== lastCategory) {
       checkPageBreak(14);
+      const catScore = getCategoryScore(q.category, assessment.answers);
+      const catMax = CATEGORY_MAXIMUMS[q.category] ?? 0;
       doc.setFontSize(10);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(...FRESH_GREEN);
-      doc.text(q.category, margin, y);
+      doc.text(
+        sanitize(`${q.category} - ${catScore} / ${catMax}`),
+        margin,
+        y
+      );
       y += 6;
       lastCategory = q.category;
     }
@@ -170,7 +244,7 @@ export function generateAssessmentPdf(
     doc.setFontSize(8);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(...TEXT_DARK);
-    const qLines = doc.splitTextToSize(q.text, contentWidth - 4);
+    const qLines = doc.splitTextToSize(sanitize(q.text), contentWidth - 4);
     doc.text(qLines, margin + 2, y);
     y += qLines.length * 3.5 + 1;
 
@@ -178,13 +252,11 @@ export function generateAssessmentPdf(
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(...TEXT_MID);
     if (Array.isArray(answer)) {
-      answer.forEach((val) => {
-        const opt = q.options.find((o) => o.value === val);
-        if (opt) {
-          checkPageBreak(5);
-          doc.text(`- ${sanitize(opt.label)}`, margin + 6, y);
-          y += 4;
-        }
+      const labels = resolveMultiLabels(q.id, answer);
+      labels.forEach((label) => {
+        checkPageBreak(5);
+        doc.text(`- ${sanitize(label)}`, margin + 6, y);
+        y += 4;
       });
     } else {
       const opt = q.options.find((o) => o.value === answer);
@@ -202,7 +274,7 @@ export function generateAssessmentPdf(
     doc.setFontSize(7);
     doc.setTextColor(...TEXT_MID);
     doc.text(
-      `Generated by Re-Rooted\u00AE \u00B7 ${dateStr}`,
+      `Generated by Re-Rooted\u00AE - ${dateStr}`,
       margin,
       pageHeight - 10
     );
