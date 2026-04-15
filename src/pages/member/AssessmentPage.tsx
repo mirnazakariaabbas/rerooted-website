@@ -264,22 +264,27 @@ const AssessmentPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="mb-10 border border-border">
-            <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Priority Focus Areas</CardTitle></CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {getPriorityDimensions(assessment.score, assessment.answers).map(dimId => {
-                  const dim = ROOTING_IN_DIMENSIONS.find(d => d.id === dimId);
-                  if (!dim) return null;
-                  return (
-                    <button key={dimId} onClick={() => navigate('/app/home?dimension=' + dimId)} className="w-full flex items-center gap-2 text-sm p-3 rounded-lg bg-muted hover:bg-muted/70 transition-colors text-left">
-                      <span>{dim.icon}</span><span className="flex-1">{dim.name}</span><ArrowRight className="h-4 w-4 text-muted-foreground" />
-                    </button>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
+          <div className="mb-10">
+            <h3 className="text-base font-[900] tracking-tight mb-3">Priority Focus Areas</h3>
+            <div className="space-y-3">
+              {getPriorityDimensions(assessment.score, assessment.answers).map(dimId => {
+                const dim = ROOTING_IN_DIMENSIONS.find(d => d.id === dimId);
+                if (!dim) return null;
+                return (
+                  <Card key={dimId} className="border border-border hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => navigate('/app/home?dimension=' + dimId)}>
+                    <CardContent className="p-4 flex items-center gap-3">
+                      <span className="text-2xl">{dim.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium text-sm">{dim.name}</div>
+                        <div className="text-xs text-muted-foreground truncate">{dim.shortDescription}</div>
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
 
           <div className="space-y-3 mb-10">
             <Button onClick={() => { setTaking(true); setCurrentIdx(0); setAnswers({}); }} variant="outline" className="w-full rounded-full">Retake Assessment</Button>
