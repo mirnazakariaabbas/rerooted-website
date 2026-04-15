@@ -44,29 +44,6 @@ function clearProgress() {
   try { sessionStorage.removeItem(SESSION_KEY); } catch {}
 }
 
-/**
- * Convert multi-select answers from option indices to option values.
- * Single-select answers are already stored as values and pass through unchanged.
- */
-function convertMultiIndicesToValues(
-  answers: Record<string, number | number[]>
-): Record<string, number | number[]> {
-  const converted: Record<string, number | number[]> = {};
-  for (const [qId, answer] of Object.entries(answers)) {
-    if (Array.isArray(answer)) {
-      const question = ASSESSMENT_QUESTIONS.find(q => q.id === qId);
-      if (question) {
-        converted[qId] = answer.map(idx => question.options[idx].value);
-      } else {
-        converted[qId] = answer;
-      }
-    } else {
-      converted[qId] = answer;
-    }
-  }
-  return converted;
-}
-
 const bandColors: Record<string, string> = {
   'Standard Support': 'bg-primary text-primary-foreground',
   'Enhanced Support': 'bg-secondary text-secondary-foreground',
