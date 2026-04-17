@@ -106,7 +106,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
           <img
             src={heroImage}
             alt="Professional in a modern workspace"
-            className="h-auto w-full max-w-none object-contain md:scale-110 lg:scale-125 origin-center"
+            className="h-auto w-full max-w-none object-contain scale-[2.5] md:scale-[2.75] lg:scale-[3] origin-center"
             loading="eager"
           />
         </motion.div>
