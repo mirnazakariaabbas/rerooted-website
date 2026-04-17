@@ -110,7 +110,6 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
             loading="eager"
           />
         </motion.div>
-        </motion.div>
       </div>
     </section>
   );
