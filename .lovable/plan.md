@@ -1,32 +1,18 @@
 
+The user wants to replace the hero image (currently `src/assets/hero-portrait.jpg` used in `src/components/Hero.tsx`) with the uploaded SVG file `Untitled_design.svg`.
 
-## Plan: Make Priority Focus Areas Clickable Buttons
+Since the user is on route `/` (homepage), the Hero component is what renders the portrait image in a circular crop.
 
-The Priority Focus Areas in the assessment results are currently static `div` elements. They need to become clickable buttons that navigate the user to the corresponding dimension detail view on the Member Home page.
-
-### Current State
-- MemberHome uses local state (`selectedDimension`) to show `DimensionDetail` when a dimension is clicked
-- The assessment page renders focus areas as plain `div` elements with icon + name
-- Both pages share `ROOTING_IN_DIMENSIONS` data with dimension IDs like `values-harmonization`, `cultural-adaptation`, etc.
+## Plan: Replace Hero Image with Uploaded SVG
 
 ### Change
 
-**`src/pages/member/AssessmentPage.tsx`**
+1. **Copy the uploaded SVG** from `user-uploads://Untitled_design.svg` into `src/assets/hero-portrait.svg`.
 
-Replace the static `div` items in the Priority Focus Areas section with clickable buttons that use `useNavigate` to route to `/app/home?dimension={dimId}`.
+2. **Update `src/components/Hero.tsx`**:
+   - Change the import from `heroImage from "@/assets/hero-portrait.jpg"` to `heroImage from "@/assets/hero-portrait.svg"`.
+   - Keep the existing circular crop container (`rounded-full`, fixed dimensions) and `object-cover` styling so the new SVG fits the same hero layout on both Corporate and Individual homepages.
 
-- Import `useNavigate` from `react-router-dom`
-- Change each focus area `div` to a `button` with an arrow icon, styled consistently with the app
-- On click, navigate to `/app/home?dimension={dimId}`
-
-**`src/pages/member/MemberHome.tsx`**
-
-Read the `dimension` query parameter on mount. If present, auto-select that dimension to show the `DimensionDetail` view.
-
-- Import `useSearchParams` from `react-router-dom`
-- On mount, check for `?dimension=` param and set `selectedDimension` accordingly
-- Clear the param from the URL after consuming it
-
-### Result
-Clicking a priority focus area from the assessment results navigates to the Member Home and opens the relevant dimension detail page.
-
+### Notes
+- The SVG will replace the image across both `CorporateHome` and `IndividualHome` since they share the `Hero` component.
+- No layout, animation, or sizing changes, only the image source swap.
