@@ -1,7 +1,7 @@
 import { useRef, ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import heroImage from "@/assets/hero-portrait.jpg";
+import heroImage from "@/assets/hero-portrait.svg";
 
 interface HeroProps {
   headline1: string;
