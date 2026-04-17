@@ -64,7 +64,7 @@ interface OutlineStatProps {
 
 const OutlineStat = ({ number, label, inView, delay }: OutlineStatProps) => (
   <motion.div
-    className="relative flex flex-col justify-between rounded-xl border border-[#CDCCCD] bg-white p-6 md:p-8 min-h-[180px] md:min-h-0 overflow-hidden"
+    className="relative flex flex-col items-center justify-center text-center rounded-xl border border-[#CDCCCD] bg-white p-6 md:p-8 min-h-[200px] md:min-h-0 overflow-hidden"
     initial={{ opacity: 0, y: 30 }}
     animate={inView ? { opacity: 1, y: 0 } : {}}
     transition={{ duration: 0.6, delay: delay / 1000, ease: "easeOut" }}
@@ -75,7 +75,7 @@ const OutlineStat = ({ number, label, inView, delay }: OutlineStatProps) => (
     >
       {number}
     </p>
-    <p className="text-foreground/80 font-medium text-sm md:text-base mt-4 leading-snug">
+    <p className="text-foreground/80 font-medium text-sm md:text-base mt-4 leading-snug uppercase tracking-wide">
       {label}
     </p>
   </motion.div>
@@ -102,17 +102,6 @@ const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
       ref={ref}
       className="relative w-full bg-[#FAF9F6] py-20 md:py-28 overflow-hidden"
     >
-      {/* Subtle grid pattern background */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-        aria-hidden
-      />
-
       <div className="container relative mx-auto px-6 lg:px-12">
         <motion.p
           className="text-secondary text-xs font-semibold uppercase tracking-[3px] mb-4"
@@ -124,7 +113,7 @@ const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
         </motion.p>
 
         <motion.h2
-          className="text-primary font-black text-3xl md:text-[44px] leading-tight mb-12 max-w-3xl"
+          className="text-primary font-black text-3xl md:text-[44px] leading-tight mb-12 max-w-3xl uppercase"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -136,27 +125,12 @@ const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr_1fr] grid-rows-[auto] md:grid-rows-2 gap-4 md:gap-5">
           {/* HERO — center, spans 2 rows on md+ */}
           <motion.div
-            className="relative flex flex-col justify-between rounded-xl bg-primary p-8 md:p-10 md:row-span-2 order-first md:order-none min-h-[280px] md:min-h-[420px] overflow-hidden"
+            className="relative flex flex-col items-center justify-center text-center rounded-xl bg-primary p-8 md:p-10 md:row-span-2 order-first md:order-none min-h-[280px] md:min-h-[420px] overflow-hidden"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
           >
-            {/* Faded watermark */}
-            <span
-              className="pointer-events-none absolute -right-6 -bottom-10 font-black text-white/[0.06] leading-none select-none"
-              style={{ fontSize: "clamp(180px, 28vw, 360px)" }}
-              aria-hidden
-            >
-              98
-            </span>
-
-            <div className="relative">
-              <span className="text-white/70 text-xs font-semibold uppercase tracking-[3px]">
-                The headline figure
-              </span>
-            </div>
-
-            <div className="relative flex items-end">
+            <div className="flex items-end justify-center">
               <p
                 className="font-black text-white leading-[0.85] tracking-tight"
                 style={{ fontSize: "clamp(96px, 14vw, 200px)" }}
@@ -171,7 +145,7 @@ const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
               </span>
             </div>
 
-            <p className="relative text-white text-base md:text-lg font-medium max-w-xs">
+            <p className="text-white text-base md:text-lg font-medium max-w-xs mt-6 uppercase tracking-wide">
               of expats report burnout symptoms during international assignments
             </p>
           </motion.div>
