@@ -103,14 +103,21 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.8, delay: 0.3 + delayBase, ease: "easeOut" }}
         >
-          <div className="w-[320px] h-[320px] md:w-[400px] md:h-[400px] overflow-hidden rounded-full">
+        <motion.div
+          className="flex-[2] flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: isIndividual ? 0.9 : 0.8, delay: 0.3 + delayBase, ease: "easeOut" }}
+        >
+          <div className="w-full max-w-[560px] md:max-w-[640px] lg:max-w-[720px]">
             <img
               src={heroImage}
               alt="Professional in a modern workspace"
-              className="h-full w-full object-cover"
+              className="h-auto w-full object-contain"
               loading="eager"
             />
           </div>
+        </motion.div>
         </motion.div>
       </div>
     </section>
