@@ -64,7 +64,7 @@ interface OutlineStatProps {
 
 const OutlineStat = ({ number, label, inView, delay }: OutlineStatProps) => (
   <motion.div
-    className="relative flex flex-col justify-between rounded-xl border border-[#CDCCCD] bg-white p-6 md:p-8 min-h-[180px] md:min-h-0 overflow-hidden"
+    className="relative flex flex-col items-center justify-center text-center rounded-xl border border-[#CDCCCD] bg-white p-6 md:p-8 min-h-[200px] md:min-h-0 overflow-hidden"
     initial={{ opacity: 0, y: 30 }}
     animate={inView ? { opacity: 1, y: 0 } : {}}
     transition={{ duration: 0.6, delay: delay / 1000, ease: "easeOut" }}
@@ -75,7 +75,7 @@ const OutlineStat = ({ number, label, inView, delay }: OutlineStatProps) => (
     >
       {number}
     </p>
-    <p className="text-foreground/80 font-medium text-sm md:text-base mt-4 leading-snug">
+    <p className="text-foreground/80 font-medium text-sm md:text-base mt-4 leading-snug uppercase tracking-wide">
       {label}
     </p>
   </motion.div>
