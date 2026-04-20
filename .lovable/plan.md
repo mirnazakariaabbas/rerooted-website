@@ -1,59 +1,48 @@
 
 
-## Plan: Redesign ProblemStats with infographic grid
+## Plan: Replace `IntegrationProgram` with vertical tree-timeline
 
-Rebuild `src/components/ProblemStats.tsx` to mirror the reference layout (asymmetric 3-column grid with one tall hero card and 4 smaller cards) while making the numbers themselves the visual hero of each box. No red — use Deep Blue hero, white-outlined cards, with one accent card in a darker brand-aligned tone.
+Replace the current corporate-only horizontal sticky-scroll 5-step section with the vertical alternating timeline from the upload, using the upload's exact content (6 steps including the new "Day 1 — Assignment complexity evaluation" step) and editorial typography.
 
-### Layout
+### What changes
 
-```text
-+-----------+-------------------+-----------+
-|   43%     |                   |  1 in 3   |
-|  perf     |       98%         |  miss     |
-+-----------+   burnout (hero)  +-----------+
-|   42%     |                   |   80%     |
-|  leaving  |                   |  recovery |
-+-----------+-------------------+-----------+
-```
+- **`src/components/IntegrationProgram.tsx`** — full rewrite of the component body. Keep the same export name and `id="program"` so `CorporateHome.tsx` and the "See how it works" CTA continue to work without changes.
 
-- Section background: `#FAF9F6` (Warm White), replacing current Deep Blue
-- Grid: `1fr 1.6fr 1fr` × 2 rows; center cell spans both rows
-- Cards: 12px rounded corners, no shadows (per brand rules)
-- Subtle background grid pattern + faded number watermark (from reference) for texture
+### Layout & content (verbatim from upload)
 
-### Card styling (number-fills-the-box)
+Six steps, alternating left/right around a central spine:
 
-- **Hero (98%)**: Deep Blue `#1F299C` bg, white number at ~clamp(80px, 12vw, 140px), green `%` superscript, label below in white
-- **4 outline cards**: White bg, 1.5px `#CDCCCD` border, Deep Blue number at ~clamp(48px, 7vw, 72px), dark label
-- **No icons** in any card — number dominates, label is compact below
-- Numbers use font-weight 900, line-height 0.9 to maximize visual size
+1. Day 0 — Candidate shortlisted (star)
+2. Day 1 — Assignment complexity evaluation (graph) ← **new step**
+3. Week 1 — Personal needs assessment (list)
+4. Weeks 2–14 — Active coaching (sprout)
+5. Week 15 — Final assessment (flag)
+6. Post-program — Ongoing support (check)
 
-### Stats (all 5 from reference)
+Footer totals: 90 days · 6 sessions · 2 assessments · 1 final report.
 
-1. 98% — expats report burnout symptoms (hero)
-2. 43% — report negative impact on work performance
-3. 1 in 3 — don't meet expectations
-4. 42% — considered leaving their employer
-5. 80% — recover productivity after 1+ year, or never
+### Visual treatment
 
-### Animations (preserved from reference)
+- Warm White `#FAF9F6` background, large editorial heading "The ReRooted *Journey*" with serif italic green emphasis (Instrument Serif via Google Fonts, loaded once at the top of the component or in `index.html`).
+- Center spine: thin Deep Blue line at 12% opacity, with a green fill that grows downward as the user scrolls (scroll-linked `scaleY` transform).
+- Each step: meta column (date eyebrow + serif title), 72px circular icon node alternating Blue/Green with a Warm-White ring, and body copy column. Pop-in animation on the dot when the step enters view; row fades up on intersection.
+- Mobile (<980px): collapses to single column with a left-aligned spine and 32px dots (already handled in the upload's CSS).
 
-- Cubic ease-out count-up triggered when section enters view
-- Staggered start: hero at 100ms, then 400/600/800/1000ms
-- "1 in 3" animates from "1 in 10" down to "1 in 3"
-- Cards fade-and-rise (Framer Motion) as they appear
-- Source line + disclaimer fade in last
+### Adjustments to keep on-brand
 
-### Responsive
+- Section keeps `id="program"` (required by Corporate Hero's "See how it works" anchor).
+- Add the existing `ProgramCTAs` block (Book a call / View pricing) below the footer totals so the corporate funnel is preserved. *(Confirm in implementation that current page already provides those — they're present in the existing component.)*
+- Load Instrument Serif via a `<link>` injection inside the component's `useEffect` so no global config changes are needed.
+- Apply the project's em-dash → en-dash/comma rule: keep "Weeks 2–14" (en dash, OK) but no em dashes anywhere in copy.
+- Footer totals styled with serif numerals as in the upload.
 
-- Mobile (<768px): single column stack, hero card first, then 4 stacked outline cards (no row spanning)
-- Tablet (≥768px): full 3×2 asymmetric grid as shown
+### Not changing
 
-### Props (unchanged signature)
+- `CorporateHome.tsx` order and props — unchanged.
+- `IndividualHome.tsx` — unchanged (this section is corporate-only).
+- `ExpatJourney.tsx` (the 4-stage life-stage timeline) — unchanged.
 
-`label`, `headline`, `closingLine` props remain — Corporate and Individual homepages keep their existing copy with no changes needed in `CorporateHome.tsx` or `IndividualHome.tsx`.
+### Memory update
 
-### File touched
-
-- `src/components/ProblemStats.tsx` — full rewrite of internals; export signature preserved
+Update `mem://features/integration-program` to reflect the new vertical 6-step timeline (replacing the 5-step horizontal sticky-scroll).
 
