@@ -278,7 +278,7 @@ const IntegrationProgram = () => {
                   ref={(el) => (stepRefs.current[i] = el)}
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "1fr 88px 1fr",
+                    gridTemplateColumns: "minmax(280px, 1fr) 88px minmax(280px, 1fr)",
                     gap: 40,
                     alignItems: "center",
                     opacity: 0,
@@ -296,6 +296,8 @@ const IntegrationProgram = () => {
                       gridColumn: 1,
                       textAlign: "right",
                       alignItems: "flex-end",
+                      justifySelf: "end",
+                      maxWidth: "18ch",
                     }}
                   >
                     <span
@@ -332,7 +334,9 @@ const IntegrationProgram = () => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      order: 2,
+                      gridColumn: 2,
+                      justifySelf: "center",
+                      alignSelf: "center",
                     }}
                   >
                     <div
@@ -350,6 +354,7 @@ const IntegrationProgram = () => {
                         position: "relative",
                         zIndex: 2,
                         boxShadow: `0 0 0 8px ${COLORS.warmWhite}`,
+                        flexShrink: 0,
                       }}
                     >
                       <IcComp style={{ width: 30, height: 30 }} />
@@ -363,12 +368,14 @@ const IntegrationProgram = () => {
                       fontSize: 15,
                       lineHeight: 1.6,
                       color: "#3a3a3a",
-                      maxWidth: "42ch",
+                      maxWidth: "36ch",
                       gridColumn: 3,
                       textAlign: "left",
+                      justifySelf: "start",
                     }}
                   >
                     {s.body}
+                  </div>
                   </div>
                 </div>
               );
