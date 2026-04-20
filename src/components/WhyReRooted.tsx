@@ -85,12 +85,12 @@ export default function WhyReRooted() {
           <div
             className="wrr-statement"
             style={{
-              fontFamily: "'Instrument Serif', Georgia, serif",
+              fontFamily: "'Manrope', system-ui, sans-serif",
               fontSize: "clamp(40px, 4.8vw, 76px)",
               lineHeight: 1.04,
               letterSpacing: "-0.02em",
               color: COLORS.blue,
-              fontWeight: 400,
+              fontWeight: 500,
             }}
           >
             A relocation is{" "}
