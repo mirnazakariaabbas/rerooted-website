@@ -30,7 +30,7 @@ export default function WhyReRooted() {
           </div>
 
           <div className="md:justify-self-end md:max-w-[620px] lg:max-w-[820px] xl:max-w-[980px]">
-            <h2 className="font-display text-[clamp(3.25rem,6.2vw,7.25rem)] font-medium leading-[0.96] tracking-[-0.055em] text-primary">
+            <h2 className="font-display text-[clamp(1.625rem,3.1vw,3.625rem)] font-medium leading-[0.96] tracking-[-0.055em] text-primary">
               A relocation is <em className="italic text-secondary">not a</em>
               <br />
               <em className="italic text-secondary">shipment.</em>
