@@ -1,0 +1,1 @@
+UPDATE public.profiles SET approval_status = 'approved', onboarding_complete = true, full_name = 'AdminG' WHERE id = 'ef358960-ee67-4d8e-8e24-c10725ee6f3b';
