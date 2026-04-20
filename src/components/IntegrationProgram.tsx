@@ -178,17 +178,18 @@ const IntegrationProgram = () => {
           .rr-spine { left: 16px !important; }
           .rr-dot { width: 32px !important; height: 32px !important; box-shadow: 0 0 0 4px ${COLORS.warmWhite} !important; }
           .rr-dot svg { width: 14px !important; height: 14px !important; }
-          .rr-node { grid-column: 1 !important; grid-row: 1 / span 2 !important; align-self: start; margin-top: 4px; order: 0 !important; }
-          .rr-meta { grid-column: 2 !important; grid-row: 1 !important; text-align: left !important; align-items: flex-start !important; order: 1 !important; }
-          .rr-content { grid-column: 2 !important; grid-row: 2 !important; max-width: none !important; order: 2 !important; }
+          .rr-node { grid-column: 1 !important; grid-row: 1 / span 2 !important; align-self: start; margin-top: 4px; }
+          .rr-meta { grid-column: 2 !important; grid-row: 1 !important; text-align: left !important; align-items: flex-start !important; justify-self: start !important; max-width: none !important; }
+          .rr-content { grid-column: 2 !important; grid-row: 2 !important; max-width: none !important; }
           .rr-head h2 { font-size: 44px !important; }
         }
-        @media (min-width: 721px) and (max-width: 980px) {
-          .rr-step { grid-template-columns: 1fr 64px 1fr !important; gap: 24px !important; }
+        @media (min-width: 721px) and (max-width: 1100px) {
+          .rr-step { grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr) !important; gap: 24px !important; }
+          .rr-meta { max-width: 16ch !important; }
           .rr-meta h4 { font-size: 32px !important; }
-          .rr-dot { width: 56px !important; height: 56px !important; }
+          .rr-dot { width: 56px !important; height: 56px !important; box-shadow: 0 0 0 6px ${COLORS.warmWhite} !important; }
           .rr-dot svg { width: 22px !important; height: 22px !important; }
-          .rr-content { font-size: 14px !important; max-width: 38ch !important; }
+          .rr-content { font-size: 14px !important; max-width: 34ch !important; }
         }
       `}</style>
 
