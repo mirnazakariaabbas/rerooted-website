@@ -376,7 +376,6 @@ const IntegrationProgram = () => {
                   >
                     {s.body}
                   </div>
-                  </div>
                 </div>
               );
             })}
