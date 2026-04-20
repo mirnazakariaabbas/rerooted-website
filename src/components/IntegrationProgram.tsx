@@ -358,7 +358,6 @@ const IntegrationProgram = () => {
                       maxWidth: "42ch",
                       gridColumn: 3,
                       textAlign: "left",
-                      order: flip ? 1 : 3,
                     }}
                   >
                     {s.body}
