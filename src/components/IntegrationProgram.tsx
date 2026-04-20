@@ -1,53 +1,111 @@
-import { useRef, useEffect, useState, useMemo } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-  AnimatePresence,
-} from "framer-motion";
-import { Phone, ClipboardList, Sprout, Flag, CheckCircle } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-const steps = [
+/**
+ * The ReRooted Journey — vertical tree-timeline.
+ * Corporate-only signature 6-step program. Replaces the previous horizontal
+ * sticky-scroll. Keeps id="program" for the Hero "See how it works" anchor.
+ */
+
+const COLORS = {
+  blue: "#1F299C",
+  green: "#3DA776",
+  warmWhite: "#FAF9F6",
+  mute: "#6B6B6B",
+  ink: "#1A1A1A",
+  line: "rgba(31,41,156,0.14)",
+};
+
+/* ── inline icons ── */
+const Ic = {
+  star: (p: any) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7-6.3-3.8L5.7 21l1.6-7L2 9.6 9 9z" />
+    </svg>
+  ),
+  graph: (p: any) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <circle cx="6" cy="7" r="2" /><circle cx="18" cy="7" r="2" />
+      <circle cx="6" cy="17" r="2" /><circle cx="18" cy="17" r="2" />
+      <path d="M8 7h8M8 17h8M6 9v6M18 9v6" />
+    </svg>
+  ),
+  list: (p: any) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <rect x="5" y="3" width="14" height="18" rx="2" />
+      <path d="M8 8h8M8 12h8M8 16h5" />
+    </svg>
+  ),
+  sprout: (p: any) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M12 21V11" />
+      <path d="M12 11c0-3 2-5 5-5-.5 3-2 5-5 5z" />
+      <path d="M12 13c0-3-2-5-5-5 .5 3 2 5 5 5z" />
+    </svg>
+  ),
+  flag: (p: any) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M5 21V4h12l-2 4 2 4H5" />
+    </svg>
+  ),
+  check: (p: any) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M5 12l5 5L20 7" />
+    </svg>
+  ),
+};
+
+type Step = {
+  when: string;
+  title: string;
+  body: string;
+  icon: keyof typeof Ic;
+};
+
+const STEPS: Step[] = [
   {
-    icon: Phone,
-    timing: "Day 0",
-    name: "Discovery Call",
-    desc: "HR or employee reaches out. We understand the assignment, the person, the family situation, and the specific integration challenges.",
+    when: "Day 0",
+    title: "Candidate shortlisted",
+    body: "The move is approved. Before anyone packs a box, we start the conversation, aligning expectations, context and goals with the candidate and their sponsor.",
+    icon: "star",
   },
   {
-    icon: ClipboardList,
-    timing: "Week 1",
-    name: "Integration Assessment",
-    desc: "Structured assessment across all six dimensions. Identifies gaps, strengths, and priorities. Shared with HR and hiring manager as a baseline.",
+    when: "Day 1",
+    title: "Assignment complexity evaluation",
+    body: "A structured baseline across 8 dimensions: family, culture, role, language, timeline. Both the individual and the employer know what they're underwriting.",
+    icon: "graph",
   },
   {
-    icon: Sprout,
-    timing: "Weeks 2–10",
-    name: "Active Coaching",
-    desc: "Bi-weekly one-on-one sessions with a matched coach. Practical, action-oriented work on the dimensions that matter most.",
+    when: "Week 1",
+    title: "Personal needs assessment",
+    body: "A confidential deep-dive with the relocating professional. Surfaces hidden blockers and defines the success measures for the next 12 weeks.",
+    icon: "list",
   },
   {
-    icon: Flag,
-    timing: "Week 11–12",
-    name: "Final Assessment",
-    desc: "Post-program assessment measuring progress across all six roots. Integration report delivered to HR and hiring manager with outcomes.",
+    when: "Weeks 2–14",
+    title: "Active coaching",
+    body: "Six 1:1 sessions across three months. Real-time work on the things that actually determine whether the move takes root: identity, relationships, performance, belonging.",
+    icon: "sprout",
   },
   {
-    icon: CheckCircle,
-    timing: "Post-program",
-    name: "Ongoing Support",
-    desc: "Optional follow-up sessions. Employee has tools and habits for continued integration. HR has data for the next assignment.",
+    when: "Week 15",
+    title: "Final assessment",
+    body: "A closing read against the Week 1 baseline. What shifted, what held, what's next. Delivered as a written report, yours to keep, yours to share.",
+    icon: "flag",
+  },
+  {
+    when: "Post-program",
+    title: "Ongoing support",
+    body: "Quarterly check-ins for the first year. Because the roots take longer than 90 days to deepen, and we stay with them.",
+    icon: "check",
   },
 ];
 
 const ProgramCTAs = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
+    <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
       <Button size="lg" onClick={() => navigate("/services")}>Get a program overview</Button>
       <a
         href="/contact"
@@ -60,220 +118,312 @@ const ProgramCTAs = () => {
   );
 };
 
-/* ───────────── DESKTOP – sticky scroll ───────────── */
-const DesktopTimeline = () => {
-  const outerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: outerRef, offset: ["start start", "end end"] });
-  const [scrollActive, setScrollActive] = useState(0);
-  const [clickedStep, setClickedStep] = useState<number | null>(null);
-  const isProgrammaticScroll = useRef(false);
-  const programmaticTimeout = useRef<ReturnType<typeof setTimeout>>();
+const IntegrationProgram = () => {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const spineFillRef = useRef<HTMLDivElement | null>(null);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (isProgrammaticScroll.current) return;
-    const idx = Math.min(Math.floor(v * steps.length), steps.length - 1);
-    setScrollActive(idx);
-    setClickedStep(null);
-  });
+  // Scroll-linked green spine growth
+  useEffect(() => {
+    const onScroll = () => {
+      if (!wrapRef.current || !spineFillRef.current) return;
+      const r = wrapRef.current.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const start = r.top - vh * 0.4;
+      const end = r.top + r.height - vh * 0.5;
+      const p = Math.max(0, Math.min(1, -start / (end - start)));
+      spineFillRef.current.style.transform = `scaleY(${p})`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const active = clickedStep !== null ? clickedStep : scrollActive;
-
-  const jumpTo = (idx: number) => {
-    setClickedStep(idx);
-    isProgrammaticScroll.current = true;
-    if (programmaticTimeout.current) clearTimeout(programmaticTimeout.current);
-    if (!outerRef.current) return;
-    const top = outerRef.current.offsetTop;
-    const h = outerRef.current.scrollHeight - window.innerHeight;
-    const progress = idx / (steps.length - 1);
-    const target = top + progress * h;
-    window.scrollTo({ top: target, behavior: "smooth" });
-    programmaticTimeout.current = setTimeout(() => {
-      isProgrammaticScroll.current = false;
-      setScrollActive(idx);
-    }, 1000);
-  };
-
-  const fillPercent = `${(active / (steps.length - 1)) * 100}%`;
+  // Reveal each step as it enters
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).style.opacity = "1";
+            (e.target as HTMLElement).style.transform = "none";
+            const dot = (e.target as HTMLElement).querySelector(
+              "[data-dot]"
+            ) as HTMLElement | null;
+            if (dot) dot.style.animation = "rrPop .6s ease both";
+          }
+        });
+      },
+      { rootMargin: "-15% 0px -15% 0px" }
+    );
+    stepRefs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div ref={outerRef} className="relative h-[500vh]" id="program">
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center bg-[hsl(40,33%,97%)] px-6 lg:px-12">
-        {/* heading */}
-        <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] mb-16 text-center">
-          The Re-Rooted® Journey
-        </h2>
+    <section
+      id="program"
+      style={{
+        padding: "140px 0 120px",
+        position: "relative",
+        background: COLORS.warmWhite,
+        color: COLORS.ink,
+        overflow: "hidden",
+      }}
+    >
+      <style>{`
+        @keyframes rrPop { 0% { transform: scale(0.4);} 60% { transform: scale(1.08);} 100% { transform: scale(1);} }
+        @media (max-width: 980px) {
+          .rr-step { grid-template-columns: 32px 1fr !important; gap: 8px 20px !important; }
+          .rr-spine { left: 16px !important; }
+          .rr-dot { width: 32px !important; height: 32px !important; box-shadow: 0 0 0 4px ${COLORS.warmWhite} !important; }
+          .rr-dot svg { width: 14px !important; height: 14px !important; }
+          .rr-node { grid-column: 1 !important; grid-row: 1 / span 2 !important; align-self: start; margin-top: 4px; order: 0 !important; }
+          .rr-meta { grid-column: 2 !important; grid-row: 1 !important; text-align: left !important; align-items: flex-start !important; order: 1 !important; }
+          .rr-content { grid-column: 2 !important; grid-row: 2 !important; max-width: none !important; order: 2 !important; }
+          .rr-head h2 { font-size: 44px !important; }
+        }
+      `}</style>
 
-        {/* timeline */}
-        <div className="relative w-full max-w-4xl mx-auto mb-12">
-          {/* bg line */}
-          <div className="absolute top-[30px] left-[30px] right-[30px] h-[3px] bg-border rounded-full" />
-          {/* filled line */}
+      <div style={{ maxWidth: 1320, margin: "0 auto", padding: "0 24px" }}>
+        {/* Heading */}
+        <div
+          className="rr-head"
+          style={{ textAlign: "center", maxWidth: 780, margin: "0 auto 80px" }}
+        >
           <div
-            className="absolute top-[30px] left-[30px] h-[3px] rounded-full bg-[hsl(153,45%,45%)] transition-all duration-500"
-            style={{ width: fillPercent }}
-          />
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 12,
+              fontSize: 11,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: COLORS.green,
+              fontWeight: 600,
+              marginBottom: 18,
+            }}
+          >
+            <span style={{ display: "inline-block", width: 28, height: 1, background: "currentColor" }} />
+            The Program
+          </div>
+          <h2
+            style={{
+              fontFamily: "'Instrument Serif', Georgia, serif",
+              fontSize: "clamp(52px, 6vw, 96px)",
+              lineHeight: 1,
+              color: COLORS.blue,
+              letterSpacing: "-0.02em",
+              fontWeight: 400,
+              margin: 0,
+            }}
+          >
+            The ReRooted{" "}
+            <em style={{ fontStyle: "italic", color: COLORS.green }}>Journey</em>
+          </h2>
+          <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute }}>
+            Ninety days, six sessions, two assessments, one clear report. Built as a route, not a retainer. Here's what happens, step by step.
+          </p>
+        </div>
 
-          <div className="relative flex justify-between">
-            {steps.map((step, i) => {
-              const Icon = step.icon;
-              const reached = i <= active;
-              const isActive = i === active;
+        {/* Timeline */}
+        <div
+          ref={wrapRef}
+          style={{ position: "relative", maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}
+        >
+          {/* Spine */}
+          <div
+            className="rr-spine"
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: 0,
+              bottom: 0,
+              width: 3,
+              transform: "translateX(-50%)",
+              background: `linear-gradient(180deg, transparent 0%, ${COLORS.blue} 8%, ${COLORS.blue} 92%, transparent 100%)`,
+              opacity: 0.12,
+            }}
+          >
+            <div
+              ref={spineFillRef}
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: COLORS.green,
+                transformOrigin: "top",
+                transform: "scaleY(0)",
+                transition: "transform 0.3s linear",
+                opacity: 1,
+              }}
+            />
+          </div>
+
+          {/* Steps */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 90 }}>
+            {STEPS.map((s, i) => {
+              const IcComp = Ic[s.icon];
+              const flip = i % 2 === 1;
               return (
-                <button
+                <div
                   key={i}
-                  onClick={() => jumpTo(i)}
-                  className="flex flex-col items-center gap-2 cursor-pointer group z-10"
+                  className="rr-step"
+                  ref={(el) => (stepRefs.current[i] = el)}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 88px 1fr",
+                    gap: 40,
+                    alignItems: "center",
+                    opacity: 0,
+                    transform: "translateY(40px)",
+                    transition: "opacity .7s ease, transform .7s ease",
+                  }}
                 >
-                  <motion.div
-                    animate={{
-                      scale: isActive ? 1.3 : 1,
+                  {/* Meta */}
+                  <div
+                    className="rr-meta"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 8,
+                      gridColumn: 1,
+                      textAlign: flip ? "right" : "left",
+                      alignItems: flip ? "flex-end" : "flex-start",
+                      order: flip ? 3 : 1,
                     }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className={`w-[60px] h-[60px] rounded-full flex items-center justify-center border-2 transition-colors duration-300 ${
-                      reached
-                        ? "bg-[hsl(153,45%,45%)] border-[hsl(153,45%,45%)] text-[hsl(0,0%,100%)]"
-                        : "bg-card border-border text-muted-foreground"
-                    } ${isActive ? "shadow-lg ring-2 ring-[hsl(153,45%,45%)]/30" : ""}`}
                   >
-                    <Icon size={isActive ? 28 : 24} />
-                  </motion.div>
-                  <span className="text-[11px] font-semibold text-muted-foreground">
-                    {step.timing}
-                  </span>
-                  <span
-                    className={`text-xs font-semibold transition-colors ${
-                      reached ? "text-foreground" : "text-muted-foreground"
-                    }`}
+                    <span
+                      style={{
+                        fontSize: 12,
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase",
+                        color: COLORS.green,
+                        fontWeight: 600,
+                      }}
+                    >
+                      {s.when}
+                    </span>
+                    <h4
+                      style={{
+                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontSize: 42,
+                        lineHeight: 1.02,
+                        color: COLORS.blue,
+                        fontWeight: 400,
+                        letterSpacing: "-0.015em",
+                        margin: 0,
+                      }}
+                    >
+                      {s.title}
+                    </h4>
+                  </div>
+
+                  {/* Dot */}
+                  <div
+                    className="rr-node"
+                    style={{
+                      position: "relative",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      order: 2,
+                    }}
                   >
-                    {step.name}
-                  </span>
-                </button>
+                    <div
+                      data-dot
+                      className="rr-dot"
+                      style={{
+                        width: 72,
+                        height: 72,
+                        borderRadius: "50%",
+                        background: i % 2 === 0 ? COLORS.blue : COLORS.green,
+                        color: "white",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        position: "relative",
+                        zIndex: 2,
+                        boxShadow: `0 0 0 8px ${COLORS.warmWhite}`,
+                      }}
+                    >
+                      <IcComp style={{ width: 30, height: 30 }} />
+                    </div>
+                  </div>
+
+                  {/* Body */}
+                  <div
+                    className="rr-content"
+                    style={{
+                      fontSize: 15,
+                      lineHeight: 1.6,
+                      color: "#3a3a3a",
+                      maxWidth: "42ch",
+                      gridColumn: 3,
+                      textAlign: "left",
+                      order: flip ? 1 : 3,
+                    }}
+                  >
+                    {s.body}
+                  </div>
+                </div>
               );
             })}
           </div>
         </div>
 
-        {/* content area */}
-        <div className="w-full max-w-2xl mx-auto min-h-[160px] text-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              className="bg-card rounded-xl border border-border shadow-sm px-8 py-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ type: "spring", stiffness: 260, damping: 22 }}
+        {/* Footer totals */}
+        <div
+          style={{
+            marginTop: 90,
+            display: "flex",
+            gap: 48,
+            justifyContent: "center",
+            flexWrap: "wrap",
+            paddingTop: 36,
+            borderTop: `1px solid ${COLORS.line}`,
+            maxWidth: 1080,
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          {[
+            ["90", "days total"],
+            ["6", "coaching sessions"],
+            ["2", "assessments"],
+            ["1", "final report"],
+          ].map(([n, l]) => (
+            <div
+              key={l}
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: 10,
+                fontSize: 13,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: COLORS.mute,
+              }}
             >
-              <h3 className="text-foreground font-bold text-lg mb-1">{steps[active].name}</h3>
-              <span className="inline-block text-[11px] font-semibold text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full mb-2">
-                {steps[active].timing}
-              </span>
-              <p className="text-muted-foreground text-base leading-relaxed">
-                {steps[active].desc}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+              <b
+                style={{
+                  fontFamily: "'Instrument Serif', Georgia, serif",
+                  fontSize: 32,
+                  color: COLORS.green,
+                  fontWeight: 400,
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {n}
+              </b>
+              {l}
+            </div>
+          ))}
         </div>
 
-        {/* summary + CTAs – visible when at step 5 */}
-        <AnimatePresence>
-          {active === 4 && (
-            <motion.div
-              className="mt-10 flex flex-col items-center gap-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <p className="text-muted-foreground text-sm text-center">
-                Total engagement: 90 days · 6–8 coaching sessions · 2 assessments · 1 HR report
-              </p>
-              <ProgramCTAs />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <ProgramCTAs />
       </div>
-    </div>
-  );
-};
-
-/* ───────────── MOBILE – vertical timeline ───────────── */
-const MobileTimeline = () => {
-  return (
-    <section id="program" className="bg-[hsl(40,33%,97%)] py-16 px-6">
-      <h2 className="text-foreground font-extrabold text-3xl mb-10 text-center">
-        The Re-Rooted® Journey
-      </h2>
-
-      <div className="relative max-w-md mx-auto">
-        {/* vertical line */}
-        <div className="absolute left-[29px] top-0 bottom-0 w-[3px] bg-border" />
-
-        {steps.map((step, i) => {
-          const Icon = step.icon;
-          return (
-            <MobileStep key={i} step={step} index={i} Icon={Icon} />
-          );
-        })}
-      </div>
-
-      {/* summary */}
-      <p className="text-muted-foreground text-sm text-center mt-10 max-w-md mx-auto">
-        Total engagement: 90 days · 6–8 coaching sessions · 2 assessments · 1 HR report
-      </p>
-      <ProgramCTAs />
     </section>
   );
-};
-
-const MobileStep = ({
-  step,
-  index,
-  Icon,
-}: {
-  step: (typeof steps)[number];
-  index: number;
-  Icon: (typeof steps)[number]["icon"];
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.4 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <motion.div
-      ref={ref}
-      className="relative flex gap-4 mb-8 pl-0"
-      initial={{ opacity: 0, x: 30 }}
-      animate={visible ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.1 }}
-    >
-      <div className="w-[60px] h-[60px] shrink-0 rounded-full flex items-center justify-center bg-[hsl(153,45%,45%)] text-[hsl(0,0%,100%)] z-10">
-        <Icon size={22} />
-      </div>
-      <div className="pt-2">
-        <p className="text-xs font-semibold text-muted-foreground">{step.timing}</p>
-        <p className="font-bold text-foreground text-sm mb-1">{step.name}</p>
-        <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
-      </div>
-    </motion.div>
-  );
-};
-
-/* ───────────── export ───────────── */
-const IntegrationProgram = () => {
-  const mobile = useIsMobile();
-  return mobile ? <MobileTimeline /> : <DesktopTimeline />;
 };
 
 export default IntegrationProgram;
