@@ -10,8 +10,8 @@ export default function WhyReRooted() {
       </div>
 
       <div className="mx-auto max-w-[1760px] px-6 pb-24 pt-20 sm:px-8 md:px-10 md:pb-28 md:pt-24 lg:px-14 lg:pb-32 lg:pt-36 xl:px-16 xl:pt-44">
-        <div className="grid grid-cols-1 gap-14 md:grid-cols-[320px_minmax(0,1fr)] md:gap-16 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-24 xl:gap-32">
-          <div className="md:pt-[11rem] lg:pt-[14rem] xl:pt-[15rem]">
+        <div className="grid grid-cols-1 gap-14 md:grid-cols-[320px_minmax(0,1fr)] md:items-end md:gap-16 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-24 xl:gap-32">
+          <div className="md:pb-[0.3em]">
             <p className="mb-8 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
               Why ReRooted
             </p>
