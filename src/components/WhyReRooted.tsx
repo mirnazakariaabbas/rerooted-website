@@ -16,16 +16,12 @@ export default function WhyReRooted() {
               Why ReRooted
             </p>
 
-            <p className="max-w-[17ch] text-[clamp(1.125rem,1.4vw,1.5rem)] leading-[1.55] text-muted-foreground">
-              Global mobility is usually treated as
+            <p className="max-w-[28ch] text-[clamp(0.875rem,1.05vw,1.125rem)] leading-[1.55] text-muted-foreground">
+              Global mobility is usually treated as logistics, visa, shipping, tax.
               <br />
-              logistics, visas, shipping, tax. But the
+              But the hardest parts of moving are invisible: identity, belonging,
               <br />
-              hardest parts of moving are invisible:
-              <br />
-              identity, belonging, family equilibrium,
-              <br />
-              confidence at work.
+              family equilibrium, confidence at work.
             </p>
           </div>
 
