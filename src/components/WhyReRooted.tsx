@@ -21,7 +21,7 @@ export default function WhyReRooted() {
         position: "relative",
         background: COLORS.warmWhite,
         color: COLORS.ink,
-        fontFamily: "'Inter Tight', system-ui, sans-serif",
+        fontFamily: "'DM Sans', system-ui, sans-serif",
         overflow: "hidden",
       }}
     >
