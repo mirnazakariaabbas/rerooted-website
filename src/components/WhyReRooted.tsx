@@ -75,7 +75,7 @@ export default function WhyReRooted() {
                 margin: 0,
               }}
             >
-              Global mobility is usually treated as logistics — visas,
+              Global mobility is usually treated as logistics: visas,
               shipping, tax. But the hardest parts of moving are invisible:
               identity, belonging, family equilibrium, confidence at work.
             </p>
