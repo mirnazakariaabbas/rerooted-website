@@ -216,6 +216,7 @@ const IntegrationProgram = () => {
             The Program
           </div>
           <h2
+            className="font-serif"
             style={{
               fontFamily: "'Instrument Serif', Georgia, serif",
               fontSize: "clamp(52px, 6vw, 96px)",
@@ -226,7 +227,7 @@ const IntegrationProgram = () => {
               margin: 0,
             }}
           >
-            The ReRooted{" "}
+            The Re-Rooted{" "}
             <em style={{ fontStyle: "italic", color: COLORS.green }}>Journey</em>
           </h2>
           <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute }}>
