@@ -21,7 +21,7 @@ export default function WhyReRooted() {
         position: "relative",
         background: COLORS.warmWhite,
         color: COLORS.ink,
-        fontFamily: "'Inter Tight', system-ui, sans-serif",
+        fontFamily: "'DM Sans', system-ui, sans-serif",
         overflow: "hidden",
       }}
     >
@@ -75,7 +75,7 @@ export default function WhyReRooted() {
                 margin: 0,
               }}
             >
-              Global mobility is usually treated as logistics — visas,
+              Global mobility is usually treated as logistics: visas,
               shipping, tax. But the hardest parts of moving are invisible:
               identity, belonging, family equilibrium, confidence at work.
             </p>
@@ -85,12 +85,12 @@ export default function WhyReRooted() {
           <div
             className="wrr-statement"
             style={{
-              fontFamily: "'Instrument Serif', Georgia, serif",
+              fontFamily: "'Manrope', system-ui, sans-serif",
               fontSize: "clamp(40px, 4.8vw, 76px)",
               lineHeight: 1.04,
               letterSpacing: "-0.02em",
               color: COLORS.blue,
-              fontWeight: 400,
+              fontWeight: 500,
             }}
           >
             A relocation is{" "}
