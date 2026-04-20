@@ -173,7 +173,7 @@ const IntegrationProgram = () => {
     >
       <style>{`
         @keyframes rrPop { 0% { transform: scale(0.4);} 60% { transform: scale(1.08);} 100% { transform: scale(1);} }
-        @media (max-width: 980px) {
+        @media (max-width: 720px) {
           .rr-step { grid-template-columns: 32px 1fr !important; gap: 8px 20px !important; }
           .rr-spine { left: 16px !important; }
           .rr-dot { width: 32px !important; height: 32px !important; box-shadow: 0 0 0 4px ${COLORS.warmWhite} !important; }
@@ -182,6 +182,13 @@ const IntegrationProgram = () => {
           .rr-meta { grid-column: 2 !important; grid-row: 1 !important; text-align: left !important; align-items: flex-start !important; order: 1 !important; }
           .rr-content { grid-column: 2 !important; grid-row: 2 !important; max-width: none !important; order: 2 !important; }
           .rr-head h2 { font-size: 44px !important; }
+        }
+        @media (min-width: 721px) and (max-width: 980px) {
+          .rr-step { grid-template-columns: 1fr 64px 1fr !important; gap: 24px !important; }
+          .rr-meta h4 { font-size: 32px !important; }
+          .rr-dot { width: 56px !important; height: 56px !important; }
+          .rr-dot svg { width: 22px !important; height: 22px !important; }
+          .rr-content { font-size: 14px !important; max-width: 38ch !important; }
         }
       `}</style>
 
