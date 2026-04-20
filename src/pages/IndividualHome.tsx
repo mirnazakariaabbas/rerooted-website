@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import WhyReRooted from "@/components/WhyReRooted";
 import ProblemStats from "@/components/ProblemStats";
 import ExpatJourney from "@/components/ExpatJourney";
 import IndividualSupport from "@/components/IndividualSupport";
@@ -31,6 +32,7 @@ const IndividualHome = () => (
       cta1={{ label: "Explore your journey", href: "#journey" }}
       cta2={{ label: "Reach out", href: "/contact" }}
     />
+    <WhyReRooted />
     <ProblemStats
       label="You're Not Alone"
       headline="What nobody told you before you moved"
