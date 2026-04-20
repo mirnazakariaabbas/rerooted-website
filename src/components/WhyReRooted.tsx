@@ -41,6 +41,48 @@ export default function WhyReRooted() {
             </h2>
           </div>
         </div>
+
+        <div className="mt-24 grid grid-cols-1 gap-14 md:mt-32 md:grid-cols-3 md:gap-10 lg:mt-40 lg:gap-16 xl:gap-24">
+          {[
+            {
+              numeral: "i.",
+              title: "Grounded in evidence",
+              body: "ICF-credentialed coaching methods combined with Innosuisse-backed research on relocation outcomes. Every session has a purpose; every purpose has a measure.",
+            },
+            {
+              numeral: "ii.",
+              title: "Built for both sides",
+              body: "Designed for the person relocating and for the HR team underwriting the move. Two parallel tracks, one shared language of progress.",
+            },
+            {
+              numeral: "iii.",
+              title: "Finite, focused, finished",
+              body: "90 days. Six coaching sessions. Two assessments. One clear report. ReRooted is a program, not a subscription, with a defined end that marks a beginning.",
+            },
+          ].map((pillar) => (
+            <div key={pillar.numeral} className="flex flex-col">
+              <div className="flex items-center gap-4">
+                <span className="font-display text-lg italic text-primary">
+                  {pillar.numeral}
+                </span>
+                <span className="h-px flex-1 bg-primary/20" />
+              </div>
+
+              <div
+                aria-hidden="true"
+                className="mt-6 h-5 w-2 rounded-full bg-secondary"
+              />
+
+              <h3 className="mt-5 font-display text-[clamp(1.5rem,2.2vw,2.25rem)] font-medium leading-[1.05] tracking-[-0.02em] text-primary">
+                {pillar.title}
+              </h3>
+
+              <p className="mt-5 max-w-[36ch] text-[clamp(0.875rem,1vw,1rem)] leading-[1.6] text-muted-foreground">
+                {pillar.body}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
