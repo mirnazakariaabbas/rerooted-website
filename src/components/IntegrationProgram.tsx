@@ -263,7 +263,6 @@ const IntegrationProgram = () => {
           <div style={{ display: "flex", flexDirection: "column", gap: 90 }}>
             {STEPS.map((s, i) => {
               const IcComp = Ic[s.icon];
-              const flip = i % 2 === 1;
               return (
                 <div
                   key={i}
@@ -279,7 +278,7 @@ const IntegrationProgram = () => {
                     transition: "opacity .7s ease, transform .7s ease",
                   }}
                 >
-                  {/* Meta */}
+                  {/* Meta (always left) */}
                   <div
                     className="rr-meta"
                     style={{
@@ -287,9 +286,8 @@ const IntegrationProgram = () => {
                       flexDirection: "column",
                       gap: 8,
                       gridColumn: 1,
-                      textAlign: flip ? "right" : "left",
-                      alignItems: flip ? "flex-end" : "flex-start",
-                      order: flip ? 3 : 1,
+                      textAlign: "right",
+                      alignItems: "flex-end",
                     }}
                   >
                     <span
