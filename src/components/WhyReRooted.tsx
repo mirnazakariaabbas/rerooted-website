@@ -1,111 +1,48 @@
-/**
- * Why ReRooted — editorial two-column statement section.
- * Self-contained: no external CSS, no Tailwind, no design tokens.
- * Drop into Lovable and render after your hero.
- */
-
-const COLORS = {
-  blue: "#1F299C",
-  green: "#3DA776",
-  warmWhite: "#FAF9F6",
-  mute: "#6B6B6B",
-  ink: "#1A1A1A",
-};
-
 export default function WhyReRooted() {
   return (
     <section
       id="approach"
-      style={{
-        padding: "180px 0 160px",
-        position: "relative",
-        background: COLORS.warmWhite,
-        color: COLORS.ink,
-        fontFamily: "'DM Sans', system-ui, sans-serif",
-        overflow: "hidden",
-      }}
+      className="relative overflow-hidden bg-background text-foreground"
     >
-      <style>{`
-        @media (max-width: 980px) {
-          .wrr-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .wrr-label { position: static !important; }
-          .wrr-statement { font-size: 40px !important; }
-        }
-      `}</style>
+      <div className="pointer-events-none absolute inset-x-0 bottom-[-16rem] hidden h-[34rem] md:block">
+        <div className="absolute left-[10%] top-0 h-[34rem] w-[16rem] rotate-[18deg] rounded-[50%] border border-primary/5" />
+        <div className="absolute right-[8%] top-[-2rem] h-[38rem] w-[16rem] rotate-[-9deg] rounded-[50%] border border-primary/5" />
+      </div>
 
-      <div
-        style={{
-          maxWidth: 1320,
-          margin: "0 auto",
-          padding: "0 48px",
-        }}
-      >
-        <div
-          className="wrr-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 90,
-            alignItems: "start",
-          }}
-        >
-          {/* Left: eyebrow + small intro paragraph */}
-          <div
-            className="wrr-label"
-            style={{ position: "sticky", top: 120 }}
-          >
-            <h4
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: COLORS.blue,
-                margin: "0 0 18px 0",
-                fontWeight: 600,
-              }}
-            >
+      <div className="mx-auto max-w-[1760px] px-6 pb-24 pt-20 sm:px-8 md:px-10 md:pb-28 md:pt-24 lg:px-14 lg:pb-32 lg:pt-36 xl:px-16 xl:pt-44">
+        <div className="grid grid-cols-1 gap-14 md:grid-cols-[320px_minmax(0,1fr)] md:gap-16 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-24 xl:gap-32">
+          <div className="md:pt-[11rem] lg:pt-[14rem] xl:pt-[15rem]">
+            <p className="mb-8 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
               Why ReRooted
-            </h4>
-            <p
-              style={{
-                fontSize: 14,
-                lineHeight: 1.6,
-                color: COLORS.mute,
-                maxWidth: "32ch",
-                margin: 0,
-              }}
-            >
-              Global mobility is usually treated as logistics: visas,
-              shipping, tax. But the hardest parts of moving are invisible:
-              identity, belonging, family equilibrium, confidence at work.
+            </p>
+
+            <p className="max-w-[17ch] text-[clamp(1.125rem,1.4vw,1.5rem)] leading-[1.55] text-muted-foreground">
+              Global mobility is usually treated as
+              <br />
+              logistics, visas, shipping, tax. But the
+              <br />
+              hardest parts of moving are invisible:
+              <br />
+              identity, belonging, family equilibrium,
+              <br />
+              confidence at work.
             </p>
           </div>
 
-          {/* Right: big editorial statement */}
-          <div
-            className="wrr-statement"
-            style={{
-              fontFamily: "'Manrope', system-ui, sans-serif",
-              fontSize: "clamp(40px, 4.8vw, 76px)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.02em",
-              color: COLORS.blue,
-              fontWeight: 500,
-            }}
-          >
-            A relocation is{" "}
-            <em style={{ fontStyle: "italic", color: COLORS.green }}>
-              not a shipment.
-            </em>
-            <br />
-            It's a person being{" "}
-            <span style={{ color: "rgba(31,41,156,0.35)" }}>replanted.</span>
-            <br />
-            We tend to the{" "}
-            <em style={{ fontStyle: "italic", color: COLORS.green }}>
-              roots,
-            </em>{" "}
-            so the move takes hold.
+          <div className="md:justify-self-end md:max-w-[620px] lg:max-w-[820px] xl:max-w-[980px]">
+            <h2 className="font-display text-[clamp(3.25rem,6.2vw,7.25rem)] font-medium leading-[0.96] tracking-[-0.055em] text-primary">
+              A relocation is <em className="italic text-secondary">not a</em>
+              <br />
+              <em className="italic text-secondary">shipment.</em>
+              <br />
+              It&apos;s a person being
+              <br />
+              <span className="text-accent">replanted.</span>
+              <br />
+              We tend to the <em className="italic text-secondary">roots</em>, so the
+              <br />
+              move takes hold.
+            </h2>
           </div>
         </div>
       </div>
