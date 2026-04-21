@@ -216,19 +216,18 @@ const IntegrationProgram = () => {
             The Program
           </div>
           <h2
-            className="font-serif"
+            className="font-display"
             style={{
-              fontFamily: "'Instrument Serif', Georgia, serif",
               fontSize: "clamp(52px, 6vw, 96px)",
               lineHeight: 1,
               color: COLORS.blue,
               letterSpacing: "-0.02em",
-              fontWeight: 400,
+              fontWeight: 700,
               margin: 0,
             }}
           >
             The Re-Rooted{" "}
-            <em style={{ fontStyle: "italic", color: COLORS.green }}>Journey</em>
+            <span style={{ color: COLORS.green }}>Journey</span>
           </h2>
           <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute }}>
             Ninety days, six sessions, two assessments, one clear report. Built as a route, not a retainer. Here's what happens, step by step.
