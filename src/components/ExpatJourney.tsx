@@ -123,12 +123,11 @@ const ExpatJourney = () => {
                 <div className="flex flex-col flex-1 p-6 lg:p-7">
                   {/* Number */}
                   <span
-                    className="font-serif italic"
+                    className="font-display"
                     style={{
-                      fontFamily: "'Instrument Serif', Georgia, serif",
                       fontSize: 18,
                       color: "#3DA776",
-                      fontWeight: 400,
+                      fontWeight: 600,
                     }}
                   >
                     {String(i + 1).padStart(2, "0")}
@@ -136,13 +135,12 @@ const ExpatJourney = () => {
 
                   {/* Title */}
                   <h3
-                    className="mt-5 font-serif italic"
+                    className="mt-5 font-display"
                     style={{
-                      fontFamily: "'Instrument Serif', Georgia, serif",
                       fontSize: "clamp(24px, 2.2vw, 32px)",
                       lineHeight: 1.15,
                       color: "#1F299C",
-                      fontWeight: 400,
+                      fontWeight: 700,
                       whiteSpace: "pre-line",
                     }}
                   >
