@@ -35,7 +35,7 @@ const CorporateHome = () => (
     />
     <WhyReRooted />
     <ProblemStats
-      label="Why I Built Re-Rooted®"
+      label="WHY RE-ROOTED® EXISTS"
       headline="The Problem Companies Avoid"
     />
     <IntegrationProgram />
