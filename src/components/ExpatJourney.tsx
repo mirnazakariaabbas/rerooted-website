@@ -98,13 +98,14 @@ const ExpatJourney = () => {
         {/* Card grid */}
         <FadeInOnScroll delay={0.15}>
           <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden"
+            className="grid grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden"
             style={{ border: "1px solid rgba(31,41,156,0.12)", background: "#F3F0F7" }}
           >
             {stages.map((stage, i) => (
-              <div
+              <Link
                 key={i}
-                className="flex flex-col"
+                to={stage.route}
+                className="group relative flex flex-col overflow-hidden cursor-pointer"
                 style={{
                   borderRight: i < stages.length - 1 ? "1px solid rgba(31,41,156,0.10)" : "none",
                   background: i % 2 === 0 ? "#F3F0F7" : "#FFFFFF",
@@ -122,7 +123,7 @@ const ExpatJourney = () => {
                 />
 
                 <div className="flex flex-col flex-1 p-6 lg:p-7">
-                  {/* Number */}
+                  {/* Label */}
                   <span
                     className="font-display"
                     style={{
@@ -148,22 +149,47 @@ const ExpatJourney = () => {
                   >
                     {stage.name}
                   </h3>
+                </div>
 
-                  {/* Description */}
-                  <p className="mt-4 flex-1" style={{ color: "#4a4a5a", fontSize: 14, lineHeight: 1.65 }}>
+                {/* Hover description overlay */}
+                <div
+                  className="absolute inset-0 flex flex-col justify-end p-6 lg:p-7 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: "rgba(31,41,156,0.94)" }}
+                >
+                  <span
+                    className="font-display"
+                    style={{
+                      fontSize: 14,
+                      color: "#3DA776",
+                      fontWeight: 600,
+                      letterSpacing: "0.1em",
+                    }}
+                  >
+                    {stage.label}
+                  </span>
+                  <h3
+                    className="mt-3 font-display"
+                    style={{
+                      fontSize: "clamp(20px, 1.8vw, 26px)",
+                      lineHeight: 1.15,
+                      color: "#FFFFFF",
+                      fontWeight: 700,
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {stage.name}
+                  </h3>
+                  <p className="mt-3" style={{ color: "rgba(255,255,255,0.88)", fontSize: 14, lineHeight: 1.65 }}>
                     {stage.desc}
                   </p>
-
-                  {/* Learn more */}
-                  <Link
-                    to={stage.route}
-                    className="inline-flex items-center gap-1.5 mt-6 text-xs font-semibold uppercase tracking-[0.12em] hover:underline underline-offset-2"
-                    style={{ color: "#1F299C" }}
+                  <span
+                    className="inline-flex items-center gap-1.5 mt-5 text-xs font-semibold uppercase tracking-[0.12em]"
+                    style={{ color: "#FFFFFF" }}
                   >
                     Learn more <span className="text-sm">→</span>
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </FadeInOnScroll>
