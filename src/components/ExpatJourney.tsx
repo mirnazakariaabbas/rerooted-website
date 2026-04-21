@@ -7,20 +7,21 @@ type Stage = {
   name: string;
   desc: string;
   route: string;
+  label: string;
 };
 
 const individualStages: Stage[] = [
-  { name: "Pre-Rooted", desc: "The stage before your move: preparing, dreaming, and gathering roots to carry with you.", route: "/journey/pre-rooted" },
-  { name: "Re-Rooted", desc: "You've arrived. Learning to feel at home in your new place, street by street.", route: "/journey/rooting-in" },
-  { name: "Thriving", desc: "Blooming where you've been planted: building community, routines, and belonging.", route: "/journey/thrive" },
-  { name: "Rooting Back", desc: "Finding ways to give back, stay connected to your origins, and grow new roots for others.", route: "/journey/rooting-back" },
+  { name: "Pre-Rooted", label: "PRE-ROOTED", desc: "The stage before your move: preparing, dreaming, and gathering roots to carry with you.", route: "/journey/pre-rooted" },
+  { name: "Re-Rooted", label: "ROOTING IN ", desc: "You've arrived. Learning to feel at home in your new place, street by street.", route: "/journey/rooting-in" },
+  { name: "Thriving", label: "ROOTING BACK", desc: "Blooming where you've been planted: building community, routines, and belonging.", route: "/journey/thrive" },
+  { name: "Rooting Back", label: "FAMILY SUPPORT ", desc: "Finding ways to give back, stay connected to your origins, and grow new roots for others.", route: "/journey/rooting-back" },
 ];
 
 const corporateStages: Stage[] = [
-  { name: "Pre-departure\ncoaching", desc: "Preparing to leave. Building readiness before the move begins. Mindset, expectations, cultural preparation.", route: "/journey/pre-rooted" },
-  { name: "On-assignment\nprogram", desc: "Just arrived. Finding ground in an unfamiliar place. Values, culture, language, relationships, social life, family.", route: "/journey/rooting-in" },
-  { name: "Repatriation\nsupport", desc: "Settled and growing. Moving beyond survival mode. Performing, connecting, contributing, building a meaningful life.", route: "/journey/thrive" },
-  { name: "Partner & family\ntrack", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", route: "/journey/rooting-back" },
+  { name: "Pre-departure\ncoaching", label: "PRE-ROOTED", desc: "Preparing to leave. Building readiness before the move begins. Mindset, expectations, cultural preparation.", route: "/journey/pre-rooted" },
+  { name: "On-assignment\nprogram", label: "ROOTING IN ", desc: "Just arrived. Finding ground in an unfamiliar place. Values, culture, language, relationships, social life, family.", route: "/journey/rooting-in" },
+  { name: "Repatriation\nsupport", label: "ROOTING BACK", desc: "Settled and growing. Moving beyond survival mode. Performing, connecting, contributing, building a meaningful life.", route: "/journey/thrive" },
+  { name: "Partner & family\ntrack", label: "FAMILY SUPPORT ", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", route: "/journey/rooting-back" },
 ];
 
 const FadeInOnScroll = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
@@ -125,12 +126,13 @@ const ExpatJourney = () => {
                   <span
                     className="font-display"
                     style={{
-                      fontSize: 18,
+                      fontSize: 14,
                       color: "#3DA776",
                       fontWeight: 600,
+                      letterSpacing: "0.1em",
                     }}
                   >
-                    {String(i + 1).padStart(2, "0")}
+                    {stage.label}
                   </span>
 
                   {/* Title */}
