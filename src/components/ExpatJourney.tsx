@@ -78,7 +78,7 @@ const ExpatJourney = () => {
                 {isIndividual ? (
                   <>Where are you<br />right now.</>
                 ) : (
-                  <>Four ways to work<br />with us.</>
+                  <>SUPPORTING YOU THROUGHOUT<br />YOUR JOURNEY</>
                 )}
               </h2>
             </div>
