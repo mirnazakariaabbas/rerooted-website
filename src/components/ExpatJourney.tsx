@@ -66,14 +66,13 @@ const ExpatJourney = () => {
                 </span>
               </div>
               <h2
-                className="font-serif"
+                className="font-display"
                 style={{
-                  fontFamily: "'Instrument Serif', Georgia, serif",
                   fontSize: "clamp(36px, 4.5vw, 64px)",
                   lineHeight: 1.05,
                   color: "#1F299C",
                   letterSpacing: "-0.02em",
-                  fontWeight: 400,
+                  fontWeight: 700,
                 }}
               >
                 {isIndividual ? (
