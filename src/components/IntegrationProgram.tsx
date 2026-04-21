@@ -416,11 +416,11 @@ const IntegrationProgram = () => {
               }}
             >
               <b
+                className="font-display"
                 style={{
-                  fontFamily: "'Instrument Serif', Georgia, serif",
                   fontSize: 32,
                   color: COLORS.green,
-                  fontWeight: 400,
+                  fontWeight: 700,
                   letterSpacing: "-0.02em",
                 }}
               >
