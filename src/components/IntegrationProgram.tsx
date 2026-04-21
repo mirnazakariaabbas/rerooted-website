@@ -382,55 +382,6 @@ const IntegrationProgram = () => {
           </div>
         </div>
 
-        {/* Footer totals */}
-        <div
-          style={{
-            marginTop: 90,
-            display: "flex",
-            gap: 48,
-            justifyContent: "center",
-            flexWrap: "wrap",
-            paddingTop: 36,
-            borderTop: `1px solid ${COLORS.line}`,
-            maxWidth: 1080,
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          {[
-            ["90", "days total"],
-            ["6", "coaching sessions"],
-            ["2", "assessments"],
-            ["1", "final report"],
-          ].map(([n, l]) => (
-            <div
-              key={l}
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                gap: 10,
-                fontSize: 13,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                color: COLORS.mute,
-              }}
-            >
-              <b
-                className="font-display"
-                style={{
-                  fontSize: 32,
-                  color: COLORS.green,
-                  fontWeight: 700,
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                {n}
-              </b>
-              {l}
-            </div>
-          ))}
-        </div>
-
         <ProgramCTAs />
       </div>
     </section>
