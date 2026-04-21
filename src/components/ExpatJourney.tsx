@@ -115,7 +115,7 @@ const ExpatJourney = () => {
                 <div
                   className="w-full"
                   style={{
-                    aspectRatio: "16 / 9",
+                    aspectRatio: "3 / 4",
                     background: i % 2 === 0
                       ? "linear-gradient(135deg, #E8E4EF 0%, #D9D3E6 100%)"
                       : "linear-gradient(135deg, #F0EDF5 0%, #E8E4EF 100%)",
