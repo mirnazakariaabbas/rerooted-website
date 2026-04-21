@@ -312,12 +312,12 @@ const IntegrationProgram = () => {
                       {s.when}
                     </span>
                     <h4
+                      className="font-display"
                       style={{
-                        fontFamily: "'Instrument Serif', Georgia, serif",
                         fontSize: 42,
                         lineHeight: 1.02,
                         color: COLORS.blue,
-                        fontWeight: 400,
+                        fontWeight: 700,
                         letterSpacing: "-0.015em",
                         margin: 0,
                       }}
