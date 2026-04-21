@@ -55,32 +55,6 @@ function useOneInCountdown(target: number, duration = 1800, start = false, delay
   return value;
 }
 
-interface OutlineStatProps {
-  number: React.ReactNode;
-  label: string;
-  inView: boolean;
-  delay: number;
-}
-
-const OutlineStat = ({ number, label, inView, delay }: OutlineStatProps) => (
-  <motion.div
-    className="relative flex flex-col items-center justify-center text-center rounded-xl border border-[#CDCCCD] bg-white p-6 md:p-8 min-h-[200px] md:min-h-0 overflow-hidden"
-    initial={{ opacity: 0, y: 30 }}
-    animate={inView ? { opacity: 1, y: 0 } : {}}
-    transition={{ duration: 0.6, delay: delay / 1000, ease: "easeOut" }}
-  >
-    <p
-      className="font-black text-primary leading-[0.9] tracking-tight"
-      style={{ fontSize: "clamp(48px, 7vw, 84px)" }}
-    >
-      {number}
-    </p>
-    <p className="text-foreground/80 font-medium text-sm md:text-base mt-4 leading-snug uppercase tracking-wide">
-      {label}
-    </p>
-  </motion.div>
-);
-
 interface ProblemStatsProps {
   label: string;
   headline: string;
@@ -89,133 +63,209 @@ interface ProblemStatsProps {
 
 const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const inView = useInView(ref, { once: true, amount: 0.2 });
 
   const hero98 = useCountUp(98, 1800, inView, 100);
-  const stat43 = useCountUp(43, 1800, inView, 400);
-  const oneIn = useOneInCountdown(3, 1800, inView, 600);
-  const stat42 = useCountUp(42, 1800, inView, 800);
-  const stat80 = useCountUp(80, 1800, inView, 1000);
+  const oneIn = useOneInCountdown(3, 1800, inView, 400);
+  const stat42 = useCountUp(42, 1800, inView, 600);
+  const stat80 = useCountUp(80, 1800, inView, 800);
+
+  const stats = [
+    {
+      num: <>1</>,
+      suffix: <span className="italic"> in {oneIn}</span>,
+      italicSuffix: true,
+      text: "don't meet performance expectations abroad.",
+    },
+    {
+      num: <>{stat42}</>,
+      suffix: <>%</>,
+      italicSuffix: false,
+      text: "have considered leaving their employer due to relocation stress.",
+    },
+    {
+      num: <>{stat80}</>,
+      suffix: <>%</>,
+      italicSuffix: false,
+      text: "take over a year to recover productivity, or never fully do.",
+    },
+  ];
 
   return (
     <section
       ref={ref}
-      className="relative w-full bg-[#FAF9F6] py-20 md:py-28 overflow-hidden"
+      id="problem"
+      className="relative w-full bg-[#FAF9F6] py-24 md:py-40 overflow-hidden"
     >
-      <div className="container relative mx-auto px-6 lg:px-12">
-        <motion.p
-          className="text-secondary text-xs font-semibold uppercase tracking-[3px] mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          {label}
-        </motion.p>
+      {/* Decorative olive branch */}
+      <svg
+        viewBox="0 0 400 300"
+        className="pointer-events-none absolute top-16 -right-10 w-[380px] h-[280px] opacity-25 hidden md:block"
+        aria-hidden="true"
+      >
+        <path
+          d="M 20 280 Q 120 200, 200 160 T 380 60"
+          stroke="#1F299C"
+          strokeWidth="1"
+          fill="none"
+        />
+        <g fill="#3DA776">
+          <ellipse cx="90" cy="232" rx="5" ry="10" transform="rotate(-40 90 232)" />
+          <ellipse cx="140" cy="202" rx="5" ry="10" transform="rotate(-30 140 202)" />
+          <ellipse cx="190" cy="172" rx="5" ry="10" transform="rotate(-20 190 172)" />
+          <ellipse cx="250" cy="138" rx="5" ry="10" transform="rotate(-10 250 138)" />
+          <ellipse cx="310" cy="100" rx="5" ry="10" transform="rotate(0 310 100)" />
+          <ellipse cx="355" cy="72" rx="5" ry="10" transform="rotate(10 355 72)" />
+        </g>
+      </svg>
 
-        <motion.h2
-          className="text-primary font-black text-3xl md:text-[44px] leading-tight mb-12 max-w-3xl uppercase"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          {headline}
-        </motion.h2>
-
-        {/* Asymmetric grid */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr_1fr] grid-rows-[auto] md:grid-rows-2 gap-4 md:gap-5">
-          {/* HERO — center, spans 2 rows on md+ */}
+      <div className="max-w-[1320px] mx-auto px-6 md:px-12 relative">
+        {/* Header */}
+        <div className="max-w-[780px] mb-20 md:mb-24">
           <motion.div
-            className="relative flex flex-col items-center justify-center text-center rounded-xl bg-primary p-8 md:p-10 md:row-span-2 order-first md:order-none min-h-[280px] md:min-h-[420px] overflow-hidden"
+            className="inline-flex items-center gap-3 mb-6"
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="inline-block w-7 h-px bg-secondary" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-secondary">
+              {label}
+            </span>
+          </motion.div>
+
+          <motion.h2
+            className="font-black text-primary leading-[1] tracking-tight m-0"
+            style={{ fontSize: "clamp(40px, 5.5vw, 84px)" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            The problem most companies{" "}
+            <em className="italic font-black text-secondary">quietly avoid.</em>
+          </motion.h2>
+
+          <motion.p
+            className="mt-6 text-base md:text-lg leading-relaxed text-foreground/60 max-w-[58ch]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Relocation policies handle the logistics. They rarely handle the human cost,
+            and the numbers on that cost are remarkably consistent.
+          </motion.p>
+        </div>
+
+        {/* Layout: anchor stat + stacked beats */}
+        <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-16 lg:gap-[120px] items-start">
+          {/* Anchor 98% */}
+          <motion.div
+            className="relative"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+            transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <div className="flex items-end justify-center">
-              <p
-                className="font-black text-white leading-[0.85] tracking-tight"
-                style={{ fontSize: "clamp(96px, 14vw, 200px)" }}
-              >
+            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-4">
+              The headline finding
+            </div>
+            <div
+              className="flex items-start font-black text-primary leading-[0.85] tracking-tight"
+            >
+              <span style={{ fontSize: "clamp(140px, 20vw, 280px)" }}>
                 {hero98}
-              </p>
+              </span>
               <span
-                className="font-black text-secondary leading-[0.85] ml-2"
-                style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+                className="text-secondary"
+                style={{
+                  fontSize: "clamp(60px, 8vw, 112px)",
+                  marginTop: "0.25em",
+                  marginLeft: "0.05em",
+                }}
               >
                 %
               </span>
             </div>
-
-            <p className="text-white text-base md:text-lg font-medium max-w-xs mt-6 uppercase tracking-wide">
-              of expats report burnout symptoms during international assignments
+            <p className="mt-6 text-base md:text-lg leading-snug text-foreground italic font-medium max-w-[30ch]">
+              of expats report burnout symptoms during international assignments.
             </p>
           </motion.div>
 
-          {/* Top-left */}
-          <OutlineStat
-            number={<>{stat43}<span className="text-secondary">%</span></>}
-            label="report a negative impact on their work performance"
-            inView={inView}
-            delay={400}
-          />
-
-          {/* Top-right */}
-          <OutlineStat
-            number={
-              <span className="whitespace-nowrap">
-                1 <span className="text-foreground/50 font-bold text-[0.55em] align-middle">in</span>{" "}
-                {oneIn}
-              </span>
-            }
-            label="don't meet performance expectations abroad"
-            inView={inView}
-            delay={600}
-          />
-
-          {/* Bottom-left */}
-          <OutlineStat
-            number={<>{stat42}<span className="text-secondary">%</span></>}
-            label="have considered leaving their employer due to relocation stress"
-            inView={inView}
-            delay={800}
-          />
-
-          {/* Bottom-right */}
-          <OutlineStat
-            number={<>{stat80}<span className="text-secondary">%</span></>}
-            label="take over a year to recover productivity, or never fully do"
-            inView={inView}
-            delay={1000}
-          />
+          {/* Three inline stats */}
+          <div className="flex flex-col gap-12 md:gap-14 pt-2 md:pt-8">
+            {stats.map((s, i) => (
+              <motion.div
+                key={i}
+                className={`grid grid-cols-1 md:grid-cols-[minmax(180px,260px)_1fr] gap-6 md:gap-10 items-baseline pb-12 md:pb-14 ${
+                  i < stats.length - 1 ? "border-b border-primary/15" : ""
+                }`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.3 + i * 0.1 }}
+              >
+                <div className="flex items-baseline leading-[0.9] text-primary tracking-tight font-black">
+                  <span
+                    style={{ fontSize: "clamp(60px, 7vw, 112px)" }}
+                  >
+                    {s.num}
+                  </span>
+                  <span
+                    className="text-secondary font-black whitespace-nowrap"
+                    style={{
+                      fontSize: "clamp(28px, 3vw, 48px)",
+                      marginLeft: s.italicSuffix ? "0.15em" : "0.02em",
+                    }}
+                  >
+                    {s.suffix}
+                  </span>
+                </div>
+                <p className="text-base md:text-lg leading-snug text-foreground italic font-medium max-w-[42ch] m-0">
+                  {s.text}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
-        {closingLine && (
-          <motion.p
-            className="text-foreground/70 text-base mt-10 max-w-2xl"
-            initial={{ opacity: 0, y: 12 }}
+        {/* Closing line */}
+        {closingLine !== null && (
+          <motion.div
+            className="mt-20 md:mt-28 pt-12 border-t border-primary/15 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-10 items-end"
+            initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 1.2 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
-            {closingLine}
-          </motion.p>
+            <p
+              className="font-bold text-primary leading-[1.25] tracking-tight max-w-[32ch] m-0"
+              style={{ fontSize: "clamp(22px, 2.4vw, 36px)" }}
+            >
+              {closingLine ?? (
+                <>
+                  These aren't edge cases. They're the{" "}
+                  <em className="italic text-secondary">default outcome</em>{" "}
+                  of treating a human move as a shipping problem.
+                </>
+              )}
+            </p>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground/60 md:text-right">
+              ReRooted exists to change that
+            </div>
+          </motion.div>
         )}
 
-        <motion.p
-          className="text-foreground/50 text-xs mt-12"
+        {/* Sources at the bottom of the section */}
+        <motion.div
+          className="mt-16 md:mt-20 pt-6 border-t border-primary/10"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 1.4 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
         >
-          Source: Black &amp; Gregersen, HBR; Cigna Global (11,922 respondents)
-        </motion.p>
-        <motion.p
-          className="text-foreground/40 font-light mt-1"
-          style={{ fontSize: "11px" }}
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 1.5 }}
-        >
-          Statistics are drawn from published research and may reflect varied methodologies.
-        </motion.p>
+          <p className="text-foreground/70 text-sm">
+            Source: Black &amp; Gregersen, HBR; Cigna Global (11,922 respondents)
+          </p>
+          <p className="text-foreground/40 text-xs font-light mt-1">
+            Statistics are drawn from published research and may reflect varied methodologies.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
