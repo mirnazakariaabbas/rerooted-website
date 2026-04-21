@@ -1,36 +1,44 @@
 
 
-## Plan: Align WhyReRooted to screenshot using brand fonts
+## Goal
 
-### What changes (`src/components/WhyReRooted.tsx`)
+Restore brand typography consistency by replacing **Instrument Serif** (a non-brand font that crept into recently added sections) with **Manrope** (the brand display font), while keeping all current font sizes intact.
 
-**Typography swap to site brand fonts** (only difference from the screenshot):
-- Section base font: `'DM Sans', system-ui, sans-serif` (replaces Inter Tight).
-- Eyebrow ("WHY REROOTED") and intro paragraph: DM Sans inherited.
-- Large editorial statement: `'Manrope', system-ui, sans-serif`, weight 500 normal / 500 italic for the highlighted words (replaces Instrument Serif). Manrope has a true italic so the slanted "not a shipment.", "replanted.", "roots," will still render as italic — matching the screenshot's emphasis pattern in the brand voice.
+## Brand reference (per visual identity memory)
 
-**Layout & content alignment with screenshot** (kept exact):
-- Two-column grid `1fr 1fr`, gap 90, `alignItems: start`.
-- Left column: sticky eyebrow + small mute paragraph, max-width 32ch.
-- Right column: large statement, three lines with `<br />` breaks:
-  1. "A relocation is *not a shipment.*"
-  2. "It's a person being **replanted.**" ("replanted." in faded blue `rgba(31,41,156,0.35)`)
-  3. "We tend to the *roots,* so the move takes hold."
-- Italic words "not a shipment.", "roots," in green `#3DA776`.
-- Statement color: Deep Blue `#1F299C`.
-- Background: Warm White `#FAF9F6`.
-- Padding `180px 0 160px`, max-width 1320, horizontal padding 48px.
-- Letter-spacing tightened (`-0.02em`) and line-height 1.04 for the same dense editorial feel.
-- Responsive: collapse to single column under 980px (unchanged).
+- **Display / Headings**: Manrope (`font-display`), weights 400-800
+- **Body**: DM Sans (`font-sans`), weights 300-700
+- No serif fonts anywhere in the brand system
 
-**Copy rule fix** (per `mem://style/content-formatting`):
-- Replace the em dash in the intro paragraph: "treated as logistics — visas, shipping, tax." becomes "treated as logistics: visas, shipping, tax."
+## Scope: two files only
 
-### Not changing
-- `index.html` font links (Manrope is already loaded).
-- `CorporateHome.tsx` and `IndividualHome.tsx` placement (still right after `<Hero />`).
-- Any other section.
+Both were added recently and use inline `fontFamily: "'Instrument Serif', Georgia, serif"` plus the `font-serif` Tailwind class.
 
-### Memory update
-- Add a short memory note `mem://features/why-rerooted` describing the section (two-column editorial statement, DM Sans + Manrope, placed after Hero on both audience homepages).
+### 1. `src/components/ExpatJourney.tsx`
+
+Replace serif typography in three spots, sizes unchanged:
+
+- **Section heading** ("Where are you right now." / "Four ways to work with us.") — remove `font-serif` class and inline `fontFamily`; switch to `font-display` with brand weight 700. Keep `clamp(36px, 4.5vw, 64px)`, line-height, color, letter-spacing.
+- **Card numerals** ("01"–"04") — drop `font-serif italic` + serif `fontFamily`; use `font-display` with weight 600, keep green color and 18px size. Italic styling removed (not in brand system).
+- **Card titles** (stage names) — drop `font-serif italic` + serif `fontFamily`; use `font-display` weight 700. Keep `clamp(24px, 2.2vw, 32px)` size, line-height, color.
+
+### 2. `src/components/IntegrationProgram.tsx`
+
+Three serif spots to convert, sizes unchanged:
+
+- **Main heading** ("The Re-Rooted Journey") — remove `font-serif` + serif `fontFamily`; use `font-display` weight 700. Keep `clamp(52px, 6vw, 96px)`. The `<em>` around "Journey" loses `fontStyle: italic` and stays green via color.
+- **Step titles** (`<h4>` at line 315) — remove serif `fontFamily`; use Manrope weight 700, keep size 42 and other styles.
+- **Inline accent `<b>`** at line 419 — remove serif `fontFamily`; use Manrope weight 700, keep size 32 and green color.
+
+## Implementation notes
+
+- Use the existing `font-display` Tailwind utility (already mapped to Manrope in `tailwind.config.ts`) instead of inline `fontFamily`. This keeps the codebase aligned with how the rest of the site declares headings.
+- Replace italic emphasis with the brand's color emphasis (Fresh Green `#3DA776` / `text-secondary`) where italics were carrying meaning, since the brand system doesn't use italic serif accents.
+- Leave `WhyReRooted.tsx`, `AudienceGate.tsx`, `Welcome.tsx`, `TestimonialsCarousel.tsx`, and `DimensionDetail.tsx` untouched: they already use `font-display` or use italic on `font-sans`/Manrope (brand-compliant), not Instrument Serif.
+- No font-size, color, spacing, or layout changes.
+
+## Out of scope
+
+- No changes to `index.html` font preconnect (Instrument Serif link can stay; it just won't be referenced anywhere). Optional cleanup can follow later.
+- No copy changes.
 
