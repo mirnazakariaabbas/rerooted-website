@@ -124,10 +124,18 @@ const StickyNav = () => {
 
   if (gateOpen && isHomePage) return null;
 
+  const navClass = [
+    "adaptive-nav fixed inset-x-0 top-0 z-50",
+    navState.solid ? "solid" : "",
+    navState.onDark ? "on-blue" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <motion.header
       ref={headerRef}
-      className="adaptive-nav fixed inset-x-0 top-0 z-50"
+      className={navClass}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
