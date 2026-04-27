@@ -49,7 +49,7 @@ const Footer = () => {
   };
 
   return (
-    <footer data-nav-theme="dark" style={{ backgroundColor: "#1A1A1A" }} className="px-6 py-8 md:py-10 lg:px-12">
+    <footer data-dark="1" data-nav-theme="dark" style={{ backgroundColor: "#1A1A1A" }} className="px-6 py-8 md:py-10 lg:px-12">
       <div className="container mx-auto">
         <div className="grid gap-6 text-center md:grid-cols-3 md:text-left">
           <div className="flex flex-col items-center md:items-start">

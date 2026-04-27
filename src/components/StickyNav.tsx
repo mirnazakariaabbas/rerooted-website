@@ -24,28 +24,18 @@ const individualLinks: NavLink[] = [
   { label: "Contact", href: "/contact", type: "route" },
 ];
 
-type Theme = "light" | "dark";
-
 interface AudienceToggleProps {
-  theme: Theme;
   className?: string;
 }
 
-const AudienceToggle = ({ theme, className = "" }: AudienceToggleProps) => {
+const AudienceToggle = ({ className = "" }: AudienceToggleProps) => {
   const { audience, setAudience } = useAudience();
   const isIndividual = audience === "individual";
-
-  const trackBg =
-    theme === "dark"
-      ? "bg-white/10 border border-white/20"
-      : "bg-[#1F299C]/10 border border-[#1F299C]/15";
-
-  const inactiveText = theme === "dark" ? "text-white/80" : "text-[#1F299C]/70";
 
   return (
     <LayoutGroup id="audience-toggle">
       <div
-        className={`relative inline-flex items-center rounded-full p-1 ${trackBg} ${className}`}
+        className={`adaptive-nav__toggle relative inline-flex items-center rounded-full p-1 ${className}`}
         role="tablist"
         aria-label="Choose audience"
       >
@@ -63,13 +53,13 @@ const AudienceToggle = ({ theme, className = "" }: AudienceToggleProps) => {
               {active && (
                 <motion.span
                   layoutId="audience-toggle-pill"
-                  className="absolute inset-0 rounded-full bg-white"
+                  className="adaptive-nav__toggle-pill absolute inset-0 rounded-full"
                   transition={{ type: "spring", stiffness: 400, damping: 32 }}
                 />
               )}
               <span
-                className={`relative ${
-                  active ? "text-[#1F299C]" : inactiveText
+                className={`adaptive-nav__toggle-label relative ${
+                  active ? "is-active" : ""
                 }`}
               >
                 {label}
@@ -84,8 +74,6 @@ const AudienceToggle = ({ theme, className = "" }: AudienceToggleProps) => {
 
 const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [theme, setTheme] = useState<Theme>("light");
   const headerRef = useRef<HTMLElement>(null);
   const { gateOpen, setGateOpen, audience } = useAudience();
   const { user } = useAuth();
@@ -109,67 +97,43 @@ const StickyNav = () => {
     }
   };
 
+  // Single scroll listener: toggles .solid and .on-blue on the nav root.
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const header = headerRef.current;
+    if (!header) return;
 
-  // Detect background theme by sampling sections marked data-nav-theme
-  useEffect(() => {
-    const sample = () => {
-      if (!headerRef.current) return;
-      const rect = headerRef.current.getBoundingClientRect();
-      const sampleY = rect.top + rect.height / 2;
-      const els = document.querySelectorAll<HTMLElement>("[data-nav-theme]");
-      let next: Theme = "light";
-      for (const el of Array.from(els)) {
+    const update = () => {
+      const solid = window.scrollY > 40;
+
+      let onDark = false;
+      const darkEls = document.querySelectorAll<HTMLElement>('[data-dark="1"]');
+      for (const el of Array.from(darkEls)) {
         const r = el.getBoundingClientRect();
-        if (r.top <= sampleY && r.bottom >= sampleY) {
-          const t = el.getAttribute("data-nav-theme");
-          if (t === "dark" || t === "light") next = t;
+        if (r.top <= 70 && r.bottom > 70) {
+          onDark = true;
           break;
         }
       }
-      setTheme(next);
+
+      header.classList.toggle("solid", solid);
+      header.classList.toggle("on-blue", onDark);
     };
-    sample();
-    window.addEventListener("scroll", sample, { passive: true });
-    window.addEventListener("resize", sample);
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
     return () => {
-      window.removeEventListener("scroll", sample);
-      window.removeEventListener("resize", sample);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
     };
   }, [location.pathname]);
 
   if (gateOpen && isHomePage) return null;
 
-  const isDark = theme === "dark";
-
-  const headerBg = scrolled
-    ? isDark
-      ? "bg-[#1A1A1A]/85 border border-white/10"
-      : "bg-background/95 border border-border"
-    : isDark
-      ? "bg-[#1A1A1A]/70 border-b border-white/10"
-      : "bg-background/95 border-b border-border";
-
-  const linkText = isDark
-    ? "text-white/75 hover:text-white"
-    : "text-foreground/70 hover:text-foreground";
-
-  const iconBtn = isDark
-    ? "border-white/20 bg-white/5 text-white/80 hover:bg-white/10 hover:text-white"
-    : "border-border bg-card text-foreground/70 hover:bg-muted hover:text-foreground";
-
   return (
     <motion.header
       ref={headerRef}
-      className={`fixed inset-x-0 z-40 backdrop-blur-md transition-[background-color,border-color,top,margin,border-radius,box-shadow] duration-500 ${
-        scrolled
-          ? `top-3 mx-4 md:mx-8 rounded-2xl ${headerBg}`
-          : `top-0 ${headerBg}`
-      }`}
+      className="adaptive-nav fixed inset-x-0 top-0 z-50"
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
@@ -186,9 +150,7 @@ const StickyNav = () => {
           <img
             src={logoShorthand}
             alt="Re-Rooted®"
-            className={`h-20 w-auto transition-[filter] duration-500 ${
-              isDark ? "brightness-0 invert" : ""
-            }`}
+            className="adaptive-nav__logo h-20 w-auto"
           />
         </button>
 
@@ -206,7 +168,7 @@ const StickyNav = () => {
                 <button
                   key={link.href + link.label}
                   onClick={() => handleNavClick(link)}
-                  className={`text-sm font-medium transition-colors cursor-pointer bg-transparent border-none ${linkText}`}
+                  className="adaptive-nav__link text-sm font-medium cursor-pointer bg-transparent border-none"
                 >
                   {link.label}
                 </button>
@@ -216,12 +178,12 @@ const StickyNav = () => {
         </nav>
 
         <div className="flex items-center gap-3">
-          <AudienceToggle theme={theme} className="hidden md:inline-flex" />
+          <AudienceToggle className="hidden md:inline-flex" />
 
           {user ? (
             <button
               onClick={() => navigate("/app/home")}
-              className={`hidden md:inline-flex items-center justify-center h-9 w-9 rounded-full border transition-colors cursor-pointer ${iconBtn}`}
+              className="adaptive-nav__icon-btn hidden md:inline-flex items-center justify-center h-9 w-9 rounded-full border cursor-pointer"
               aria-label="Go to Dashboard"
             >
               <UserRound className="h-4 w-4" />
@@ -229,11 +191,7 @@ const StickyNav = () => {
           ) : (
             <button
               onClick={() => navigate("/auth")}
-              className={`hidden md:inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors cursor-pointer ${
-                isDark
-                  ? "bg-white text-[#1F299C] hover:bg-white/90"
-                  : "bg-primary text-primary-foreground hover:bg-primary/90"
-              }`}
+              className="adaptive-nav__cta hidden md:inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold cursor-pointer"
             >
               <LogIn className="h-3.5 w-3.5" />
               Login
@@ -241,15 +199,11 @@ const StickyNav = () => {
           )}
 
           <button
-            className="md:hidden"
+            className="adaptive-nav__link md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? (
-              <X className={`h-6 w-6 ${isDark ? "text-white" : "text-foreground"}`} />
-            ) : (
-              <Menu className={`h-6 w-6 ${isDark ? "text-white" : "text-foreground"}`} />
-            )}
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
@@ -257,9 +211,7 @@ const StickyNav = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.nav
-            className={`border-t px-6 py-6 md:hidden ${
-              isDark ? "border-white/10 bg-[#1A1A1A]" : "border-border bg-background"
-            }`}
+            className="adaptive-nav__mobile border-t px-6 py-6 md:hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -270,19 +222,19 @@ const StickyNav = () => {
                 <button
                   key={link.href + link.label}
                   onClick={() => handleNavClick(link)}
-                  className={`text-left text-base font-medium transition-colors cursor-pointer bg-transparent border-none ${linkText}`}
+                  className="adaptive-nav__link text-left text-base font-medium cursor-pointer bg-transparent border-none"
                 >
                   {link.label}
                 </button>
               ))}
-              <AudienceToggle theme={theme} className="mt-2 w-fit" />
+              <AudienceToggle className="mt-2 w-fit" />
               {user ? (
                 <button
                   onClick={() => {
                     navigate("/app/home");
                     setMobileOpen(false);
                   }}
-                  className={`mt-2 w-fit inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${iconBtn}`}
+                  className="adaptive-nav__icon-btn mt-2 w-fit inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium cursor-pointer"
                 >
                   <UserRound className="h-4 w-4" />
                   My Account
@@ -293,11 +245,7 @@ const StickyNav = () => {
                     navigate("/auth");
                     setMobileOpen(false);
                   }}
-                  className={`mt-2 w-fit rounded-full px-4 py-2 text-sm font-semibold cursor-pointer ${
-                    isDark
-                      ? "bg-white text-[#1F299C]"
-                      : "bg-primary text-primary-foreground"
-                  }`}
+                  className="adaptive-nav__cta mt-2 w-fit rounded-full px-4 py-2 text-sm font-semibold cursor-pointer"
                 >
                   Login
                 </button>

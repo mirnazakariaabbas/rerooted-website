@@ -95,3 +95,130 @@
     @apply bg-background text-foreground font-sans;
   }
 }
+
+/* ===== Adaptive sticky navigation ===== */
+.adaptive-nav {
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    -webkit-backdrop-filter 0.3s ease,
+    backdrop-filter 0.3s ease;
+  color: #1F299C;
+}
+
+.adaptive-nav.on-blue {
+  color: #FFFFFF;
+}
+
+.adaptive-nav.solid {
+  background-color: rgba(250, 249, 246, 0.85);
+  border-bottom-color: rgba(31, 41, 156, 0.14);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  backdrop-filter: saturate(140%) blur(14px);
+}
+
+.adaptive-nav.solid.on-blue {
+  background-color: rgba(20, 26, 107, 0.6);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  backdrop-filter: saturate(140%) blur(14px);
+}
+
+/* Children inherit color via currentColor + transition */
+.adaptive-nav__link,
+.adaptive-nav__icon-btn,
+.adaptive-nav__cta {
+  color: currentColor;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+}
+
+.adaptive-nav__link {
+  opacity: 0.75;
+}
+.adaptive-nav__link:hover {
+  opacity: 1;
+}
+
+.adaptive-nav__logo {
+  filter: none;
+  transition: filter 0.3s ease;
+}
+.adaptive-nav.on-blue .adaptive-nav__logo {
+  filter: brightness(0) invert(1);
+}
+
+/* CTA / icon button states */
+.adaptive-nav__cta {
+  background-color: #1F299C;
+  color: #FAF9F6;
+}
+.adaptive-nav__cta:hover {
+  background-color: rgba(31, 41, 156, 0.9);
+}
+.adaptive-nav.on-blue .adaptive-nav__cta {
+  background-color: #FFFFFF;
+  color: #1F299C;
+}
+.adaptive-nav.on-blue .adaptive-nav__cta:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.adaptive-nav__icon-btn {
+  border-color: rgba(31, 41, 156, 0.2);
+  background-color: rgba(31, 41, 156, 0.05);
+}
+.adaptive-nav__icon-btn:hover {
+  background-color: rgba(31, 41, 156, 0.1);
+}
+.adaptive-nav.on-blue .adaptive-nav__icon-btn {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.adaptive-nav.on-blue .adaptive-nav__icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Audience toggle */
+.adaptive-nav__toggle {
+  background-color: rgba(31, 41, 156, 0.1);
+  border: 1px solid rgba(31, 41, 156, 0.15);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.adaptive-nav.on-blue .adaptive-nav__toggle {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.adaptive-nav__toggle-pill {
+  background-color: #FFFFFF;
+}
+.adaptive-nav__toggle-label {
+  color: rgba(31, 41, 156, 0.7);
+  transition: color 0.3s ease;
+}
+.adaptive-nav__toggle-label.is-active {
+  color: #1F299C;
+}
+.adaptive-nav.on-blue .adaptive-nav__toggle-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+.adaptive-nav.on-blue .adaptive-nav__toggle-label.is-active {
+  color: #1F299C;
+}
+
+/* Mobile drawer matches mode */
+.adaptive-nav__mobile {
+  background-color: rgba(250, 249, 246, 0.95);
+  border-color: rgba(31, 41, 156, 0.14);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  backdrop-filter: saturate(140%) blur(14px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.adaptive-nav.on-blue .adaptive-nav__mobile {
+  background-color: rgba(20, 26, 107, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+}
