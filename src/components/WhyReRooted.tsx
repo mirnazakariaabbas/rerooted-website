@@ -65,6 +65,10 @@ export default function WhyReRooted() {
                   alt=""
                   aria-hidden="true"
                   className="h-7 w-auto shrink-0"
+                  style={{
+                    filter:
+                      "brightness(0) saturate(100%) invert(54%) sepia(38%) saturate(519%) hue-rotate(106deg) brightness(92%) contrast(89%)",
+                  }}
                 />
                 <span className="h-px flex-1 bg-primary/20" />
               </div>
