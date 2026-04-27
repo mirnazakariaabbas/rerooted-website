@@ -75,6 +75,7 @@ const AudienceToggle = ({ className = "" }: AudienceToggleProps) => {
 
 const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [navState, setNavState] = useState({ solid: false, onDark: false });
   const headerRef = useRef<HTMLElement>(null);
   const { gateOpen, setGateOpen, audience } = useAudience();
   const { user } = useAuth();
