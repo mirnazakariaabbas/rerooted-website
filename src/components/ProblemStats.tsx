@@ -97,28 +97,6 @@ const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
       id="problem"
       className="relative w-full bg-[#FAF9F6] py-24 md:py-40 overflow-hidden"
     >
-      {/* Decorative olive branch */}
-      <svg
-        viewBox="0 0 400 300"
-        className="pointer-events-none absolute top-16 -right-10 w-[380px] h-[280px] opacity-25 hidden md:block"
-        aria-hidden="true"
-      >
-        <path
-          d="M 20 280 Q 120 200, 200 160 T 380 60"
-          stroke="#1F299C"
-          strokeWidth="1"
-          fill="none"
-        />
-        <g fill="#3DA776">
-          <ellipse cx="90" cy="232" rx="5" ry="10" transform="rotate(-40 90 232)" />
-          <ellipse cx="140" cy="202" rx="5" ry="10" transform="rotate(-30 140 202)" />
-          <ellipse cx="190" cy="172" rx="5" ry="10" transform="rotate(-20 190 172)" />
-          <ellipse cx="250" cy="138" rx="5" ry="10" transform="rotate(-10 250 138)" />
-          <ellipse cx="310" cy="100" rx="5" ry="10" transform="rotate(0 310 100)" />
-          <ellipse cx="355" cy="72" rx="5" ry="10" transform="rotate(10 355 72)" />
-        </g>
-      </svg>
-
       <div className="max-w-[1320px] mx-auto px-6 md:px-12 relative">
         {/* Header */}
         <div className="max-w-[780px] mb-20 md:mb-24">
