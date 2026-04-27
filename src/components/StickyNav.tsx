@@ -75,6 +75,7 @@ const AudienceToggle = ({ className = "" }: AudienceToggleProps) => {
 
 const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [navState, setNavState] = useState({ solid: false, onDark: false });
   const headerRef = useRef<HTMLElement>(null);
   const { gateOpen, setGateOpen, audience } = useAudience();
   const { user } = useAuth();
@@ -98,20 +99,18 @@ const StickyNav = () => {
     }
   };
 
-  // Single scroll listener: toggles .solid and .on-blue on the nav root.
+  // Single scroll listener: drives .solid and .on-blue via React state.
   useEffect(() => {
-    const header = headerRef.current;
-    if (!header) return;
-
     const update = () => {
       const darkEls = document.querySelectorAll<HTMLElement>('[data-dark="1"]');
       const rects = Array.from(darkEls).map((el) => {
         const r = el.getBoundingClientRect();
         return { top: r.top, bottom: r.bottom };
       });
-      const { solid, onDark } = computeNavState(window.scrollY, rects);
-      header.classList.toggle("solid", solid);
-      header.classList.toggle("on-blue", onDark);
+      const next = computeNavState(window.scrollY, rects);
+      setNavState((prev) =>
+        prev.solid === next.solid && prev.onDark === next.onDark ? prev : next,
+      );
     };
 
     update();
@@ -125,10 +124,18 @@ const StickyNav = () => {
 
   if (gateOpen && isHomePage) return null;
 
+  const navClass = [
+    "adaptive-nav fixed inset-x-0 top-0 z-50",
+    navState.solid ? "solid" : "",
+    navState.onDark ? "on-blue" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <motion.header
       ref={headerRef}
-      className="adaptive-nav fixed inset-x-0 top-0 z-50"
+      className={navClass}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}

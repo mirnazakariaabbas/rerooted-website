@@ -116,17 +116,17 @@
 }
 
 .adaptive-nav.solid {
-  background-color: rgba(250, 249, 246, 0.85);
+  background-color: rgba(250, 249, 246, 0.92);
   border-bottom-color: rgba(31, 41, 156, 0.14);
-  -webkit-backdrop-filter: saturate(140%) blur(14px);
-  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
 }
 
 .adaptive-nav.solid.on-blue {
-  background-color: rgba(20, 26, 107, 0.6);
+  background-color: rgba(20, 26, 107, 0.75);
   border-bottom-color: rgba(255, 255, 255, 0.12);
-  -webkit-backdrop-filter: saturate(140%) blur(14px);
-  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
 }
 
 /* Children inherit color via currentColor + transition */
