@@ -151,14 +151,9 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
           <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-secondary">
             {label}
           </span>
-          <h2
-            className="m-0 text-white leading-[1.05] tracking-tight"
-            style={{ ...serif, fontStyle: "italic", fontSize: "clamp(34px, 4.4vw, 64px)" }}
-          >
+          <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)]">
             The problem most companies{" "}
-            <em className="text-secondary not-italic" style={{ ...serif, fontStyle: "italic" }}>
-              quietly avoid.
-            </em>
+            <em className="italic text-secondary">quietly avoid.</em>
           </h2>
         </motion.div>
 
