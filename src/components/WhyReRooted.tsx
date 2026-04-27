@@ -1,3 +1,5 @@
+import rootsIcon from "@/assets/roots-icon.png";
+
 export default function WhyReRooted() {
   return (
     <section
@@ -62,9 +64,12 @@ export default function WhyReRooted() {
           ].map((pillar) => (
             <div key={pillar.numeral} className="flex flex-col">
               <div className="flex items-center gap-4">
-                <span className="font-display text-lg italic text-primary">
-                  {pillar.numeral}
-                </span>
+                <img
+                  src={rootsIcon}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-7 w-auto shrink-0"
+                />
                 <span className="h-px flex-1 bg-primary/20" />
               </div>
 
@@ -77,7 +82,7 @@ export default function WhyReRooted() {
                 {pillar.title}
               </h3>
 
-              <p className="mt-5 max-w-[36ch] text-[clamp(0.875rem,1vw,1rem)] leading-[1.6] text-muted-foreground">
+              <p className="mt-5 max-w-[36ch] text-lg font-normal leading-[1.55] text-foreground/90">
                 {pillar.body}
               </p>
             </div>
