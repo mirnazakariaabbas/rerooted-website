@@ -41,7 +41,7 @@ const IndividualHome = () => (
     <ExpatJourney />
     <IndividualSupport />
     <AboutSection />
-    <GroundingPillars />
+    
     <BlogPreview />
     <TestimonialsCarousel />
     <ContactCTA />
