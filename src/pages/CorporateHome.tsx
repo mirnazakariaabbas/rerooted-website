@@ -41,7 +41,7 @@ const CorporateHome = () => (
     <IntegrationProgram />
     <ExpatJourney />
     <AboutSection />
-    <GroundingPillars />
+    
     <BlogPreview />
     <TestimonialsCarousel />
     <ContactCTA />
