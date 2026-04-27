@@ -65,7 +65,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <nav className="grid grid-cols-2 gap-x-8 gap-y-2 items-start justify-items-center md:justify-items-start">
+          <nav className="grid grid-cols-2 gap-x-8 gap-y-2 items-start justify-items-start text-left">
             {links.map((l) => (
               <button
                 key={l.href + l.label}
