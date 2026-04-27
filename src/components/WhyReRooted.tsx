@@ -6,10 +6,6 @@ export default function WhyReRooted() {
       id="approach"
       className="relative overflow-hidden bg-background text-foreground"
     >
-      <div className="pointer-events-none absolute inset-x-0 bottom-[-16rem] hidden h-[34rem] md:block">
-        <div className="absolute left-[10%] top-0 h-[34rem] w-[16rem] rotate-[18deg] rounded-[50%] border border-primary/5" />
-        <div className="absolute right-[8%] top-[-2rem] h-[38rem] w-[16rem] rotate-[-9deg] rounded-[50%] border border-primary/5" />
-      </div>
 
       <div className="mx-auto max-w-[1760px] px-6 pb-24 pt-20 sm:px-8 md:px-10 md:pb-28 md:pt-24 lg:px-14 lg:pb-32 lg:pt-36 xl:px-16 xl:pt-44">
         <div className="grid grid-cols-1 gap-14 md:grid-cols-[320px_minmax(0,1fr)] md:items-end md:gap-16 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-24 xl:gap-32">
