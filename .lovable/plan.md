@@ -1,47 +1,44 @@
+
+
 ## Goal
-Add a new editorial, black-background "Field Note 02 — The Problem" section directly after the Hero on both `IndividualHome` and `CorporateHome`, matching the supplied spec 1:1.
 
-## Open question (please confirm before I build)
-Both homepages currently render `<ProblemStats>` right after `<WhyReRooted>`. The new section covers the same topic ("The Problem"). Pick one:
-- **A. Replace** the existing `ProblemStats` with the new section on both pages.
-- **B. Keep both** — render the new section between Hero and WhyReRooted, leave ProblemStats where it is.
-- **C. Replace on Corporate only** (where the headline is literally "The Problem Companies Avoid"), keep ProblemStats on Individual.
+Restore brand typography consistency by replacing **Instrument Serif** (a non-brand font that crept into recently added sections) with **Manrope** (the brand display font), while keeping all current font sizes intact.
 
-Default if you don't say: **A (replace on both)** — the new section is a stronger, more on-spec take.
+## Brand reference (per visual identity memory)
 
-## What gets built
+- **Display / Headings**: Manrope (`font-display`), weights 400-800
+- **Body**: DM Sans (`font-sans`), weights 300-700
+- No serif fonts anywhere in the brand system
 
-### 1. New component: `src/components/ProblemCompaniesAvoid.tsx`
-Self-contained section that follows the spec exactly:
-- Near-black `#0A0A0A` background, white text, full-width, `min-h-screen`.
-- Fixed left/right 56px edge rails with vertical labels (hidden <980px).
-- Centered 1200px inner frame, 80px horizontal padding (28px mobile), 80/100px vertical padding.
-- Top meta strip: `§ 02 — The Problem` ↔ sources, on a hairline border.
-- Masthead: "Ninety-eight" in Instrument Serif italic, with a small green `percent` label inline.
-- Subhead in Instrument Serif italic, max 44ch.
-- "The findings · iii. data points" divider.
-- 3-column stats grid (`1 in 3`, `42%`, `80%`) with green tag labels, big serif numbers, italic captions. Collapses to 1 column <980px.
-- Closing line with one italic+green phrase ("default outcome") and right-aligned "Re-Rooted® exists to change that".
+## Scope: two files only
 
-### 2. Page wiring
-Edit `src/pages/IndividualHome.tsx` and `src/pages/CorporateHome.tsx`:
-- Import `ProblemCompaniesAvoid`.
-- Render it right after `<Hero …/>`.
-- Apply chosen option (A/B/C) for the existing `<ProblemStats>`.
+Both were added recently and use inline `fontFamily: "'Instrument Serif', Georgia, serif"` plus the `font-serif` Tailwind class.
 
-### 3. No `index.html` changes needed
-Instrument Serif and Inter Tight are already loaded in the existing Google Fonts link.
+### 1. `src/components/ExpatJourney.tsx`
 
-## Technical details
+Replace serif typography in three spots, sizes unchanged:
 
-- Component is a single `.tsx` file with all styles inlined via Tailwind arbitrary values + a tiny `<style>` block scoped to the section for the things Tailwind handles awkwardly (writing-mode for vertical rails, the `clamp()` font-sizes, the inline-flex masthead/percent alignment). Keeps it dependency-free.
-- Font families set locally on the section root: `font-family: 'Inter Tight', sans-serif;` with serif elements using `font-family: 'Instrument Serif', serif;`. No global Tailwind config changes.
-- Colors hardcoded per spec (`#0A0A0A`, `#3DA776`, `#BCADD4`, white at various opacities). This intentionally diverges from the Deep Blue / Manrope project tokens — scoped to this section only, no global token edits.
-- No shadows, no gradients, no rounded corners, no icons (matches both spec and project core rules).
-- Edge rails use `position: fixed` with `pointer-events: none` and `z-index: 5`, hidden via media query <980px so they don't fight mobile layout.
-- Responsive breakpoint: a single 980px boundary (per spec) for rails, headline scaling, and grid collapse.
+- **Section heading** ("Where are you right now." / "Four ways to work with us.") — remove `font-serif` class and inline `fontFamily`; switch to `font-display` with brand weight 700. Keep `clamp(36px, 4.5vw, 64px)`, line-height, color, letter-spacing.
+- **Card numerals** ("01"–"04") — drop `font-serif italic` + serif `fontFamily`; use `font-display` with weight 600, keep green color and 18px size. Italic styling removed (not in brand system).
+- **Card titles** (stage names) — drop `font-serif italic` + serif `fontFamily`; use `font-display` weight 700. Keep `clamp(24px, 2.2vw, 32px)` size, line-height, color.
+
+### 2. `src/components/IntegrationProgram.tsx`
+
+Three serif spots to convert, sizes unchanged:
+
+- **Main heading** ("The Re-Rooted Journey") — remove `font-serif` + serif `fontFamily`; use `font-display` weight 700. Keep `clamp(52px, 6vw, 96px)`. The `<em>` around "Journey" loses `fontStyle: italic` and stays green via color.
+- **Step titles** (`<h4>` at line 315) — remove serif `fontFamily`; use Manrope weight 700, keep size 42 and other styles.
+- **Inline accent `<b>`** at line 419 — remove serif `fontFamily`; use Manrope weight 700, keep size 32 and green color.
+
+## Implementation notes
+
+- Use the existing `font-display` Tailwind utility (already mapped to Manrope in `tailwind.config.ts`) instead of inline `fontFamily`. This keeps the codebase aligned with how the rest of the site declares headings.
+- Replace italic emphasis with the brand's color emphasis (Fresh Green `#3DA776` / `text-secondary`) where italics were carrying meaning, since the brand system doesn't use italic serif accents.
+- Leave `WhyReRooted.tsx`, `AudienceGate.tsx`, `Welcome.tsx`, `TestimonialsCarousel.tsx`, and `DimensionDetail.tsx` untouched: they already use `font-display` or use italic on `font-sans`/Manrope (brand-compliant), not Instrument Serif.
+- No font-size, color, spacing, or layout changes.
 
 ## Out of scope
-- No memory updates (this is a one-off editorial section; existing ProblemStats memory still applies if we keep it).
-- No changes to navigation, routing, or the StickyNav adaptive behavior.
-- No new tests (pure presentational component).
+
+- No changes to `index.html` font preconnect (Instrument Serif link can stay; it just won't be referenced anywhere). Optional cleanup can follow later.
+- No copy changes.
+

@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import WhyReRooted from "@/components/WhyReRooted";
-import ProblemCompaniesAvoid from "@/components/ProblemCompaniesAvoid";
+import ProblemStats from "@/components/ProblemStats";
 import IntegrationProgram from "@/components/IntegrationProgram";
 import ExpatJourney from "@/components/ExpatJourney";
 import AboutSection from "@/components/AboutSection";
@@ -33,8 +33,11 @@ const CorporateHome = () => (
       cta1={{ label: "See how it works", href: "#program" }}
       cta2={{ label: "Start a conversation", href: "/contact" }}
     />
-    <ProblemCompaniesAvoid />
     <WhyReRooted />
+    <ProblemStats
+      label="WHY RE-ROOTED® EXISTS"
+      headline="The Problem Companies Avoid"
+    />
     <IntegrationProgram />
     <ExpatJourney />
     <AboutSection />
