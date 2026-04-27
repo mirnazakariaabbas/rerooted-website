@@ -16,7 +16,7 @@ export default function WhyReRooted() {
               Why ReRooted
             </p>
 
-            <p className="max-w-[28ch] text-[clamp(0.875rem,1.05vw,1.125rem)] leading-[1.55] text-muted-foreground">
+            <p className="max-w-[28ch] text-lg font-normal leading-[1.55] text-muted-foreground">
               Global mobility is usually treated as logistics, visa, shipping, tax.
               <br />
               But the hardest parts of moving are invisible: identity, belonging,
