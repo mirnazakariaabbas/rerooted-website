@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import logoShorthand from "@/assets/logo-shorthand-blue.png";
 import { useAudience } from "@/contexts/AudienceContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { computeNavState } from "@/lib/navAdaptive";
 
 type NavLink = { label: string; href: string; type: "route" | "hash" };
 
@@ -103,18 +104,12 @@ const StickyNav = () => {
     if (!header) return;
 
     const update = () => {
-      const solid = window.scrollY > 40;
-
-      let onDark = false;
       const darkEls = document.querySelectorAll<HTMLElement>('[data-dark="1"]');
-      for (const el of Array.from(darkEls)) {
+      const rects = Array.from(darkEls).map((el) => {
         const r = el.getBoundingClientRect();
-        if (r.top <= 70 && r.bottom > 70) {
-          onDark = true;
-          break;
-        }
-      }
-
+        return { top: r.top, bottom: r.bottom };
+      });
+      const { solid, onDark } = computeNavState(window.scrollY, rects);
       header.classList.toggle("solid", solid);
       header.classList.toggle("on-blue", onDark);
     };
