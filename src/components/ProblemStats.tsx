@@ -106,7 +106,7 @@ const ProblemStats = ({ label, headline, closingLine }: ProblemStatsProps) => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block w-7 h-px bg-secondary" />
+            
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-secondary">
               {label}
             </span>
