@@ -60,8 +60,7 @@ const ExpatJourney = () => {
         <FadeInOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 md:gap-16 md:items-end mb-16 md:mb-20">
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="block w-8 h-[2px]" style={{ background: "#3DA776" }} />
+              <div className="mb-6">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: "#3DA776" }}>
                   {isIndividual ? "Your Journey" : "Services"}
                 </span>

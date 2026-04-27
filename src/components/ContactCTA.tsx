@@ -38,8 +38,10 @@ const ContactCTA = () => {
   return (
     <section
       id="contact"
+      data-dark="1"
+      data-nav-theme="dark"
       className="py-20 md:py-28"
-      style={{ backgroundColor: "#FAF9F6" }}
+      style={{ backgroundColor: "#1F299C" }}
     >
       <div ref={ref} className="container mx-auto px-6 lg:px-12">
         <motion.div
@@ -49,9 +51,8 @@ const ContactCTA = () => {
           className="mx-auto max-w-lg text-center"
         >
           <h2
-            className="font-extrabold tracking-tight"
+            className="font-extrabold tracking-tight text-white"
             style={{
-              color: "#1A1A1A",
               fontSize: "clamp(30px, 4.5vw, 40px)",
             }}
           >
@@ -60,13 +61,13 @@ const ContactCTA = () => {
 
           <div
             className="mx-auto mt-5 max-w-[600px] space-y-3 text-sm md:text-base"
-            style={{ color: "#1A1A1A" }}
+            style={{ color: "rgba(255,255,255,0.85)" }}
           >
             {isIndividual ? (
               <>
                 <p>
                   Whether you're about to move, just arrived, or have been away
-                  for years — it's never too late to feel at home.
+                  for years, it's never too late to feel at home.
                 </p>
                 <p>No judgement. No pressure. Just a conversation about you.</p>
               </>
@@ -75,7 +76,7 @@ const ContactCTA = () => {
                 <p>
                   Whether you're exploring support for an upcoming assignment,
                   rethinking your mobility program, or just curious about what{" "}
-                  <strong>Re-Rooted®</strong> does — we'd like to hear from you.
+                  <strong className="text-white">Re-Rooted®</strong> does, we'd like to hear from you.
                 </p>
                 <p>
                   No pitch. No pressure. Just a conversation about what your
@@ -198,9 +199,10 @@ const ContactCTA = () => {
 
               <button
                 type="submit"
-                className="mt-2 w-full py-3 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.98]"
+                className="mt-2 w-full py-3 text-sm font-semibold transition-transform duration-150 active:scale-[0.98]"
                 style={{
-                  backgroundColor: isIndividual ? "#3DA776" : "#1F299C",
+                  backgroundColor: isIndividual ? "#3DA776" : "#FAF9F6",
+                  color: isIndividual ? "#FFFFFF" : "#1F299C",
                   borderRadius: isIndividual ? "12px" : "8px",
                 }}
               >
@@ -209,7 +211,7 @@ const ContactCTA = () => {
             </form>
           )}
 
-          <div className="mt-8 space-y-1 text-xs" style={{ color: "#6B6B6B" }}>
+          <div className="mt-8 space-y-1 text-xs" style={{ color: "rgba(255,255,255,0.7)" }}>
             <p>hello@re-rooted.com</p>
             <p>Based in Switzerland. Working with organizations globally.</p>
           </div>

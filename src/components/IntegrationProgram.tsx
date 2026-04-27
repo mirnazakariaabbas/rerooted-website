@@ -212,7 +212,6 @@ const IntegrationProgram = () => {
               marginBottom: 18,
             }}
           >
-            <span style={{ display: "inline-block", width: 28, height: 1, background: "currentColor" }} />
             The Program
           </div>
           <h2
