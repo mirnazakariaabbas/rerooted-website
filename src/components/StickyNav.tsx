@@ -99,20 +99,18 @@ const StickyNav = () => {
     }
   };
 
-  // Single scroll listener: toggles .solid and .on-blue on the nav root.
+  // Single scroll listener: drives .solid and .on-blue via React state.
   useEffect(() => {
-    const header = headerRef.current;
-    if (!header) return;
-
     const update = () => {
       const darkEls = document.querySelectorAll<HTMLElement>('[data-dark="1"]');
       const rects = Array.from(darkEls).map((el) => {
         const r = el.getBoundingClientRect();
         return { top: r.top, bottom: r.bottom };
       });
-      const { solid, onDark } = computeNavState(window.scrollY, rects);
-      header.classList.toggle("solid", solid);
-      header.classList.toggle("on-blue", onDark);
+      const next = computeNavState(window.scrollY, rects);
+      setNavState((prev) =>
+        prev.solid === next.solid && prev.onDark === next.onDark ? prev : next,
+      );
     };
 
     update();
