@@ -70,7 +70,7 @@ const Footer = () => {
               <button
                 key={l.href + l.label}
                 onClick={() => handleClick(l)}
-                className="text-sm transition-colors hover:text-white cursor-pointer bg-transparent border-none"
+                className="text-sm transition-colors hover:text-white cursor-pointer bg-transparent border-none text-left w-full whitespace-nowrap"
                 style={{ color: "rgba(255,255,255,0.7)" }}
               >
                 {l.label}
