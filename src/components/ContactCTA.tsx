@@ -199,9 +199,10 @@ const ContactCTA = () => {
 
               <button
                 type="submit"
-                className="mt-2 w-full py-3 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.98]"
+                className="mt-2 w-full py-3 text-sm font-semibold transition-transform duration-150 active:scale-[0.98]"
                 style={{
-                  backgroundColor: isIndividual ? "#3DA776" : "#1F299C",
+                  backgroundColor: isIndividual ? "#3DA776" : "#FAF9F6",
+                  color: isIndividual ? "#FFFFFF" : "#1F299C",
                   borderRadius: isIndividual ? "12px" : "8px",
                 }}
               >
@@ -210,7 +211,7 @@ const ContactCTA = () => {
             </form>
           )}
 
-          <div className="mt-8 space-y-1 text-xs" style={{ color: "#6B6B6B" }}>
+          <div className="mt-8 space-y-1 text-xs" style={{ color: "rgba(255,255,255,0.7)" }}>
             <p>hello@re-rooted.com</p>
             <p>Based in Switzerland. Working with organizations globally.</p>
           </div>
