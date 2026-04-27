@@ -15,7 +15,7 @@ const GroundingPillars = () => {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section data-nav-theme="dark" className="bg-primary py-20 px-6 lg:px-12">
+    <section data-dark="1" data-nav-theme="dark" className="bg-primary py-20 px-6 lg:px-12">
       <div ref={ref} className="max-w-5xl mx-auto">
         <h2 className="text-primary-foreground font-extrabold text-3xl md:text-[40px] text-center mb-12">
           What we pay attention to
