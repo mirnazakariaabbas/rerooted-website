@@ -32,8 +32,8 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
 
   return (
     <section className="relative flex min-h-screen items-center bg-background">
-      <div className="container mx-auto flex flex-col items-center gap-12 px-6 py-20 md:flex-row md:items-center md:gap-16 md:px-12">
-        <div ref={textRef} className="w-full min-w-0 md:basis-[60%] md:flex-none">
+      <div className="container mx-auto flex flex-col items-center gap-12 px-6 py-20 md:flex-row md:items-center md:gap-8 md:px-12">
+        <div ref={textRef} className="w-full min-w-0 md:basis-[45%] md:flex-none">
           <h1
             className="text-4xl font-black leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-[56px]"
             style={{ fontWeight: 900 }}
