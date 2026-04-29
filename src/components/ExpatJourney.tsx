@@ -101,17 +101,14 @@ const ExpatJourney = () => {
 
         {/* Card grid */}
         <FadeInOnScroll delay={0.15}>
-          <div
-            className="grid grid-cols-4 rounded-2xl overflow-hidden"
-            style={{ border: "1px solid rgba(31,41,156,0.12)", background: "#F3F0F7" }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
             {stages.map((stage, i) => (
               <Link
                 key={i}
                 to={stage.route}
-                className="group relative flex flex-col overflow-hidden cursor-pointer"
+                className="group relative flex flex-col overflow-hidden cursor-pointer rounded-2xl"
                 style={{
-                  borderRight: i < stages.length - 1 ? "1px solid rgba(31,41,156,0.10)" : "none",
+                  border: "1px solid rgba(31,41,156,0.12)",
                   background: i % 2 === 0 ? "#F3F0F7" : "#FFFFFF",
                 }}
               >
