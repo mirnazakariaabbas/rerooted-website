@@ -10,7 +10,7 @@ const AboutSection = () => {
   const isIndividual = audience === "individual";
 
   return (
-    <section id="about" className={`bg-background px-6 lg:px-12 ${isIndividual ? "py-24" : "py-20"}`}>
+    <section id="about" className={`px-6 lg:px-12 ${isIndividual ? "py-24" : "py-20"}`} style={{ background: "#1F299C" }}>
       <div
         ref={ref}
         className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
@@ -31,7 +31,7 @@ const AboutSection = () => {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.7, ease: "easeOut", delay: 0.15 }}
         >
-          <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] leading-tight mb-6">
+          <h2 className="font-extrabold text-3xl md:text-[40px] leading-tight mb-6" style={{ color: "#FAF9F6" }}>
             {isIndividual ? (
               <>
                 I've been where
@@ -47,7 +47,7 @@ const AboutSection = () => {
             )}
           </h2>
 
-          <div className={`space-y-4 text-foreground leading-relaxed ${isIndividual ? "text-base md:text-lg" : "text-base"}`}>
+          <div className={`space-y-4 leading-relaxed ${isIndividual ? "text-base md:text-lg" : "text-base"}`} style={{ color: "rgba(250,249,246,0.88)" }}>
             {isIndividual ? (
               <>
                 <p>
@@ -89,7 +89,8 @@ const AboutSection = () => {
 
           <Link
             to="/about"
-            className="inline-block mt-6 text-secondary font-semibold hover:underline underline-offset-4"
+            className="inline-block mt-6 font-semibold hover:underline underline-offset-4"
+            style={{ color: "#3DA776" }}
           >
             {isIndividual ? "Hear my story →" : "Read the full story →"}
           </Link>
