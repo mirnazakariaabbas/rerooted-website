@@ -54,7 +54,7 @@ const ExpatJourney = () => {
   const stages = isIndividual ? individualStages : corporateStages;
 
   return (
-    <section id="journey" className="px-6 lg:px-12" style={{ background: "#1F299C", paddingTop: 80, paddingBottom: 80 }}>
+    <section id="journey" className="px-6 lg:px-12" style={{ background: "#FAF9F6", paddingTop: 80, paddingBottom: 80 }}>
       <div className="container mx-auto max-w-[1760px]">
         {/* Header: two-column layout */}
         <FadeInOnScroll>
