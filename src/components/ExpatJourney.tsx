@@ -70,7 +70,7 @@ const ExpatJourney = () => {
                 style={{
                   fontSize: "clamp(36px, 4.5vw, 64px)",
                   lineHeight: 1.05,
-                  color: "#1F299C",
+                  color: "#FAF9F6",
                   letterSpacing: "-0.02em",
                   fontWeight: 700,
                 }}
