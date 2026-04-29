@@ -10,7 +10,7 @@ const AboutSection = () => {
   const isIndividual = audience === "individual";
 
   return (
-    <section id="about" className={`bg-background px-6 lg:px-12 ${isIndividual ? "py-24" : "py-20"}`}>
+    <section id="about" className={`px-6 lg:px-12 ${isIndividual ? "py-24" : "py-20"}`} style={{ background: "#1F299C" }}>
       <div
         ref={ref}
         className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
