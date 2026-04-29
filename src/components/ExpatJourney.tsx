@@ -114,16 +114,39 @@ const ExpatJourney = () => {
                   background: i % 2 === 0 ? "#F3F0F7" : "#FFFFFF",
                 }}
               >
-                {/* Image placeholder */}
-                <div
-                  className="w-full"
-                  style={{
-                    aspectRatio: "3 / 4",
-                    background: i % 2 === 0
-                      ? "linear-gradient(135deg, #E8E4EF 0%, #D9D3E6 100%)"
-                      : "linear-gradient(135deg, #F0EDF5 0%, #E8E4EF 100%)",
-                  }}
-                />
+                {/* Image with desaturated blue soft-light treatment */}
+                <div className="relative w-full overflow-hidden" style={{ aspectRatio: "3 / 4" }}>
+                  {stage.image ? (
+                    <>
+                      <img
+                        src={stage.image}
+                        alt={stage.name}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover"
+                        style={{ filter: "saturate(0.55) brightness(1.02) contrast(0.96)" }}
+                      />
+                      <div
+                        aria-hidden
+                        className="absolute inset-0"
+                        style={{ background: "rgba(31,41,156,0.22)", mixBlendMode: "soft-light" }}
+                      />
+                      <div
+                        aria-hidden
+                        className="absolute inset-0"
+                        style={{ background: "linear-gradient(180deg, rgba(31,41,156,0.05) 0%, rgba(31,41,156,0.18) 100%)" }}
+                      />
+                    </>
+                  ) : (
+                    <div
+                      className="w-full h-full"
+                      style={{
+                        background: i % 2 === 0
+                          ? "linear-gradient(135deg, #E8E4EF 0%, #D9D3E6 100%)"
+                          : "linear-gradient(135deg, #F0EDF5 0%, #E8E4EF 100%)",
+                      }}
+                    />
+                  )}
+                </div>
 
                 <div className="flex flex-col flex-1 p-6 lg:p-7">
                   {/* Label */}
