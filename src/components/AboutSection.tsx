@@ -89,7 +89,8 @@ const AboutSection = () => {
 
           <Link
             to="/about"
-            className="inline-block mt-6 text-secondary font-semibold hover:underline underline-offset-4"
+            className="inline-block mt-6 font-semibold hover:underline underline-offset-4"
+            style={{ color: "#3DA776" }}
           >
             {isIndividual ? "Hear my story →" : "Read the full story →"}
           </Link>
