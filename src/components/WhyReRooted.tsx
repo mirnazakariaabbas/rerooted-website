@@ -75,6 +75,23 @@ export default function WhyReRooted() {
         className="relative overflow-hidden bg-background text-foreground"
       >
         <div className="mx-auto max-w-[1760px] px-6 pb-24 pt-20 sm:px-8 md:px-10 md:pb-28 md:pt-24 lg:px-14 lg:pb-32 lg:pt-36 xl:px-16 xl:pt-44">
+          <div className="mb-16 flex flex-col gap-6 md:mb-20 lg:mb-24">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
+              What makes Re-Rooted Unique
+            </p>
+            <h2
+              className="font-display text-primary"
+              style={{
+                fontWeight: 500,
+                fontSize: "clamp(2rem, 4.5vw, 4.5rem)",
+                lineHeight: 1.05,
+                letterSpacing: "-0.022em",
+                maxWidth: "22ch",
+              }}
+            >
+              We are grounded by our 3 Re-Rooted Principles
+            </h2>
+          </div>
           <div className="grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-10 lg:gap-16 xl:gap-24">
             {[
               {
