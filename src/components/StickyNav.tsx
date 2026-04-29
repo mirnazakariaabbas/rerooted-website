@@ -144,6 +144,9 @@ const StickyNav = () => {
         <button
           onClick={() => {
             setGateOpen(true);
+            if (location.pathname !== "/") {
+              navigate("/");
+            }
             window.scrollTo({ top: 0 });
           }}
           className="shrink-0 cursor-pointer"
