@@ -5,6 +5,7 @@ import { useAudience } from "@/contexts/AudienceContext";
 import preRootedImg from "@/assets/journey-pre-rooted.jpg";
 import rootingInImg from "@/assets/journey-rooting-in.jpg";
 import rootingBackImg from "@/assets/journey-rooting-back.jpg";
+import familySupportImg from "@/assets/journey-family-support.jpg";
 
 type Stage = {
   name: string;
@@ -18,14 +19,14 @@ const individualStages: Stage[] = [
   { name: "Pre-Rooted", label: "PRE-ROOTED", desc: "The stage before your move: preparing, dreaming, and gathering roots to carry with you.", route: "/journey/pre-rooted", image: preRootedImg },
   { name: "Re-Rooted®", label: "ROOTING IN ", desc: "You've arrived. Learning to feel at home in your new place, street by street.", route: "/journey/rooting-in", image: rootingInImg },
   { name: "Thriving", label: "ROOTING BACK", desc: "Blooming where you've been planted: building community, routines, and belonging.", route: "/journey/thrive", image: rootingBackImg },
-  { name: "Rooting Back", label: "FAMILY SUPPORT ", desc: "Finding ways to give back, stay connected to your origins, and grow new roots for others.", route: "/journey/rooting-back" },
+  { name: "Rooting Back", label: "FAMILY SUPPORT ", desc: "Finding ways to give back, stay connected to your origins, and grow new roots for others.", route: "/journey/rooting-back", image: familySupportImg },
 ];
 
 const corporateStages: Stage[] = [
   { name: "Pre-departure", label: "PRE-ROOTED", desc: "Preparing to leave. Building readiness before the move begins. Mindset, expectations, cultural preparation.", route: "/journey/pre-rooted", image: preRootedImg },
   { name: "On-assignment", label: "ROOTING IN ", desc: "Just arrived. Finding ground in an unfamiliar place. Values, culture, language, relationships, social life, family.", route: "/journey/rooting-in", image: rootingInImg },
   { name: "Repatriation", label: "ROOTING BACK", desc: "Settled and growing. Moving beyond survival mode. Performing, connecting, contributing, building a meaningful life.", route: "/journey/thrive", image: rootingBackImg },
-  { name: "Partner & family", label: "FAMILY SUPPORT ", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", route: "/journey/rooting-back" },
+  { name: "Partner & family", label: "FAMILY SUPPORT ", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", route: "/journey/rooting-back", image: familySupportImg },
 ];
 
 const FadeInOnScroll = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
