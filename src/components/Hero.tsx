@@ -32,8 +32,8 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
 
   return (
     <section className="relative flex min-h-screen items-center bg-background">
-      <div className="container mx-auto flex flex-col items-center gap-12 px-6 py-20 md:flex-row md:gap-16 md:px-12">
-        <div ref={textRef} className="flex-1 min-w-0">
+      <div className="container mx-auto flex flex-col items-center gap-12 px-6 py-20 md:flex-row md:items-center md:gap-16 md:px-12">
+        <div ref={textRef} className="w-full min-w-0 md:basis-[60%] md:flex-none">
           <h1
             className="text-4xl font-black leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-[56px]"
             style={{ fontWeight: 900 }}
@@ -98,7 +98,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
         </div>
 
         <motion.div
-          className="flex-1 flex items-center justify-center md:justify-end"
+          className="flex w-full items-center justify-center md:basis-[40%] md:flex-none md:justify-end"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.8, delay: 0.3 + delayBase, ease: "easeOut" }}
@@ -106,7 +106,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
           <img
             src={heroImage}
             alt="Professional in a modern workspace"
-            className="h-auto w-full max-w-[640px] object-contain"
+            className="h-auto w-full max-w-[420px] object-contain sm:max-w-[520px] md:w-[145%] md:max-w-[760px] lg:max-w-[820px]"
             loading="eager"
           />
         </motion.div>
