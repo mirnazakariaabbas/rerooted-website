@@ -54,7 +54,7 @@ const ExpatJourney = () => {
   const stages = isIndividual ? individualStages : corporateStages;
 
   return (
-    <section id="journey" className="px-6 lg:px-12" style={{ background: "#FAF9F6", paddingTop: 80, paddingBottom: 80 }}>
+    <section id="journey" className="px-6 lg:px-12" style={{ background: "#1F299C", paddingTop: 80, paddingBottom: 80 }}>
       <div className="container mx-auto max-w-[1760px]">
         {/* Header: two-column layout */}
         <FadeInOnScroll>
@@ -70,7 +70,7 @@ const ExpatJourney = () => {
                 style={{
                   fontSize: "clamp(36px, 4.5vw, 64px)",
                   lineHeight: 1.05,
-                  color: "#1F299C",
+                  color: "#FAF9F6",
                   letterSpacing: "-0.02em",
                   fontWeight: 700,
                 }}
@@ -83,7 +83,7 @@ const ExpatJourney = () => {
               </h2>
             </div>
             <div className="md:pb-1">
-              <p className="leading-[1.65]" style={{ color: "#1A1A1A", fontSize: "clamp(15px, 1.2vw, 18px)" }}>
+              <p className="leading-[1.65]" style={{ color: "rgba(250,249,246,0.85)", fontSize: "clamp(15px, 1.2vw, 18px)" }}>
                 {isIndividual ? (
                   <>The expat journey isn't a straight line. You move forward, loop back, and start again. Find the stage that feels like yours right now: that's where we begin.</>
                 ) : (
