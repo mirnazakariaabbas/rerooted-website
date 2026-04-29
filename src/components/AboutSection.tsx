@@ -47,7 +47,7 @@ const AboutSection = () => {
             )}
           </h2>
 
-          <div className={`space-y-4 text-foreground leading-relaxed ${isIndividual ? "text-base md:text-lg" : "text-base"}`}>
+          <div className={`space-y-4 leading-relaxed ${isIndividual ? "text-base md:text-lg" : "text-base"}`} style={{ color: "rgba(250,249,246,0.88)" }}>
             {isIndividual ? (
               <>
                 <p>
