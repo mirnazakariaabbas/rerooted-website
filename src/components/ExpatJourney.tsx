@@ -83,7 +83,7 @@ const ExpatJourney = () => {
               </h2>
             </div>
             <div className="md:pb-1">
-              <p className="leading-[1.65]" style={{ color: "#1A1A1A", fontSize: "clamp(15px, 1.2vw, 18px)" }}>
+              <p className="leading-[1.65]" style={{ color: "rgba(250,249,246,0.85)", fontSize: "clamp(15px, 1.2vw, 18px)" }}>
                 {isIndividual ? (
                   <>The expat journey isn't a straight line. You move forward, loop back, and start again. Find the stage that feels like yours right now: that's where we begin.</>
                 ) : (
