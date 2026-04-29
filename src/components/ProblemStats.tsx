@@ -270,27 +270,6 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
           })}
         </div>
 
-        {/* Closing line */}
-        <motion.div
-          className="mt-16 md:mt-20 pt-10 border-t border-white/10 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-10 items-end"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.7 }}
-        >
-          <p
-            className="m-0 text-white leading-[1.25] max-w-[40ch]"
-            style={{ ...serif, fontStyle: "italic", fontSize: "clamp(22px, 2.4vw, 36px)" }}
-          >
-            These aren't edge cases. They're the{" "}
-            <em className="text-secondary not-italic" style={{ ...serif, fontStyle: "italic" }}>
-              default outcome
-            </em>{" "}
-            of treating a human move as a shipping problem.
-          </p>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50 md:text-right">
-            Re-Rooted® exists to change that
-          </div>
-        </motion.div>
       </div>
     </section>
   );
