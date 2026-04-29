@@ -32,7 +32,7 @@ export default function WhyReRooted() {
           style={{ maxWidth: 1800, padding: "160px 64px" }}
         >
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
-            Why ReRooted
+            Why Re-Rooted®
           </p>
 
           <h2
@@ -77,7 +77,7 @@ export default function WhyReRooted() {
         <div className="mx-auto max-w-[1760px] px-6 pb-24 pt-20 sm:px-8 md:px-10 md:pb-28 md:pt-24 lg:px-14 lg:pb-32 lg:pt-36 xl:px-16 xl:pt-44">
           <div className="mb-16 flex flex-col gap-6 md:mb-20 lg:mb-24">
             <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
-              What makes Re-Rooted Unique
+              What makes Re-Rooted® Unique
             </p>
             <h2
               className="font-display text-primary"
@@ -89,7 +89,7 @@ export default function WhyReRooted() {
                 maxWidth: "22ch",
               }}
             >
-              We are grounded by our 3 Re-Rooted Principles
+              We are grounded by our 3 Re-Rooted® Principles
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-10 lg:gap-16 xl:gap-24">
@@ -107,7 +107,7 @@ export default function WhyReRooted() {
               {
                 numeral: "iii.",
                 title: "Finite, focused, finished",
-                body: "90 days. Six coaching sessions. Two assessments. One clear report. ReRooted is a program, not a subscription, with a defined end that marks a beginning.",
+                body: "90 days. Six coaching sessions. Two assessments. One clear report. Re-Rooted® is a program, not a subscription, with a defined end that marks a beginning.",
               },
             ].map((pillar) => (
               <div key={pillar.numeral} className="flex flex-col">

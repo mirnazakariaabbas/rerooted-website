@@ -34,7 +34,7 @@ type Newsletter = {
 const emptyDraft = {
   subject: '',
   body_html: '',
-  from_name: 'Re-Rooted',
+  from_name: 'Re-Rooted®',
   reply_to: 'hello@re-rooted.com',
   recipient_segment: 'all_subscribers',
 };

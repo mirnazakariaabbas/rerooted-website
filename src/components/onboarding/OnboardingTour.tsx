@@ -7,7 +7,7 @@ import { useAdmin } from '@/hooks/useAdmin';
 const TOUR_KEY = 'onboarding-tour-complete';
 
 const steps = [
-  { title: 'Welcome to Re-Rooted', description: 'Your admin dashboard for managing expat coaching programs, contacts, and content.' },
+  { title: 'Welcome to Re-Rooted®', description: 'Your admin dashboard for managing expat coaching programs, contacts, and content.' },
   { title: 'Your Dashboard', description: 'Get an overview of key metrics, recent contacts, and member activity at a glance.' },
   { title: 'User Management', description: 'Manage contacts, members, organizations, coaches, and admin users from one place.' },
   { title: 'Content Manager', description: 'Compose newsletters, manage automated emails, and monitor brand mentions.' },

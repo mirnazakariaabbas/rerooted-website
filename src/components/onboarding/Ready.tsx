@@ -21,11 +21,11 @@ const Ready = ({ onComplete }: ReadyProps) => (
       <span className="text-primary">You're rooting in.</span>
     </h1>
     <p className="text-muted-foreground text-lg leading-relaxed max-w-md mb-12">
-      Your journey is unique. Re-Rooted will meet you where you are — with guidance,
+      Your journey is unique. Re-Rooted® will meet you where you are, with guidance,
       reflection, and the quiet reminder that you're not alone in this.
     </p>
     <Button onClick={onComplete} size="lg" className="rounded-full px-10 py-6 text-base font-medium">
-      Open Re-Rooted
+      Open Re-Rooted®
     </Button>
   </div>
 );
