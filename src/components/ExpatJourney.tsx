@@ -62,7 +62,7 @@ const ExpatJourney = () => {
             <div>
               <div className="mb-6">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: "#3DA776" }}>
-                  {isIndividual ? "Your Journey" : "Services"}
+                  {isIndividual ? "RE-ROOTED® JOURNEY" : "RE-ROOTED® PACKAGES"}
                 </span>
               </div>
               <h2
