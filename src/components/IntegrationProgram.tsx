@@ -225,7 +225,7 @@ const IntegrationProgram = () => {
               margin: 0,
             }}
           >
-            The Re-Rooted{" "}
+            The Re-Rooted®{" "}
             <span style={{ color: COLORS.green }}>Journey</span>
           </h2>
           <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute }}>

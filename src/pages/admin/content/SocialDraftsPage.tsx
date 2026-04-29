@@ -82,7 +82,7 @@ export default function SocialDraftsPage() {
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-6">
       <div>
         <h1 className="text-2xl font-display font-bold text-foreground">AI Social Drafts</h1>
-        <p className="text-sm text-muted-foreground mt-1">Generate social media content with AI — tailored for Re-Rooted's brand</p>
+        <p className="text-sm text-muted-foreground mt-1">Generate social media content with AI, tailored for Re-Rooted®'s brand</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -13,7 +13,7 @@ const Welcome = ({ onNext }: WelcomeProps) => (
       <span className="text-primary">It's a journey.</span>
     </h1>
     <p className="text-muted-foreground text-lg leading-relaxed max-w-md mb-12">
-      Re-Rooted is your personal companion through every stage — from preparing to leave,
+      Re-Rooted® is your personal companion through every stage, from preparing to leave,
       to finding your ground, to feeling truly at home.
     </p>
     <Button onClick={onNext} size="lg" className="rounded-full px-10 py-6 text-base font-medium">

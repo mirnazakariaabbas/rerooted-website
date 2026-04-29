@@ -61,7 +61,7 @@ const AdminHome = () => {
     >
       <div className="mb-8">
         <h1 className="text-3xl font-display font-bold text-foreground">Command Center</h1>
-        <p className="text-muted-foreground mt-1">Overview of your Re-Rooted platform activity</p>
+        <p className="text-muted-foreground mt-1">Overview of your Re-Rooted® platform activity</p>
       </div>
 
       {/* Primary metric cards */}

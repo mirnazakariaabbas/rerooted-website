@@ -358,16 +358,16 @@ export function getScoreInterpretation(score: number, countryFrom: string, count
     return `The move from ${countryFrom} to ${countryTo} carries meaningful differences in culture or role, but they're manageable. Targeted coaching on 2–3 key focus areas will make a significant difference in how quickly they settle and perform.`;
   }
   if (score <= 65) {
-    return `The relocation from ${countryFrom} to ${countryTo} shows significant complexity across multiple dimensions. A structured Re-Rooted coaching program is recommended to support the transition across professional, cultural, and personal domains.`;
+    return `The relocation from ${countryFrom} to ${countryTo} shows significant complexity across multiple dimensions. A structured Re-Rooted® coaching program is recommended to support the transition across professional, cultural, and personal domains.`;
   }
-  return `The move from ${countryFrom} to ${countryTo} is one of the most complex relocation profiles — compounding factors across assignment, culture, family, and readiness. A full Re-Rooted program with ongoing support across all pillars is strongly recommended.`;
+  return `The move from ${countryFrom} to ${countryTo} is one of the most complex relocation profiles — compounding factors across assignment, culture, family, and readiness. A full Re-Rooted® program with ongoing support across all pillars is strongly recommended.`;
 }
 
 export function getScoreBand(score: number): { label: string; recommendation: string } {
   if (score <= 25) return { label: 'Standard Support', recommendation: 'Standard relocation package likely sufficient. Light-touch check-ins.' };
   if (score <= 45) return { label: 'Enhanced Support', recommendation: 'Targeted coaching on 2–3 key focus areas.' };
-  if (score <= 65) return { label: 'Intensive Support', recommendation: 'Structured Re-Rooted coaching program recommended.' };
-  return { label: 'High-Touch Program', recommendation: 'Full Re-Rooted program with ongoing support across all pillars.' };
+  if (score <= 65) return { label: 'Intensive Support', recommendation: 'Structured Re-Rooted® coaching program recommended.' };
+  return { label: 'High-Touch Program', recommendation: 'Full Re-Rooted® program with ongoing support across all pillars.' };
 }
 
 export function getPriorityDimensions(score: number, answers: Record<string, number | number[]>): string[] {

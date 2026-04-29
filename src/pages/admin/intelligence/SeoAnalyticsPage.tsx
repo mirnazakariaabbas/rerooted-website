@@ -317,7 +317,7 @@ export default function SeoAnalyticsPage() {
               <thead>
                 <tr className="border-b border-border">
                   <th className="text-left py-2 text-muted-foreground font-medium">Metric</th>
-                  <th className="text-right py-2 text-muted-foreground font-medium">Re-Rooted</th>
+                  <th className="text-right py-2 text-muted-foreground font-medium">Re-Rooted®</th>
                   <th className="text-right py-2 text-muted-foreground font-medium">Industry Avg</th>
                 </tr>
               </thead>
