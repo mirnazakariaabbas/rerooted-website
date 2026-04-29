@@ -31,7 +31,7 @@ const AboutSection = () => {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.7, ease: "easeOut", delay: 0.15 }}
         >
-          <h2 className="text-foreground font-extrabold text-3xl md:text-[40px] leading-tight mb-6">
+          <h2 className="font-extrabold text-3xl md:text-[40px] leading-tight mb-6" style={{ color: "#FAF9F6" }}>
             {isIndividual ? (
               <>
                 I've been where
