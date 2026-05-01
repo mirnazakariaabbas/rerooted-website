@@ -108,6 +108,7 @@ const AboutSection = () => {
             {isIndividual ? "Hear my story →" : "Read the full story →"}
           </Link>
         </motion.div>
+        </div>
       </div>
     </section>
   );
