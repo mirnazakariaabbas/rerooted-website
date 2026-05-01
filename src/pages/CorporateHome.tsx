@@ -12,9 +12,9 @@ import Footer from "@/components/Footer";
 
 const CorporateHome = () => (
   <main id="top">
+    <WhyReRooted />
     <Hero
       variant="corporate"
-      __whyFirst
       headline1="Relocation is not a moment."
       headline2="It's a journey."
       body={

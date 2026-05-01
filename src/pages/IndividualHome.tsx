@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 
 const IndividualHome = () => (
   <main id="top">
+    <WhyReRooted />
     <Hero
       variant="individual"
       headline1="You are moving countries,"
@@ -32,7 +33,6 @@ const IndividualHome = () => (
       cta1={{ label: "Explore your journey", href: "#journey" }}
       cta2={{ label: "Reach out", href: "/contact" }}
     />
-    <WhyReRooted />
     <ProblemStats
       label="You're Not Alone"
       headline="What nobody told you before you moved"
