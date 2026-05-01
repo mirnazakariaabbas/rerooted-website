@@ -1,1 +1,4 @@
 project_id = "yxpryybdppykkiuulrmq"
+
+[functions.sync-substack]
+verify_jwt = false
