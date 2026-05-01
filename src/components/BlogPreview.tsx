@@ -40,10 +40,18 @@ const BlogPreview = () => {
   return (
     <section
       id="insights"
-      className="py-20 md:py-28"
+      className="py-24 md:py-32"
       style={{ backgroundColor: "#FAF9F6" }}
     >
       <div className="container mx-auto px-6 lg:px-12">
+        {/* Top-left section eyebrow header */}
+        <p
+          className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20"
+          style={{ color: "#3DA776" }}
+        >
+          The thought behind Re-Rooted®
+        </p>
+
         <h2
           className="text-center font-extrabold tracking-tight"
           style={{ color: "#1A1A1A", fontSize: "clamp(28px, 4vw, 36px)" }}
