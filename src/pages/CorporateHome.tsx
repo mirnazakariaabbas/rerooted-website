@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import WhyReRooted from "@/components/WhyReRooted";
+import { WhyReRootedStatement, WhyReRootedPillars } from "@/components/WhyReRooted";
 import ProblemStats from "@/components/ProblemStats";
 import IntegrationProgram from "@/components/IntegrationProgram";
 import ExpatJourney from "@/components/ExpatJourney";
