@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import WhyReRooted from "@/components/WhyReRooted";
+import { WhyReRootedStatement, WhyReRootedPillars } from "@/components/WhyReRooted";
 import ProblemStats from "@/components/ProblemStats";
 import ExpatJourney from "@/components/ExpatJourney";
 import IndividualSupport from "@/components/IndividualSupport";
@@ -12,12 +12,13 @@ import Footer from "@/components/Footer";
 
 const IndividualHome = () => (
   <main id="top">
-    <WhyReRooted />
+    <WhyReRootedStatement />
     <ProblemStats
       label="You're Not Alone"
       headline="What nobody told you before you moved"
       closingLine="These aren't just numbers — they're people like you, navigating the same challenges you face right now."
     />
+    <WhyReRootedPillars />
     <ExpatJourney />
     <IndividualSupport />
     <AboutSection />

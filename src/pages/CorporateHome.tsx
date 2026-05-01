@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import WhyReRooted from "@/components/WhyReRooted";
+import { WhyReRootedStatement, WhyReRootedPillars } from "@/components/WhyReRooted";
 import ProblemStats from "@/components/ProblemStats";
 import IntegrationProgram from "@/components/IntegrationProgram";
 import ExpatJourney from "@/components/ExpatJourney";
@@ -12,11 +12,12 @@ import Footer from "@/components/Footer";
 
 const CorporateHome = () => (
   <main id="top">
-    <WhyReRooted />
+    <WhyReRootedStatement />
     <ProblemStats
       label="WHY RE-ROOTED® EXISTS"
       headline="The Problem Companies Avoid"
     />
+    <WhyReRootedPillars />
     <ExpatJourney />
     <IntegrationProgram />
     <AboutSection />

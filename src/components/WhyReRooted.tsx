@@ -1,6 +1,6 @@
 import rootsIcon from "@/assets/roots-icon.png";
 
-export default function WhyReRooted() {
+export function WhyReRootedStatement() {
   return (
     <>
       {/* Section 1: Statement with tree background */}
@@ -68,7 +68,13 @@ export default function WhyReRooted() {
           </p>
         </div>
       </section>
+    </>
+  );
+}
 
+export function WhyReRootedPillars() {
+  return (
+    <>
       {/* Section 2: Three pillars */}
       <section
         id="approach"
