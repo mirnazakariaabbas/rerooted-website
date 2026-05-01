@@ -38,6 +38,9 @@ const AboutSection = () => {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.7, ease: "easeOut", delay: 0.15 }}
         >
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#3DA776" }}>
+            Meet the Re-Rooted® founder
+          </p>
           <h2 className="font-extrabold text-3xl md:text-[40px] leading-tight mb-6" style={{ color: "#FAF9F6" }}>
             {isIndividual ? (
               <>
