@@ -11,11 +11,17 @@ const AboutSection = () => {
   const isIndividual = audience === "individual";
 
   return (
-    <section id="about" className={`px-6 lg:px-12 ${isIndividual ? "py-24" : "py-20"}`} style={{ background: "#1F299C" }}>
-      <div
-        ref={ref}
-        className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
-      >
+    <section id="about" className={`px-6 lg:px-12 ${isIndividual ? "py-32" : "py-28"}`} style={{ background: "#1F299C" }}>
+      <div className="max-w-6xl mx-auto">
+        {/* Top-left section eyebrow header — aligned with previous section */}
+        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20" style={{ color: "#3DA776" }}>
+          Meet the Re-Rooted® founder
+        </p>
+
+        <div
+          ref={ref}
+          className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
+        >
         {/* Left — Photo placeholder */}
         <motion.div
           className="aspect-[3/4] w-full max-w-md mx-auto md:mx-0 rounded-2xl overflow-hidden"
@@ -38,9 +44,6 @@ const AboutSection = () => {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.7, ease: "easeOut", delay: 0.15 }}
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-4" style={{ color: "#3DA776" }}>
-            Meet the Re-Rooted® founder
-          </p>
           <h2 className="font-extrabold text-3xl md:text-[40px] leading-tight mb-6" style={{ color: "#FAF9F6" }}>
             {isIndividual ? (
               <>
@@ -105,6 +108,7 @@ const AboutSection = () => {
             {isIndividual ? "Hear my story →" : "Read the full story →"}
           </Link>
         </motion.div>
+        </div>
       </div>
     </section>
   );
