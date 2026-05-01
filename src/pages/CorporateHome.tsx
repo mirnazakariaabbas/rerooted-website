@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 
 const CorporateHome = () => (
   <main id="top">
+    <WhyReRooted />
     <Hero
       variant="corporate"
       headline1="Relocation is not a moment."
@@ -33,7 +34,6 @@ const CorporateHome = () => (
       cta1={{ label: "See how it works", href: "#program" }}
       cta2={{ label: "Start a conversation", href: "/contact" }}
     />
-    <WhyReRooted />
     <ProblemStats
       label="WHY RE-ROOTED® EXISTS"
       headline="The Problem Companies Avoid"
