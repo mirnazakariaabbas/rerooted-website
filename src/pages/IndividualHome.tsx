@@ -13,6 +13,18 @@ import Footer from "@/components/Footer";
 const IndividualHome = () => (
   <main id="top">
     <WhyReRooted />
+    <ProblemStats
+      label="You're Not Alone"
+      headline="What nobody told you before you moved"
+      closingLine="These aren't just numbers — they're people like you, navigating the same challenges you face right now."
+    />
+    <ExpatJourney />
+    <IndividualSupport />
+    <AboutSection />
+    
+    <BlogPreview />
+    <TestimonialsCarousel />
+    <ContactCTA />
     <Hero
       variant="individual"
       headline1="You are moving countries,"
@@ -33,18 +45,6 @@ const IndividualHome = () => (
       cta1={{ label: "Explore your journey", href: "#journey" }}
       cta2={{ label: "Reach out", href: "/contact" }}
     />
-    <ProblemStats
-      label="You're Not Alone"
-      headline="What nobody told you before you moved"
-      closingLine="These aren't just numbers — they're people like you, navigating the same challenges you face right now."
-    />
-    <ExpatJourney />
-    <IndividualSupport />
-    <AboutSection />
-    
-    <BlogPreview />
-    <TestimonialsCarousel />
-    <ContactCTA />
     <Footer />
   </main>
 );
