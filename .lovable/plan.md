@@ -1,44 +1,59 @@
+# Sync Substack articles into the Insights section
 
+Pull articles (title, excerpt, cover image, link, date) directly from Yasser's Substack RSS feed (`https://yasserabbas.substack.com/feed`) and display them in the **Insights from the journey** section, plus the `/blog` page. No manual copy/paste needed; new Substack posts appear automatically.
 
-## Goal
+## How it will work
 
-Restore brand typography consistency by replacing **Instrument Serif** (a non-brand font that crept into recently added sections) with **Manrope** (the brand display font), while keeping all current font sizes intact.
+```text
+Substack RSS feed
+        │
+        ▼
+ Edge function: sync-substack  ──► blog_posts table (Lovable Cloud)
+        │                                │
+   (runs on demand                       ▼
+    + scheduled daily)         BlogPreview + /blog pages
+```
 
-## Brand reference (per visual identity memory)
+- The edge function fetches the RSS XML, parses each item (title, link, pubDate, description/content, first image), and upserts into the existing `blog_posts` table using the Substack URL slug as the unique key.
+- Cover image is extracted from the `<enclosure>` tag or the first `<img>` in the content.
+- Existing `BlogPreview.tsx` already reads from `blog_posts` (or will be wired to), so cards refresh automatically.
+- Clicking an article opens the original Substack post in a new tab (cleanest, preserves Yasser's analytics + comments). Optional alternative below.
 
-- **Display / Headings**: Manrope (`font-display`), weights 400-800
-- **Body**: DM Sans (`font-sans`), weights 300-700
-- No serif fonts anywhere in the brand system
+## Changes
 
-## Scope: two files only
+### 1. Database
+- Add columns to `blog_posts` if missing: `source` (text, e.g. `'substack'`), `source_url` (text, unique), `external_url` (text — the public Substack link).
+- Add unique index on `source_url` so re-syncing updates instead of duplicating.
 
-Both were added recently and use inline `fontFamily: "'Instrument Serif', Georgia, serif"` plus the `font-serif` Tailwind class.
+### 2. Edge function: `sync-substack`
+- Fetches `https://yasserabbas.substack.com/feed`.
+- Parses XML (using `fast-xml-parser` via esm.sh).
+- For each item: extract title, slug from URL, excerpt (first ~200 chars of description, stripped of HTML), cover image, published date, full HTML body.
+- Upserts into `blog_posts` with `status = 'published'`, `source = 'substack'`.
+- Returns count of new + updated posts.
+- Public (no JWT required) so it can be triggered from the admin UI and from a scheduled cron.
 
-### 1. `src/components/ExpatJourney.tsx`
+### 3. Admin trigger
+- In `BlogManagerPage.tsx`, add a **"Sync from Substack"** button next to "New Post" that calls the edge function and shows a toast with the result.
 
-Replace serif typography in three spots, sizes unchanged:
+### 4. Scheduled sync (optional, recommended)
+- Add a daily cron via `pg_cron` that calls the edge function automatically so new Substack posts appear without manual action.
 
-- **Section heading** ("Where are you right now." / "Four ways to work with us.") — remove `font-serif` class and inline `fontFamily`; switch to `font-display` with brand weight 700. Keep `clamp(36px, 4.5vw, 64px)`, line-height, color, letter-spacing.
-- **Card numerals** ("01"–"04") — drop `font-serif italic` + serif `fontFamily`; use `font-display` with weight 600, keep green color and 18px size. Italic styling removed (not in brand system).
-- **Card titles** (stage names) — drop `font-serif italic` + serif `fontFamily`; use `font-display` weight 700. Keep `clamp(24px, 2.2vw, 32px)` size, line-height, color.
+### 5. Frontend
+- `BlogPreview.tsx`: ensure it queries `blog_posts` (latest 3 published) and renders the cover image, category, title, excerpt.
+- Card click → if `external_url` is set, open in new tab; otherwise route to `/blog/:slug`.
+- `/blog` page: same behaviour.
 
-### 2. `src/components/IntegrationProgram.tsx`
+## Decision needed
 
-Three serif spots to convert, sizes unchanged:
+When a visitor clicks an article card, where should it go?
 
-- **Main heading** ("The Re-Rooted Journey") — remove `font-serif` + serif `fontFamily`; use `font-display` weight 700. Keep `clamp(52px, 6vw, 96px)`. The `<em>` around "Journey" loses `fontStyle: italic` and stays green via color.
-- **Step titles** (`<h4>` at line 315) — remove serif `fontFamily`; use Manrope weight 700, keep size 42 and other styles.
-- **Inline accent `<b>`** at line 419 — remove serif `fontFamily`; use Manrope weight 700, keep size 32 and green color.
+**Option A (recommended):** Open the original Substack article in a new tab. Keeps Yasser's subscriber funnel, comments, and analytics intact. Zero risk of broken formatting.
 
-## Implementation notes
+**Option B:** Render the article inside the site at `/blog/:slug` using the HTML pulled from the feed. Keeps users on-site but may have minor formatting/image-hosting quirks, and Substack-only features (subscribe box, comments) are lost.
 
-- Use the existing `font-display` Tailwind utility (already mapped to Manrope in `tailwind.config.ts`) instead of inline `fontFamily`. This keeps the codebase aligned with how the rest of the site declares headings.
-- Replace italic emphasis with the brand's color emphasis (Fresh Green `#3DA776` / `text-secondary`) where italics were carrying meaning, since the brand system doesn't use italic serif accents.
-- Leave `WhyReRooted.tsx`, `AudienceGate.tsx`, `Welcome.tsx`, `TestimonialsCarousel.tsx`, and `DimensionDetail.tsx` untouched: they already use `font-display` or use italic on `font-sans`/Manrope (brand-compliant), not Instrument Serif.
-- No font-size, color, spacing, or layout changes.
+I'll default to **Option A** unless you tell me otherwise.
 
 ## Out of scope
-
-- No changes to `index.html` font preconnect (Instrument Serif link can stay; it just won't be referenced anywhere). Optional cleanup can follow later.
-- No copy changes.
-
+- Importing Substack subscribers / paid tiers.
+- Two-way sync (writing from the site back to Substack).

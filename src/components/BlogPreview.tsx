@@ -1,30 +1,70 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
-const posts = [
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  cover_image_url: string | null;
+  category: string | null;
+  external_url: string | null;
+}
+
+const fallbackPosts = [
   {
-    tag: "Values",
+    id: "f1",
     title: "The Re-Rooted® Compass: 5 Questions to Ask Before You Move Abroad",
     excerpt:
-      "Before the visa and the packing list, there are questions that will shape your entire experience — and most people never ask them.",
+      "Before the visa and the packing list, there are questions that will shape your entire experience.",
+    category: "Values",
+    cover_image_url: null,
+    slug: "#",
+    external_url: null,
   },
   {
-    tag: "Purpose",
+    id: "f2",
     title: "What Nobody Tells You About the First 90 Days",
     excerpt:
-      "The honeymoon ends. The loneliness begins. Here's what actually happens in the first three months — and how to navigate it.",
+      "The honeymoon ends. The loneliness begins. Here's what actually happens in the first three months.",
+    category: "Purpose",
+    cover_image_url: null,
+    slug: "#",
+    external_url: null,
   },
   {
-    tag: "Identity",
+    id: "f3",
     title: "The Identity Shift Nobody Warns You About",
     excerpt:
-      "You moved countries. But somewhere along the way, you also lost the version of yourself that felt sure. That's normal.",
+      "You moved countries. But somewhere along the way, you also lost the version of yourself that felt sure.",
+    category: "Identity",
+    cover_image_url: null,
+    slug: "#",
+    external_url: null,
   },
-];
+] as BlogPost[];
 
 const BlogPreview = () => {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  const { data: dbPosts } = useQuery({
+    queryKey: ["blog-posts-preview"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("id, title, slug, excerpt, cover_image_url, category, external_url")
+        .eq("status", "published")
+        .order("published_at", { ascending: false })
+        .limit(3);
+      if (error) throw error;
+      return (data || []) as BlogPost[];
+    },
+  });
+
+  const posts = dbPosts && dbPosts.length > 0 ? dbPosts : fallbackPosts;
 
   useEffect(() => {
     const el = ref.current;
@@ -44,7 +84,6 @@ const BlogPreview = () => {
       style={{ backgroundColor: "#FAF9F6" }}
     >
       <div className="container mx-auto px-6 lg:px-12">
-        {/* Top-left section eyebrow header */}
         <p
           className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20"
           style={{ color: "#3DA776" }}
@@ -70,67 +109,84 @@ const BlogPreview = () => {
           ref={ref}
           className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {posts.map((post, i) => (
-            <motion.article
-              key={i}
-              initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
-              animate={
-                visible
-                  ? { opacity: 1, y: 0, filter: "blur(0px)" }
-                  : undefined
-              }
-              transition={{
-                duration: 0.6,
-                delay: i * 0.1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="group flex flex-col overflow-hidden rounded-xl bg-white transition-shadow duration-300 hover:shadow-lg"
-              style={{ border: "1px solid #e8e4ed" }}
-            >
-              {/* Placeholder image */}
-              <div
-                className="flex aspect-video items-center justify-center text-xs font-medium"
-                style={{ backgroundColor: "#e8e4ed", color: "#9a94a8" }}
+          {posts.map((post, i) => {
+            const href = post.external_url || (post.slug && post.slug !== "#" ? `/blog/${post.slug}` : "#");
+            const isExternal = !!post.external_url;
+            return (
+              <motion.article
+                key={post.id}
+                initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
+                animate={
+                  visible
+                    ? { opacity: 1, y: 0, filter: "blur(0px)" }
+                    : undefined
+                }
+                transition={{
+                  duration: 0.6,
+                  delay: i * 0.1,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="group flex flex-col overflow-hidden rounded-xl bg-white transition-shadow duration-300 hover:shadow-lg"
+                style={{ border: "1px solid #e8e4ed" }}
               >
-                Featured image
-              </div>
-
-              <div className="flex flex-1 flex-col p-5">
-                {/* Tag pill */}
-                <span
-                  className="mb-3 w-fit rounded-full px-3 py-0.5 text-xs font-semibold"
-                  style={{
-                    backgroundColor: "rgba(61,167,118,0.12)",
-                    color: "#3DA776",
-                  }}
-                >
-                  {post.tag}
-                </span>
-
-                <h3
-                  className="text-lg font-bold leading-snug"
-                  style={{ color: "#1A1A1A" }}
-                >
-                  {post.title}
-                </h3>
-
-                <p
-                  className="mt-2 flex-1 text-sm leading-relaxed"
-                  style={{ color: "#6B6B6B" }}
-                >
-                  {post.excerpt}
-                </p>
-
                 <a
-                  href="#"
-                  className="mt-4 inline-flex items-center text-sm font-semibold transition-colors hover:opacity-80"
-                  style={{ color: "#3DA776" }}
+                  href={href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  className="flex aspect-video items-center justify-center text-xs font-medium overflow-hidden"
+                  style={{ backgroundColor: "#e8e4ed", color: "#9a94a8" }}
                 >
-                  Read more →
+                  {post.cover_image_url ? (
+                    <img
+                      src={post.cover_image_url}
+                      alt={post.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <span>Featured image</span>
+                  )}
                 </a>
-              </div>
-            </motion.article>
-          ))}
+
+                <div className="flex flex-1 flex-col p-5">
+                  {post.category && (
+                    <span
+                      className="mb-3 w-fit rounded-full px-3 py-0.5 text-xs font-semibold"
+                      style={{
+                        backgroundColor: "rgba(61,167,118,0.12)",
+                        color: "#3DA776",
+                      }}
+                    >
+                      {post.category}
+                    </span>
+                  )}
+
+                  <h3
+                    className="text-lg font-bold leading-snug"
+                    style={{ color: "#1A1A1A" }}
+                  >
+                    {post.title}
+                  </h3>
+
+                  <p
+                    className="mt-2 flex-1 text-sm leading-relaxed"
+                    style={{ color: "#6B6B6B" }}
+                  >
+                    {post.excerpt}
+                  </p>
+
+                  <a
+                    href={href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                    className="mt-4 inline-flex items-center text-sm font-semibold transition-colors hover:opacity-80"
+                    style={{ color: "#3DA776" }}
+                  >
+                    Read more →
+                  </a>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
 
         <p className="mt-10 text-center">
