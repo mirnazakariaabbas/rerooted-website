@@ -128,6 +128,22 @@ export default function BlogManagerPage() {
     toast({ title: `Post ${newStatus}` });
   };
 
+  const [syncing, setSyncing] = useState(false);
+  const syncSubstack = async () => {
+    setSyncing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-substack');
+      if (error) throw error;
+      queryClient.invalidateQueries({ queryKey: ['blog-posts-admin'] });
+      toast({ title: 'Substack synced', description: `${data?.inserted ?? 0} new, ${data?.updated ?? 0} updated` });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'Sync failed';
+      toast({ title: 'Sync failed', description: msg, variant: 'destructive' });
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
       <div className="flex items-center justify-between">
@@ -135,7 +151,13 @@ export default function BlogManagerPage() {
           <h1 className="text-2xl font-bold text-foreground">Blog Manager</h1>
           <p className="text-muted-foreground text-sm">Create and manage blog articles</p>
         </div>
-        <Button onClick={openNew}><Plus className="h-4 w-4 mr-2" />New Post</Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={syncSubstack} disabled={syncing}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${syncing ? 'animate-spin' : ''}`} />
+            {syncing ? 'Syncing…' : 'Sync from Substack'}
+          </Button>
+          <Button onClick={openNew}><Plus className="h-4 w-4 mr-2" />New Post</Button>
+        </div>
       </div>
 
       <Card>
