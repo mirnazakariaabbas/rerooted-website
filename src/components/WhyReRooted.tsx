@@ -69,6 +69,14 @@ export function WhyReRootedStatement() {
         </div>
       </section>
 
+      </section>
+    </>
+  );
+}
+
+export function WhyReRootedPillars() {
+  return (
+    <>
       {/* Section 2: Three pillars */}
       <section
         id="approach"
