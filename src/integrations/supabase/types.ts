@@ -208,9 +208,12 @@ export type Database = {
           cover_image_url: string | null
           created_at: string
           excerpt: string | null
+          external_url: string | null
           id: string
           published_at: string | null
           slug: string
+          source: string | null
+          source_url: string | null
           status: string
           tags: Json | null
           title: string
@@ -223,9 +226,12 @@ export type Database = {
           cover_image_url?: string | null
           created_at?: string
           excerpt?: string | null
+          external_url?: string | null
           id?: string
           published_at?: string | null
           slug: string
+          source?: string | null
+          source_url?: string | null
           status?: string
           tags?: Json | null
           title: string
@@ -238,9 +244,12 @@ export type Database = {
           cover_image_url?: string | null
           created_at?: string
           excerpt?: string | null
+          external_url?: string | null
           id?: string
           published_at?: string | null
           slug?: string
+          source?: string | null
+          source_url?: string | null
           status?: string
           tags?: Json | null
           title?: string
