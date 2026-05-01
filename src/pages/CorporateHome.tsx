@@ -17,8 +17,8 @@ const CorporateHome = () => (
       label="WHY RE-ROOTED® EXISTS"
       headline="The Problem Companies Avoid"
     />
-    <IntegrationProgram />
     <ExpatJourney />
+    <IntegrationProgram />
     <AboutSection />
     
     <BlogPreview />
