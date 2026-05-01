@@ -25,6 +25,26 @@ const IndividualHome = () => (
     <BlogPreview />
     <TestimonialsCarousel />
     <ContactCTA />
+    <Hero
+      variant="individual"
+      headline1="You are moving countries,"
+      headline2="Now what?"
+      body={
+        <>
+          <p>
+            You've handled the logistics — the visa, the flight, the apartment.
+            <br />
+            But nobody told you about the <strong>emotional side</strong>.
+          </p>
+          <p>
+            <strong>Re-Rooted®</strong> helps you navigate the human challenges
+            of relocation — so you can feel at home, not just live somewhere new.
+          </p>
+        </>
+      }
+      cta1={{ label: "Explore your journey", href: "#journey" }}
+      cta2={{ label: "Reach out", href: "/contact" }}
+    />
     <Footer />
   </main>
 );
