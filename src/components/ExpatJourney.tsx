@@ -121,6 +121,14 @@ const ExpatJourney = () => {
                         alt={stage.name}
                         loading="lazy"
                         className="absolute inset-0 w-full h-full object-cover"
+                        style={{
+                          objectPosition:
+                            stage.image === rootingBackImg
+                              ? "center 75%"
+                              : stage.image === familySupportImg
+                              ? "50% center"
+                              : "center",
+                        }}
                       />
                       <div
                         aria-hidden
