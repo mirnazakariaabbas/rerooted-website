@@ -197,7 +197,7 @@ const IntegrationProgram = () => {
         {/* Heading */}
         <div
           className="rr-head"
-          style={{ textAlign: "center", maxWidth: 780, margin: "0 auto 80px" }}
+          style={{ textAlign: "left", margin: "0 0 80px" }}
         >
           <div
             style={{
