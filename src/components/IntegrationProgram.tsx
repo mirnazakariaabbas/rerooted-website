@@ -202,19 +202,18 @@ const IntegrationProgram = () => {
           <div
             style={{
               display: "inline-flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
+              alignItems: "center",
+              gap: 12,
               fontSize: 11,
               letterSpacing: "0.22em",
               textTransform: "uppercase",
               color: COLORS.green,
               fontWeight: 600,
               marginBottom: 18,
+              whiteSpace: "nowrap",
             }}
           >
-            The Re-Rooted®
-            <br />
-            Program
+            The Re-Rooted® Program
           </div>
           <h2
             className="font-display"
