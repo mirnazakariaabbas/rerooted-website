@@ -12,11 +12,12 @@ import Footer from "@/components/Footer";
 
 const CorporateHome = () => (
   <main id="top">
-    <WhyReRooted />
+    <WhyReRootedStatement />
     <ProblemStats
       label="WHY RE-ROOTED® EXISTS"
       headline="The Problem Companies Avoid"
     />
+    <WhyReRootedPillars />
     <ExpatJourney />
     <IntegrationProgram />
     <AboutSection />
