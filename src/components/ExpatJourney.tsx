@@ -121,17 +121,11 @@ const ExpatJourney = () => {
                         alt={stage.name}
                         loading="lazy"
                         className="absolute inset-0 w-full h-full object-cover"
-                        style={{ filter: "saturate(0.55) brightness(1.02) contrast(0.96)" }}
                       />
                       <div
                         aria-hidden
                         className="absolute inset-0"
-                        style={{ background: "rgba(31,41,156,0.22)", mixBlendMode: "soft-light" }}
-                      />
-                      <div
-                        aria-hidden
-                        className="absolute inset-0"
-                        style={{ background: "linear-gradient(180deg, rgba(31,41,156,0.05) 0%, rgba(31,41,156,0.18) 100%)" }}
+                        style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 40%, rgba(0,0,0,0.35) 100%)" }}
                       />
                     </>
                   ) : (
