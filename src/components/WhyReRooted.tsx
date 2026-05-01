@@ -2,6 +2,7 @@ import rootsIcon from "@/assets/roots-icon.png";
 
 export function WhyReRootedStatement() {
   return (
+    <>
       {/* Section 1: Statement with tree background */}
       <section
         id="why-rerooted"
