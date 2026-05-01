@@ -68,8 +68,6 @@ export function WhyReRootedStatement() {
           </p>
         </div>
       </section>
-
-      </section>
     </>
   );
 }
