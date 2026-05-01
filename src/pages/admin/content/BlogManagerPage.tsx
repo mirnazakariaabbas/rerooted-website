@@ -13,7 +13,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
-import { Plus, Pencil, Trash2, Eye, FileText } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, FileText, RefreshCw } from 'lucide-react';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 
