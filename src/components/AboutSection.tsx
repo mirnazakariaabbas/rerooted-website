@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAudience } from "@/contexts/AudienceContext";
+import aboutPhoto from "@/assets/about-yasser.jpg";
 
 const AboutSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -17,12 +18,18 @@ const AboutSection = () => {
       >
         {/* Left — Photo placeholder */}
         <motion.div
-          className="aspect-[3/4] w-full max-w-md mx-auto md:mx-0 rounded-2xl bg-muted flex items-center justify-center"
+          className="aspect-[3/4] w-full max-w-md mx-auto md:mx-0 rounded-2xl overflow-hidden"
           initial={{ opacity: 0, x: -60 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.7, ease: "easeOut" }}
         >
-          <span className="text-muted-foreground text-lg font-semibold">Photo</span>
+          <img
+            src={aboutPhoto}
+            alt="Yasser Abbas, founder of Re-Rooted"
+            className="w-full h-full object-cover"
+            style={{ objectPosition: "center 30%" }}
+            loading="lazy"
+          />
         </motion.div>
 
         {/* Right — Text */}
