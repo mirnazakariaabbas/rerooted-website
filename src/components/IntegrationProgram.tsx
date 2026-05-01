@@ -222,13 +222,15 @@ const IntegrationProgram = () => {
               color: COLORS.blue,
               letterSpacing: "-0.02em",
               fontWeight: 700,
-              margin: 0,
+              margin: "0 auto",
+              textAlign: "center",
+              maxWidth: 780,
             }}
           >
             The Re-Rooted®{" "}
             <span style={{ color: COLORS.green }}>Journey</span>
           </h2>
-          <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute }}>
+          <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute, textAlign: "center", maxWidth: 780, marginLeft: "auto", marginRight: "auto" }}>
             Ninety days, six sessions, two assessments, one clear report. Built as a route, not a retainer. Here's what happens, step by step.
           </p>
         </div>
