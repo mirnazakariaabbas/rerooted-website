@@ -3,40 +3,6 @@ import offeringCoach from "@/assets/offering-coach.jpg";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 
-/**
- * Hand-drawn oval frame inspired by the "FLOURISHING" brand mark.
- * Sits on top of the image, contained within the card width.
- */
-const OvalFrame = () => (
-  <svg
-    viewBox="0 0 400 260"
-    className="pointer-events-none absolute inset-0 h-full w-full"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-  >
-    <path
-      d="M 60 130
-         C 60 60, 160 30, 230 32
-         C 320 35, 380 80, 378 140
-         C 376 200, 300 232, 210 230
-         C 120 228, 62 200, 60 130 Z"
-      fill="none"
-      stroke="white"
-      strokeWidth="3.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    {/* Open swoosh tail */}
-    <path
-      d="M 250 228 C 290 244, 330 244, 360 222"
-      fill="none"
-      stroke="white"
-      strokeWidth="3.5"
-      strokeLinecap="round"
-    />
-  </svg>
-);
-
 export function WhyReRootedStatement() {
   return (
     <>
