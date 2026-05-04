@@ -33,7 +33,7 @@
 .pheroInner { position: relative; z-index: 2; text-align: center; max-width: 1100px; margin: 0 auto; padding: 0 48px; }
 .pheroEyebrow { display:inline-flex; align-items:center; gap:12px; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--green-soft); font-weight: 600; margin-bottom: 28px; }
 .pheroEyebrow::before, .pheroEyebrow::after { content:""; width: 28px; height:1px; background: currentColor; }
-.pheroTitle { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(60px, 8.5vw, 132px); line-height: 0.95; letter-spacing: -0.025em; font-weight: 400; max-width: 14ch; margin: 0 auto; }
+.pheroTitle { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(60px, 8.5vw, 132px); line-height: 0.95; letter-spacing: -0.025em; font-weight: 900; max-width: 14ch; margin: 0 auto; }
 .pheroSub { margin-top: 30px; font-size: 19px; line-height: 1.55; opacity: 0.88; max-width: 56ch; margin-left: auto; margin-right: auto; font-weight: 300; }
 
 .metaStrip { margin-top: 70px; display: flex; justify-content: center; gap: 0; flex-wrap: wrap; max-width: 880px; margin-left: auto; margin-right: auto; border-top: 1px solid rgba(255,255,255,0.18); border-bottom: 1px solid rgba(255,255,255,0.18); }
@@ -45,7 +45,7 @@
 /* INTRO STRIP */
 .introStrip { padding: 120px 0; }
 .introStripGrid { display:grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
-.introStrip h2 { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(44px, 5.5vw, 76px); line-height: 1.02; color: var(--blue); font-weight: 400; letter-spacing: -0.02em; }
+.introStrip h2 { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(44px, 5.5vw, 76px); line-height: 1.02; color: var(--blue); font-weight: 900; letter-spacing: -0.02em; }
 .introStrip p { font-size: 17px; line-height: 1.7; color: #3a3a3a; max-width: 52ch; }
 .introStrip p + p { margin-top: 18px; }
 
@@ -54,7 +54,7 @@
 .stepsHead { text-align:center; max-width: 760px; margin: 0 auto 90px; }
 .stepsHead :global(.eyebrow) { display:inline-flex; align-items:center; gap: 12px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); font-weight: 600; margin-bottom: 18px; }
 .stepsHead :global(.eyebrow)::before { content:""; display:inline-block; width: 28px; height: 1px; background: currentColor; }
-.stepsHead h2 { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(48px, 6vw, 88px); line-height: 1; color: var(--blue); letter-spacing: -0.02em; font-weight: 400; }
+.stepsHead h2 { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(48px, 6vw, 88px); line-height: 1; color: var(--blue); letter-spacing: -0.02em; font-weight: 900; }
 
 .step { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 80px 0; border-top: 1px solid var(--line); position: relative; }
 .step:first-of-type { border-top: 0; }
@@ -62,10 +62,10 @@
 
 .stepContent { max-width: 50ch; }
 .stepNumRow { display: flex; align-items: baseline; gap: 22px; margin-bottom: 24px; }
-.stepNum { font-family: 'Manrope', system-ui, sans-serif; font-size: 96px; line-height: 0.85; color: var(--blue); font-weight: 400; letter-spacing: -0.04em; font-feature-settings: "lnum"; }
+.stepNum { font-family: 'Manrope', system-ui, sans-serif; font-size: 96px; line-height: 0.85; color: var(--blue); font-weight: 900; letter-spacing: -0.04em; font-feature-settings: "lnum"; }
 .step.isGreen .stepNum { color: var(--green); }
 .stepWhen { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
-.step h3 { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(36px, 4vw, 56px); line-height: 1.05; color: var(--blue); font-weight: 400; letter-spacing: -0.02em; margin-bottom: 18px; }
+.step h3 { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(36px, 4vw, 56px); line-height: 1.05; color: var(--blue); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 18px; }
 .step :global(.lead) { font-size: 19px; line-height: 1.6; color: #2a2a2a; margin-bottom: 26px; }
 .step ul { list-style: none; display: flex; flex-direction: column; gap: 14px; padding: 0; margin: 0; }
 .step ul li { display: flex; gap: 14px; align-items: flex-start; font-size: 17px; line-height: 1.5; color: #2a2a2a; }
@@ -183,7 +183,7 @@
 .cta { background: var(--blue); color: white; padding: 140px 0; position: relative; overflow: hidden; }
 .ctaInner { text-align: center; max-width: 760px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 2; }
 .ctaGlow { position:absolute; inset:0; background: radial-gradient(50% 50% at 50% 50%, rgba(108,193,149,0.18), transparent 70%); pointer-events: none; }
-.cta h2 { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(48px, 6vw, 88px); line-height: 1; font-weight: 400; letter-spacing: -0.02em; }
+.cta h2 { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(48px, 6vw, 88px); line-height: 1; font-weight: 900; letter-spacing: -0.02em; }
 .cta p { margin-top: 22px; font-size: 18px; line-height: 1.6; opacity: 0.85; font-weight: 300; }
 .ctaButtons { margin-top: 40px; display:flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
