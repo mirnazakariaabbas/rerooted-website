@@ -141,19 +141,49 @@ export function WhyReRootedPillars() {
                 numeral: "i.",
                 title: "A coach picked for you",
                 body: "Every client is matched with a coach hand-picked for their move, holding at least an ACC accreditation and trained in the Re-Rooted® methodology and principles.",
+                image: offeringCoach,
+                imageFit: "cover" as const,
+                bg: "hsl(var(--primary))",
               },
               {
                 numeral: "ii.",
                 title: "The Re-Rooted® app",
                 body: "Compare cultures and cost of living from home to destination, connect with other expats on the ground, work through pre-move checklists, and much more, all in one place.",
+                image: offeringApp,
+                imageFit: "contain" as const,
+                bg: "hsl(var(--primary))",
               },
               {
                 numeral: "iii.",
                 title: "Assessments that speak HR",
                 body: "Diagnostic and outcome assessments prove the program works in a language organizations understand. Clear data, clear ROI, clear impact on retention.",
+                image: offeringAssessments,
+                imageFit: "cover" as const,
+                bg: "hsl(var(--primary))",
               },
             ].map((pillar) => (
               <div key={pillar.numeral} className="flex flex-col">
+                {/* Framed image */}
+                <div
+                  className="relative mb-8 w-full overflow-hidden"
+                  style={{
+                    aspectRatio: "4 / 3",
+                    background: pillar.bg,
+                  }}
+                >
+                  <img
+                    src={pillar.image}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                    className="absolute inset-0 h-full w-full"
+                    style={{ objectFit: pillar.imageFit }}
+                  />
+                  <OvalFrame />
+                </div>
+
                 <div className="flex items-center gap-4">
                   <img
                     src={rootsIcon}
