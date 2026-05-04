@@ -108,6 +108,10 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
             alt="Professional in a modern workspace"
             className="h-auto w-full max-w-[720px] object-contain sm:max-w-[860px] md:w-[184%] md:max-w-none md:translate-x-[20%]"
             loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            width={1600}
+            height={900}
           />
         </motion.div>
       </div>
