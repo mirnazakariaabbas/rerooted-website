@@ -90,7 +90,7 @@ const ExpatJourney = () => {
             <div className="md:pb-1">
               <p className="leading-[1.65]" style={{ color: "rgba(250,249,246,0.85)", fontSize: "clamp(15px, 1.2vw, 18px)" }}>
                 {isIndividual ? (
-                  <>The expat journey isn't a straight line. You move forward, loop back, and start again. Find the stage that feels like yours right now: that's where we begin.</>
+                  <>The expat stages aren't a straight line. You move forward, loop back, and start again. Find the stage that feels like yours right now: that's where we begin.</>
                 ) : (
                   <>Each engagement is a clean 90-day cycle, priced by complexity tier and available as an individual purchase or a corporate cohort. Mix and match across a family move.</>
                 )}
