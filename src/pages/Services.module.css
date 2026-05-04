@@ -36,11 +36,10 @@
 .pheroTitle { font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(60px, 8.5vw, 132px); line-height: 0.95; letter-spacing: -0.025em; font-weight: 900; max-width: 14ch; margin: 0 auto; }
 .pheroSub { margin-top: 30px; font-size: 19px; line-height: 1.55; opacity: 0.88; max-width: 56ch; margin-left: auto; margin-right: auto; font-weight: 300; }
 
-.metaStrip { margin-top: 70px; display: flex; justify-content: center; gap: 0; flex-wrap: wrap; max-width: 880px; margin-left: auto; margin-right: auto; border-top: 1px solid rgba(255,255,255,0.18); border-bottom: 1px solid rgba(255,255,255,0.18); }
-.metaCell { flex: 1; min-width: 160px; padding: 22px 18px; text-align: center; border-right: 1px solid rgba(255,255,255,0.12); }
-.metaCell:last-child { border-right: 0; }
-.metaCell :global(.k) { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.65; margin-bottom: 8px; }
-.metaCell :global(.v) { font-family: 'Manrope', system-ui, sans-serif; font-size: 32px; line-height: 1; font-weight: 400; }
+.metaStrip { margin-top: 70px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 880px; margin-left: auto; margin-right: auto; }
+.metaCell { padding: 28px 20px; text-align: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; }
+.metaCell :global(.k) { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.7; margin-bottom: 10px; }
+.metaCell :global(.v) { font-family: 'Manrope', system-ui, sans-serif; font-size: 28px; line-height: 1.1; font-weight: 700; }
 
 /* INTRO STRIP */
 .introStrip { padding: 120px 0; }
@@ -196,6 +195,5 @@
   .introStripGrid, .step { grid-template-columns: 1fr; gap: 40px; }
   .step.flip .stepMedia { order: 0; }
   .stepNum { font-size: 72px; }
-  .metaCell { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.12); }
-  .metaCell:last-child { border-bottom: 0; }
+  .metaStrip { grid-template-columns: repeat(2, 1fr); }
 }
