@@ -136,11 +136,11 @@
   -webkit-mask-image: radial-gradient(circle at 50% 49%, #000 0%, #000 var(--r, 0%), transparent calc(var(--r, 0%) + 6%));
           mask-image: radial-gradient(circle at 50% 49%, #000 0%, #000 var(--r, 0%), transparent calc(var(--r, 0%) + 6%));
   clip-path: inset(49% 0 0 0);
-  animation: rootsRadial 6s cubic-bezier(.25,.7,.3,1) infinite;
+  animation: rootsRadial 5s cubic-bezier(.25,.7,.3,1) infinite;
 }
 @keyframes rootsRadial {
   0%, 6% { --r: 0%; }
-  70%, 100% { --r: 70%; }
+  60%, 100% { --r: 70%; }
 }
 @property --r {
   syntax: '<percentage>';
