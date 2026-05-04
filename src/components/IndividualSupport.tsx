@@ -59,7 +59,10 @@ const IndividualSupport = () => {
               <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
                 <card.icon className="w-6 h-6 text-secondary" />
               </div>
-              <h3 className="text-foreground font-bold text-xl md:text-2xl mb-3">
+              <div className="text-secondary font-semibold uppercase tracking-[0.2em] text-xs mb-3">
+                {card.eyebrow}
+              </div>
+              <h3 className="font-display text-primary font-black text-3xl md:text-[40px] leading-[1.05] tracking-tight mb-4">
                 {card.title}
               </h3>
               <p className="text-muted-foreground text-base leading-relaxed mb-6">
