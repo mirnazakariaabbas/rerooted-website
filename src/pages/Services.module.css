@@ -195,6 +195,5 @@
   .introStripGrid, .step { grid-template-columns: 1fr; gap: 40px; }
   .step.flip .stepMedia { order: 0; }
   .stepNum { font-size: 72px; }
-  .metaCell { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.12); }
-  .metaCell:last-child { border-bottom: 0; }
+  .metaStrip { grid-template-columns: repeat(2, 1fr); }
 }
