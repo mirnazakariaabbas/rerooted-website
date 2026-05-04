@@ -11,14 +11,14 @@ type NavLink = { label: string; href: string; type: "route" | "hash" };
 
 const corporateLinks: NavLink[] = [
   { label: "The Program", href: "/services", type: "route" },
-  { label: "The Journey", href: "#journey", type: "hash" },
+  { label: "The Stages", href: "#journey", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
   { label: "Contact", href: "/contact", type: "route" },
 ];
 
 const individualLinks: NavLink[] = [
-  { label: "Your Journey", href: "#journey", type: "hash" },
+  { label: "Your Stages", href: "#journey", type: "hash" },
   { label: "Support", href: "#support", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
