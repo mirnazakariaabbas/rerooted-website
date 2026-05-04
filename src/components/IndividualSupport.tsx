@@ -5,7 +5,6 @@ import { Heart, Smartphone } from "lucide-react";
 const cards = [
   {
     icon: Heart,
-    eyebrow: "Personal Coaching",
     title: "A coach who gets it",
     description:
       "Someone who's lived the expat experience — not just studied it. Your coach helps you navigate the emotional side of relocation: identity, belonging, loneliness, and building a life that feels like yours.",
@@ -13,7 +12,6 @@ const cards = [
   },
   {
     icon: Smartphone,
-    eyebrow: "Companion App",
     title: "Your new country, side by side with home",
     description:
       "A companion app that helps you settle in — from cultural tips and local know-how to daily check-ins and guided reflections. Think of it as a friend who already lives where you're going.",
