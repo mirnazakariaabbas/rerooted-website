@@ -129,45 +129,40 @@ export function WhyReRootedPillars() {
               },
             ].map((pillar) => (
               <div key={pillar.numeral} className="flex flex-col">
-                {/* Image */}
+                {/* Icon */}
                 <div
-                  className="relative mb-8 w-full overflow-hidden"
-                  style={{
-                    aspectRatio: "4 / 3",
-                    background: pillar.bg,
-                  }}
+                  className="relative mb-6 flex w-full items-center justify-center"
+                  style={{ height: "clamp(120px, 14vw, 180px)" }}
                 >
                   <img
                     src={pillar.image}
                     alt=""
                     aria-hidden="true"
                     loading="lazy"
-                    width={1024}
-                    height={1024}
-                    className="absolute inset-0 h-full w-full"
-                    style={{ objectFit: pillar.imageFit }}
+                    className="h-full w-auto max-w-full"
+                    style={{ objectFit: "contain" }}
                   />
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <img
                     src={rootsIcon}
                     alt=""
                     aria-hidden="true"
-                    className="h-7 w-auto shrink-0"
+                    className="h-5 w-auto shrink-0"
                     style={{
                       filter:
                         "brightness(0) saturate(100%) invert(54%) sepia(38%) saturate(519%) hue-rotate(106deg) brightness(92%) contrast(89%)",
                     }}
                   />
-                  <span className="h-px flex-1 bg-primary/20" />
+                  <span className="h-px flex-1 bg-primary/15" />
                 </div>
 
-                <h3 className="mt-5 font-display text-[clamp(1.5rem,2.2vw,2.25rem)] font-medium leading-[1.05] tracking-[-0.02em] text-primary">
+                <h3 className="mt-4 font-display text-[clamp(1.5rem,2.2vw,2.25rem)] font-medium leading-[1.05] tracking-[-0.02em] text-primary">
                   {pillar.title}
                 </h3>
 
-                <p className="mt-5 max-w-[36ch] text-lg font-normal leading-[1.55] text-foreground/90">
+                <p className="mt-4 max-w-[36ch] text-lg font-normal leading-[1.55] text-foreground/90">
                   {pillar.body}
                 </p>
               </div>
