@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAudience } from "@/contexts/AudienceContext";
-import aboutPhoto from "@/assets/about-yasser.jpg";
+import aboutPhoto from "@/assets/about-yasser.webp";
 
 const AboutSection = () => {
   const ref = useRef<HTMLDivElement>(null);
