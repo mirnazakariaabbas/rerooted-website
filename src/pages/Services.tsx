@@ -35,11 +35,6 @@ const Services = () => {
 
       {/* HERO */}
       <section className={s.phero}>
-        <svg className={s.pheroArcs} viewBox="0 0 1440 700" preserveAspectRatio="none">
-          <path d="M -100,500 Q 720,100 1540,500" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2" fill="none" />
-          <path d="M -100,580 Q 720,180 1540,580" stroke="rgba(255,255,255,0.18)" strokeWidth="1" fill="none" />
-          <path d="M -100,660 Q 720,260 1540,660" stroke="rgba(255,255,255,0.08)" strokeWidth="1" fill="none" />
-        </svg>
         <div className={s.pheroGlow}></div>
         <div className={s.pheroInner}>
           <div className={s.pheroEyebrow}>The Program</div>
@@ -55,19 +50,23 @@ const Services = () => {
           <div className={s.metaStrip}>
             <div className={s.metaCell}>
               <div className="k">Duration</div>
-              <div className="v">90 Days</div>
+              <div className="num">90</div>
+              <div className="unit">Days</div>
             </div>
             <div className={s.metaCell}>
               <div className="k">Coaching</div>
-              <div className="v">6 Sessions</div>
+              <div className="num">6</div>
+              <div className="unit">Sessions</div>
             </div>
             <div className={s.metaCell}>
               <div className="k">Diagnostics</div>
-              <div className="v">2 Assessments</div>
+              <div className="num">2</div>
+              <div className="unit">Assessments</div>
             </div>
             <div className={s.metaCell}>
               <div className="k">Outcome</div>
-              <div className="v">1 Final Report</div>
+              <div className="num">1</div>
+              <div className="unit">Final Report</div>
             </div>
           </div>
         </div>
