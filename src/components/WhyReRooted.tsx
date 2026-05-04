@@ -95,25 +95,25 @@ export function WhyReRootedPillars() {
                 maxWidth: "22ch",
               }}
             >
-              We are grounded by our 3 Re-Rooted® Principles
+              What sets Re-Rooted® apart
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-10 lg:gap-16 xl:gap-24">
             {[
               {
                 numeral: "i.",
-                title: "Grounded in evidence",
-                body: "ICF-credentialed coaching methods combined with Innosuisse-backed research on relocation outcomes. Every session has a purpose; every purpose has a measure.",
+                title: "A coach picked for you",
+                body: "Every client is matched with a coach hand-picked for their move, holding at least an ACC accreditation and trained in the Re-Rooted® methodology and principles.",
               },
               {
                 numeral: "ii.",
-                title: "Built for both sides",
-                body: "Designed for the person relocating and for the HR team underwriting the move. Two parallel tracks, one shared language of progress.",
+                title: "The Re-Rooted® app",
+                body: "Compare cultures and cost of living from home to destination, connect with other expats on the ground, work through pre-move checklists, and much more, all in one place.",
               },
               {
                 numeral: "iii.",
-                title: "Finite, focused, finished",
-                body: "90 days. Six coaching sessions. Two assessments. One clear report. Re-Rooted® is a program, not a subscription, with a defined end that marks a beginning.",
+                title: "Assessments that speak HR",
+                body: "Diagnostic and outcome assessments prove the program works in a language organizations understand. Clear data, clear ROI, clear impact on retention.",
               },
             ].map((pillar) => (
               <div key={pillar.numeral} className="flex flex-col">
