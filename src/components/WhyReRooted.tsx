@@ -1,4 +1,41 @@
 import rootsIcon from "@/assets/roots-icon.png";
+import offeringCoach from "@/assets/offering-coach.jpg";
+import offeringApp from "@/assets/offering-app.png";
+import offeringAssessments from "@/assets/offering-assessments.jpg";
+
+/**
+ * Hand-drawn oval frame inspired by the "FLOURISHING" brand mark.
+ * Sits on top of the image, contained within the card width.
+ */
+const OvalFrame = () => (
+  <svg
+    viewBox="0 0 400 260"
+    className="pointer-events-none absolute inset-0 h-full w-full"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M 60 130
+         C 60 60, 160 30, 230 32
+         C 320 35, 380 80, 378 140
+         C 376 200, 300 232, 210 230
+         C 120 228, 62 200, 60 130 Z"
+      fill="none"
+      stroke="white"
+      strokeWidth="3.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    {/* Open swoosh tail */}
+    <path
+      d="M 250 228 C 290 244, 330 244, 360 222"
+      fill="none"
+      stroke="white"
+      strokeWidth="3.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
 
 export function WhyReRootedStatement() {
   return (
@@ -104,19 +141,49 @@ export function WhyReRootedPillars() {
                 numeral: "i.",
                 title: "A coach picked for you",
                 body: "Every client is matched with a coach hand-picked for their move, holding at least an ACC accreditation and trained in the Re-Rooted® methodology and principles.",
+                image: offeringCoach,
+                imageFit: "cover" as const,
+                bg: "hsl(var(--primary))",
               },
               {
                 numeral: "ii.",
                 title: "The Re-Rooted® app",
                 body: "Compare cultures and cost of living from home to destination, connect with other expats on the ground, work through pre-move checklists, and much more, all in one place.",
+                image: offeringApp,
+                imageFit: "contain" as const,
+                bg: "hsl(var(--primary))",
               },
               {
                 numeral: "iii.",
                 title: "Assessments that speak HR",
                 body: "Diagnostic and outcome assessments prove the program works in a language organizations understand. Clear data, clear ROI, clear impact on retention.",
+                image: offeringAssessments,
+                imageFit: "cover" as const,
+                bg: "hsl(var(--primary))",
               },
             ].map((pillar) => (
               <div key={pillar.numeral} className="flex flex-col">
+                {/* Framed image */}
+                <div
+                  className="relative mb-8 w-full overflow-hidden"
+                  style={{
+                    aspectRatio: "4 / 3",
+                    background: pillar.bg,
+                  }}
+                >
+                  <img
+                    src={pillar.image}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                    className="absolute inset-0 h-full w-full"
+                    style={{ objectFit: pillar.imageFit }}
+                  />
+                  <OvalFrame />
+                </div>
+
                 <div className="flex items-center gap-4">
                   <img
                     src={rootsIcon}
