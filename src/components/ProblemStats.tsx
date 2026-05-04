@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
-import mountainImg from "@/assets/problem-mountain.jpg";
-import cityImg from "@/assets/problem-city.jpg";
+import mountainImg from "@/assets/problem-mountain.webp";
+import cityImg from "@/assets/problem-city.webp";
 import planeImg from "@/assets/problem-plane.jpg";
 
 // Cubic ease-out count-up

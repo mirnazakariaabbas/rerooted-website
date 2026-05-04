@@ -2,10 +2,10 @@ import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAudience } from "@/contexts/AudienceContext";
-import preRootedImg from "@/assets/journey-pre-rooted.jpg";
-import rootingInImg from "@/assets/journey-rooting-in.jpg";
-import rootingBackImg from "@/assets/journey-rooting-back.jpg";
-import familySupportImg from "@/assets/journey-family-support.jpg";
+import preRootedImg from "@/assets/journey-pre-rooted.webp";
+import rootingInImg from "@/assets/journey-rooting-in.webp";
+import rootingBackImg from "@/assets/journey-rooting-back.webp";
+import familySupportImg from "@/assets/journey-family-support.webp";
 
 type Stage = {
   name: string;
