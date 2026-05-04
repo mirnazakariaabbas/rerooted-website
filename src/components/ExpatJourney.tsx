@@ -16,10 +16,10 @@ type Stage = {
 };
 
 const individualStages: Stage[] = [
-  { name: "Pre-Rooted", label: "PRE-ROOTED", desc: "The stage before your move: preparing, dreaming, and gathering roots to carry with you.", route: "/journey/pre-rooted", image: preRootedImg },
-  { name: "Re-Rooted®", label: "ROOTING IN ", desc: "You've arrived. Learning to feel at home in your new place, street by street.", route: "/journey/rooting-in", image: rootingInImg },
-  { name: "Thriving", label: "ROOTING BACK", desc: "Blooming where you've been planted: building community, routines, and belonging.", route: "/journey/thrive", image: rootingBackImg },
-  { name: "Rooting Back", label: "FAMILY SUPPORT ", desc: "Finding ways to give back, stay connected to your origins, and grow new roots for others.", route: "/journey/rooting-back", image: familySupportImg },
+  { name: "Pre-departure", label: "PRE-ROOTED", desc: "The stage before your move: preparing, dreaming, and gathering roots to carry with you.", route: "/journey/pre-rooted", image: preRootedImg },
+  { name: "On-assignment", label: "ROOTING IN ", desc: "You've arrived. Learning to feel at home in your new place, street by street.", route: "/journey/rooting-in", image: rootingInImg },
+  { name: "Repatriation", label: "ROOTING BACK", desc: "Blooming where you've been planted: building community, routines, and belonging.", route: "/journey/thrive", image: rootingBackImg },
+  { name: "Partner & family", label: "FAMILY SUPPORT ", desc: "Finding ways to give back, stay connected to your origins, and grow new roots for others.", route: "/journey/rooting-back", image: familySupportImg },
 ];
 
 const corporateStages: Stage[] = [
