@@ -1,213 +1,315 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Phone, ClipboardList, Sprout, Flag, CheckCircle, Heart, Globe, Languages, Brain, Users, Baby } from "lucide-react";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
+import s from "./Services.module.css";
 
-const Section = ({ children, className = "", bg = "#FAF9F6" }: { children: React.ReactNode; className?: string; bg?: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+const cn = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(" ");
+
+const Services = () => {
+  const rootRef = useRef<HTMLElement>(null);
+
+  // Reveal-on-scroll observer (mirrors original inline script)
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const els = root.querySelectorAll<HTMLElement>(`.${s.reveal}`);
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add(s.in);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { rootMargin: "-10% 0px -10% 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <motion.section
-      ref={ref}
-      className={`px-6 lg:px-12 ${className}`}
-      style={{ backgroundColor: bg }}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {children}
-    </motion.section>
-  );
-};
+    <main ref={rootRef} className={s.root}>
+      <StickyNav />
 
-const services = [
-  {
-    icon: Phone,
-    timing: "Day 0",
-    name: "Discovery Call",
-    bg: "#FAF9F6",
-    content: [
-      "HR or employee reaches out. We understand the assignment, the person, the family situation, and the specific integration challenges.",
-      "This initial conversation shapes everything that follows. We listen before we recommend, because no two relocations are the same."
-    ],
-  },
-  {
-    icon: ClipboardList,
-    timing: "Week 1",
-    name: "Integration Assessment",
-    bg: "#F3F0F7",
-    content: [
-      "Our Integration Assessment is a scored diagnostic that measures the difficulty of a specific country-to-country move, factoring in cultural distance, language, lifestyle differences, and more.",
-      "The assessment covers six dimensions: values harmonization, cultural adaptation, language confidence, emotional wellbeing, social integration, and family support. It identifies gaps, strengths, and priorities.",
-      "The result is a difficulty score that shapes the level of coaching support needed. Higher difficulty, more intensive coaching. Lower difficulty, lighter touch. No guesswork.",
-      "The assessment is shared with HR and the hiring manager as a baseline."
-    ],
-  },
-  {
-    icon: Sprout,
-    timing: "Weeks 2–10",
-    name: "Active Coaching",
-    bg: "#FAF9F6",
-    content: [
-      "Bi-weekly one-on-one sessions with a matched coach. Practical, action-oriented work on the dimensions that matter most.",
-      "Coaching is delivered through a global network of certified coaches, each bringing local knowledge and lived expat experience. Programs are tiered based on the Integration Assessment difficulty score, so the intensity of support matches the complexity of the move."
-    ],
-  },
-  {
-    icon: Flag,
-    timing: "Week 11–12",
-    name: "Final Assessment",
-    bg: "#F3F0F7",
-    content: [
-      "Post-program assessment measuring progress across all six roots. The same diagnostic used at the start is repeated, creating a clear before-and-after picture.",
-      "Integration report delivered to HR and hiring manager with outcomes. A clear picture of what worked, what was hard, and what your organization can improve next time, turning every assignment into institutional knowledge."
-    ],
-  },
-  {
-    icon: CheckCircle,
-    timing: "Post-program",
-    name: "Ongoing Support",
-    bg: "#FAF9F6",
-    content: [
-      "Optional follow-up sessions. The employee has tools and habits for continued integration. HR has data for the next assignment.",
-      "Re-Rooted® doesn't disappear after the program ends. We remain available for the moments that matter."
-    ],
-  },
-];
+      {/* HERO */}
+      <section className={s.phero}>
+        <svg className={s.pheroArcs} viewBox="0 0 1440 700" preserveAspectRatio="none">
+          <path d="M -100,500 Q 720,100 1540,500" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2" fill="none" />
+          <path d="M -100,580 Q 720,180 1540,580" stroke="rgba(255,255,255,0.18)" strokeWidth="1" fill="none" />
+          <path d="M -100,660 Q 720,260 1540,660" stroke="rgba(255,255,255,0.08)" strokeWidth="1" fill="none" />
+        </svg>
+        <div className={s.pheroGlow}></div>
+        <div className={s.pheroInner}>
+          <div className={s.pheroEyebrow}>The Program</div>
+          <h1 className={s.pheroTitle}>
+            The Re-Rooted
+            <sup style={{ fontSize: "0.35em", verticalAlign: "super", opacity: 0.7, fontStyle: "normal" }}>®</sup>{" "}
+            Integration Program
+          </h1>
+          <p className={s.pheroSub}>
+            Tools to measure. Coaching to support. Data to prove it worked. A 90 day route in six clear steps, built for the person, the move, and the stage they're in.
+          </p>
 
-const coachingAreas = [
-  { icon: Heart, title: "Values Harmonization", desc: "Aligning personal beliefs with the culture of the host country." },
-  { icon: Globe, title: "Cultural Adaptation", desc: "Understanding behavior, communication, and trust-building across cultures." },
-  { icon: Languages, title: "Language Confidence", desc: "Addressing the emotional blocks that slow language learning." },
-  { icon: Brain, title: "Emotional Wellbeing", desc: "Navigating relationships, loneliness, and personal identity during transition." },
-  { icon: Users, title: "Social Integration", desc: "Building friendships, activities, and a life outside of work." },
-  { icon: Baby, title: "Family Support", desc: "Helping partners and children adapt, with dedicated guidance for third culture kids." },
-];
-
-const Services = () => (
-  <motion.main
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 0.3 }}
-  >
-    <StickyNav />
-
-    {/* Hero */}
-    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "#1F299C" }}>
-      <div className="container mx-auto max-w-4xl text-center">
-        <h1 className="text-white font-black text-4xl md:text-5xl leading-tight" style={{ fontWeight: 900 }}>
-          The Re-Rooted® Integration Program
-        </h1>
-        <p className="mt-4 text-lg text-white/80" style={{ fontWeight: 400 }}>
-          Tools to measure. Coaching to support. Data to prove it worked.
-        </p>
-      </div>
-    </section>
-
-    {/* Overview */}
-    <Section className="py-20" bg="#FAF9F6">
-      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
-        <p>
-          Relocation support shouldn't end at logistics. <strong>Re-Rooted®</strong> combines diagnostic tools, personalized coaching, and measurable outcomes to help expatriates integrate, and help organizations see the difference.
-        </p>
-        <p>
-          Every engagement is tailored to the move, the person, and the stage they're in.
-        </p>
-      </div>
-    </Section>
-
-    {/* Service Sections */}
-    {services.map((service, i) => {
-      const Icon = service.icon;
-      return (
-        <Section key={i} className="py-16" bg={service.bg}>
-          <div className="container mx-auto max-w-3xl">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "rgba(31,41,156,0.1)" }}>
-                <Icon size={22} style={{ color: "#1F299C" }} />
-              </div>
-              <div>
-                <h3 className="font-bold text-xl" style={{ color: "#1A1A1A" }}>{service.name}</h3>
-                <span className="inline-block mt-1 text-xs font-semibold px-2.5 py-0.5 rounded-full" style={{ backgroundColor: "rgba(61,167,118,0.12)", color: "#3DA776" }}>
-                  {service.timing}
-                </span>
-              </div>
+          <div className={s.metaStrip}>
+            <div className={s.metaCell}>
+              <div className="k">Duration</div>
+              <div className="v">90 Days</div>
             </div>
-            <div className="space-y-4 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
-              {service.content.map((p, j) => <p key={j}>{p}</p>)}
+            <div className={s.metaCell}>
+              <div className="k">Coaching</div>
+              <div className="v">6 Sessions</div>
             </div>
+            <div className={s.metaCell}>
+              <div className="k">Diagnostics</div>
+              <div className="v">2 Assessments</div>
+            </div>
+            <div className={s.metaCell}>
+              <div className="k">Outcome</div>
+              <div className="v">1 Final Report</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Coaching areas grid for Active Coaching */}
-            {i === 2 && (
-              <div className="mt-10">
-                <p className="font-semibold mb-4" style={{ color: "#1A1A1A" }}>What coaching covers:</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {coachingAreas.map((area, k) => {
-                    const AreaIcon = area.icon;
-                    return (
-                      <div key={k} className="rounded-xl p-5 border" style={{ backgroundColor: "#F3F0F7", borderColor: "rgba(188,173,212,0.5)" }}>
-                        <AreaIcon size={20} style={{ color: "#1F299C" }} className="mb-2" />
-                        <p className="font-semibold text-sm mb-1" style={{ color: "#1A1A1A" }}>{area.title}</p>
-                        <p className="text-xs leading-relaxed" style={{ color: "#6B6B6B" }}>{area.desc}</p>
-                      </div>
-                    );
-                  })}
+      {/* INTRO STRIP */}
+      <section className={s.introStrip}>
+        <div className={cn(s.container, s.introStripGrid)}>
+          <h2 className={s.reveal}>Relocation support shouldn't end at logistics.</h2>
+          <div className={s.reveal}>
+            <p>Re-Rooted® combines diagnostic tools, personalized coaching, and measurable outcomes. The goal: help expatriates integrate, and help organizations see the difference.</p>
+            <p>Every engagement is tailored to the move, the person, and the stage they're in.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* STEPS */}
+      <section className={s.steps} id="program">
+        <div className={s.container}>
+          <div className={cn(s.stepsHead, s.reveal)}>
+            <div className="eyebrow">Six Steps</div>
+            <h2>How the program works</h2>
+          </div>
+
+          {/* STEP 01 */}
+          <div className={cn(s.step, s.reveal)}>
+            <div className={s.stepContent}>
+              <div className={s.stepNumRow}>
+                <div className={s.stepNum}>01</div>
+                <div className={s.stepWhen}>Day 0</div>
+              </div>
+              <h3>Discovery Call</h3>
+              <p className="lead">A first conversation to understand the assignment, the person, and the family situation.</p>
+              <ul>
+                <li>HR or employee reaches out</li>
+                <li>We map the move and the people involved</li>
+                <li>Define success together</li>
+              </ul>
+            </div>
+            <div className={s.stepMedia}>
+              <div className={s.mediaCard}>
+                <div className={s.animPhone}>
+                  <div className={s.ring}></div>
+                  <div className={s.ring}></div>
+                  <div className={s.ring}></div>
+                  <div className={s.phoneIcon}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.33 1.85.57 2.81.7a2 2 0 011.72 2z"></path></svg>
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
-        </Section>
-      );
-    })}
 
-    {/* Summary */}
-    <Section className="py-10" bg="#FAF9F6">
-      <p className="text-center text-sm font-semibold" style={{ color: "#6B6B6B" }}>
-        Total engagement: 90 days · 6–8 coaching sessions · 2 assessments · 1 HR report
-      </p>
-    </Section>
+          {/* STEP 02 */}
+          <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
+            <div className={s.stepContent}>
+              <div className={s.stepNumRow}>
+                <div className={s.stepNum}>02</div>
+                <div className={s.stepWhen}>Day 1</div>
+              </div>
+              <h3>Complexity Assessment</h3>
+              <p className="lead">A structured baseline across eight dimensions: family, culture, role, language, timeline. The level of risk is visible from day one.</p>
+              <ul>
+                <li>8 dimension diagnostic</li>
+                <li>Risk score for individual and employer</li>
+                <li>Tailored program recommendation</li>
+              </ul>
+            </div>
+            <div className={cn(s.stepMedia, s.left)}>
+              <div className={cn(s.mediaCard, s.blue)}>
+                <div className={s.animDial}>
+                  <svg className={s.dialSvg} viewBox="0 0 200 200">
+                    <g transform="translate(100,100)">
+                      <line className={s.dialTick} x1="0" y1="-86" x2="0" y2="-78" transform="rotate(-135)" />
+                      <line className={s.dialTick} x1="0" y1="-86" x2="0" y2="-78" transform="rotate(-90)" />
+                      <line className={s.dialTick} x1="0" y1="-86" x2="0" y2="-78" transform="rotate(-45)" />
+                      <line className={s.dialTick} x1="0" y1="-86" x2="0" y2="-78" transform="rotate(0)" />
+                      <line className={s.dialTick} x1="0" y1="-86" x2="0" y2="-78" transform="rotate(45)" />
+                      <line className={s.dialTick} x1="0" y1="-86" x2="0" y2="-78" transform="rotate(90)" />
+                      <line className={s.dialTick} x1="0" y1="-86" x2="0" y2="-78" transform="rotate(135)" />
+                    </g>
+                    <circle className={s.dialBg} cx="100" cy="100" r="65" />
+                    <circle className={s.dialFg} cx="100" cy="100" r="65" transform="rotate(-90 100 100)" />
+                    <text className={s.dialNum} x="100" y="110">7.2</text>
+                    <text className={s.dialLabel} x="100" y="135">Complexity Score</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    {/* Cultural Companion App */}
-    <section className="py-20 px-6 lg:px-12" style={{ backgroundColor: "#1F299C" }}>
-      <div className="container mx-auto max-w-3xl text-center">
-        <h2 className="text-white font-extrabold text-3xl md:text-[36px] leading-tight mb-6">
-          Your Cultural Companion, The Re-Rooted® App
-        </h2>
-        <div className="space-y-4 text-base leading-[1.7] text-white/80">
-          <p>
-            The <strong className="text-white">Re-Rooted®</strong> Cultural Companion is a digital tool that helps expatriates explore and understand their destination country, side by side with the country they're coming from. Cultural norms, communication styles, daily life, values, cost of living, all compared in a way that's practical and personal.
-          </p>
-          <p>
-            A living reference that helps people prepare before they arrive and make sense of what they experience once they're there.
-          </p>
+          {/* STEP 03 */}
+          <div className={cn(s.step, s.reveal)}>
+            <div className={s.stepContent}>
+              <div className={s.stepNumRow}>
+                <div className={s.stepNum}>03</div>
+                <div className={s.stepWhen}>Week 1</div>
+              </div>
+              <h3>Personal Needs Plan</h3>
+              <p className="lead">A confidential deep dive with the relocating professional. We surface hidden blockers and define the success measures for the next 12 weeks.</p>
+              <ul>
+                <li>1:1 confidential intake</li>
+                <li>Blockers and opportunities mapped</li>
+                <li>12 week goal contract</li>
+              </ul>
+            </div>
+            <div className={s.stepMedia}>
+              <div className={cn(s.mediaCard, s.warm)}>
+                <div className={s.animList}>
+                  {[0, 1, 2, 3].map((i) => (
+                    <div key={i} className={s.listItem}>
+                      <div className={s.checkCircle}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l5 5L20 7"></path></svg>
+                      </div>
+                      <div className={cn(s.lineFill, i === 1 || i === 3 ? s.med : i === 2 ? s.short : "")}></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 04 */}
+          <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
+            <div className={s.stepContent}>
+              <div className={s.stepNumRow}>
+                <div className={s.stepNum}>04</div>
+                <div className={s.stepWhen}>Weeks 2 to 14</div>
+              </div>
+              <h3>Active Coaching</h3>
+              <p className="lead">Six 1:1 sessions across three months. Real time work on the things that actually determine whether a move takes root.</p>
+              <ul>
+                <li>Identity, relationships, performance, belonging</li>
+                <li>Six structured sessions with flexible scheduling</li>
+                <li>Tools and frameworks delivered between sessions</li>
+              </ul>
+            </div>
+            <div className={cn(s.stepMedia, s.left)}>
+              <div className={cn(s.mediaCard, s.green)}>
+                <div className={s.animTree}>
+                  <div className={s.treeStage}>
+                    <img className={cn(s.treeImg, s.treeCanopyImg)} src="/assets/tree-of-life.png" alt="" />
+                    <img className={cn(s.treeImg, s.treeRootsImg)} src="/assets/tree-of-life.png" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 05 */}
+          <div className={cn(s.step, s.reveal)}>
+            <div className={s.stepContent}>
+              <div className={s.stepNumRow}>
+                <div className={s.stepNum}>05</div>
+                <div className={s.stepWhen}>Week 15</div>
+              </div>
+              <h3>Final Assessment</h3>
+              <p className="lead">A closing read against the Week 1 baseline. What shifted, what held, what's next, delivered as a written report.</p>
+              <ul>
+                <li>Re-run the 8 dimension diagnostic</li>
+                <li>Written report, yours to keep</li>
+                <li>Shareable summary for HR and sponsor</li>
+              </ul>
+            </div>
+            <div className={s.stepMedia}>
+              <div className={cn(s.mediaCard, s.blue)}>
+                <div className={s.animChart}>
+                  <svg className={s.chartSvg} viewBox="0 0 400 240" preserveAspectRatio="none">
+                    <path className={s.chartArea} d="M 20,180 L 80,160 L 140,140 L 200,110 L 260,90 L 320,55 L 380,30 L 380,220 L 20,220 Z" />
+                    <path className={s.chartLine} d="M 20,180 L 80,160 L 140,140 L 200,110 L 260,90 L 320,55 L 380,30" />
+                    <circle className={s.chartDot} cx="20" cy="180" r="5" style={{ animationDelay: "0s" }} />
+                    <circle className={s.chartDot} cx="80" cy="160" r="5" style={{ animationDelay: "0.1s" }} />
+                    <circle className={s.chartDot} cx="140" cy="140" r="5" style={{ animationDelay: "0.2s" }} />
+                    <circle className={s.chartDot} cx="200" cy="110" r="5" style={{ animationDelay: "0.3s" }} />
+                    <circle className={s.chartDot} cx="260" cy="90" r="5" style={{ animationDelay: "0.4s" }} />
+                    <circle className={s.chartDot} cx="320" cy="55" r="5" style={{ animationDelay: "0.5s" }} />
+                    <circle className={s.chartDot} cx="380" cy="30" r="6" style={{ animationDelay: "0.6s" }} />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* STEP 06 */}
+          <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
+            <div className={s.stepContent}>
+              <div className={s.stepNumRow}>
+                <div className={s.stepNum}>06</div>
+                <div className={s.stepWhen}>Post Program</div>
+              </div>
+              <h3>Ongoing Support</h3>
+              <p className="lead">Quarterly check ins for the first year. The roots take longer than 90 days to deepen, and we stay with them.</p>
+              <ul>
+                <li>4 quarterly check ins in year one</li>
+                <li>Direct line to your coach</li>
+                <li>Optional family or partner sessions</li>
+              </ul>
+            </div>
+            <div className={cn(s.stepMedia, s.left)}>
+              <div className={s.mediaCard}>
+                <div className={s.animOrbit}>
+                  <div className={cn(s.orbitRing, s.r2)}>
+                    <div className={s.orbitDot} style={{ top: "-18px", left: "50%", transform: "translateX(-50%)" }}>Q3</div>
+                    <div className={s.orbitDot} style={{ bottom: "-18px", left: "50%", transform: "translateX(-50%)" }}>Q1</div>
+                  </div>
+                  <div className={cn(s.orbitRing, s.r1)}>
+                    <div className={s.orbitDot} style={{ top: "50%", left: "-18px", transform: "translateY(-50%)" }}>Q4</div>
+                    <div className={s.orbitDot} style={{ top: "50%", right: "-18px", transform: "translateY(-50%)" }}>Q2</div>
+                  </div>
+                  <div className={s.orbitCore}>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.35-7-10a4 4 0 017-2.65A4 4 0 0119 11c0 5.65-7 10-7 10z"></path></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <Link
-          to="/app/cultural"
-          className="inline-flex items-center mt-8 px-7 py-3.5 text-base font-semibold rounded-lg transition-colors hover:opacity-90"
-          style={{ backgroundColor: "#3DA776", color: "#fff" }}
-        >
-          Explore the app →
-        </Link>
-      </div>
-    </section>
+      </section>
 
-    {/* CTA */}
-    <Section className="py-16" bg="#FAF9F6">
-      <div className="container mx-auto max-w-3xl text-center">
-        <Link
-          to="/contact"
-          className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90"
-          style={{ backgroundColor: "#1F299C" }}
-        >
-          Start a conversation →
-        </Link>
-      </div>
-    </Section>
+      {/* CTA */}
+      <section className={s.cta}>
+        <div className={s.ctaGlow}></div>
+        <svg className={s.pheroArcs} viewBox="0 0 1440 700" preserveAspectRatio="none">
+          <path d="M -100,400 Q 720,0 1540,400" stroke="rgba(255,255,255,0.18)" strokeWidth="1" fill="none" />
+          <path d="M -100,500 Q 720,100 1540,500" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
+        </svg>
+        <div className={s.ctaInner}>
+          <h2>Ready to start?</h2>
+          <p>Book a discovery call. We'll map the move, the person, and the right next step together.</p>
+          <div className={s.ctaButtons}>
+            <Link to="/contact" className={cn(s.btn, s.btnGreen)}>
+              Book a discovery call{" "}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
+            </Link>
+            <Link to="/contact" className={cn(s.btn, s.btnGhost)}>For employers</Link>
+          </div>
+        </div>
+      </section>
 
-    <Footer />
-  </motion.main>
-);
+      <Footer />
+    </main>
+  );
+};
 
 export default Services;
