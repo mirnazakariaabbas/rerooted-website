@@ -101,71 +101,81 @@ export function WhyReRootedPillars() {
               What sets Re-Rooted® apart
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-10 lg:gap-16 xl:gap-24">
+          <div className="flex flex-col gap-8 md:gap-10">
             {[
               {
-                numeral: "i.",
+                eyebrow: "Coaching",
                 title: "A coach picked for you",
                 body: "Every client is matched with a coach hand-picked for their move, holding at least an ACC accreditation and trained in the Re-Rooted® methodology and principles.",
                 image: offeringCoach,
-                imageFit: "cover" as const,
-                bg: "hsl(var(--background))",
+                bg: "hsl(var(--primary))",
+                text: "hsl(var(--primary-foreground))",
+                tile: "hsl(var(--primary-foreground) / 0.08)",
               },
               {
-                numeral: "ii.",
+                eyebrow: "The App",
                 title: "The Re-Rooted® app",
                 body: "Compare cultures and cost of living from home to destination, connect with other expats on the ground, work through pre-move checklists, and much more, all in one place.",
                 image: offeringApp,
-                imageFit: "contain" as const,
-                bg: "hsl(var(--background))",
+                bg: "hsl(var(--secondary))",
+                text: "hsl(var(--secondary-foreground))",
+                tile: "hsl(var(--secondary-foreground) / 0.1)",
               },
               {
-                numeral: "iii.",
+                eyebrow: "Assessments",
                 title: "Assessments that speak HR",
                 body: "Diagnostic and outcome assessments prove the program works in a language organizations understand. Clear data, clear ROI, clear impact on retention.",
                 image: offeringAssessments,
-                imageFit: "contain" as const,
-                bg: "hsl(var(--background))",
+                bg: "hsl(var(--accent))",
+                text: "hsl(var(--accent-foreground))",
+                tile: "hsl(var(--accent-foreground) / 0.08)",
               },
             ].map((pillar) => (
-              <div key={pillar.numeral} className="flex flex-col">
-                {/* Icon */}
+              <article
+                key={pillar.title}
+                className="grid grid-cols-1 overflow-hidden rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
+                style={{ background: pillar.bg, color: pillar.text }}
+              >
+                {/* Image left */}
                 <div
-                  className="relative mb-6 flex w-full items-center justify-center"
-                  style={{ height: "clamp(120px, 14vw, 180px)" }}
+                  className="flex items-center justify-center p-8 md:p-12 lg:p-16"
+                  style={{ minHeight: "clamp(280px, 32vw, 460px)" }}
                 >
-                  <img
-                    src={pillar.image}
-                    alt=""
-                    aria-hidden="true"
-                    loading="lazy"
-                    className="h-full w-auto max-w-full"
-                    style={{ objectFit: "contain" }}
-                  />
+                  <div
+                    className="flex h-full w-full items-center justify-center rounded-[20px] p-6 md:p-10"
+                    style={{ background: pillar.tile }}
+                  >
+                    <img
+                      src={pillar.image}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      className="max-h-[320px] w-auto max-w-full object-contain"
+                    />
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <img
-                    src={rootsIcon}
-                    alt=""
-                    aria-hidden="true"
-                    className="h-5 w-auto shrink-0"
-                    style={{
-                      filter:
-                        "brightness(0) saturate(100%) invert(54%) sepia(38%) saturate(519%) hue-rotate(106deg) brightness(92%) contrast(89%)",
-                    }}
-                  />
-                  <span className="h-px flex-1 bg-primary/15" />
+                {/* Text right */}
+                <div className="flex flex-col justify-center gap-5 p-8 md:p-12 lg:p-16">
+                  <p
+                    className="text-[11px] font-semibold uppercase tracking-[0.26em] opacity-80 md:text-xs"
+                  >
+                    {pillar.eyebrow}
+                  </p>
+                  <h3
+                    className="font-display font-medium leading-[1.05] tracking-[-0.02em]"
+                    style={{ fontSize: "clamp(1.75rem, 3vw, 2.75rem)" }}
+                  >
+                    {pillar.title}
+                  </h3>
+                  <p
+                    className="max-w-[44ch] font-normal leading-[1.55] opacity-90"
+                    style={{ fontSize: "clamp(1rem, 1.15vw, 1.125rem)" }}
+                  >
+                    {pillar.body}
+                  </p>
                 </div>
-
-                <h3 className="mt-4 font-display text-[clamp(1.5rem,2.2vw,2.25rem)] font-medium leading-[1.05] tracking-[-0.02em] text-primary">
-                  {pillar.title}
-                </h3>
-
-                <p className="mt-4 max-w-[36ch] text-lg font-normal leading-[1.55] text-foreground/90">
-                  {pillar.body}
-                </p>
-              </div>
+              </article>
             ))}
           </div>
         </div>
