@@ -152,7 +152,7 @@ const Services = () => {
                     </g>
                     <circle className={s.dialBg} cx="100" cy="100" r="65" />
                     <circle className={s.dialFg} cx="100" cy="100" r="65" transform="rotate(-90 100 100)" />
-                    <text className={s.dialNum} x="100" y="105">7.2</text>
+                    <text className={s.dialNum} x="100" y="112">7.2</text>
                     <text className={s.dialLabel} x="100" y="128">Complexity</text>
                     <text className={s.dialLabel} x="100" y="146">Score</text>
                   </svg>
