@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import rootsIcon from "@/assets/roots-icon.png";
 import offeringCoach from "@/assets/offering-coach.jpg";
 import offeringApp from "@/assets/offering-app.png";
