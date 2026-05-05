@@ -44,7 +44,8 @@ const Services = () => {
             Integration Program
           </h1>
           <p className={s.pheroSub}>
-            Tools to measure. Coaching to support. Data to prove it worked. A 90 day route in six clear steps, built for the person, the move, and the stage they're in.
+            Tools to measure. Coaching to support. Data to prove it worked. <br />
+            A 90 day route in six clear steps, built for the person, the move, and the stage they're in.
           </p>
 
           <div className={s.metaStrip}>
