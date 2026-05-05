@@ -134,6 +134,7 @@ const Services = () => {
                 <li>1 & 2:  Assignment change context, new workplace environment </li>
                 <li>3 & 4: Cultural Distance and Language</li>
                 <li>5 & 6 : Spouse and Family situation</li>
+                <li>7 & 8 : Geographical factors, Resilience & Adaptability</li>
               </ul>
             </div>
             <div className={cn(s.stepMedia, s.left)}>
