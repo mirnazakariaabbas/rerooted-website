@@ -127,7 +127,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
     {
       kind: "image",
       src: planeImg,
-      eyebrow: "Recovery is slow when no one\ntends to the roots.",
+      eyebrow: "",
       tagline: "",
       // We'll show 80% over this image instead of Re-Rooted mark
     },
