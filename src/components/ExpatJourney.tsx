@@ -25,7 +25,7 @@ const individualStages: Stage[] = [
 const corporateStages: Stage[] = [
   { name: "Pre-departure", label: "PRE-ROOTED", desc: "Preparing to leave. Building readiness before the move begins. Mindset, expectations, cultural preparation.", route: "/journey/pre-rooted", image: preRootedImg },
   { name: "On-assignment", label: "ROOTING IN ", desc: "Just arrived. Finding ground in an unfamiliar place. Values, culture, language, relationships, social life, family.", route: "/journey/rooting-in", image: rootingInImg },
-  { name: "Repatriation", label: "ROOTING BACK", desc: "Settled and growing. Moving beyond survival mode. Performing, connecting, contributing, building a meaningful life.", route: "/journey/thrive", image: rootingBackImg },
+  { name: "Repatriation", label: "ROOTING BACK", desc: "The reverse culture shock, re-adapting to a home that is now different and evolved version of the people you once knew, including yourself!", route: "/journey/thrive", image: rootingBackImg },
   { name: "Partner & family", label: "FAMILY SUPPORT ", desc: "Returning home. Re-integrating after life abroad. Managing reverse culture shock and a changed identity.", route: "/journey/rooting-back", image: familySupportImg },
 ];
 
