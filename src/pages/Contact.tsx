@@ -48,7 +48,7 @@ const Contact = () => {
             <p>
               Whether you're exploring support for an upcoming assignment, rethinking your mobility program, or simply curious about what <strong>Re-Rooted®</strong> does, we'd like to hear from you.
             </p>
-            <p>No pitch. No pressure. Just a conversation about what your people need.</p>
+            <p>​</p>
           </div>
         </div>
       </section>
