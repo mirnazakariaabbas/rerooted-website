@@ -131,7 +131,7 @@ const Services = () => {
               <h3>Complexity Assessment</h3>
               <p className="lead">A structured assessment and scoring across eight dimensions, defining the level of risk to the assignment by understanding the strain the employee is going to face.</p>
               <ul>
-                <li>8 dimension diagnostic</li>
+                <li>1 & 2:  Assignment change context, new workplace environment </li>
                 <li>Risk score for individual and employer</li>
                 <li>Tailored program recommendation</li>
               </ul>
