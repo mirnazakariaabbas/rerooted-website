@@ -129,7 +129,7 @@ const Services = () => {
                 <div className={s.stepWhen}>Day 1</div>
               </div>
               <h3>Complexity Assessment</h3>
-              <p className="lead">A structured baseline across eight dimensions: family, culture, role, language, timeline. The level of risk is visible from day one.</p>
+              <p className="lead">A structured assessment and scoring across eight dimensions, defining the level of risk to the assignment by understanding the strain the employee is going to face.</p>
               <ul>
                 <li>8 dimension diagnostic</li>
                 <li>Risk score for individual and employer</li>
