@@ -80,7 +80,7 @@ const PILLARS = [
   {
     eyebrow: "Coaching",
     title: "A coach picked for you",
-    body: "Every client is matched with a coach hand-picked for their move, holding at least an ACC accreditation and trained in the Re-Rooted® methodology and principles.",
+    body: "Every client is matched with a coach hand-picked for their move, holding at least a PCC accreditation and trained in the Re-Rooted® methodology and principles.",
     image: offeringCoach,
     bg: "hsl(var(--primary))",
     text: "hsl(var(--primary-foreground))",
