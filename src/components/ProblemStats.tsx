@@ -95,7 +95,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
     {
       kind: "image",
       src: mountainImg,
-      eyebrow: "The hardest part of moving\nis rarely on the manifest.",
+      eyebrow: "",
       tagline: "Replanted, not relocated",
     },
     {
