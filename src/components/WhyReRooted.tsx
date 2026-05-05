@@ -89,7 +89,7 @@ const PILLARS = [
   {
     eyebrow: "The App",
     title: "The Re-Rooted® app",
-    body: "Compare cultures and cost of living from home to destination, connect with other expats on the ground, work through pre-move checklists, and much more, all in one place.",
+    body: "Everything an expat needs to know in one place.\nCompare cultures and cost of living from home to destination, connect with other expats on the ground, work through total-move checklists, and much more, all in one place.",
     image: offeringApp,
     bg: "hsl(var(--secondary))",
     text: "hsl(var(--secondary-foreground))",
