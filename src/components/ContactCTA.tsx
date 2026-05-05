@@ -79,8 +79,7 @@ const ContactCTA = () => {
                   <strong className="text-white">Re-Rooted®</strong> does, we'd like to hear from you.
                 </p>
                 <p>
-                  No pitch. No pressure. Just a conversation about what your
-                  people need.
+                  ​
                 </p>
               </>
             )}
