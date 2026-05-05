@@ -67,8 +67,8 @@ export function WhyReRootedStatement() {
             }}
           >
             Global mobility is usually treated as logistics, visa, shipping,
-            tax. But the hardest parts of moving are invisible: identity,
-            belonging, family equilibrium, confidence at work.
+            tax. But the hardest parts of moving are personal: identity,
+            belonging, family, balance, confidence in a new work assignment.
           </p>
         </div>
       </section>
