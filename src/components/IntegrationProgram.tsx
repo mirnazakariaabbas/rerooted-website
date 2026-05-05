@@ -67,7 +67,7 @@ const STEPS: Step[] = [
   {
     when: "Day 0",
     title: "Candidate shortlisted",
-    body: "The move is approved. Before anyone packs a box, we start the conversation, aligning expectations, context and goals with the candidate and their sponsor.",
+    body: "A closing read against the initial 1 baseline. What shifted, what held, what's next. Delivered as a written report with measurements and focus areas.",
     icon: "star",
   },
   {
@@ -232,7 +232,7 @@ const IntegrationProgram = () => {
             <span style={{ color: COLORS.green }}>Journey</span>
           </h2>
           <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute, textAlign: "center", maxWidth: 780, marginLeft: "auto", marginRight: "auto" }}>
-            Ninety days, six sessions, two assessments, one clear report. Built as a route, not a retainer. Here's what happens, step by step.
+            Ninety days, six sessions, two assessments, one clear report. Here's how it goes, step by step.
           </p>
         </div>
 
