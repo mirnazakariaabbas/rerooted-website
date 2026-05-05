@@ -102,9 +102,9 @@ const Services = () => {
               <h3>Discovery Call</h3>
               <p className="lead">A first conversation to understand the assignment, the person, and the family situation.</p>
               <ul>
-                <li>HR or employee reaches out</li>
+                <li>HR, Hiring Manager or Global Mobility lead reaches out</li>
                 <li>We map the move and the people involved</li>
-                <li>Define success together</li>
+                <li>Initial definition of the support model required to make the move successful</li>
               </ul>
             </div>
             <div className={s.stepMedia}>
