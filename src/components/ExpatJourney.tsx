@@ -92,7 +92,7 @@ const ExpatJourney = () => {
                 {isIndividual ? (
                   <>The expat stages aren't a straight line. You move forward, loop back, and start again. Find the stage that feels like yours right now: that's where we begin.</>
                 ) : (
-                  <>Each engagement is a clean 90-day cycle, priced by complexity tier and available as an individual purchase or a corporate cohort. Mix and match across a family move.</>
+                  <>Four different packages meeting the person where they are, supporting them with what they need to thrive in their new transition.</>
                 )}
               </p>
             </div>

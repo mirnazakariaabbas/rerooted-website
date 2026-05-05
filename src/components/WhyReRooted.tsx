@@ -97,8 +97,8 @@ const PILLARS = [
   },
   {
     eyebrow: "Assessments",
-    title: "Assessments that speak HR",
-    body: "Diagnostic and outcome assessments prove the program works in a language organizations understand. Clear data, clear ROI, clear impact on retention.",
+    title: "Psychometric assessment to measure program results",
+    body: "Diagnostic and outcome assessments prove the program works in a language organizations understand. Clear data, clear ROI, clear impact on performance and retention.",
     image: offeringAssessments,
     bg: "hsl(var(--accent))",
     text: "hsl(var(--accent-foreground))",
