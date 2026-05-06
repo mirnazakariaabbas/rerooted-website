@@ -275,21 +275,16 @@ export function WhyReRootedPillars() {
               style={{ background: pillar.bg, color: pillar.text }}
             >
               <div
-                className="flex items-center justify-center p-8 md:p-12 lg:p-16"
-                style={{ minHeight: "clamp(280px, 32vw, 460px)" }}
+                className="flex items-center justify-center px-4 pt-8 md:px-6 md:pt-10 lg:px-8 lg:pt-12"
+                style={{ minHeight: "clamp(320px, 36vw, 520px)" }}
               >
-                <div
-                  className="flex h-full w-full items-center justify-center rounded-[20px] p-6 md:p-10"
-                  style={{ background: pillar.tile }}
-                >
-                  <img
-                    src={pillar.image}
-                    alt=""
-                    aria-hidden="true"
-                    loading="lazy"
-                    className="max-h-[320px] w-auto max-w-full object-contain"
-                  />
-                </div>
+                <img
+                  src={pillar.image}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  className="h-full max-h-[480px] w-auto max-w-full object-contain"
+                />
               </div>
 
               <div className="flex flex-col justify-center gap-5 p-8 md:p-12 lg:p-16">
