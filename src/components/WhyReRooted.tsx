@@ -213,7 +213,7 @@ export function WhyReRootedPillars() {
           {PILLARS.map((pillar) => (
             <article
               key={pillar.title}
-              className="grid w-[86%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] sm:w-[88%] md:w-[90%] md:grid-cols-2 md:rounded-[32px] lg:w-[92%]"
+              className="grid w-[78%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] sm:w-[75%] md:w-[78%] md:grid-cols-2 md:rounded-[32px] lg:w-[80%]"
               style={{ background: pillar.bg, color: pillar.text }}
             >
               <div
