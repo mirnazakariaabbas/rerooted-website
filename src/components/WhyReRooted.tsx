@@ -143,8 +143,66 @@ export function WhyReRootedPillars() {
       });
     };
     track.addEventListener("scroll", onScroll, { passive: true });
+
+    // Mouse drag-to-scroll
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+    let moved = false;
+    const onDown = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      isDown = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = track.scrollLeft;
+      track.style.cursor = "grabbing";
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = startScroll - dx;
+    };
+    const endDrag = () => {
+      if (!isDown) return;
+      isDown = false;
+      track.style.cursor = "grab";
+      if (moved) {
+        // Snap to nearest
+        const center = track.scrollLeft + track.clientWidth / 2;
+        let best = track.children[0] as HTMLElement;
+        let bestDist = Infinity;
+        Array.from(track.children).forEach((el) => {
+          const node = el as HTMLElement;
+          const c = node.offsetLeft + node.offsetWidth / 2;
+          const d = Math.abs(c - center);
+          if (d < bestDist) {
+            bestDist = d;
+            best = node;
+          }
+        });
+        track.scrollTo({ left: best.offsetLeft, behavior: "smooth" });
+      }
+    };
+    const onClickCapture = (e: MouseEvent) => {
+      if (moved) {
+        e.preventDefault();
+        e.stopPropagation();
+        moved = false;
+      }
+    };
+    track.style.cursor = "grab";
+    track.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", endDrag);
+    track.addEventListener("click", onClickCapture, true);
+
     return () => {
       track.removeEventListener("scroll", onScroll);
+      track.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", endDrag);
+      track.removeEventListener("click", onClickCapture, true);
       cancelAnimationFrame(raf);
     };
   }, []);
