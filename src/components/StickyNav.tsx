@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { Menu, X, LogIn, UserRound } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-import logoShorthand from "@/assets/logo-shorthand-blue.png";
+import logoShorthand from "@/assets/logo-blue.png";
 import { useAudience } from "@/contexts/AudienceContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { computeNavState } from "@/lib/navAdaptive";
@@ -10,7 +10,6 @@ import { computeNavState } from "@/lib/navAdaptive";
 type NavLink = { label: string; href: string; type: "route" | "hash" };
 
 const corporateLinks: NavLink[] = [
-  { label: "Homepage", href: "/", type: "route" },
   { label: "The Program", href: "/services", type: "route" },
   { label: "The Stages", href: "#journey", type: "hash" },
   { label: "About", href: "/about", type: "route" },
@@ -19,7 +18,6 @@ const corporateLinks: NavLink[] = [
 ];
 
 const individualLinks: NavLink[] = [
-  { label: "Homepage", href: "/", type: "route" },
   { label: "Your Stages", href: "#journey", type: "hash" },
   { label: "Support", href: "#support", type: "hash" },
   { label: "About", href: "/about", type: "route" },
