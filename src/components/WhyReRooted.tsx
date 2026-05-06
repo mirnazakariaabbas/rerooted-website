@@ -108,17 +108,22 @@ const PILLARS = [
 
 export function WhyReRootedPillars() {
   const [active, setActive] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
 
   const goTo = (i: number) => {
-    setActive(i);
+    const idx = (i + PILLARS.length) % PILLARS.length;
+    setActive(idx);
     const track = trackRef.current;
     if (!track) return;
-    const slide = track.children[i] as HTMLElement | undefined;
+    const slide = track.children[idx] as HTMLElement | undefined;
     if (slide) {
       track.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
     }
   };
+
+  const next = () => goTo(active + 1);
+  const prev = () => goTo(active - 1);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -143,69 +148,28 @@ export function WhyReRootedPillars() {
       });
     };
     track.addEventListener("scroll", onScroll, { passive: true });
-
-    // Mouse drag-to-scroll
-    let isDown = false;
-    let startX = 0;
-    let startScroll = 0;
-    let moved = false;
-    const onDown = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse") return;
-      isDown = true;
-      moved = false;
-      startX = e.clientX;
-      startScroll = track.scrollLeft;
-      track.style.cursor = "grabbing";
-    };
-    const onMove = (e: PointerEvent) => {
-      if (!isDown) return;
-      const dx = e.clientX - startX;
-      if (Math.abs(dx) > 4) moved = true;
-      track.scrollLeft = startScroll - dx;
-    };
-    const endDrag = () => {
-      if (!isDown) return;
-      isDown = false;
-      track.style.cursor = "grab";
-      if (moved) {
-        // Snap to nearest
-        const center = track.scrollLeft + track.clientWidth / 2;
-        let best = track.children[0] as HTMLElement;
-        let bestDist = Infinity;
-        Array.from(track.children).forEach((el) => {
-          const node = el as HTMLElement;
-          const c = node.offsetLeft + node.offsetWidth / 2;
-          const d = Math.abs(c - center);
-          if (d < bestDist) {
-            bestDist = d;
-            best = node;
-          }
-        });
-        track.scrollTo({ left: best.offsetLeft, behavior: "smooth" });
-      }
-    };
-    const onClickCapture = (e: MouseEvent) => {
-      if (moved) {
-        e.preventDefault();
-        e.stopPropagation();
-        moved = false;
-      }
-    };
-    track.style.cursor = "grab";
-    track.addEventListener("pointerdown", onDown);
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", endDrag);
-    track.addEventListener("click", onClickCapture, true);
-
     return () => {
       track.removeEventListener("scroll", onScroll);
-      track.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", endDrag);
-      track.removeEventListener("click", onClickCapture, true);
       cancelAnimationFrame(raf);
     };
   }, []);
+
+  // Autoplay every 7 seconds, pause on hover
+  useEffect(() => {
+    if (isHovering) return;
+    const id = window.setInterval(() => {
+      setActive((curr) => {
+        const nextIdx = (curr + 1) % PILLARS.length;
+        const track = trackRef.current;
+        if (track) {
+          const slide = track.children[nextIdx] as HTMLElement | undefined;
+          if (slide) track.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
+        }
+        return nextIdx;
+      });
+    }, 7000);
+    return () => window.clearInterval(id);
+  }, [isHovering]);
 
   return (
     <section
@@ -263,17 +227,22 @@ export function WhyReRootedPillars() {
           })}
         </div>
 
-        {/* Carousel */}
+        {/* Carousel wrapper with hover arrows */}
         <div
-          ref={trackRef}
-          className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-5 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-6 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          className="group relative"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
         >
-          {PILLARS.map((pillar) => (
-            <article
-              key={pillar.title}
-              className="grid w-[70%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
-              style={{ background: pillar.bg, color: pillar.text }}
-            >
+          <div
+            ref={trackRef}
+            className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-5 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-6 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            {PILLARS.map((pillar) => (
+              <article
+                key={pillar.title}
+                className="grid w-[70%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
+                style={{ background: pillar.bg, color: pillar.text }}
+              >
               <div
                 className="flex items-center justify-center p-4 md:p-6 lg:p-8"
                 style={{ minHeight: "clamp(320px, 36vw, 520px)" }}
@@ -306,6 +275,25 @@ export function WhyReRootedPillars() {
               </div>
             </article>
           ))}
+          </div>
+
+          {/* Hover arrows */}
+          <button
+            type="button"
+            onClick={prev}
+            aria-label="Previous"
+            className="absolute left-2 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full bg-background/90 p-3 text-foreground opacity-0 transition-opacity duration-200 hover:bg-background group-hover:opacity-100 md:flex"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label="Next"
+            className="absolute right-2 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full bg-background/90 p-3 text-foreground opacity-0 transition-opacity duration-200 hover:bg-background group-hover:opacity-100 md:flex"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+          </button>
         </div>
 
         {/* Dots */}
