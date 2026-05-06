@@ -275,7 +275,7 @@ export function WhyReRootedPillars() {
               style={{ background: pillar.bg, color: pillar.text }}
             >
               <div
-                className="flex items-center justify-center p-4 md:p-6 lg:p-8"
+                className="relative overflow-hidden"
                 style={{ minHeight: "clamp(360px, 42vw, 600px)" }}
               >
                 <img
@@ -283,7 +283,7 @@ export function WhyReRootedPillars() {
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full max-h-[560px] w-auto max-w-full object-contain"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>
 
