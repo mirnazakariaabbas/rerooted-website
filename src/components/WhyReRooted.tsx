@@ -208,12 +208,12 @@ export function WhyReRootedPillars() {
         {/* Carousel */}
         <div
           ref={trackRef}
-          className="-mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-5 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-6 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
         >
           {PILLARS.map((pillar) => (
             <article
               key={pillar.title}
-              className="grid w-[88%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] sm:w-[90%] md:w-[92%] md:grid-cols-2 md:rounded-[32px]"
+              className="grid w-[86%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] sm:w-[88%] md:w-[90%] md:grid-cols-2 md:rounded-[32px] lg:w-[92%]"
               style={{ background: pillar.bg, color: pillar.text }}
             >
               <div
