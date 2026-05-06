@@ -275,6 +275,25 @@ export function WhyReRootedPillars() {
               </div>
             </article>
           ))}
+          </div>
+
+          {/* Hover arrows */}
+          <button
+            type="button"
+            onClick={prev}
+            aria-label="Previous"
+            className="absolute left-2 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full bg-background/90 p-3 text-foreground opacity-0 transition-opacity duration-200 hover:bg-background group-hover:opacity-100 md:flex"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label="Next"
+            className="absolute right-2 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full bg-background/90 p-3 text-foreground opacity-0 transition-opacity duration-200 hover:bg-background group-hover:opacity-100 md:flex"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+          </button>
         </div>
 
         {/* Dots */}
