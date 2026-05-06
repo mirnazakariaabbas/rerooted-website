@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import rootsIcon from "@/assets/roots-icon.png";
-import offeringCoach from "@/assets/offering-coach.jpg";
+import offeringCoach from "@/assets/offering-coach.png";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 
@@ -275,15 +275,15 @@ export function WhyReRootedPillars() {
               style={{ background: pillar.bg, color: pillar.text }}
             >
               <div
-                className="flex items-center justify-center px-4 pt-8 md:px-6 md:pt-10 lg:px-8 lg:pt-12"
-                style={{ minHeight: "clamp(320px, 36vw, 520px)" }}
+                className="flex items-center justify-center p-4 md:p-6 lg:p-8"
+                style={{ minHeight: "clamp(360px, 42vw, 600px)" }}
               >
                 <img
                   src={pillar.image}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full max-h-[480px] w-auto max-w-full object-contain"
+                  className="h-full max-h-[560px] w-auto max-w-full object-contain"
                 />
               </div>
 
