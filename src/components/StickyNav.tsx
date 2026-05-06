@@ -10,6 +10,7 @@ import { computeNavState } from "@/lib/navAdaptive";
 type NavLink = { label: string; href: string; type: "route" | "hash" };
 
 const corporateLinks: NavLink[] = [
+  { label: "Homepage", href: "/", type: "route" },
   { label: "The Program", href: "/services", type: "route" },
   { label: "The Stages", href: "#journey", type: "hash" },
   { label: "About", href: "/about", type: "route" },
@@ -18,6 +19,7 @@ const corporateLinks: NavLink[] = [
 ];
 
 const individualLinks: NavLink[] = [
+  { label: "Homepage", href: "/", type: "route" },
   { label: "Your Stages", href: "#journey", type: "hash" },
   { label: "Support", href: "#support", type: "hash" },
   { label: "About", href: "/about", type: "route" },
