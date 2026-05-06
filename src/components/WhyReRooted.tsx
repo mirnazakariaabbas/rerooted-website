@@ -227,17 +227,22 @@ export function WhyReRootedPillars() {
           })}
         </div>
 
-        {/* Carousel */}
+        {/* Carousel wrapper with hover arrows */}
         <div
-          ref={trackRef}
-          className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-5 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-6 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          className="group relative"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
         >
-          {PILLARS.map((pillar) => (
-            <article
-              key={pillar.title}
-              className="grid w-[70%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
-              style={{ background: pillar.bg, color: pillar.text }}
-            >
+          <div
+            ref={trackRef}
+            className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-5 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-6 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+          >
+            {PILLARS.map((pillar) => (
+              <article
+                key={pillar.title}
+                className="grid w-[70%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
+                style={{ background: pillar.bg, color: pillar.text }}
+              >
               <div
                 className="flex items-center justify-center p-4 md:p-6 lg:p-8"
                 style={{ minHeight: "clamp(320px, 36vw, 520px)" }}
