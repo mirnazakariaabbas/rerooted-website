@@ -152,7 +152,8 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
             {label}
           </span>
           <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)]">
-            The problem most companies{" "}
+            The problem most companies
+            <br />
             <em className="italic text-secondary">live with.</em>
           </h2>
         </motion.div>
