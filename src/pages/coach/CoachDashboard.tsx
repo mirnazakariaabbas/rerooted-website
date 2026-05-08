@@ -60,6 +60,7 @@ const CoachDashboard = () => {
         <TabsContent value="sessions"><SessionsTab coachId={coachId} /></TabsContent>
         <TabsContent value="profile"><ProfileTab coachId={coachId} /></TabsContent>
       </Tabs>
+      </div>
     </motion.div>
   );
 };

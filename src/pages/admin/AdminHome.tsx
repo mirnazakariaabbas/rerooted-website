@@ -139,6 +139,7 @@ const AdminHome = () => {
           Manage Email Templates
         </Button>
       </div>
+      </div>
     </motion.div>
   );
 };

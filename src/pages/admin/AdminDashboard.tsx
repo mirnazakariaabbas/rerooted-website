@@ -51,6 +51,7 @@ const AdminDashboard = () => {
         <TabsContent value="bookings"><BookingsTab /></TabsContent>
         <TabsContent value="contacts"><ContactsTab /></TabsContent>
       </Tabs>
+      </div>
     </motion.div>
   );
 };
