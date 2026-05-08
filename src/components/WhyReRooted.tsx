@@ -157,9 +157,34 @@ export function WhyReRootedPillars() {
     };
   }, []);
 
+  // Detect when the section enters the viewport
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+            setHasEnteredView(true);
+          }
+        });
+      },
+      { threshold: [0, 0.4, 0.6] }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  // After entering view, give the user time to read the first slide before autoplay
+  useEffect(() => {
+    if (!hasEnteredView) return;
+    const t = window.setTimeout(() => setReadyToAutoplay(true), 6000);
+    return () => window.clearTimeout(t);
+  }, [hasEnteredView]);
+
   // Autoplay every 7 seconds, pause on hover
   useEffect(() => {
-    if (isHovering) return;
+    if (isHovering || !readyToAutoplay) return;
     const id = window.setInterval(() => {
       setActive((curr) => {
         const nextIdx = (curr + 1) % PILLARS.length;
@@ -172,7 +197,7 @@ export function WhyReRootedPillars() {
       });
     }, 7000);
     return () => window.clearInterval(id);
-  }, [isHovering]);
+  }, [isHovering, readyToAutoplay]);
 
   return (
     <section
