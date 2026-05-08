@@ -59,7 +59,7 @@ const ExpatJourney = () => {
   const stages = isIndividual ? individualStages : corporateStages;
 
   return (
-    <section id="journey" className="px-6 lg:px-12" style={{ background: "#0A0A0A", paddingTop: 80, paddingBottom: 80 }}>
+    <section id="journey" className="px-6 lg:px-12" style={{ background: "#1B1F1C", paddingTop: 80, paddingBottom: 80 }}>
       <div className="container mx-auto max-w-[1760px]">
         {/* Header: two-column layout */}
         <FadeInOnScroll>
@@ -109,7 +109,7 @@ const ExpatJourney = () => {
                 className="group relative flex flex-col overflow-hidden cursor-pointer rounded-2xl"
                 style={{
                   border: "1px solid rgba(31,41,156,0.12)",
-                  background: i % 2 === 0 ? "#F3F0F7" : "#FFFFFF",
+                  background: i % 2 === 0 ? "#F5F2EA" : "#FFFFFF",
                 }}
               >
                 {/* Image with desaturated blue soft-light treatment */}
@@ -141,8 +141,8 @@ const ExpatJourney = () => {
                       className="w-full h-full"
                       style={{
                         background: i % 2 === 0
-                          ? "linear-gradient(135deg, #E8E4EF 0%, #D9D3E6 100%)"
-                          : "linear-gradient(135deg, #F0EDF5 0%, #E8E4EF 100%)",
+                          ? "linear-gradient(135deg, #D8DCD9 0%, #D8DCD9 100%)"
+                          : "linear-gradient(135deg, #F5F2EA 0%, #D8DCD9 100%)",
                       }}
                     />
                   )}

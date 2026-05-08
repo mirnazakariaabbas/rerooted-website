@@ -93,13 +93,13 @@ const BlogPreview = () => {
 
         <h2
           className="text-center font-extrabold tracking-tight"
-          style={{ color: "#1A1A1A", fontSize: "clamp(28px, 4vw, 36px)" }}
+          style={{ color: "#1B1F1C", fontSize: "clamp(28px, 4vw, 36px)" }}
         >
           Insights from the journey
         </h2>
         <p
           className="mx-auto mt-4 max-w-xl text-center text-sm md:text-base"
-          style={{ color: "#6B6B6B" }}
+          style={{ color: "#4C5751" }}
         >
           Stories, perspectives, and lessons from the expat experience, written
           by Yasser Abbas.
@@ -127,14 +127,14 @@ const BlogPreview = () => {
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className="group flex flex-col overflow-hidden rounded-xl bg-white transition-shadow duration-300 hover:shadow-lg"
-                style={{ border: "1px solid #e8e4ed" }}
+                style={{ border: "1px solid #D8DCD9" }}
               >
                 <a
                   href={href}
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
                   className="flex aspect-video items-center justify-center text-xs font-medium overflow-hidden"
-                  style={{ backgroundColor: "#e8e4ed", color: "#9a94a8" }}
+                  style={{ backgroundColor: "#D8DCD9", color: "#4C5751" }}
                 >
                   {post.cover_image_url ? (
                     <img
@@ -162,14 +162,14 @@ const BlogPreview = () => {
 
                   <h3
                     className="text-lg font-bold leading-snug"
-                    style={{ color: "#1A1A1A" }}
+                    style={{ color: "#1B1F1C" }}
                   >
                     {post.title}
                   </h3>
 
                   <p
                     className="mt-2 flex-1 text-sm leading-relaxed"
-                    style={{ color: "#6B6B6B" }}
+                    style={{ color: "#4C5751" }}
                   >
                     {post.excerpt}
                   </p>

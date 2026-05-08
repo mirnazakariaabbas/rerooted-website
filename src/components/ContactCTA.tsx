@@ -105,13 +105,13 @@ const ContactCTA = () => {
                 placeholder="Name"
                 className={fieldClass}
                 style={{
-                  borderColor: "#BCADD4",
+                  borderColor: "#D8DCD9",
                 }}
                 onFocus={(e) =>
                   (e.currentTarget.style.borderColor = "#2C6A58")
                 }
                 onBlur={(e) =>
-                  (e.currentTarget.style.borderColor = "#BCADD4")
+                  (e.currentTarget.style.borderColor = "#D8DCD9")
                 }
               />
 
@@ -120,12 +120,12 @@ const ContactCTA = () => {
                   required
                   className={fieldClass}
                   defaultValue=""
-                  style={{ borderColor: "#BCADD4" }}
+                  style={{ borderColor: "#D8DCD9" }}
                   onFocus={(e) =>
                     (e.currentTarget.style.borderColor = "#2C6A58")
                   }
                   onBlur={(e) =>
-                    (e.currentTarget.style.borderColor = "#BCADD4")
+                    (e.currentTarget.style.borderColor = "#D8DCD9")
                   }
                 >
                   <option value="" disabled>
@@ -143,12 +143,12 @@ const ContactCTA = () => {
                   type="text"
                   placeholder="Company"
                   className={fieldClass}
-                  style={{ borderColor: "#BCADD4" }}
+                  style={{ borderColor: "#D8DCD9" }}
                   onFocus={(e) =>
                     (e.currentTarget.style.borderColor = "#2C6A58")
                   }
                   onBlur={(e) =>
-                    (e.currentTarget.style.borderColor = "#BCADD4")
+                    (e.currentTarget.style.borderColor = "#D8DCD9")
                   }
                 />
               )}
@@ -158,12 +158,12 @@ const ContactCTA = () => {
                 type="email"
                 placeholder="Email"
                 className={fieldClass}
-                style={{ borderColor: "#BCADD4" }}
+                style={{ borderColor: "#D8DCD9" }}
                 onFocus={(e) =>
                   (e.currentTarget.style.borderColor = "#2C6A58")
                 }
                 onBlur={(e) =>
-                  (e.currentTarget.style.borderColor = "#BCADD4")
+                  (e.currentTarget.style.borderColor = "#D8DCD9")
                 }
               />
 
@@ -172,12 +172,12 @@ const ContactCTA = () => {
                   type="tel"
                   placeholder="Phone (optional)"
                   className={fieldClass}
-                  style={{ borderColor: "#BCADD4" }}
+                  style={{ borderColor: "#D8DCD9" }}
                   onFocus={(e) =>
                     (e.currentTarget.style.borderColor = "#2C6A58")
                   }
                   onBlur={(e) =>
-                    (e.currentTarget.style.borderColor = "#BCADD4")
+                    (e.currentTarget.style.borderColor = "#D8DCD9")
                   }
                 />
               )}
@@ -187,12 +187,12 @@ const ContactCTA = () => {
                 rows={4}
                 placeholder="Message"
                 className={fieldClass + " resize-none"}
-                style={{ borderColor: "#BCADD4" }}
+                style={{ borderColor: "#D8DCD9" }}
                 onFocus={(e) =>
                   (e.currentTarget.style.borderColor = "#2C6A58")
                 }
                 onBlur={(e) =>
-                  (e.currentTarget.style.borderColor = "#BCADD4")
+                  (e.currentTarget.style.borderColor = "#D8DCD9")
                 }
               />
 

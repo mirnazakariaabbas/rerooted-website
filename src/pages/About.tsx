@@ -47,7 +47,7 @@ const About = () => (
         <div className="md:col-span-2 aspect-[3/4] w-full max-w-md mx-auto rounded-2xl bg-muted flex items-center justify-center">
           <span className="text-muted-foreground text-lg font-semibold">Photo</span>
         </div>
-        <div className="md:col-span-3 space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
+        <div className="md:col-span-3 space-y-5 text-base leading-[1.7]" style={{ color: "#1B1F1C" }}>
           <p>
             Yasser Abbas has been an expat for close to two decades.
           </p>
@@ -65,8 +65,8 @@ const About = () => (
     </Section>
 
     {/* Professional */}
-    <Section className="py-20" bg="#F3F0F7">
-      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
+    <Section className="py-20" bg="#F5F2EA">
+      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1B1F1C" }}>
         <p>
           Yasser brings 17+ years of leadership experience leading businesses for global multinationals, most recently as General Manager for a leading global consumer health company in Switzerland and Austria. His career has spanned markets across the Middle East, North Africa, and Europe, always at the intersection of people, performance, and culture.
         </p>
@@ -83,10 +83,10 @@ const About = () => (
     {/* Mission */}
     <Section className="py-20" bg="#F5F2EA">
       <div className="container mx-auto max-w-3xl">
-        <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-6" style={{ color: "#1A1A1A", fontWeight: 800 }}>
+        <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-6" style={{ color: "#1B1F1C", fontWeight: 800 }}>
           We don't replace your mobility program. We complete it.
         </h2>
-        <div className="space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
+        <div className="space-y-5 text-base leading-[1.7]" style={{ color: "#1B1F1C" }}>
           <p>
             <strong>Re-Rooted®</strong> exists to close the gap between moving someone and supporting them.
           </p>
@@ -98,9 +98,9 @@ const About = () => (
     </Section>
 
     {/* How We Work */}
-    <Section className="py-20" bg="#F3F0F7">
+    <Section className="py-20" bg="#F5F2EA">
       <div className="container mx-auto max-w-3xl">
-        <div className="space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
+        <div className="space-y-5 text-base leading-[1.7]" style={{ color: "#1B1F1C" }}>
           <p>
             <strong>Re-Rooted®</strong> operates through a global network of coaches, each bringing local knowledge and lived experience. Whether your people are landing in Zurich, Dubai, São Paulo, or Singapore, they're supported by someone who understands the ground they're standing on.
           </p>

@@ -12,8 +12,8 @@ const COLORS = {
   blue: "#1C4339",
   green: "#2C6A58",
   warmWhite: "#F5F2EA",
-  mute: "#6B6B6B",
-  ink: "#1A1A1A",
+  mute: "#4C5751",
+  ink: "#1B1F1C",
   line: "rgba(31,41,156,0.14)",
 };
 
@@ -369,7 +369,7 @@ const IntegrationProgram = () => {
                     style={{
                       fontSize: 15,
                       lineHeight: 1.6,
-                      color: "#3a3a3a",
+                      color: "#4C5751",
                       maxWidth: "36ch",
                       gridColumn: 3,
                       textAlign: "left",
