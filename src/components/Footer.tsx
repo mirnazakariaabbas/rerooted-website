@@ -49,7 +49,7 @@ const Footer = () => {
   };
 
   return (
-    <footer data-dark="1" data-nav-theme="dark" style={{ backgroundColor: "#1B1F1C" }} className="px-6 py-8 md:py-10 lg:px-12">
+    <footer data-dark="1" data-nav-theme="dark" style={{ backgroundColor: "var(--brand-ink)" }} className="px-6 py-8 md:py-10 lg:px-12">
       <div className="container mx-auto">
         <div className="grid gap-6 text-center md:grid-cols-3 md:text-left">
           <div className="flex flex-col items-center md:items-start">
@@ -82,7 +82,7 @@ const Footer = () => {
             <Link
               to="/contact"
               className="text-sm font-semibold transition-colors hover:opacity-80"
-              style={{ color: "#2C6A58" }}
+              style={{ color: "var(--brand-accent)" }}
             >
               {isOrg
                 ? "Ready to talk? Get in touch →"

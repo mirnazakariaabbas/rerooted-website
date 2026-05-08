@@ -50,6 +50,15 @@
     --sidebar-border: 165 42% 12%;
     --sidebar-ring: 60 21% 96%;
     --sidebar-muted: 162 30% 25%;
+
+    /* ===== Brand hex tokens (used by inline styles) — Alpine ===== */
+    --brand-deep: #1C4339;     /* Alpine Green   (was Deep Blue #1F299C) */
+    --brand-accent: #2C6A58;   /* Emerald        (was Fresh Green #3DA776) */
+    --brand-surface: #F5F2EA;  /* Bone White     (was Warm White #FAF9F6) */
+    --brand-ink: #1B1F1C;      /* Graphite Ink   (was #1A1A1A) */
+    --brand-mute: #4C5751;     /* Slate          (was #6B6B6B) */
+    --brand-soft: #D8DCD9;     /* Fog Grey       (was Lavender #BCADD4) */
+    --brand-dark: #17382F;     /* Dark Pine      (was near-black #0A0A0A) */
   }
 
   /* ===== Original Re-Rooted® palette (Deep Blue) ===== */
@@ -97,6 +106,15 @@
     --sidebar-border: 233 50% 30%;
     --sidebar-ring: 40 33% 97%;
     --sidebar-muted: 233 40% 50%;
+
+    /* Brand hex tokens — Original Re-Rooted® */
+    --brand-deep: #1F299C;
+    --brand-accent: #3DA776;
+    --brand-surface: #FAF9F6;
+    --brand-ink: #1A1A1A;
+    --brand-mute: #6B6B6B;
+    --brand-soft: #BCADD4;
+    --brand-dark: #0A0A0A;
   }
 
   .dark {

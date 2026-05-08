@@ -5,7 +5,7 @@ import { ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
 
-const Section = ({ children, className = "", bg = "#F5F2EA" }: { children: React.ReactNode; className?: string; bg?: string }) => {
+const Section = ({ children, className = "", bg = "var(--brand-surface)" }: { children: React.ReactNode; className?: string; bg?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
@@ -57,11 +57,11 @@ const ExpandableCard = ({ dim }: { dim: typeof dimensions[0] }) => {
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between p-5 text-left cursor-pointer"
       >
-        <p className="font-bold text-base" style={{ color: "#1B1F1C" }}>{dim.title}</p>
+        <p className="font-bold text-base" style={{ color: "var(--brand-ink)" }}>{dim.title}</p>
         <ChevronDown
           size={20}
           className="shrink-0 transition-transform duration-200"
-          style={{ color: "#1C4339", transform: open ? "rotate(180deg)" : "rotate(0)" }}
+          style={{ color: "var(--brand-deep)", transform: open ? "rotate(180deg)" : "rotate(0)" }}
         />
       </button>
       <AnimatePresence>
@@ -73,7 +73,7 @@ const ExpandableCard = ({ dim }: { dim: typeof dimensions[0] }) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 text-sm leading-[1.8]" style={{ color: "#1B1F1C" }}>
+            <div className="px-5 pb-5 text-sm leading-[1.8]" style={{ color: "var(--brand-ink)" }}>
               {dim.content}
             </div>
           </motion.div>
@@ -92,18 +92,18 @@ const RootingIn = () => (
     <StickyNav />
 
     {/* Hero */}
-    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
+    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "var(--brand-surface)" }}>
       <div className="container mx-auto max-w-4xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#2C6A58" }}>Stage 2 of 4</p>
-        <h1 className="font-black text-4xl md:text-5xl leading-tight" style={{ color: "#1B1F1C", fontWeight: 900 }}>
+        <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--brand-accent)" }}>Stage 2 of 4</p>
+        <h1 className="font-black text-4xl md:text-5xl leading-tight" style={{ color: "var(--brand-ink)", fontWeight: 900 }}>
           I made the move. How do I make this home?
         </h1>
       </div>
     </section>
 
     {/* Intro */}
-    <Section className="py-20" bg="#F5F2EA">
-      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1B1F1C" }}>
+    <Section className="py-20" bg="var(--brand-surface)">
+      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "var(--brand-ink)" }}>
         <p>
           The bags are unpacked. The paperwork is done. And now comes the part no relocation package prepared you for, actually living here.
         </p>
@@ -117,12 +117,12 @@ const RootingIn = () => (
     </Section>
 
     {/* Dimensions */}
-    <Section className="py-20" bg="#F5F2EA">
+    <Section className="py-20" bg="var(--brand-surface)">
       <div className="container mx-auto max-w-3xl">
-        <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-2" style={{ color: "#1B1F1C", fontWeight: 800 }}>
+        <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-2" style={{ color: "var(--brand-ink)", fontWeight: 800 }}>
           What Rooting In Looks Like
         </h2>
-        <p className="text-base mb-8" style={{ color: "#4C5751" }}>
+        <p className="text-base mb-8" style={{ color: "var(--brand-mute)" }}>
           Six dimensions of settling into a new life, and the coaching that supports each one.
         </p>
         <div className="space-y-4">
@@ -134,8 +134,8 @@ const RootingIn = () => (
     </Section>
 
     {/* Corporate Close */}
-    <Section className="py-20" bg="#F5F2EA">
-      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1B1F1C" }}>
+    <Section className="py-20" bg="var(--brand-surface)">
+      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "var(--brand-ink)" }}>
         <p>
           The Rooting In phase is where most assignment failures begin, not because the employee can't do the job, but because they can't settle into the life around it.
         </p>
@@ -149,7 +149,7 @@ const RootingIn = () => (
           <Link
             to="/contact"
             className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: "#1C4339" }}
+            style={{ backgroundColor: "var(--brand-deep)" }}
           >
             Talk to us about supporting your people through Rooting In →
           </Link>
@@ -158,12 +158,12 @@ const RootingIn = () => (
     </Section>
 
     {/* Journey Nav */}
-    <section className="py-10 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
+    <section className="py-10 px-6 lg:px-12" style={{ backgroundColor: "var(--brand-surface)" }}>
       <div className="container mx-auto max-w-3xl flex justify-between">
-        <Link to="/journey/pre-rooted" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4" style={{ color: "#1C4339" }}>
+        <Link to="/journey/pre-rooted" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4" style={{ color: "var(--brand-deep)" }}>
           <ArrowLeft size={16} /> Pre-Rooted
         </Link>
-        <Link to="/journey/thrive" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4" style={{ color: "#1C4339" }}>
+        <Link to="/journey/thrive" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4" style={{ color: "var(--brand-deep)" }}>
           Thrive <ArrowRight size={16} />
         </Link>
       </div>
