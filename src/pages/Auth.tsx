@@ -72,7 +72,7 @@ const Auth = () => {
         setPending(true);
       }
     } else {
-      const { error } = await signIn(email, password);
+      const { error } = await signIn(email, password, keepSignedIn);
       setSubmitting(false);
       if (error) {
         toast.error(error.message);
