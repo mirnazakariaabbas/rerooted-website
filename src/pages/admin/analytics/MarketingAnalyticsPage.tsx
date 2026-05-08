@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Users, Mail, FileText, TrendingUp, Eye, MousePointer, UserPlus, Megaphone } from 'lucide-react';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--warning))', 'hsl(var(--accent))'];
 
@@ -89,11 +90,9 @@ export default function MarketingAnalyticsPage() {
   const categoryData = Object.entries(categoryCounts).map(([name, value]) => ({ name, value }));
 
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-display font-black text-foreground">Marketing Analytics</h1>
-        <p className="text-sm text-muted-foreground mt-1">Subscriber growth, email performance, and content metrics</p>
-      </div>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
+      <PageHeader title="Marketing Analytics" subtitle="Subscriber growth, email performance, and content metrics" />
+      <div className="max-w-7xl mx-auto px-6 -mt-10 relative space-y-6">
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -250,6 +249,7 @@ export default function MarketingAnalyticsPage() {
           </CardContent>
         </Card>
       )}
+          </div>
     </motion.div>
   );
 }

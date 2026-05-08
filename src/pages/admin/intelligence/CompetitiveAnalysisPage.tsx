@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, RefreshCw, Globe, Shield, Lightbulb, FileText, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type Competitor = {
   id: string;
@@ -80,13 +81,9 @@ export default function CompetitiveAnalysisPage() {
   const intel = analysis.intelligence || {};
 
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-display font-black text-foreground">Competitive Analysis</h1>
-          <p className="text-sm text-muted-foreground mt-1">AI-powered competitive intelligence</p>
-        </div>
-      </div>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
+      <PageHeader title="Competitive Analysis" subtitle="AI-powered competitive intelligence" />
+      <div className="max-w-7xl mx-auto px-6 -mt-10 relative space-y-6">
 
       <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
         {/* Left panel - Competitors list */}
@@ -295,6 +292,7 @@ export default function CompetitiveAnalysisPage() {
           </CardContent>
         </Card>
       )}
+          </div>
     </motion.div>
   );
 }

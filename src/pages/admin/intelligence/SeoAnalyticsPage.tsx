@@ -6,6 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { TrendingUp, Globe, Search, Link2, Zap, AlertTriangle, CheckCircle, XCircle, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const healthScore = 72;
 const breakdowns = [
@@ -106,7 +107,7 @@ export default function SeoAnalyticsPage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-8">
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
       {/* Sample Data Banner */}
       <div className="bg-warning/10 border border-warning/30 rounded-lg px-4 py-3 flex items-center gap-3">
         <AlertTriangle className="h-4 w-4 text-warning shrink-0" />
@@ -118,12 +119,8 @@ export default function SeoAnalyticsPage() {
         </Button>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-display font-black text-foreground">SEO Analytics</h1>
-          <p className="text-sm text-muted-foreground mt-1">re-rooted.com — Performance overview</p>
-        </div>
-      </div>
+      <PageHeader title="SEO Analytics" subtitle="re-rooted.com — Performance overview" />
+      <div className="max-w-7xl mx-auto px-6 -mt-10 relative space-y-6">
 
       {/* Health Score + Breakdowns */}
       <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6">
@@ -334,6 +331,7 @@ export default function SeoAnalyticsPage() {
           </div>
         </CardContent>
       </Card>
+          </div>
     </motion.div>
   );
 }

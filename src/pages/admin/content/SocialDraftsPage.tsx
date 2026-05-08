@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Sparkles, Copy, RefreshCw, Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const platforms = [
   { value: 'linkedin', label: 'LinkedIn', icon: Linkedin, maxChars: 3000 },
@@ -79,11 +80,9 @@ export default function SocialDraftsPage() {
   const maxChars = platforms.find(p => p.value === platform)?.maxChars || 3000;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-display font-black text-foreground">AI Social Drafts</h1>
-        <p className="text-sm text-muted-foreground mt-1">Generate social media content with AI, tailored for Re-Rooted®'s brand</p>
-      </div>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
+      <PageHeader title="AI Social Drafts" subtitle="Generate social media content with AI, tailored for Re-Rooted®'s brand" />
+      <div className="max-w-7xl mx-auto px-6 -mt-10 relative space-y-6">
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Input Panel */}
@@ -221,6 +220,7 @@ export default function SocialDraftsPage() {
           </CardContent>
         </Card>
       )}
+          </div>
     </motion.div>
   );
 }
