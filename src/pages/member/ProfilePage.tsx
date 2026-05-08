@@ -172,6 +172,7 @@ const ProfilePage = () => {
       <Button variant="outline" className="w-full mt-4 rounded-full text-destructive border-destructive/30 hover:bg-destructive/5" onClick={signOut}>
         Sign Out
       </Button>
+      </div>
     </motion.div>
   );
 };

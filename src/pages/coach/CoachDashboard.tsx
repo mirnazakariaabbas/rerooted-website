@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { Users, BookOpen, Calendar, Clock, UserCircle, Plus, Trash2, FileText } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -37,9 +38,13 @@ const CoachDashboard = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="pb-24 px-6 pt-8 lg:px-12 max-w-4xl mx-auto"
+      className="pb-24"
     >
-      <h1 className="text-3xl font-black tracking-tight mb-8">Coach Dashboard</h1>
+      <PageHeader
+        title="Coach Dashboard"
+        subtitle="Coachees, sessions, and your coaching journal"
+      />
+      <div className="max-w-4xl mx-auto px-6 -mt-10 relative">
       <Tabs defaultValue="coachees">
         <TabsList className="w-full flex overflow-x-auto mb-6">
           <TabsTrigger value="coachees" className="flex-1 text-xs gap-1"><Users className="h-4 w-4" />Coachees</TabsTrigger>

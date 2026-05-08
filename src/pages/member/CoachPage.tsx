@@ -222,6 +222,7 @@ const CoachPage = () => {
           <CoachNotes userId={user?.id} />
         </div>
       )}
+      </div>
     </motion.div>
   );
 };

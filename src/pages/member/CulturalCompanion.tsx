@@ -224,6 +224,7 @@ const CulturalCompanion = () => {
           )}
         </CardContent>
       </Card>
+      </div>
     </motion.div>
   );
 };

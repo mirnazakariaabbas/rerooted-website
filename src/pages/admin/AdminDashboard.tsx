@@ -7,6 +7,7 @@ import CoachesTab from './tabs/CoachesTab';
 import InvitationsTab from './tabs/InvitationsTab';
 import BookingsTab from './tabs/BookingsTab';
 import ContactsTab from './tabs/ContactsTab';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const AdminDashboard = () => {
   const { isAdmin, loading } = useAdmin();
@@ -30,12 +31,12 @@ const AdminDashboard = () => {
       transition={{ duration: 0.4 }}
       className="min-h-screen bg-background pb-24"
     >
-      <div className="px-6 pt-8 pb-4 lg:px-12 max-w-2xl mx-auto">
-        <h1 className="text-3xl font-black tracking-tight text-foreground">Admin Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-1">Manage users, coaches, and platform activity</p>
-      </div>
-
-      <Tabs defaultValue="users" className="px-6 lg:px-12 max-w-2xl mx-auto">
+      <PageHeader
+        title="Admin Dashboard"
+        subtitle="Manage users, coaches, and platform activity"
+      />
+      <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
+      <Tabs defaultValue="users">
         <TabsList className="w-full grid grid-cols-5 mb-4">
           <TabsTrigger value="users" className="text-xs">Users</TabsTrigger>
           <TabsTrigger value="coaches" className="text-xs">Coaches</TabsTrigger>

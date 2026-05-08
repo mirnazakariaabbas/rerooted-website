@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 function MetricCard({ icon: Icon, label, value, change }: { icon: React.ElementType; label: string; value: number | string; change?: string }) {
   return (
@@ -57,12 +58,13 @@ const AdminHome = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="mb-8">
-        <h1 className="text-3xl font-display font-black text-foreground">Command Center</h1>
-        <p className="text-muted-foreground mt-1">Overview of your Re-Rooted® platform activity</p>
-      </div>
+      <PageHeader
+        title="Command Center"
+        subtitle="Overview of your Re-Rooted® platform activity"
+      />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
 
       {/* Primary metric cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

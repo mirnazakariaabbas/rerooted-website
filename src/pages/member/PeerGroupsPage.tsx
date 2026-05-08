@@ -130,6 +130,7 @@ export default function PeerGroupsPage() {
           })}
         </div>
       )}
+      </div>
     </motion.div>
   );
 }
