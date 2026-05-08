@@ -36,7 +36,7 @@ export function WhyReRootedStatement() {
           style={{ maxWidth: 1800, padding: "160px 64px" }}
         >
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
-            Why Re-Rooted®
+            {" "}
           </p>
 
           <h2
