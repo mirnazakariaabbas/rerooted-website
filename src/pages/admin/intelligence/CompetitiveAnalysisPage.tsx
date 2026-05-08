@@ -83,7 +83,7 @@ export default function CompetitiveAnalysisPage() {
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-display font-bold text-foreground">Competitive Analysis</h1>
+          <h1 className="text-2xl font-display font-black text-foreground">Competitive Analysis</h1>
           <p className="text-sm text-muted-foreground mt-1">AI-powered competitive intelligence</p>
         </div>
       </div>
@@ -149,7 +149,7 @@ export default function CompetitiveAnalysisPage() {
             <>
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-display font-bold text-foreground">{selectedComp.name}</h2>
+                  <h2 className="text-xl font-display font-black text-foreground">{selectedComp.name}</h2>
                   {selectedComp.website && <p className="text-sm text-muted-foreground">{selectedComp.website}</p>}
                 </div>
                 <Button onClick={() => runAnalysis(selectedComp)} disabled={analyzing} size="sm">

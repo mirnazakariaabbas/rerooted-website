@@ -74,7 +74,7 @@ const OrganizationsPage = () => {
     >
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">Organizations</h1>
+          <h1 className="text-3xl font-display font-black text-foreground">Organizations</h1>
           <p className="text-muted-foreground mt-1">Corporate clients and partner organizations</p>
         </div>
         <Button size="sm" onClick={() => { setForm(emptyForm); setDialogOpen(true); }}>
@@ -153,7 +153,7 @@ const OrganizationsPage = () => {
           {drawerOrg && (
             <>
               <SheetHeader className="mb-6">
-                <SheetTitle className="text-xl font-display font-bold">{drawerOrg.name}</SheetTitle>
+                <SheetTitle className="text-xl font-display font-black">{drawerOrg.name}</SheetTitle>
               </SheetHeader>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div><span className="text-muted-foreground block">Industry</span>{drawerOrg.industry || '—'}</div>

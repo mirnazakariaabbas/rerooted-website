@@ -63,7 +63,7 @@ export function OnboardingTour() {
             </Button>
           </div>
 
-          <h3 className="text-lg font-display font-bold text-foreground mb-2">{steps[step].title}</h3>
+          <h3 className="text-lg font-display font-black text-foreground mb-2">{steps[step].title}</h3>
           <p className="text-sm text-muted-foreground leading-relaxed mb-6">{steps[step].description}</p>
 
           <div className="flex items-center justify-between">

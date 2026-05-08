@@ -139,7 +139,7 @@ const ContactsPage = () => {
     >
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">Contacts</h1>
+          <h1 className="text-3xl font-display font-black text-foreground">Contacts</h1>
           <p className="text-muted-foreground mt-1">People in your database who haven't signed up yet</p>
         </div>
         <div className="flex gap-2">
@@ -270,7 +270,7 @@ const ContactsPage = () => {
           {drawerContact && (
             <>
               <SheetHeader className="mb-6">
-                <SheetTitle className="text-xl font-display font-bold">
+                <SheetTitle className="text-xl font-display font-black">
                   {drawerContact.first_name} {drawerContact.last_name}
                 </SheetTitle>
                 <div className="flex gap-2 mt-2">

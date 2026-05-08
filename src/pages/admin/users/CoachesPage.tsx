@@ -120,7 +120,7 @@ const CoachesPage = () => {
     >
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">Coaches</h1>
+          <h1 className="text-3xl font-display font-black text-foreground">Coaches</h1>
           <p className="text-muted-foreground mt-1">Manage your global coaching network</p>
         </div>
         <Button size="sm" onClick={openAdd}><Plus className="h-4 w-4 mr-1" /> Add Coach</Button>
@@ -231,7 +231,7 @@ const CoachesPage = () => {
           {drawerCoach && (
             <>
               <SheetHeader className="mb-6">
-                <SheetTitle className="text-xl font-display font-bold">{drawerCoach.name}</SheetTitle>
+                <SheetTitle className="text-xl font-display font-black">{drawerCoach.name}</SheetTitle>
                 <div className="flex gap-2 mt-2">
                   <Badge className={`text-xs ${certBadgeColor[drawerCoach.certification_level]}`}>
                     {drawerCoach.certification_level === 'non-certified' ? 'Non-certified' : drawerCoach.certification_level}

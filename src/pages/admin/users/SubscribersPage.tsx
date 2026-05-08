@@ -99,7 +99,7 @@ const SubscribersPage = () => {
     >
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">Subscribers</h1>
+          <h1 className="text-3xl font-display font-black text-foreground">Subscribers</h1>
           <p className="text-muted-foreground mt-1">Manage newsletter and email subscribers</p>
         </div>
         <div className="flex gap-2">
@@ -127,7 +127,7 @@ const SubscribersPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Total Subscribers</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{subscribers.length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{subscribers.length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center"><Users className="h-5 w-5 text-primary" /></div>
             </div>
@@ -138,7 +138,7 @@ const SubscribersPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Active</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{subscribers.filter(s => s.is_active).length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{subscribers.filter(s => s.is_active).length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-success/10 flex items-center justify-center"><Mail className="h-5 w-5 text-success" /></div>
             </div>
@@ -149,7 +149,7 @@ const SubscribersPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Unsubscribed</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{subscribers.filter(s => !s.is_active).length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{subscribers.filter(s => !s.is_active).length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-destructive/10 flex items-center justify-center"><UserX className="h-5 w-5 text-destructive" /></div>
             </div>

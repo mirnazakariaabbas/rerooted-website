@@ -134,14 +134,14 @@ export default function EngagementAnalyticsPage() {
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-display font-bold text-foreground">Engagement Analytics</h1>
+          <h1 className="text-2xl font-display font-black text-foreground">Engagement Analytics</h1>
           <p className="text-sm text-muted-foreground mt-1">Member activity and coach performance overview</p>
         </div>
       </div>
 
       {/* Member Engagement Stats */}
       <div>
-        <h2 className="text-lg font-display font-bold text-foreground mb-4">Member Engagement</h2>
+        <h2 className="text-lg font-display font-black text-foreground mb-4">Member Engagement</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <CardContent className="pt-5">
@@ -216,7 +216,7 @@ export default function EngagementAnalyticsPage() {
       {/* Coach Performance */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-display font-bold text-foreground">Coach Performance</h2>
+          <h2 className="text-lg font-display font-black text-foreground">Coach Performance</h2>
           <Button variant="outline" size="sm" onClick={exportCoachPerformance}>
             <Download className="h-3 w-3 mr-1.5" /> Export CSV
           </Button>

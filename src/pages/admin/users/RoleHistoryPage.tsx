@@ -79,7 +79,7 @@ const RoleHistoryPage = () => {
     >
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">Role Version History</h1>
+          <h1 className="text-3xl font-display font-black text-foreground">Role Version History</h1>
           <p className="text-muted-foreground mt-1">Track all role changes across users</p>
         </div>
         <Button variant="outline" size="sm" onClick={handleExport}>

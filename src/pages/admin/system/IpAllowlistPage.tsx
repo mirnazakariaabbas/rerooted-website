@@ -74,7 +74,7 @@ const IpAllowlistPage = () => {
     >
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">IP Allowlist</h1>
+          <h1 className="text-3xl font-display font-black text-foreground">IP Allowlist</h1>
           <p className="text-muted-foreground mt-1">Restrict admin portal access to specific IPs</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>

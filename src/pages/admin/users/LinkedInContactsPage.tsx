@@ -139,7 +139,7 @@ const LinkedInContactsPage = () => {
     >
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">LinkedIn Contacts</h1>
+          <h1 className="text-3xl font-display font-black text-foreground">LinkedIn Contacts</h1>
           <p className="text-muted-foreground mt-1">Import and manage LinkedIn connections</p>
         </div>
         <div>
@@ -156,7 +156,7 @@ const LinkedInContactsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Total Imported</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{contacts.length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{contacts.length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center"><Linkedin className="h-5 w-5 text-primary" /></div>
             </div>
@@ -167,7 +167,7 @@ const LinkedInContactsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">With Email</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{contacts.filter(c => c.email).length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{contacts.filter(c => c.email).length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-success/10 flex items-center justify-center"><Linkedin className="h-5 w-5 text-success" /></div>
             </div>
@@ -178,7 +178,7 @@ const LinkedInContactsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Converted</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{contacts.filter(c => c.converted_to_contact_id).length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{contacts.filter(c => c.converted_to_contact_id).length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-accent/30 flex items-center justify-center"><UserPlus className="h-5 w-5 text-accent-foreground" /></div>
             </div>

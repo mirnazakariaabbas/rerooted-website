@@ -108,7 +108,7 @@ const NewsletterPage = () => {
       className="p-8 lg:p-12 max-w-6xl mx-auto"
     >
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-foreground">Newsletter</h1>
+        <h1 className="text-3xl font-display font-black text-foreground">Newsletter</h1>
         <p className="text-muted-foreground mt-1">Compose and manage email newsletters</p>
       </div>
 

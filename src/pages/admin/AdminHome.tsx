@@ -14,7 +14,7 @@ function MetricCard({ icon: Icon, label, value, change }: { icon: React.ElementT
         <div className="flex items-start justify-between">
           <div>
             <p className="text-sm text-muted-foreground font-medium">{label}</p>
-            <p className="text-3xl font-display font-bold text-foreground mt-1">{value}</p>
+            <p className="text-3xl font-display font-black text-foreground mt-1">{value}</p>
             {change && <p className="text-xs text-muted-foreground mt-1">{change}</p>}
           </div>
           <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -60,7 +60,7 @@ const AdminHome = () => {
       className="p-8 lg:p-12 max-w-6xl mx-auto"
     >
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-foreground">Command Center</h1>
+        <h1 className="text-3xl font-display font-black text-foreground">Command Center</h1>
         <p className="text-muted-foreground mt-1">Overview of your Re-Rooted® platform activity</p>
       </div>
 
@@ -82,7 +82,7 @@ const AdminHome = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-display font-bold">{pendingCount}</p>
+            <p className="text-2xl font-display font-black">{pendingCount}</p>
             <Button
               variant="link"
               className="px-0 text-sm text-primary"
@@ -101,7 +101,7 @@ const AdminHome = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-display font-bold">{submissionCount}</p>
+            <p className="text-2xl font-display font-black">{submissionCount}</p>
             <Button
               variant="link"
               className="px-0 text-sm text-primary"
