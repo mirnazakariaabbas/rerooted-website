@@ -81,12 +81,12 @@ const BlogPreview = () => {
     <section
       id="insights"
       className="py-24 md:py-32"
-      style={{ backgroundColor: "#FAF9F6" }}
+      style={{ backgroundColor: "#F5F2EA" }}
     >
       <div className="container mx-auto px-6 lg:px-12">
         <p
           className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20"
-          style={{ color: "#3DA776" }}
+          style={{ color: "#2C6A58" }}
         >
           The thought behind Re-Rooted®
         </p>
@@ -153,7 +153,7 @@ const BlogPreview = () => {
                       className="mb-3 w-fit rounded-full px-3 py-0.5 text-xs font-semibold"
                       style={{
                         backgroundColor: "rgba(61,167,118,0.12)",
-                        color: "#3DA776",
+                        color: "#2C6A58",
                       }}
                     >
                       {post.category}
@@ -179,7 +179,7 @@ const BlogPreview = () => {
                     target={isExternal ? "_blank" : undefined}
                     rel={isExternal ? "noopener noreferrer" : undefined}
                     className="mt-4 inline-flex items-center text-sm font-semibold transition-colors hover:opacity-80"
-                    style={{ color: "#3DA776" }}
+                    style={{ color: "#2C6A58" }}
                   >
                     Read more →
                   </a>
@@ -193,7 +193,7 @@ const BlogPreview = () => {
           <a
             href="/blog"
             className="text-sm font-semibold transition-colors hover:opacity-80"
-            style={{ color: "#3DA776" }}
+            style={{ color: "#2C6A58" }}
           >
             See all insights →
           </a>

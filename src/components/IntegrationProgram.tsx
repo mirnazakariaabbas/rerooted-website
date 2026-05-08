@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button";
  */
 
 const COLORS = {
-  blue: "#1F299C",
-  green: "#3DA776",
-  warmWhite: "#FAF9F6",
+  blue: "#1C4339",
+  green: "#2C6A58",
+  warmWhite: "#F5F2EA",
   mute: "#6B6B6B",
   ink: "#1A1A1A",
   line: "rgba(31,41,156,0.14)",

@@ -82,7 +82,7 @@ const Footer = () => {
             <Link
               to="/contact"
               className="text-sm font-semibold transition-colors hover:opacity-80"
-              style={{ color: "#3DA776" }}
+              style={{ color: "#2C6A58" }}
             >
               {isOrg
                 ? "Ready to talk? Get in touch →"

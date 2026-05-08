@@ -41,7 +41,7 @@ const ContactCTA = () => {
       data-dark="1"
       data-nav-theme="dark"
       className="py-20 md:py-28"
-      style={{ backgroundColor: "#1F299C" }}
+      style={{ backgroundColor: "#1C4339" }}
     >
       <div ref={ref} className="container mx-auto px-6 lg:px-12">
         <motion.div
@@ -90,7 +90,7 @@ const ContactCTA = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="mt-10 text-lg font-semibold"
-              style={{ color: "#3DA776" }}
+              style={{ color: "#2C6A58" }}
             >
               Thank you. We'll be in touch soon.
             </motion.p>
@@ -108,7 +108,7 @@ const ContactCTA = () => {
                   borderColor: "#BCADD4",
                 }}
                 onFocus={(e) =>
-                  (e.currentTarget.style.borderColor = "#3DA776")
+                  (e.currentTarget.style.borderColor = "#2C6A58")
                 }
                 onBlur={(e) =>
                   (e.currentTarget.style.borderColor = "#BCADD4")
@@ -122,7 +122,7 @@ const ContactCTA = () => {
                   defaultValue=""
                   style={{ borderColor: "#BCADD4" }}
                   onFocus={(e) =>
-                    (e.currentTarget.style.borderColor = "#3DA776")
+                    (e.currentTarget.style.borderColor = "#2C6A58")
                   }
                   onBlur={(e) =>
                     (e.currentTarget.style.borderColor = "#BCADD4")
@@ -145,7 +145,7 @@ const ContactCTA = () => {
                   className={fieldClass}
                   style={{ borderColor: "#BCADD4" }}
                   onFocus={(e) =>
-                    (e.currentTarget.style.borderColor = "#3DA776")
+                    (e.currentTarget.style.borderColor = "#2C6A58")
                   }
                   onBlur={(e) =>
                     (e.currentTarget.style.borderColor = "#BCADD4")
@@ -160,7 +160,7 @@ const ContactCTA = () => {
                 className={fieldClass}
                 style={{ borderColor: "#BCADD4" }}
                 onFocus={(e) =>
-                  (e.currentTarget.style.borderColor = "#3DA776")
+                  (e.currentTarget.style.borderColor = "#2C6A58")
                 }
                 onBlur={(e) =>
                   (e.currentTarget.style.borderColor = "#BCADD4")
@@ -174,7 +174,7 @@ const ContactCTA = () => {
                   className={fieldClass}
                   style={{ borderColor: "#BCADD4" }}
                   onFocus={(e) =>
-                    (e.currentTarget.style.borderColor = "#3DA776")
+                    (e.currentTarget.style.borderColor = "#2C6A58")
                   }
                   onBlur={(e) =>
                     (e.currentTarget.style.borderColor = "#BCADD4")
@@ -189,7 +189,7 @@ const ContactCTA = () => {
                 className={fieldClass + " resize-none"}
                 style={{ borderColor: "#BCADD4" }}
                 onFocus={(e) =>
-                  (e.currentTarget.style.borderColor = "#3DA776")
+                  (e.currentTarget.style.borderColor = "#2C6A58")
                 }
                 onBlur={(e) =>
                   (e.currentTarget.style.borderColor = "#BCADD4")
@@ -200,8 +200,8 @@ const ContactCTA = () => {
                 type="submit"
                 className="mt-2 w-full py-3 text-sm font-semibold transition-transform duration-150 active:scale-[0.98]"
                 style={{
-                  backgroundColor: isIndividual ? "#3DA776" : "#FAF9F6",
-                  color: isIndividual ? "#FFFFFF" : "#1F299C",
+                  backgroundColor: isIndividual ? "#2C6A58" : "#F5F2EA",
+                  color: isIndividual ? "#FFFFFF" : "#1C4339",
                   borderRadius: isIndividual ? "12px" : "8px",
                 }}
               >

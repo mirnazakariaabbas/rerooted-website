@@ -66,7 +66,7 @@ const ExpatJourney = () => {
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 md:gap-16 md:items-end mb-16 md:mb-20">
             <div>
               <div className="mb-6">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: "#3DA776" }}>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: "#2C6A58" }}>
                   {isIndividual ? "RE-ROOTED® STAGES" : "RE-ROOTED® PACKAGES"}
                 </span>
               </div>
@@ -75,7 +75,7 @@ const ExpatJourney = () => {
                 style={{
                   fontSize: "clamp(36px, 4.5vw, 64px)",
                   lineHeight: 1.05,
-                  color: "#FAF9F6",
+                  color: "#F5F2EA",
                   letterSpacing: "-0.02em",
                   fontWeight: 700,
                 }}
@@ -154,7 +154,7 @@ const ExpatJourney = () => {
                     className="font-display"
                     style={{
                       fontSize: 14,
-                      color: "#3DA776",
+                      color: "#2C6A58",
                       fontWeight: 600,
                       letterSpacing: "0.1em",
                     }}
@@ -168,7 +168,7 @@ const ExpatJourney = () => {
                     style={{
                       fontSize: "clamp(24px, 2.2vw, 32px)",
                       lineHeight: 1.15,
-                      color: "#1F299C",
+                      color: "#1C4339",
                       fontWeight: 700,
                       whiteSpace: "pre-line",
                     }}
@@ -186,7 +186,7 @@ const ExpatJourney = () => {
                     className="font-display"
                     style={{
                       fontSize: 14,
-                      color: "#3DA776",
+                      color: "#2C6A58",
                       fontWeight: 600,
                       letterSpacing: "0.1em",
                     }}
