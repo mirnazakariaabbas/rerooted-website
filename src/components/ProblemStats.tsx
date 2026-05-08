@@ -111,7 +111,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
     {
       kind: "image",
       src: cityImg,
-      eyebrow: "A move is not a transaction.\nIt's a person being replanted.",
+      eyebrow: " ",
       tagline: "Roots that travel with you",
     },
     {
