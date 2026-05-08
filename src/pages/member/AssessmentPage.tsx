@@ -139,6 +139,7 @@ const AssessmentPage = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
     );
   }
