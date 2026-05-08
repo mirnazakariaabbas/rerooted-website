@@ -52,6 +52,53 @@
     --sidebar-muted: 162 30% 25%;
   }
 
+  /* ===== Original Re-Rooted® palette (Deep Blue) ===== */
+  .theme-original {
+    --background: 40 33% 97%;
+    --foreground: 0 0% 10%;
+
+    --card: 267 30% 95%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 40 33% 97%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 233 67% 37%;
+    --primary-foreground: 40 33% 97%;
+
+    --secondary: 153 45% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 267 30% 95%;
+    --muted-foreground: 0 0% 42%;
+
+    --accent: 267 27% 76%;
+    --accent-foreground: 233 67% 37%;
+
+    --destructive: 0 52% 58%;
+    --destructive-foreground: 0 0% 100%;
+
+    --warning: 36 80% 56%;
+    --warning-foreground: 0 0% 100%;
+
+    --success: 153 45% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 260 15% 88%;
+    --input: 260 15% 88%;
+    --ring: 233 67% 37%;
+
+    --sidebar-background: 233 67% 37%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 153 45% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 233 50% 44%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 233 50% 30%;
+    --sidebar-ring: 40 33% 97%;
+    --sidebar-muted: 233 40% 50%;
+  }
+
   .dark {
     --background: 233 67% 7%;
     --foreground: 40 33% 97%;
