@@ -7,12 +7,15 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   signUp: (email: string, password: string, meta?: Record<string, string>) => Promise<{ error: Error | null }>;
-  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signIn: (email: string, password: string, keepSignedIn?: boolean) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: Error | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const KEEP_KEY = "rerooted_keep_signed_in";
+const TAB_KEY = "rerooted_tab_active";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
@@ -26,11 +29,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
     });
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // If user opted out of "keep signed in", clear session on new browser session
+    const init = async () => {
+      const keep = localStorage.getItem(KEEP_KEY);
+      const tabActive = sessionStorage.getItem(TAB_KEY);
+      if (keep === "false" && !tabActive) {
+        await supabase.auth.signOut();
+      }
+      sessionStorage.setItem(TAB_KEY, "1");
+      const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
-    });
+    };
+    init();
 
     return () => subscription.unsubscribe();
   }, []);
@@ -47,7 +59,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return { error: error as Error | null };
   };
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string, keepSignedIn = true) => {
+    localStorage.setItem(KEEP_KEY, keepSignedIn ? "true" : "false");
+    sessionStorage.setItem(TAB_KEY, "1");
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     return { error: error as Error | null };
   };
