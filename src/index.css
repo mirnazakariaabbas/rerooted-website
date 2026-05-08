@@ -361,3 +361,33 @@
   position: relative;
   z-index: 2;
 }
+
+/* ===== Embroidered logo effect ===== */
+/* Mimics raised satin-stitch thread: tight bevel highlight on top-left,
+   soft shadow on bottom-right, plus a stitched outline. */
+.logo-embroidered {
+  filter:
+    drop-shadow(-0.5px -0.5px 0 rgba(255, 255, 255, 0.55))
+    drop-shadow(0.5px 0.5px 0 rgba(0, 0, 0, 0.35))
+    drop-shadow(1px 1.5px 0 rgba(0, 0, 0, 0.25))
+    drop-shadow(2px 3px 2.5px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 0 0.4px rgba(0, 0, 0, 0.6));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+.logo-embroidered:hover {
+  filter:
+    drop-shadow(-0.5px -0.5px 0 rgba(255, 255, 255, 0.65))
+    drop-shadow(0.5px 0.5px 0 rgba(0, 0, 0, 0.4))
+    drop-shadow(1.5px 2px 0 rgba(0, 0, 0, 0.3))
+    drop-shadow(3px 4px 4px rgba(0, 0, 0, 0.4));
+  transform: translateY(-0.5px);
+}
+/* When the nav is over a dark hero, flip the bevel highlight to read against blue */
+.adaptive-nav.on-blue .logo-embroidered {
+  filter:
+    drop-shadow(-0.5px -0.5px 0 rgba(255, 255, 255, 0.7))
+    drop-shadow(0.5px 0.5px 0 rgba(0, 0, 0, 0.5))
+    drop-shadow(1.5px 2px 0 rgba(0, 0, 0, 0.45))
+    drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.55))
+    brightness(0) invert(1);
+}
