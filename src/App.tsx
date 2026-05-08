@@ -135,6 +135,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
             <CookieBanner />
+            <PaletteToggle />
           </BrowserRouter>
         </AudienceProvider>
       </AuthProvider>
