@@ -15,9 +15,8 @@ import { Badge } from '@/components/ui/badge';
 import { differenceInMonths } from 'date-fns';
 import {
   ArrowRight, Globe, BarChart3, Heart, BookOpen, Calendar, Award,
-  MessageCircle, Sparkles, TrendingUp,
+  MessageCircle, Sparkles,
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DimensionDetail from '@/components/home/DimensionDetail';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 
