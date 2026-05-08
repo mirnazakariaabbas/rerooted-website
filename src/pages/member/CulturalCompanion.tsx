@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
   const [search, setSearch] = useState('');
@@ -99,10 +100,13 @@ const CulturalCompanion = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+      className="pb-24"
     >
-      <h1 className="text-3xl font-[900] tracking-tight mb-2">Your Cultural Companion</h1>
-      <p className="text-sm text-muted-foreground mb-6">Explore cultural differences between countries</p>
+      <PageHeader
+        title="Your Cultural Companion"
+        subtitle="Explore cultural differences between countries"
+      />
+      <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
       <div className="flex items-center gap-2 mb-8 flex-wrap">
         <CountryPicker value={homeCountry} onChange={setHomeCountry} />
         <button onClick={swap} className="p-1.5 rounded-full hover:bg-muted transition-colors">
