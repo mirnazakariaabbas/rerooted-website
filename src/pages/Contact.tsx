@@ -26,9 +26,9 @@ const Contact = () => {
   };
 
   const focusStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
-    (e.currentTarget.style.borderColor = "#2C6A58");
+    (e.currentTarget.style.borderColor = "var(--brand-accent)");
   const blurStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
-    (e.currentTarget.style.borderColor = "#D8DCD9");
+    (e.currentTarget.style.borderColor = "var(--brand-soft)");
 
   return (
     <motion.main
@@ -39,12 +39,12 @@ const Contact = () => {
       <StickyNav />
 
       {/* Hero */}
-      <section className="pt-32 pb-10 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
+      <section className="pt-32 pb-10 px-6 lg:px-12" style={{ backgroundColor: "var(--brand-surface)" }}>
         <div className="container mx-auto max-w-lg text-center">
-          <h1 className="font-black text-4xl md:text-5xl leading-tight mb-6" style={{ color: "#1B1F1C", fontWeight: 900 }}>
+          <h1 className="font-black text-4xl md:text-5xl leading-tight mb-6" style={{ color: "var(--brand-ink)", fontWeight: 900 }}>
             Start a conversation
           </h1>
-          <div className="space-y-3 text-base" style={{ color: "#1B1F1C" }}>
+          <div className="space-y-3 text-base" style={{ color: "var(--brand-ink)" }}>
             <p>
               Whether you're exploring support for an upcoming assignment, rethinking your mobility program, or simply curious about what <strong>Re-Rooted®</strong> does, we'd like to hear from you.
             </p>
@@ -54,7 +54,7 @@ const Contact = () => {
       </section>
 
       {/* Form */}
-      <section className="pb-20 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
+      <section className="pb-20 px-6 lg:px-12" style={{ backgroundColor: "var(--brand-surface)" }}>
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
@@ -67,21 +67,21 @@ const Contact = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="text-center text-lg font-semibold py-16"
-              style={{ color: "#2C6A58" }}
+              style={{ color: "var(--brand-accent)" }}
             >
               Thank you. We'll be in touch soon.
             </motion.p>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input required type="text" placeholder="Name" className={fieldClass} style={{ borderColor: "#D8DCD9" }} onFocus={focusStyle} onBlur={blurStyle} />
-              <input required type="text" placeholder="Company" className={fieldClass} style={{ borderColor: "#D8DCD9" }} onFocus={focusStyle} onBlur={blurStyle} />
-              <input required type="email" placeholder="Email" className={fieldClass} style={{ borderColor: "#D8DCD9" }} onFocus={focusStyle} onBlur={blurStyle} />
-              <input type="tel" placeholder="Phone (optional)" className={fieldClass} style={{ borderColor: "#D8DCD9" }} onFocus={focusStyle} onBlur={blurStyle} />
+              <input required type="text" placeholder="Name" className={fieldClass} style={{ borderColor: "var(--brand-soft)" }} onFocus={focusStyle} onBlur={blurStyle} />
+              <input required type="text" placeholder="Company" className={fieldClass} style={{ borderColor: "var(--brand-soft)" }} onFocus={focusStyle} onBlur={blurStyle} />
+              <input required type="email" placeholder="Email" className={fieldClass} style={{ borderColor: "var(--brand-soft)" }} onFocus={focusStyle} onBlur={blurStyle} />
+              <input type="tel" placeholder="Phone (optional)" className={fieldClass} style={{ borderColor: "var(--brand-soft)" }} onFocus={focusStyle} onBlur={blurStyle} />
               <select
                 required
                 defaultValue=""
                 className={fieldClass}
-                style={{ borderColor: "#D8DCD9" }}
+                style={{ borderColor: "var(--brand-soft)" }}
                 onFocus={focusStyle as any}
                 onBlur={blurStyle as any}
               >
@@ -95,14 +95,14 @@ const Contact = () => {
                 rows={5}
                 placeholder="Message"
                 className={fieldClass + " resize-none"}
-                style={{ borderColor: "#D8DCD9" }}
+                style={{ borderColor: "var(--brand-soft)" }}
                 onFocus={focusStyle as any}
                 onBlur={blurStyle as any}
               />
               <button
                 type="submit"
                 className="mt-2 w-full py-3 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.98] rounded-lg"
-                style={{ backgroundColor: "#1C4339" }}
+                style={{ backgroundColor: "var(--brand-deep)" }}
               >
                 Send
               </button>
@@ -111,19 +111,19 @@ const Contact = () => {
 
           {/* Contact info */}
           <div className="mt-10 flex flex-col items-center gap-3 text-center">
-            <div className="flex items-center gap-2 text-sm" style={{ color: "#4C5751" }}>
+            <div className="flex items-center gap-2 text-sm" style={{ color: "var(--brand-mute)" }}>
               <Mail size={14} />
               <span>hello@re-rooted.com</span>
             </div>
-            <div className="flex items-center gap-2 text-sm" style={{ color: "#4C5751" }}>
+            <div className="flex items-center gap-2 text-sm" style={{ color: "var(--brand-mute)" }}>
               <MapPin size={14} />
               <span>Based in Zug, Switzerland</span>
             </div>
           </div>
 
-          <p className="mt-10 text-center text-sm" style={{ color: "#4C5751" }}>
+          <p className="mt-10 text-center text-sm" style={{ color: "var(--brand-mute)" }}>
             Not ready for a form? Email us directly at{" "}
-            <a href="mailto:hello@re-rooted.com" className="font-semibold hover:underline" style={{ color: "#2C6A58" }}>
+            <a href="mailto:hello@re-rooted.com" className="font-semibold hover:underline" style={{ color: "var(--brand-accent)" }}>
               hello@re-rooted.com
             </a>
           </p>

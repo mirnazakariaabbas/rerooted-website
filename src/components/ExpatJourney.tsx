@@ -59,14 +59,14 @@ const ExpatJourney = () => {
   const stages = isIndividual ? individualStages : corporateStages;
 
   return (
-    <section id="journey" className="px-6 lg:px-12" style={{ background: "#1B1F1C", paddingTop: 80, paddingBottom: 80 }}>
+    <section id="journey" className="px-6 lg:px-12" style={{ background: "var(--brand-ink)", paddingTop: 80, paddingBottom: 80 }}>
       <div className="container mx-auto max-w-[1760px]">
         {/* Header: two-column layout */}
         <FadeInOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 md:gap-16 md:items-end mb-16 md:mb-20">
             <div>
               <div className="mb-6">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: "#2C6A58" }}>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: "var(--brand-accent)" }}>
                   {isIndividual ? "RE-ROOTED® STAGES" : "RE-ROOTED® PACKAGES"}
                 </span>
               </div>
@@ -75,7 +75,7 @@ const ExpatJourney = () => {
                 style={{
                   fontSize: "clamp(36px, 4.5vw, 64px)",
                   lineHeight: 1.05,
-                  color: "#F5F2EA",
+                  color: "var(--brand-surface)",
                   letterSpacing: "-0.02em",
                   fontWeight: 700,
                 }}
@@ -109,7 +109,7 @@ const ExpatJourney = () => {
                 className="group relative flex flex-col overflow-hidden cursor-pointer rounded-2xl"
                 style={{
                   border: "1px solid rgba(31,41,156,0.12)",
-                  background: i % 2 === 0 ? "#F5F2EA" : "#FFFFFF",
+                  background: i % 2 === 0 ? "var(--brand-surface)" : "#FFFFFF",
                 }}
               >
                 {/* Image with desaturated blue soft-light treatment */}
@@ -141,8 +141,8 @@ const ExpatJourney = () => {
                       className="w-full h-full"
                       style={{
                         background: i % 2 === 0
-                          ? "linear-gradient(135deg, #D8DCD9 0%, #D8DCD9 100%)"
-                          : "linear-gradient(135deg, #F5F2EA 0%, #D8DCD9 100%)",
+                          ? "linear-gradient(135deg, var(--brand-soft) 0%, var(--brand-soft) 100%)"
+                          : "linear-gradient(135deg, var(--brand-surface) 0%, var(--brand-soft) 100%)",
                       }}
                     />
                   )}
@@ -154,7 +154,7 @@ const ExpatJourney = () => {
                     className="font-display"
                     style={{
                       fontSize: 14,
-                      color: "#2C6A58",
+                      color: "var(--brand-accent)",
                       fontWeight: 600,
                       letterSpacing: "0.1em",
                     }}
@@ -168,7 +168,7 @@ const ExpatJourney = () => {
                     style={{
                       fontSize: "clamp(24px, 2.2vw, 32px)",
                       lineHeight: 1.15,
-                      color: "#1C4339",
+                      color: "var(--brand-deep)",
                       fontWeight: 700,
                       whiteSpace: "pre-line",
                     }}
@@ -186,7 +186,7 @@ const ExpatJourney = () => {
                     className="font-display"
                     style={{
                       fontSize: 14,
-                      color: "#2C6A58",
+                      color: "var(--brand-accent)",
                       fontWeight: 600,
                       letterSpacing: "0.1em",
                     }}

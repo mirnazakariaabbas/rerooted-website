@@ -138,7 +138,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
       ref={ref}
       id="problem"
       data-dark="1"
-      className="relative w-full bg-[#1B1F1C] py-24 md:py-32 overflow-hidden"
+      className="relative w-full bg-[var(--brand-ink)] py-24 md:py-32 overflow-hidden"
     >
       <div className="max-w-[1320px] mx-auto px-6 md:px-12">
         {/* Header row: eyebrow left, headline right */}
@@ -189,7 +189,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
               return (
                 <motion.div
                   key={i}
-                  className={`${common} bg-[#F5F2EA] flex flex-col justify-between p-6 md:p-8`}
+                  className={`${common} bg-[var(--brand-surface)] flex flex-col justify-between p-6 md:p-8`}
                   initial={{ opacity: 0, y: 24 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.06 }}

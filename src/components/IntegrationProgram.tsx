@@ -9,11 +9,11 @@ import { Button } from "@/components/ui/button";
  */
 
 const COLORS = {
-  blue: "#1C4339",
-  green: "#2C6A58",
-  warmWhite: "#F5F2EA",
-  mute: "#4C5751",
-  ink: "#1B1F1C",
+  blue: "var(--brand-deep)",
+  green: "var(--brand-accent)",
+  warmWhite: "var(--brand-surface)",
+  mute: "var(--brand-mute)",
+  ink: "var(--brand-ink)",
   line: "rgba(31,41,156,0.14)",
 };
 
@@ -369,7 +369,7 @@ const IntegrationProgram = () => {
                     style={{
                       fontSize: 15,
                       lineHeight: 1.6,
-                      color: "#4C5751",
+                      color: "var(--brand-mute)",
                       maxWidth: "36ch",
                       gridColumn: 3,
                       textAlign: "left",

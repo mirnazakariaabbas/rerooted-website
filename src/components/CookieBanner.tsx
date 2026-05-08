@@ -43,7 +43,7 @@ const CookieBanner = () => {
       {/* Banner */}
       <div
         className="fixed bottom-0 left-0 right-0 z-50 px-4 py-3 md:px-8 md:py-4 flex flex-col md:flex-row items-center justify-between gap-3"
-        style={{ backgroundColor: "#1B1F1C" }}
+        style={{ backgroundColor: "var(--brand-ink)" }}
       >
         <p className="text-sm text-white/80 max-w-2xl text-center md:text-left">
           We use cookies to improve your experience on our website. By continuing to browse, you consent to our use of cookies.{" "}

@@ -5,7 +5,7 @@ import { ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
 
-const Section = ({ children, className = "", bg = "#F5F2EA" }: { children: React.ReactNode; className?: string; bg?: string }) => {
+const Section = ({ children, className = "", bg = "var(--brand-surface)" }: { children: React.ReactNode; className?: string; bg?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
@@ -86,13 +86,13 @@ const AccordionCard = ({ point }: { point: typeof compassPoints[0] }) => {
         className="w-full flex items-center justify-between p-5 text-left cursor-pointer"
       >
         <div>
-          <p className="font-bold text-base" style={{ color: "#1B1F1C" }}>{point.title}</p>
-          <p className="text-sm mt-0.5 italic" style={{ color: "#4C5751" }}>{point.question}</p>
+          <p className="font-bold text-base" style={{ color: "var(--brand-ink)" }}>{point.title}</p>
+          <p className="text-sm mt-0.5 italic" style={{ color: "var(--brand-mute)" }}>{point.question}</p>
         </div>
         <ChevronDown
           size={20}
           className="shrink-0 transition-transform duration-200"
-          style={{ color: "#1C4339", transform: open ? "rotate(180deg)" : "rotate(0)" }}
+          style={{ color: "var(--brand-deep)", transform: open ? "rotate(180deg)" : "rotate(0)" }}
         />
       </button>
       <AnimatePresence>
@@ -104,7 +104,7 @@ const AccordionCard = ({ point }: { point: typeof compassPoints[0] }) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 text-sm leading-[1.8] whitespace-pre-line" style={{ color: "#1B1F1C" }}>
+            <div className="px-5 pb-5 text-sm leading-[1.8] whitespace-pre-line" style={{ color: "var(--brand-ink)" }}>
               {point.content}
             </div>
           </motion.div>
@@ -123,18 +123,18 @@ const PreRooted = () => (
     <StickyNav />
 
     {/* Hero */}
-    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
+    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "var(--brand-surface)" }}>
       <div className="container mx-auto max-w-4xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#2C6A58" }}>Stage 1 of 4</p>
-        <h1 className="font-black text-4xl md:text-5xl leading-tight" style={{ color: "#1B1F1C", fontWeight: 900 }}>
+        <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--brand-accent)" }}>Stage 1 of 4</p>
+        <h1 className="font-black text-4xl md:text-5xl leading-tight" style={{ color: "var(--brand-ink)", fontWeight: 900 }}>
           Should I stay or should I go?
         </h1>
       </div>
     </section>
 
     {/* Intro */}
-    <Section className="py-20" bg="#F5F2EA">
-      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1B1F1C" }}>
+    <Section className="py-20" bg="var(--brand-surface)">
+      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "var(--brand-ink)" }}>
         <p>
           You're standing at a crossroads. There's an opportunity, maybe a job offer, maybe a restless feeling that more is waiting somewhere else. Everyone has an opinion. Your family. Your friends. Your gut. But nobody is asking you the right questions.
         </p>
@@ -145,12 +145,12 @@ const PreRooted = () => (
     </Section>
 
     {/* The Compass */}
-    <Section className="py-20" bg="#F5F2EA">
+    <Section className="py-20" bg="var(--brand-surface)">
       <div className="container mx-auto max-w-3xl">
-        <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-2" style={{ color: "#1B1F1C", fontWeight: 800 }}>
+        <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-2" style={{ color: "var(--brand-ink)", fontWeight: 800 }}>
           The Re-Rooted® Compass
         </h2>
-        <p className="text-base mb-8" style={{ color: "#4C5751" }}>5 questions to ask before you move abroad</p>
+        <p className="text-base mb-8" style={{ color: "var(--brand-mute)" }}>5 questions to ask before you move abroad</p>
         <div className="space-y-4">
           {compassPoints.map((point, i) => (
             <AccordionCard key={i} point={point} />
@@ -160,19 +160,19 @@ const PreRooted = () => (
     </Section>
 
     {/* Four Directions */}
-    <Section className="py-20" bg="#F5F2EA">
+    <Section className="py-20" bg="var(--brand-surface)">
       <div className="container mx-auto max-w-3xl">
-        <h2 className="font-extrabold text-2xl md:text-3xl leading-tight mb-2" style={{ color: "#1B1F1C", fontWeight: 800 }}>
+        <h2 className="font-extrabold text-2xl md:text-3xl leading-tight mb-2" style={{ color: "var(--brand-ink)", fontWeight: 800 }}>
           The Four Directions
         </h2>
-        <p className="text-base mb-8" style={{ color: "#4C5751" }}>
+        <p className="text-base mb-8" style={{ color: "var(--brand-mute)" }}>
           After you've worked through all five points, you'll land in one of four places:
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {directions.map((d, i) => (
             <div key={i} className="rounded-xl p-6 border" style={{ backgroundColor: "#fff", borderColor: "rgba(188,173,212,0.5)" }}>
-              <p className="font-bold text-lg mb-2" style={{ color: "#1C4339" }}>{d.title}</p>
-              <p className="text-sm leading-relaxed" style={{ color: "#1B1F1C" }}>{d.desc}</p>
+              <p className="font-bold text-lg mb-2" style={{ color: "var(--brand-deep)" }}>{d.title}</p>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--brand-ink)" }}>{d.desc}</p>
             </div>
           ))}
         </div>
@@ -180,8 +180,8 @@ const PreRooted = () => (
     </Section>
 
     {/* Corporate Close */}
-    <Section className="py-20" bg="#F5F2EA">
-      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1B1F1C" }}>
+    <Section className="py-20" bg="var(--brand-surface)">
+      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "var(--brand-ink)" }}>
         <p>
           The Pre-Rooted stage is where assignment success or failure begins. When employees make conscious, supported decisions about their move, they arrive with clarity instead of anxiety. <strong>Re-Rooted®</strong> coaching during this phase helps your people enter their assignment grounded.
         </p>
@@ -189,7 +189,7 @@ const PreRooted = () => (
           <Link
             to="/contact"
             className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: "#1C4339" }}
+            style={{ backgroundColor: "var(--brand-deep)" }}
           >
             Talk to us about supporting your people before they move →
           </Link>
@@ -198,9 +198,9 @@ const PreRooted = () => (
     </Section>
 
     {/* Journey Nav */}
-    <section className="py-10 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
+    <section className="py-10 px-6 lg:px-12" style={{ backgroundColor: "var(--brand-surface)" }}>
       <div className="container mx-auto max-w-3xl flex justify-end">
-        <Link to="/journey/rooting-in" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4" style={{ color: "#1C4339" }}>
+        <Link to="/journey/rooting-in" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4" style={{ color: "var(--brand-deep)" }}>
           Rooting In <ArrowRight size={16} />
         </Link>
       </div>

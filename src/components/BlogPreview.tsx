@@ -81,25 +81,25 @@ const BlogPreview = () => {
     <section
       id="insights"
       className="py-24 md:py-32"
-      style={{ backgroundColor: "#F5F2EA" }}
+      style={{ backgroundColor: "var(--brand-surface)" }}
     >
       <div className="container mx-auto px-6 lg:px-12">
         <p
           className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20"
-          style={{ color: "#2C6A58" }}
+          style={{ color: "var(--brand-accent)" }}
         >
           The thought behind Re-Rooted®
         </p>
 
         <h2
           className="text-center font-extrabold tracking-tight"
-          style={{ color: "#1B1F1C", fontSize: "clamp(28px, 4vw, 36px)" }}
+          style={{ color: "var(--brand-ink)", fontSize: "clamp(28px, 4vw, 36px)" }}
         >
           Insights from the journey
         </h2>
         <p
           className="mx-auto mt-4 max-w-xl text-center text-sm md:text-base"
-          style={{ color: "#4C5751" }}
+          style={{ color: "var(--brand-mute)" }}
         >
           Stories, perspectives, and lessons from the expat experience, written
           by Yasser Abbas.
@@ -127,14 +127,14 @@ const BlogPreview = () => {
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className="group flex flex-col overflow-hidden rounded-xl bg-white transition-shadow duration-300 hover:shadow-lg"
-                style={{ border: "1px solid #D8DCD9" }}
+                style={{ border: "1px solid var(--brand-soft)" }}
               >
                 <a
                   href={href}
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
                   className="flex aspect-video items-center justify-center text-xs font-medium overflow-hidden"
-                  style={{ backgroundColor: "#D8DCD9", color: "#4C5751" }}
+                  style={{ backgroundColor: "var(--brand-soft)", color: "var(--brand-mute)" }}
                 >
                   {post.cover_image_url ? (
                     <img
@@ -153,7 +153,7 @@ const BlogPreview = () => {
                       className="mb-3 w-fit rounded-full px-3 py-0.5 text-xs font-semibold"
                       style={{
                         backgroundColor: "rgba(61,167,118,0.12)",
-                        color: "#2C6A58",
+                        color: "var(--brand-accent)",
                       }}
                     >
                       {post.category}
@@ -162,14 +162,14 @@ const BlogPreview = () => {
 
                   <h3
                     className="text-lg font-bold leading-snug"
-                    style={{ color: "#1B1F1C" }}
+                    style={{ color: "var(--brand-ink)" }}
                   >
                     {post.title}
                   </h3>
 
                   <p
                     className="mt-2 flex-1 text-sm leading-relaxed"
-                    style={{ color: "#4C5751" }}
+                    style={{ color: "var(--brand-mute)" }}
                   >
                     {post.excerpt}
                   </p>
@@ -179,7 +179,7 @@ const BlogPreview = () => {
                     target={isExternal ? "_blank" : undefined}
                     rel={isExternal ? "noopener noreferrer" : undefined}
                     className="mt-4 inline-flex items-center text-sm font-semibold transition-colors hover:opacity-80"
-                    style={{ color: "#2C6A58" }}
+                    style={{ color: "var(--brand-accent)" }}
                   >
                     Read more →
                   </a>
@@ -193,7 +193,7 @@ const BlogPreview = () => {
           <a
             href="/blog"
             className="text-sm font-semibold transition-colors hover:opacity-80"
-            style={{ color: "#2C6A58" }}
+            style={{ color: "var(--brand-accent)" }}
           >
             See all insights →
           </a>
