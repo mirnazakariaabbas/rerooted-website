@@ -27,16 +27,13 @@ const Auth = () => {
   const { signUp, signIn, resetPassword } = useAuth();
   const navigate = useNavigate();
 
-  // Load remembered credentials
+  // Load remembered email + keep-signed-in preference
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const { email: savedEmail, password: savedPassword } = JSON.parse(saved);
-        setEmail(savedEmail || "");
-        setPassword(savedPassword || "");
-        setRememberMe(true);
-      }
+      const savedEmail = localStorage.getItem(STORAGE_KEY);
+      if (savedEmail) setEmail(savedEmail);
+      const savedKeep = localStorage.getItem(KEEP_FLAG_KEY);
+      if (savedKeep !== null) setKeepSignedIn(savedKeep !== "false");
     } catch {}
   }, []);
 
@@ -44,9 +41,9 @@ const Auth = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    // Handle remember me
-    if (rememberMe) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ email, password }));
+    // Persist email (never password) and keep-signed-in preference
+    if (keepSignedIn) {
+      localStorage.setItem(STORAGE_KEY, email);
     } else {
       localStorage.removeItem(STORAGE_KEY);
     }
