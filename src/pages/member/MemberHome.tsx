@@ -140,9 +140,11 @@ const MemberHome = () => {
 
         <div className="relative max-w-2xl mx-auto">
           <AnnouncementBanner />
-          <p className="text-sm uppercase tracking-[0.2em] font-semibold text-primary-foreground/70 mb-2">
-            Re-Rooted®
-          </p>
+          <img
+            src={logoWordmarkWhite}
+            alt="Re-Rooted®"
+            className="h-6 w-auto object-contain opacity-80 mb-3"
+          />
           <h1 className="text-4xl md:text-5xl font-[900] tracking-tight leading-tight">
             Hello, {greeting}.
           </h1>
