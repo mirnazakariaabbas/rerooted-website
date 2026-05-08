@@ -1,23 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useUser } from '@/contexts/UserContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { STAGE_LABELS } from '@/types/user';
 import { STAGE_DESCRIPTIONS, ROOTING_IN_DIMENSIONS, WEEKLY_PROMPTS } from '@/data/coaching-content';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
 import { differenceInMonths } from 'date-fns';
-import { ArrowRight, Globe, BarChart3 } from 'lucide-react';
+import {
+  ArrowRight, Globe, BarChart3, Heart, BookOpen, Calendar, Award,
+  MessageCircle, Sparkles, TrendingUp,
+} from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DimensionDetail from '@/components/home/DimensionDetail';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
-import logoShorthand from '@/assets/logo-shorthand-blue.png';
 
 const MemberHome = () => {
   const { user, reflections, addReflection, dimensionProgress } = useUser();
+  const { user: authUser } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [reflectionText, setReflectionText] = useState('');
@@ -32,23 +38,78 @@ const MemberHome = () => {
     }
   }, [searchParams, setSearchParams]);
 
+  // ===== Progress data (merged from ProgressPage) =====
+  const { data: assessments = [] } = useQuery({
+    queryKey: ['my-assessments', authUser?.id],
+    queryFn: async () => {
+      if (!authUser) return [];
+      const { data } = await supabase
+        .from('assessments')
+        .select('id, score, completed_at, created_at')
+        .eq('user_id', authUser.id)
+        .not('completed_at', 'is', null)
+        .order('completed_at', { ascending: true });
+      return data || [];
+    },
+    enabled: !!authUser,
+  });
+
+  const { data: bookings = [] } = useQuery({
+    queryKey: ['my-bookings', authUser?.id],
+    queryFn: async () => {
+      if (!authUser) return [];
+      const { data } = await supabase
+        .from('meeting_bookings')
+        .select('id, scheduled_at, status, duration_minutes')
+        .eq('user_id', authUser.id)
+        .order('scheduled_at', { ascending: false });
+      return data || [];
+    },
+    enabled: !!authUser,
+  });
+
+  const { data: notes = [] } = useQuery({
+    queryKey: ['my-coaching-notes', authUser?.id],
+    queryFn: async () => {
+      if (!authUser) return [];
+      const { data } = await (supabase as any)
+        .from('coaching_notes')
+        .select('id, session_date, notes, created_at')
+        .eq('coachee_id', authUser.id)
+        .order('session_date', { ascending: false })
+        .limit(5);
+      return data || [];
+    },
+    enabled: !!authUser,
+  });
+
   const stageInfo = STAGE_LABELS[user.stage];
   const monthsAgo = user.arrivalDate ? differenceInMonths(new Date(), new Date(user.arrivalDate)) : 0;
-  const arrivalText = monthsAgo > 0 ? `Arrived ${monthsAgo} month${monthsAgo !== 1 ? 's' : ''} ago` : monthsAgo === 0 ? 'Just arrived' : 'Arriving soon';
-  const greeting = user.name ? `Welcome, ${user.name}` : 'Welcome';
+  const arrivalText =
+    monthsAgo > 0 ? `Arrived ${monthsAgo} month${monthsAgo !== 1 ? 's' : ''} ago` :
+    monthsAgo === 0 ? 'Just arrived' : 'Arriving soon';
+  const greeting = user.name ? user.name.split(' ')[0] : 'Welcome';
   const weekIndex = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000)) % WEEKLY_PROMPTS.length;
   const weeklyPrompt = WEEKLY_PROMPTS[weekIndex];
 
   const isRootingIn = user.stage === 'rooting-in';
-  const isComingSoon = !isRootingIn;
   const dimensions = ROOTING_IN_DIMENSIONS.filter(d => !d.requiresChildren || user.hasChildren);
   const getProgress = (id: string) => dimensionProgress.find(d => d.dimension === id)?.status || 'not-started';
 
-  const statusColors = {
-    'not-started': 'bg-muted text-muted-foreground',
-    'in-progress': 'bg-accent/20 text-accent-foreground',
-    'explored': 'bg-primary/15 text-primary',
-  };
+  const latestScore = assessments.length > 0 ? (assessments[assessments.length - 1] as any).score : null;
+  const previousScore = assessments.length > 1 ? (assessments[assessments.length - 2] as any).score : null;
+  const scoreDiff = latestScore != null && previousScore != null ? latestScore - previousScore : null;
+  const completedSessions = (bookings as any[]).filter(
+    b => b.status === 'completed' || new Date(b.scheduled_at) < new Date()
+  ).length;
+  const reflectionMilestones = [10, 25, 50, 100];
+  const currentMilestone = reflectionMilestones.find(m => reflections.length < m) || 100;
+  const milestonePct = Math.min((reflections.length / currentMilestone) * 100, 100);
+
+  const assessmentTrend = (assessments as any[]).map(a => ({
+    date: new Date(a.completed_at).toLocaleDateString('en', { month: 'short', day: 'numeric' }),
+    score: a.score,
+  }));
 
   const handleReflection = () => {
     if (reflectionText.trim()) {
@@ -65,100 +126,370 @@ const MemberHome = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+      className="pb-24"
     >
-      <AnnouncementBanner />
-      <div className="mb-10">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-[900] tracking-tight mb-1">{greeting}</h1>
-          <img src={logoShorthand} alt="Re-Rooted" className="h-20" />
-        </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <Badge variant="secondary" className="text-xs font-medium">
+      {/* ============ Curved Deep Blue Header ============ */}
+      <header className="relative bg-primary text-primary-foreground overflow-hidden rounded-b-[3rem] px-6 pt-10 pb-16 lg:pt-14 lg:pb-20">
+        {/* Concentric arched accents */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[180%] h-72 rounded-[50%] bg-primary-foreground/[0.04]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-[140%] h-72 rounded-[50%] bg-primary-foreground/[0.06]"
+        />
+
+        <div className="relative max-w-2xl mx-auto">
+          <AnnouncementBanner />
+          <p className="text-sm uppercase tracking-[0.2em] font-semibold text-primary-foreground/70 mb-2">
+            Re-Rooted®
+          </p>
+          <h1 className="text-4xl md:text-5xl font-[900] tracking-tight leading-tight">
+            Hello, {greeting}.
+          </h1>
+          <p className="mt-2 text-base text-primary-foreground/80">
             Stage {stageInfo.number}: {stageInfo.name}
-          </Badge>
-          {user.countryFrom && user.countryTo && (
-            <span className="text-sm text-muted-foreground">
-              {user.countryFrom} → {user.countryTo} · {arrivalText}
-            </span>
-          )}
+            {user.countryFrom && user.countryTo && (
+              <span className="block text-sm text-primary-foreground/60 mt-0.5">
+                {user.countryFrom} to {user.countryTo}, {arrivalText}
+              </span>
+            )}
+          </p>
         </div>
-      </div>
+      </header>
 
-      <Card className="mb-10 border border-border bg-muted">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-lg font-[900] tracking-tight">Where You Are</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm leading-relaxed text-foreground/80">{STAGE_DESCRIPTIONS[user.stage]}</p>
-        </CardContent>
-      </Card>
+      <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
+        {/* ============ Stats Card (Headspace style) ============ */}
+        <Card className="border-0 bg-muted rounded-3xl mb-10">
+          <CardContent className="p-6">
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-muted-foreground mb-4">
+              Your Stats
+            </p>
+            <div className="space-y-5">
+              <StatRow
+                icon={<BarChart3 className="h-5 w-5" />}
+                iconBg="bg-primary text-primary-foreground"
+                value={latestScore != null ? `${latestScore}%` : '—'}
+                label="Latest complexity score"
+                trailing={
+                  scoreDiff != null ? (
+                    <Badge
+                      className={`text-[10px] ${
+                        scoreDiff >= 0
+                          ? 'bg-secondary text-secondary-foreground'
+                          : 'bg-destructive text-destructive-foreground'
+                      }`}
+                    >
+                      {scoreDiff >= 0 ? '+' : ''}{scoreDiff}
+                    </Badge>
+                  ) : null
+                }
+              />
+              <StatRow
+                icon={<BookOpen className="h-5 w-5" />}
+                iconBg="bg-secondary text-secondary-foreground"
+                value={`${reflections.length}`}
+                label="Reflections journaled"
+              />
+              <StatRow
+                icon={<Calendar className="h-5 w-5" />}
+                iconBg="bg-accent text-accent-foreground"
+                value={`${completedSessions}`}
+                label="Coaching sessions"
+              />
+              <StatRow
+                icon={<Award className="h-5 w-5" />}
+                iconBg="bg-primary text-primary-foreground"
+                value={`${assessments.length}`}
+                label="Assessments completed"
+              />
+            </div>
+          </CardContent>
+        </Card>
 
-      <div className="mb-10">
-        <h2 className="text-lg font-[900] tracking-tight mb-4">Your Focus Areas</h2>
-        {isComingSoon ? (
-          <Card className="border-dashed border border-border">
-            <CardContent className="py-10 text-center">
-              <p className="text-muted-foreground font-bold text-lg mb-2">Coming Soon</p>
-              <p className="text-sm text-muted-foreground">Full coaching content for the {stageInfo.name} stage is being developed.</p>
-            </CardContent>
-          </Card>
-        ) : (
+        {/* ============ Reflection Streak / Milestone ============ */}
+        <section className="mb-10">
+          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
+            Reflection Streak
+          </p>
+          <div className="flex items-end gap-4 mb-3">
+            <div className="text-5xl font-[900] tracking-tight text-foreground leading-none">
+              {reflections.length}
+            </div>
+            <div className="pb-1">
+              <p className="text-sm font-semibold text-foreground">
+                of {currentMilestone} reflections
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {currentMilestone - reflections.length > 0
+                  ? `${currentMilestone - reflections.length} more to your next milestone`
+                  : 'Milestone reached.'}
+              </p>
+            </div>
+          </div>
+          <div className="h-2 bg-muted rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${milestonePct}%` }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="h-full bg-secondary rounded-full"
+            />
+          </div>
+        </section>
+
+        {/* ============ Where You Are ============ */}
+        <Card className="mb-10 border-0 bg-accent/40 rounded-3xl">
+          <CardContent className="p-6">
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-primary mb-2">
+              Where You Are
+            </p>
+            <p className="text-sm leading-relaxed text-foreground/80">
+              {STAGE_DESCRIPTIONS[user.stage]}
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* ============ Action Tiles (phone screenshot style) ============ */}
+        <section className="mb-10">
+          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
+            My App
+          </p>
           <div className="space-y-3">
-            {dimensions.map(dim => (
-              <button key={dim.id} onClick={() => setSelectedDimension(dim.id)} className="w-full text-left">
-                <Card className="hover:bg-muted/50 transition-colors border border-border">
-                  <CardContent className="p-4 flex items-center gap-3">
+            <ActionTile
+              title="Cultural Companion"
+              subtitle="Compare 195 cultures"
+              icon={<Globe className="h-7 w-7" />}
+              tone="primary"
+              onClick={() => navigate('/app/cultural')}
+            />
+            <ActionTile
+              title="Daily Reflection"
+              subtitle="Journal this week's prompt"
+              icon={<Sparkles className="h-7 w-7" />}
+              tone="cream"
+              onClick={() => {
+                document.getElementById('weekly-reflection')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            />
+            <ActionTile
+              title="Complexity Assessment"
+              subtitle="28-question diagnostic"
+              icon={<BarChart3 className="h-7 w-7" />}
+              tone="secondary"
+              onClick={() => navigate('/app/assessment')}
+            />
+            <ActionTile
+              title="My Coach"
+              subtitle="Sessions and notes"
+              icon={<Heart className="h-7 w-7" />}
+              tone="accent"
+              onClick={() => navigate('/app/coach')}
+            />
+            <ActionTile
+              title="Messages"
+              subtitle="Talk with your coach"
+              icon={<MessageCircle className="h-7 w-7" />}
+              tone="cream"
+              onClick={() => navigate('/app/messages')}
+            />
+          </div>
+        </section>
+
+        {/* ============ Focus Areas (Rooting In dimensions) ============ */}
+        {isRootingIn && (
+          <section className="mb-10">
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
+              Your Focus Areas
+            </p>
+            <div className="space-y-3">
+              {dimensions.map(dim => {
+                const status = getProgress(dim.id);
+                const statusStyle =
+                  status === 'explored' ? 'bg-primary/15 text-primary' :
+                  status === 'in-progress' ? 'bg-accent/30 text-accent-foreground' :
+                  'bg-muted text-muted-foreground';
+                return (
+                  <button
+                    key={dim.id}
+                    onClick={() => setSelectedDimension(dim.id)}
+                    className="w-full text-left rounded-2xl border border-border bg-background hover:bg-muted/40 transition-colors p-4 flex items-center gap-3"
+                  >
                     <span className="text-2xl">{dim.icon}</span>
                     <div className="flex-1 min-w-0">
-                      <div className="font-medium text-sm">{dim.name}</div>
+                      <div className="font-semibold text-sm text-foreground">{dim.name}</div>
                       <div className="text-xs text-muted-foreground truncate">{dim.shortDescription}</div>
                     </div>
-                    <Badge className={cn('text-xs shrink-0', statusColors[getProgress(dim.id)])}>{getProgress(dim.id).replace('-', ' ')}</Badge>
-                  </CardContent>
-                </Card>
-              </button>
-            ))}
-          </div>
+                    <Badge className={`text-[10px] shrink-0 ${statusStyle}`}>
+                      {status.replace('-', ' ')}
+                    </Badge>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* ============ Assessment Trend ============ */}
+        {assessmentTrend.length > 0 && (
+          <section className="mb-10">
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3 flex items-center gap-2">
+              <TrendingUp className="h-3.5 w-3.5" /> Score Trend
+            </p>
+            <Card className="border-0 bg-muted rounded-3xl">
+              <CardContent className="p-6">
+                <div className="h-48">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={assessmentTrend}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                      <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} />
+                      <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="score" stroke="hsl(var(--primary))" strokeWidth={2.5} dot={{ r: 4 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        )}
+
+        {/* ============ Weekly Reflection ============ */}
+        <section id="weekly-reflection" className="mb-10">
+          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
+            Weekly Reflection
+          </p>
+          <Card className="border-0 bg-card rounded-3xl">
+            <CardContent className="p-6">
+              <p className="text-base italic mb-4 text-foreground/80 font-serif">"{weeklyPrompt}"</p>
+              <Textarea
+                value={reflectionText}
+                onChange={e => setReflectionText(e.target.value)}
+                placeholder="Write your thoughts..."
+                className="min-h-[80px] text-sm resize-none mb-3 bg-background border-border rounded-2xl"
+              />
+              <div className="flex items-center gap-2 mb-3">
+                <Checkbox
+                  id="share-coach"
+                  checked={shareWithCoach}
+                  onCheckedChange={c => setShareWithCoach(c === true)}
+                />
+                <label htmlFor="share-coach" className="text-xs text-muted-foreground cursor-pointer">
+                  Share this entry with my coach
+                </label>
+              </div>
+              <Button
+                onClick={handleReflection}
+                disabled={!reflectionText.trim()}
+                className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                Save to journal
+              </Button>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* ============ Coach Notes ============ */}
+        {notes.length > 0 && (
+          <section className="mb-10">
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
+              Coach Session Notes
+            </p>
+            <div className="space-y-3">
+              {(notes as any[]).map(n => (
+                <div key={n.id} className="p-4 rounded-2xl bg-muted">
+                  <Badge variant="outline" className="text-[10px] mb-2">
+                    {new Date(n.session_date).toLocaleDateString()}
+                  </Badge>
+                  <p className="text-sm text-foreground">{n.notes}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ============ Recent Reflections ============ */}
+        {reflections.length > 0 && (
+          <section>
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
+              Recent Reflections
+            </p>
+            <div className="space-y-3">
+              {reflections.slice(0, 8).map(r => (
+                <div key={r.id} className="flex items-start gap-3 p-3 rounded-2xl bg-background border border-border">
+                  <div className="w-2 h-2 rounded-full bg-secondary mt-2 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-foreground truncate">{r.prompt}</p>
+                    <p className="text-[10px] text-muted-foreground">{new Date(r.date).toLocaleDateString()}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
       </div>
-
-      <div className="grid grid-cols-2 gap-3 mb-10">
-        <Card className="cursor-pointer hover:bg-muted/50 transition-colors border border-border" onClick={() => navigate('/app/cultural')}>
-          <CardContent className="p-6 flex flex-col items-center text-center gap-2">
-            <Globe className="h-6 w-6 text-primary" />
-            <span className="text-xs font-medium">Cultural Companion</span>
-            <ArrowRight className="h-3 w-3 text-muted-foreground" />
-          </CardContent>
-        </Card>
-        <Card className="cursor-pointer hover:bg-muted/50 transition-colors border border-border" onClick={() => navigate('/app/assessment')}>
-          <CardContent className="p-6 flex flex-col items-center text-center gap-2">
-            <BarChart3 className="h-6 w-6 text-primary" />
-            <span className="text-xs font-medium">Complexity Score</span>
-            <ArrowRight className="h-3 w-3 text-muted-foreground" />
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="border border-border">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-bold text-muted-foreground">Weekly Reflection</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm italic mb-3 text-foreground/80">"{weeklyPrompt}"</p>
-          <Textarea value={reflectionText} onChange={e => setReflectionText(e.target.value)} placeholder="Write your thoughts..." className="min-h-[60px] text-sm resize-none mb-2" />
-          <div className="flex items-center gap-2 mb-2">
-            <Checkbox id="share-coach" checked={shareWithCoach} onCheckedChange={(checked) => setShareWithCoach(checked === true)} />
-            <label htmlFor="share-coach" className="text-xs text-muted-foreground cursor-pointer">Share this entry with my coach</label>
-          </div>
-          <Button onClick={handleReflection} disabled={!reflectionText.trim()} size="sm" variant="secondary" className="w-full rounded-full">Save to journal</Button>
-        </CardContent>
-      </Card>
     </motion.div>
   );
 };
+
+// ===== Helpers =====
+
+function StatRow({
+  icon, iconBg, value, label, trailing,
+}: {
+  icon: React.ReactNode;
+  iconBg: string;
+  value: string;
+  label: string;
+  trailing?: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-4">
+      <div className={`h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 ${iconBg}`}>
+        {icon}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="text-xl font-[900] tracking-tight text-foreground leading-tight">{value}</div>
+        <div className="text-xs text-muted-foreground">{label}</div>
+      </div>
+      {trailing}
+    </div>
+  );
+}
+
+function ActionTile({
+  title, subtitle, icon, tone, onClick,
+}: {
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  tone: 'primary' | 'secondary' | 'accent' | 'cream';
+  onClick: () => void;
+}) {
+  const styles: Record<string, string> = {
+    primary: 'bg-primary text-primary-foreground',
+    secondary: 'bg-secondary text-secondary-foreground',
+    accent: 'bg-accent text-accent-foreground',
+    cream: 'bg-card text-foreground border border-border',
+  };
+  return (
+    <motion.button
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.99 }}
+      onClick={onClick}
+      className={`w-full text-left rounded-2xl p-5 flex items-center gap-4 transition-colors ${styles[tone]}`}
+    >
+      <div className="flex-1 min-w-0">
+        <div className="text-lg font-[900] tracking-tight leading-tight">{title}</div>
+        <div className="text-xs opacity-80 mt-1">{subtitle}</div>
+      </div>
+      <div className="shrink-0 opacity-90">{icon}</div>
+      <ArrowRight className="h-4 w-4 opacity-60 shrink-0" />
+    </motion.button>
+  );
+}
 
 export default MemberHome;

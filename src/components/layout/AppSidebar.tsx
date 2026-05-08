@@ -37,7 +37,6 @@ const memberNav = [
   { path: '/app/cultural', label: 'Cultural Companion', icon: Globe },
   { path: '/app/coach', label: 'My Coach', icon: Heart },
   { path: '/app/assessment', label: 'Assessment', icon: BarChart3 },
-  { path: '/app/progress', label: 'Progress', icon: TrendingUp },
   { path: '/app/messages', label: 'Messages', icon: MessageCircle },
   { path: '/app/profile', label: 'Profile', icon: User },
 ];
