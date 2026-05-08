@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Monitor, RefreshCw, Wifi, WifiOff } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type Session = {
   id: string;
@@ -58,17 +59,13 @@ const ActiveSessionsPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">Active Sessions</h1>
-          <p className="text-muted-foreground mt-1">Monitor and manage active user sessions</p>
-        </div>
-        <Button variant="outline" size="sm" onClick={fetchSessions}>
+      <PageHeader title="Active Sessions" subtitle="Monitor and manage active user sessions" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><Button variant="outline" size="sm" onClick={fetchSessions}>
           <RefreshCw className="h-4 w-4 mr-1" /> Refresh
-        </Button>
-      </div>
+        </Button></div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <Card className="border-0 shadow-sm">
@@ -177,6 +174,7 @@ const ActiveSessionsPage = () => {
           </TableBody>
         </Table>
       </div>
+          </div>
     </motion.div>
   );
 };

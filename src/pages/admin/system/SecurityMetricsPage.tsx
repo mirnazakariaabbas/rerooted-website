@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState } from 'react';
 import { Shield, Users, AlertTriangle, Clock, Lock, Key, Timer } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const SecurityMetricsPage = () => {
   const [timeRange, setTimeRange] = useState('30');
@@ -13,14 +14,11 @@ const SecurityMetricsPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">Security Metrics</h1>
-          <p className="text-muted-foreground mt-1">Monitor login activity and security events</p>
-        </div>
-        <Select value={timeRange} onValueChange={setTimeRange}>
+      <PageHeader title="Security Metrics" subtitle="Monitor login activity and security events" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><Select value={timeRange} onValueChange={setTimeRange}>
           <SelectTrigger className="w-[160px]">
             <SelectValue />
           </SelectTrigger>
@@ -29,8 +27,7 @@ const SecurityMetricsPage = () => {
             <SelectItem value="30">Last 30 days</SelectItem>
             <SelectItem value="90">Last 90 days</SelectItem>
           </SelectContent>
-        </Select>
-      </div>
+        </Select></div>
 
       {/* Metrics Row 1 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -199,6 +196,7 @@ const SecurityMetricsPage = () => {
           </div>
         </CardContent>
       </Card>
+          </div>
     </motion.div>
   );
 };

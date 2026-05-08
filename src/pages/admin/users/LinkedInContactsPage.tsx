@@ -10,6 +10,7 @@ import { Search, Upload, ExternalLink, UserPlus, Linkedin } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type LinkedInContact = {
   id: string;
@@ -135,19 +136,15 @@ const LinkedInContactsPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">LinkedIn Contacts</h1>
-          <p className="text-muted-foreground mt-1">Import and manage LinkedIn connections</p>
-        </div>
-        <div>
+      <PageHeader title="LinkedIn Contacts" subtitle="Import and manage LinkedIn connections" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><div>
           <input type="file" accept=".csv" ref={fileRef} className="hidden" onChange={handleCsvImport} />
           <Button size="sm" onClick={() => fileRef.current?.click()} disabled={importing}>
             <Upload className="h-4 w-4 mr-1" /> {importing ? 'Importing...' : 'Import CSV'}
-          </Button>
-        </div>
+          </Button></div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
@@ -252,6 +249,7 @@ const LinkedInContactsPage = () => {
           </TableBody>
         </Table>
       </div>
+          </div>
     </motion.div>
   );
 };

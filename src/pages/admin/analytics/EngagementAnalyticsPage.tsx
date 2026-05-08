@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Users, BarChart3, BookOpen, Calendar, TrendingUp, Download } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { exportToCSV } from '@/utils/csvExport';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 export default function EngagementAnalyticsPage() {
   // Member engagement
@@ -131,13 +132,9 @@ export default function EngagementAnalyticsPage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-display font-black text-foreground">Engagement Analytics</h1>
-          <p className="text-sm text-muted-foreground mt-1">Member activity and coach performance overview</p>
-        </div>
-      </div>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
+      <PageHeader title="Engagement Analytics" subtitle="Member activity and coach performance overview" />
+      <div className="max-w-7xl mx-auto px-6 -mt-10 relative space-y-6">
 
       {/* Member Engagement Stats */}
       <div>
@@ -281,6 +278,7 @@ export default function EngagementAnalyticsPage() {
           </>
         )}
       </div>
+          </div>
     </motion.div>
   );
 }

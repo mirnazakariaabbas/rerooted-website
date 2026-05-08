@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { MessageSquare, Plus, ArrowLeft, Pin, Clock, Send } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 
@@ -219,11 +220,12 @@ export default function CommunityPage() {
 
   // Category list
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-3xl font-[900] tracking-tight text-foreground">Community</h1>
-        <p className="text-muted-foreground text-sm">Connect with fellow members in topic-based discussions</p>
-      </div>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
+      <PageHeader
+        title="Community"
+        subtitle="Connect with fellow members in topic-based discussions"
+      />
+      <div className="max-w-2xl mx-auto px-6 -mt-10 relative space-y-6">
       {categories.length === 0 ? (
         <div className="text-center py-16 text-muted-foreground">
           <MessageSquare className="h-10 w-10 mx-auto mb-3 opacity-30" />
@@ -253,6 +255,7 @@ export default function CommunityPage() {
           ))}
         </div>
       )}
+      </div>
     </motion.div>
   );
 }

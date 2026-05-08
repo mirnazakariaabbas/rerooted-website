@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { CalendarIcon, Search, ChevronDown, Shield } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -74,17 +75,21 @@ const ProfilePage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-2">
-        <h1 className="text-3xl font-[900] tracking-tight">Profile</h1>
+      <PageHeader
+        title="Profile"
+        subtitle="Manage your personal details and preferences"
+      >
         {isAdmin && (
-          <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-full" onClick={() => navigate('/app/admin')}>
-            <Shield className="h-3.5 w-3.5" /> Admin
-          </Button>
+          <div className="mt-4">
+            <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-full bg-primary-foreground text-primary hover:bg-primary-foreground/90 border-0" onClick={() => navigate('/app/admin')}>
+              <Shield className="h-3.5 w-3.5" /> Admin
+            </Button>
+          </div>
         )}
-      </div>
-      <p className="text-sm text-muted-foreground mb-10">Manage your personal details and preferences</p>
+      </PageHeader>
+      <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
 
       <Card className="mb-6 border border-border">
         <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Personal Details</CardTitle></CardHeader>
@@ -167,6 +172,7 @@ const ProfilePage = () => {
       <Button variant="outline" className="w-full mt-4 rounded-full text-destructive border-destructive/30 hover:bg-destructive/5" onClick={signOut}>
         Sign Out
       </Button>
+      </div>
     </motion.div>
   );
 };

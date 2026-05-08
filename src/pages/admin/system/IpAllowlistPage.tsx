@@ -12,6 +12,7 @@ import { Plus, Shield, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type IpEntry = {
   id: string;
@@ -72,12 +73,9 @@ const IpAllowlistPage = () => {
       transition={{ duration: 0.4 }}
       className="p-8 lg:p-12 max-w-4xl mx-auto"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">IP Allowlist</h1>
-          <p className="text-muted-foreground mt-1">Restrict admin portal access to specific IPs</p>
-        </div>
-        <Dialog open={open} onOpenChange={setOpen}>
+      <PageHeader title="IP Allowlist" subtitle="Restrict admin portal access to specific IPs" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button size="sm"><Plus className="h-4 w-4 mr-1" /> Add IP</Button>
           </DialogTrigger>
@@ -86,8 +84,7 @@ const IpAllowlistPage = () => {
             <div className="space-y-4 mt-2">
               <div>
                 <Label>IP Address or CIDR</Label>
-                <Input placeholder="192.168.1.0/24" value={newIp} onChange={e => setNewIp(e.target.value)} />
-              </div>
+                <Input placeholder="192.168.1.0/24" value={newIp} onChange={e => setNewIp(e.target.value)} /></div>
               <div>
                 <Label>Label (optional)</Label>
                 <Input placeholder="Office network" value={newLabel} onChange={e => setNewLabel(e.target.value)} />
@@ -163,6 +160,7 @@ const IpAllowlistPage = () => {
           </TableBody>
         </Table>
       </div>
+          </div>
     </motion.div>
   );
 };

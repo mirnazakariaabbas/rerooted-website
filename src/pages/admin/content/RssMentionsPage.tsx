@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Rss, ExternalLink, Check, Search, RefreshCw } from 'lucide-react';
 import { format } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type Mention = {
   id: string;
@@ -59,19 +60,15 @@ const RssMentionsPage = () => {
       transition={{ duration: 0.4 }}
       className="p-8 lg:p-12 max-w-5xl mx-auto"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">RSS Mention Monitor</h1>
-          <p className="text-muted-foreground mt-1">Track brand mentions across the web</p>
-        </div>
-        <div className="flex gap-2">
+      <PageHeader title="RSS Mention Monitor" subtitle="Track brand mentions across the web" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><div className="flex gap-2">
           {unreadCount > 0 && (
             <Badge className="bg-primary/15 text-primary">{unreadCount} unread</Badge>
           )}
           <Button variant="outline" size="sm" onClick={fetchMentions}>
             <RefreshCw className="h-4 w-4 mr-1" /> Refresh
-          </Button>
-        </div>
+          </Button></div>
       </div>
 
       <div className="relative max-w-sm mb-6">
@@ -122,6 +119,7 @@ const RssMentionsPage = () => {
           ))}
         </div>
       )}
+          </div>
     </motion.div>
   );
 };

@@ -8,6 +8,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Heart, Calendar, Check, FileText } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { toast } from 'sonner';
 import { addDays, format, startOfDay, getDay } from 'date-fns';
 
@@ -126,9 +127,8 @@ const CoachPage = () => {
 
   if (loading) {
     return (
-      <div className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto">
-        <h1 className="text-3xl font-[900] tracking-tight mb-10">Your Coach</h1>
-        <p className="text-sm text-muted-foreground">Loading...</p>
+      <div className="pb-24">
+        <PageHeader title="Your Coach" subtitle="Loading…" />
       </div>
     );
   }
@@ -140,10 +140,13 @@ const CoachPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+      className="pb-24"
     >
-      <h1 className="text-3xl font-[900] tracking-tight mb-2">Your Coach</h1>
-      <p className="text-sm text-muted-foreground mb-10">Your personal relocation coach and session booking</p>
+      <PageHeader
+        title="Your Coach"
+        subtitle="Your personal relocation coach and session booking"
+      />
+      <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
 
       {!coach ? (
         <Card className="border border-border">
@@ -219,6 +222,7 @@ const CoachPage = () => {
           <CoachNotes userId={user?.id} />
         </div>
       )}
+      </div>
     </motion.div>
   );
 };

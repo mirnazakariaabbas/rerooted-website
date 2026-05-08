@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { toast } from '@/hooks/use-toast';
 import { Users, UserPlus, UserMinus, Globe, MapPin, Heart, Sparkles } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { motion } from 'framer-motion';
 
 interface PeerGroup { id: string; name: string; description: string | null; group_type: string; created_at: string; }
@@ -64,11 +65,12 @@ export default function PeerGroupsPage() {
   const getGroupPeers = (groupId: string) => peerMembers.filter(m => m.group_id === groupId && m.user_id !== user?.id);
 
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-3xl font-[900] tracking-tight text-foreground">Peer Groups</h1>
-        <p className="text-muted-foreground text-sm">Connect with members who share your experience</p>
-      </div>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
+      <PageHeader
+        title="Peer Groups"
+        subtitle="Connect with members who share your experience"
+      />
+      <div className="max-w-2xl mx-auto px-6 -mt-10 relative space-y-6">
 
       {groups.length === 0 ? (
         <div className="text-center py-16 text-muted-foreground">
@@ -128,6 +130,7 @@ export default function PeerGroupsPage() {
           })}
         </div>
       )}
+      </div>
     </motion.div>
   );
 }

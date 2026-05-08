@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { Search, Check, X, UserPlus } from 'lucide-react';
 import { format } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type Profile = {
   id: string;
@@ -102,12 +103,10 @@ const MembersPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="mb-8">
-        <h1 className="text-3xl font-display font-black text-foreground">Members</h1>
-        <p className="text-muted-foreground mt-1">Signed-up users and their coaching status</p>
-      </div>
+      <PageHeader title="Members" subtitle="Signed-up users and their coaching status" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
 
       <div className="flex gap-3 mb-6">
         <div className="relative flex-1 max-w-sm">
@@ -241,6 +240,7 @@ const MembersPage = () => {
           <Button onClick={handleAssignCoach} disabled={!selectedCoachId}>Assign</Button>
         </DialogContent>
       </Dialog>
+          </div>
     </motion.div>
   );
 };

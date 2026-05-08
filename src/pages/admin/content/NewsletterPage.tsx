@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { Send, FileText, Eye, Copy, Plus } from 'lucide-react';
 import { format } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type Newsletter = {
   id: string;
@@ -105,12 +106,10 @@ const NewsletterPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="mb-8">
-        <h1 className="text-3xl font-display font-black text-foreground">Newsletter</h1>
-        <p className="text-muted-foreground mt-1">Compose and manage email newsletters</p>
-      </div>
+      <PageHeader title="Newsletter" subtitle="Compose and manage email newsletters" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="mb-6">
@@ -282,6 +281,7 @@ const NewsletterPage = () => {
           </div>
         </TabsContent>
       </Tabs>
+          </div>
     </motion.div>
   );
 };

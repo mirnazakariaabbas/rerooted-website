@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Calendar, Edit2, Trash2, FileText, Share2, Video, Image } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, parseISO } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const contentTypes = [
   { value: 'blog_post', label: 'Blog Post', icon: FileText },
@@ -121,13 +122,10 @@ export default function ContentCalendarPage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-display font-black text-foreground">Content Calendar</h1>
-          <p className="text-sm text-muted-foreground mt-1">Plan and schedule your content pipeline</p>
-        </div>
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
+      <PageHeader title="Content Calendar" subtitle="Plan and schedule your content pipeline" />
+      <div className="max-w-7xl mx-auto px-6 -mt-10 relative space-y-6">
+      <div className="flex justify-end"><Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button onClick={() => openNew()}><Plus className="h-4 w-4 mr-1.5" /> Add Content</Button>
           </DialogTrigger>
@@ -147,8 +145,7 @@ export default function ContentCalendarPage() {
                   <SelectContent>
                     {statuses.map(s => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
                   </SelectContent>
-                </Select>
-              </div>
+                </Select></div>
               <Input type="date" value={form.scheduled_date} onChange={e => setForm(f => ({ ...f, scheduled_date: e.target.value }))} />
               <Textarea placeholder="Description" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2} />
               <Textarea placeholder="Internal notes" value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={2} />
@@ -247,6 +244,7 @@ export default function ContentCalendarPage() {
           );
         })}
       </div>
+          </div>
     </motion.div>
   );
 }
