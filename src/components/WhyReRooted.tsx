@@ -201,6 +201,7 @@ export function WhyReRootedPillars() {
 
   return (
     <section
+      ref={sectionRef}
       id="approach"
       className="relative overflow-hidden bg-background text-foreground"
     >
