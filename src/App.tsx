@@ -94,7 +94,7 @@ const App = () => (
                 <Route path="cultural" element={<CulturalCompanion />} />
                 <Route path="coach" element={<CoachPage />} />
                 <Route path="assessment" element={<AssessmentPage />} />
-                <Route path="progress" element={<ProgressPage />} />
+                <Route path="progress" element={<Navigate to="/app/home" replace />} />
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="messages" element={<MessagesPage />} />
                 <Route path="coach-dashboard" element={<CoachDashboard />} />
