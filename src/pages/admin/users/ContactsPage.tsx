@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Plus, Search, Trash2, Upload, UserPlus } from 'lucide-react';
 import { format } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type Contact = {
   id: string;
@@ -135,21 +136,17 @@ const ContactsPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">Contacts</h1>
-          <p className="text-muted-foreground mt-1">People in your database who haven't signed up yet</p>
-        </div>
-        <div className="flex gap-2">
+      <PageHeader title="Contacts" subtitle="People in your database who haven't signed up yet" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><div className="flex gap-2">
           <Button variant="outline" size="sm" disabled>
             <Upload className="h-4 w-4 mr-1" /> CSV Import
           </Button>
           <Button size="sm" onClick={() => { setForm(emptyForm); setDialogOpen(true); }}>
             <Plus className="h-4 w-4 mr-1" /> Add Contact
-          </Button>
-        </div>
+          </Button></div>
       </div>
 
       {/* Filters */}
@@ -340,6 +337,7 @@ const ContactsPage = () => {
           )}
         </SheetContent>
       </Sheet>
+          </div>
     </motion.div>
   );
 };

@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Mail, Send } from 'lucide-react';
 import { toast } from 'sonner';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type EmailTemplate = {
   id: string;
@@ -110,12 +111,10 @@ const AutomatedEmailsPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="mb-8">
-        <h1 className="text-3xl font-display font-black text-foreground">Automated Emails</h1>
-        <p className="text-muted-foreground mt-1">Manage triggered email templates for your platform</p>
-      </div>
+      <PageHeader title="Automated Emails" subtitle="Manage triggered email templates for your platform" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {templates.map(template => (
@@ -204,6 +203,7 @@ const AutomatedEmailsPage = () => {
           )}
         </SheetContent>
       </Sheet>
+          </div>
     </motion.div>
   );
 };

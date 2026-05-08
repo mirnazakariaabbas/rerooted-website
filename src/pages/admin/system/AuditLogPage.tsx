@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Download, FileText } from 'lucide-react';
 import { format } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type AuditEntry = {
   id: string;
@@ -101,17 +102,13 @@ const AuditLogPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">Audit Log</h1>
-          <p className="text-muted-foreground mt-1">Complete, immutable log of all admin actions</p>
-        </div>
-        <Button variant="outline" size="sm" onClick={handleExport}>
+      <PageHeader title="Audit Log" subtitle="Complete, immutable log of all admin actions" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><Button variant="outline" size="sm" onClick={handleExport}>
           <Download className="h-4 w-4 mr-1" /> Export CSV
-        </Button>
-      </div>
+        </Button></div>
 
       {/* Filters */}
       <div className="flex gap-3 mb-6 flex-wrap">
@@ -186,6 +183,7 @@ const AuditLogPage = () => {
           </TableBody>
         </Table>
       </div>
+          </div>
     </motion.div>
   );
 };

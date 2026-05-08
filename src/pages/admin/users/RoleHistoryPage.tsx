@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, Download, History, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type RoleChange = {
   id: string;
@@ -75,17 +76,13 @@ const RoleHistoryPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">Role Version History</h1>
-          <p className="text-muted-foreground mt-1">Track all role changes across users</p>
-        </div>
-        <Button variant="outline" size="sm" onClick={handleExport}>
+      <PageHeader title="Role Version History" subtitle="Track all role changes across users" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><Button variant="outline" size="sm" onClick={handleExport}>
           <Download className="h-4 w-4 mr-1" /> Export CSV
-        </Button>
-      </div>
+        </Button></div>
 
       <div className="relative max-w-sm mb-6">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -149,6 +146,7 @@ const RoleHistoryPage = () => {
           </TableBody>
         </Table>
       </div>
+          </div>
     </motion.div>
   );
 };

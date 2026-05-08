@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Plus, Search, Mail, Download, UserX, Users } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type Subscriber = {
   id: string;
@@ -95,14 +96,11 @@ const SubscribersPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">Subscribers</h1>
-          <p className="text-muted-foreground mt-1">Manage newsletter and email subscribers</p>
-        </div>
-        <div className="flex gap-2">
+      <PageHeader title="Subscribers" subtitle="Manage newsletter and email subscribers" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={handleExport}><Download className="h-4 w-4 mr-1" /> Export</Button>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild><Button size="sm"><Plus className="h-4 w-4 mr-1" /> Add Subscriber</Button></DialogTrigger>
@@ -219,6 +217,7 @@ const SubscribersPage = () => {
           </TableBody>
         </Table>
       </div>
+          </div>
     </motion.div>
   );
 };

@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Check, X, Shield, Lock } from 'lucide-react';
 import { format } from 'date-fns';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type AdminUser = {
   user_id: string;
@@ -146,12 +147,10 @@ const AdminUsersPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="mb-8">
-        <h1 className="text-3xl font-display font-black text-foreground">Admin Users</h1>
-        <p className="text-muted-foreground mt-1">Manage admin access levels and approvals</p>
-      </div>
+      <PageHeader title="Admin Users" subtitle="Manage admin access levels and approvals" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
 
       <Tabs defaultValue="current">
         <TabsList className="mb-6">
@@ -373,6 +372,7 @@ const AdminUsersPage = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+          </div>
     </motion.div>
   );
 };

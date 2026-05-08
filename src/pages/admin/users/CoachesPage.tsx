@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Send, CheckCircle2, GraduationCap } from 'lucide-react';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 type Coach = {
   id: string;
@@ -116,15 +117,11 @@ const CoachesPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="p-8 lg:p-12 max-w-6xl mx-auto"
+      className="pb-24"
     >
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-black text-foreground">Coaches</h1>
-          <p className="text-muted-foreground mt-1">Manage your global coaching network</p>
-        </div>
-        <Button size="sm" onClick={openAdd}><Plus className="h-4 w-4 mr-1" /> Add Coach</Button>
-      </div>
+      <PageHeader title="Coaches" subtitle="Manage your global coaching network" />
+      <div className="max-w-6xl mx-auto px-6 -mt-10 relative">
+      <div className="flex justify-end mb-6"><Button size="sm" onClick={openAdd}><Plus className="h-4 w-4 mr-1" /> Add Coach</Button></div>
 
       <div className="rounded-lg border border-border bg-card overflow-x-auto">
         <Table>
@@ -288,6 +285,7 @@ const CoachesPage = () => {
           )}
         </SheetContent>
       </Sheet>
+          </div>
     </motion.div>
   );
 };
