@@ -109,7 +109,10 @@ const PILLARS = [
 export function WhyReRootedPillars() {
   const [active, setActive] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
+  const [hasEnteredView, setHasEnteredView] = useState(false);
+  const [readyToAutoplay, setReadyToAutoplay] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const goTo = (i: number) => {
     const idx = (i + PILLARS.length) % PILLARS.length;
