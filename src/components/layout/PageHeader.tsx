@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
+import logoWordmarkWhite from '@/assets/logo-wordmark-white.png';
 
 interface PageHeaderProps {
-  eyebrow?: string;
+  eyebrow?: ReactNode;
   title: string;
   subtitle?: ReactNode;
   children?: ReactNode;
@@ -15,7 +16,7 @@ interface PageHeaderProps {
  * `<div className="max-w-2xl mx-auto px-6 -mt-10 relative">` to overlap the curve.
  */
 export const PageHeader = ({
-  eyebrow = 'Re-Rooted®',
+  eyebrow,
   title,
   subtitle,
   children,
@@ -30,10 +31,16 @@ export const PageHeader = ({
       className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-[140%] h-72 rounded-[50%] bg-primary-foreground/[0.06]"
     />
     <div className="relative max-w-2xl mx-auto">
-      {eyebrow && (
-        <p className="text-sm uppercase tracking-[0.2em] font-semibold text-primary-foreground/70 mb-2">
-          {eyebrow}
-        </p>
+      {eyebrow !== false && (
+        <div className="mb-3">
+          {eyebrow || (
+            <img
+              src={logoWordmarkWhite}
+              alt="Re-Rooted®"
+              className="h-6 w-auto object-contain opacity-80"
+            />
+          )}
+        </div>
       )}
       <h1 className="text-4xl md:text-5xl font-[900] tracking-tight leading-tight">
         {title}
