@@ -12,7 +12,8 @@ import logoWhite from "@/assets/logo-wordmark-white.png";
 type Mode = "signin" | "signup" | "forgot";
 type UserType = "individual" | "organization";
 
-const STORAGE_KEY = "rerooted_remember";
+const STORAGE_KEY = "rerooted_remember_email";
+const KEEP_FLAG_KEY = "rerooted_keep_signed_in";
 
 const Auth = () => {
   const [mode, setMode] = useState<Mode>("signin");
@@ -20,22 +21,19 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [userType, setUserType] = useState<UserType>("individual");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [keepSignedIn, setKeepSignedIn] = useState(true);
   const [pending, setPending] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { signUp, signIn, resetPassword } = useAuth();
   const navigate = useNavigate();
 
-  // Load remembered credentials
+  // Load remembered email + keep-signed-in preference
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const { email: savedEmail, password: savedPassword } = JSON.parse(saved);
-        setEmail(savedEmail || "");
-        setPassword(savedPassword || "");
-        setRememberMe(true);
-      }
+      const savedEmail = localStorage.getItem(STORAGE_KEY);
+      if (savedEmail) setEmail(savedEmail);
+      const savedKeep = localStorage.getItem(KEEP_FLAG_KEY);
+      if (savedKeep !== null) setKeepSignedIn(savedKeep !== "false");
     } catch {}
   }, []);
 
@@ -43,9 +41,9 @@ const Auth = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    // Handle remember me
-    if (rememberMe) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ email, password }));
+    // Persist email (never password) and keep-signed-in preference
+    if (keepSignedIn) {
+      localStorage.setItem(STORAGE_KEY, email);
     } else {
       localStorage.removeItem(STORAGE_KEY);
     }
@@ -74,7 +72,7 @@ const Auth = () => {
         setPending(true);
       }
     } else {
-      const { error } = await signIn(email, password);
+      const { error } = await signIn(email, password, keepSignedIn);
       setSubmitting(false);
       if (error) {
         toast.error(error.message);
@@ -231,12 +229,12 @@ const Auth = () => {
               <div className="flex items-center gap-2">
                 <Checkbox
                   id="remember"
-                  checked={rememberMe}
-                  onCheckedChange={(checked) => setRememberMe(checked === true)}
+                  checked={keepSignedIn}
+                  onCheckedChange={(checked) => setKeepSignedIn(checked === true)}
                   className="border-primary-foreground/40 data-[state=checked]:bg-primary-foreground data-[state=checked]:text-primary"
                 />
                 <Label htmlFor="remember" className="text-sm text-primary-foreground/70 cursor-pointer">
-                  Remember me
+                  Keep me signed in
                 </Label>
               </div>
               <button
