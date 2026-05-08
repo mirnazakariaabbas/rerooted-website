@@ -20,6 +20,7 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight, Download, ArrowRight } from 'lucide-react';
 import { generateAssessmentPdf } from '@/utils/assessmentPdf';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const SESSION_KEY = 'assessment-in-progress';
 
@@ -117,9 +118,10 @@ const AssessmentPage = () => {
     const savedQuestion = visibleQuestions[Math.min(currentIdx, visibleQuestions.length - 1)];
     const answeredCount = Object.keys(answers).length;
     return (
-      <div className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto">
-        <h1 className="text-3xl font-[900] tracking-tight mb-10">Relocation Complexity Score</h1>
-        <Card className="border border-border">
+      <div className="pb-24">
+        <PageHeader title="Relocation Complexity Score" subtitle="Resume your assessment" />
+        <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
+        <Card className="border-0 bg-card rounded-3xl">
           <CardContent className="py-10 text-center">
             <div className="text-4xl mb-4">📝</div>
             <h2 className="text-xl font-[900] tracking-tight mb-2">Resume Assessment?</h2>
