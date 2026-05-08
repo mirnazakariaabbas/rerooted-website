@@ -1,12 +1,12 @@
 /* Scoped styles for the Program (Services) page. Values preserved verbatim from source HTML. */
 .root {
-  --blue: #1F299C;
+  --blue: #1C4339;
   --blue-deep: #141a6b;
-  --green: #3DA776;
+  --green: #2C6A58;
   --green-soft: #6cc195;
   --lavender: #BCADD4;
   --lavender-soft: #F3F0F7;
-  --warm-white: #FAF9F6;
+  --warm-white: #F5F2EA;
   --ink: #1A1A1A;
   --mute: #6B6B6B;
   --line: rgba(31,41,156,0.14);

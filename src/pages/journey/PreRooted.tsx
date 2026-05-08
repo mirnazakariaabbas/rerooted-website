@@ -5,7 +5,7 @@ import { ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
 
-const Section = ({ children, className = "", bg = "#FAF9F6" }: { children: React.ReactNode; className?: string; bg?: string }) => {
+const Section = ({ children, className = "", bg = "#F5F2EA" }: { children: React.ReactNode; className?: string; bg?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
@@ -92,7 +92,7 @@ const AccordionCard = ({ point }: { point: typeof compassPoints[0] }) => {
         <ChevronDown
           size={20}
           className="shrink-0 transition-transform duration-200"
-          style={{ color: "#1F299C", transform: open ? "rotate(180deg)" : "rotate(0)" }}
+          style={{ color: "#1C4339", transform: open ? "rotate(180deg)" : "rotate(0)" }}
         />
       </button>
       <AnimatePresence>
@@ -125,7 +125,7 @@ const PreRooted = () => (
     {/* Hero */}
     <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "#F3F0F7" }}>
       <div className="container mx-auto max-w-4xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#3DA776" }}>Stage 1 of 4</p>
+        <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#2C6A58" }}>Stage 1 of 4</p>
         <h1 className="font-black text-4xl md:text-5xl leading-tight" style={{ color: "#1A1A1A", fontWeight: 900 }}>
           Should I stay or should I go?
         </h1>
@@ -133,7 +133,7 @@ const PreRooted = () => (
     </section>
 
     {/* Intro */}
-    <Section className="py-20" bg="#FAF9F6">
+    <Section className="py-20" bg="#F5F2EA">
       <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
         <p>
           You're standing at a crossroads. There's an opportunity, maybe a job offer, maybe a restless feeling that more is waiting somewhere else. Everyone has an opinion. Your family. Your friends. Your gut. But nobody is asking you the right questions.
@@ -145,7 +145,7 @@ const PreRooted = () => (
     </Section>
 
     {/* The Compass */}
-    <Section className="py-20" bg="#FAF9F6">
+    <Section className="py-20" bg="#F5F2EA">
       <div className="container mx-auto max-w-3xl">
         <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-2" style={{ color: "#1A1A1A", fontWeight: 800 }}>
           The Re-Rooted® Compass
@@ -171,7 +171,7 @@ const PreRooted = () => (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {directions.map((d, i) => (
             <div key={i} className="rounded-xl p-6 border" style={{ backgroundColor: "#fff", borderColor: "rgba(188,173,212,0.5)" }}>
-              <p className="font-bold text-lg mb-2" style={{ color: "#1F299C" }}>{d.title}</p>
+              <p className="font-bold text-lg mb-2" style={{ color: "#1C4339" }}>{d.title}</p>
               <p className="text-sm leading-relaxed" style={{ color: "#1A1A1A" }}>{d.desc}</p>
             </div>
           ))}
@@ -189,7 +189,7 @@ const PreRooted = () => (
           <Link
             to="/contact"
             className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: "#1F299C" }}
+            style={{ backgroundColor: "#1C4339" }}
           >
             Talk to us about supporting your people before they move →
           </Link>
@@ -198,9 +198,9 @@ const PreRooted = () => (
     </Section>
 
     {/* Journey Nav */}
-    <section className="py-10 px-6 lg:px-12" style={{ backgroundColor: "#FAF9F6" }}>
+    <section className="py-10 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
       <div className="container mx-auto max-w-3xl flex justify-end">
-        <Link to="/journey/rooting-in" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4" style={{ color: "#1F299C" }}>
+        <Link to="/journey/rooting-in" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline underline-offset-4" style={{ color: "#1C4339" }}>
           Rooting In <ArrowRight size={16} />
         </Link>
       </div>

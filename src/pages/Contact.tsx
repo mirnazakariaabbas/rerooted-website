@@ -26,7 +26,7 @@ const Contact = () => {
   };
 
   const focusStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
-    (e.currentTarget.style.borderColor = "#3DA776");
+    (e.currentTarget.style.borderColor = "#2C6A58");
   const blurStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     (e.currentTarget.style.borderColor = "#BCADD4");
 
@@ -39,7 +39,7 @@ const Contact = () => {
       <StickyNav />
 
       {/* Hero */}
-      <section className="pt-32 pb-10 px-6 lg:px-12" style={{ backgroundColor: "#FAF9F6" }}>
+      <section className="pt-32 pb-10 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
         <div className="container mx-auto max-w-lg text-center">
           <h1 className="font-black text-4xl md:text-5xl leading-tight mb-6" style={{ color: "#1A1A1A", fontWeight: 900 }}>
             Start a conversation
@@ -54,7 +54,7 @@ const Contact = () => {
       </section>
 
       {/* Form */}
-      <section className="pb-20 px-6 lg:px-12" style={{ backgroundColor: "#FAF9F6" }}>
+      <section className="pb-20 px-6 lg:px-12" style={{ backgroundColor: "#F5F2EA" }}>
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
@@ -67,7 +67,7 @@ const Contact = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="text-center text-lg font-semibold py-16"
-              style={{ color: "#3DA776" }}
+              style={{ color: "#2C6A58" }}
             >
               Thank you. We'll be in touch soon.
             </motion.p>
@@ -102,7 +102,7 @@ const Contact = () => {
               <button
                 type="submit"
                 className="mt-2 w-full py-3 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.98] rounded-lg"
-                style={{ backgroundColor: "#1F299C" }}
+                style={{ backgroundColor: "#1C4339" }}
               >
                 Send
               </button>
@@ -123,7 +123,7 @@ const Contact = () => {
 
           <p className="mt-10 text-center text-sm" style={{ color: "#6B6B6B" }}>
             Not ready for a form? Email us directly at{" "}
-            <a href="mailto:hello@re-rooted.com" className="font-semibold hover:underline" style={{ color: "#3DA776" }}>
+            <a href="mailto:hello@re-rooted.com" className="font-semibold hover:underline" style={{ color: "#2C6A58" }}>
               hello@re-rooted.com
             </a>
           </p>

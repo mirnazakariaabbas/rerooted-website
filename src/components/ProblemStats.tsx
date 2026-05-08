@@ -189,7 +189,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
               return (
                 <motion.div
                   key={i}
-                  className={`${common} bg-[#FAF9F6] flex flex-col justify-between p-6 md:p-8`}
+                  className={`${common} bg-[#F5F2EA] flex flex-col justify-between p-6 md:p-8`}
                   initial={{ opacity: 0, y: 24 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.06 }}

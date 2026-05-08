@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
 
-const Section = ({ children, className = "", bg = "#FAF9F6" }: { children: React.ReactNode; className?: string; bg?: string }) => {
+const Section = ({ children, className = "", bg = "#F5F2EA" }: { children: React.ReactNode; className?: string; bg?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
@@ -30,19 +30,19 @@ const About = () => (
     <StickyNav />
 
     {/* Hero */}
-    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "#1F299C" }}>
+    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "#1C4339" }}>
       <div className="container mx-auto max-w-4xl text-center">
         <h1 className="text-white font-black text-4xl md:text-5xl leading-tight" style={{ fontWeight: 900 }}>
           Built from experience. Designed for yours.
         </h1>
-        <p className="mt-4 text-lg italic" style={{ color: "#3DA776" }}>
+        <p className="mt-4 text-lg italic" style={{ color: "#2C6A58" }}>
           The human side of relocation
         </p>
       </div>
     </section>
 
     {/* The Story */}
-    <Section className="py-20" bg="#FAF9F6">
+    <Section className="py-20" bg="#F5F2EA">
       <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-5 gap-12 items-start">
         <div className="md:col-span-2 aspect-[3/4] w-full max-w-md mx-auto rounded-2xl bg-muted flex items-center justify-center">
           <span className="text-muted-foreground text-lg font-semibold">Photo</span>
@@ -81,7 +81,7 @@ const About = () => (
     </Section>
 
     {/* Mission */}
-    <Section className="py-20" bg="#FAF9F6">
+    <Section className="py-20" bg="#F5F2EA">
       <div className="container mx-auto max-w-3xl">
         <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-6" style={{ color: "#1A1A1A", fontWeight: 800 }}>
           We don't replace your mobility program. We complete it.
@@ -109,7 +109,7 @@ const About = () => (
           <Link
             to="/contact"
             className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: "#1F299C" }}
+            style={{ backgroundColor: "#1C4339" }}
           >
             Start a conversation →
           </Link>
