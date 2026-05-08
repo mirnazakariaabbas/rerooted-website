@@ -304,6 +304,7 @@ const AssessmentPage = () => {
           </div>
         </>
       )}
+      </div>
     </motion.div>
   );
 };
