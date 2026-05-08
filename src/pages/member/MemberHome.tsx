@@ -105,10 +105,6 @@ const MemberHome = () => {
   const currentMilestone = reflectionMilestones.find(m => reflections.length < m) || 100;
   const milestonePct = Math.min((reflections.length / currentMilestone) * 100, 100);
 
-  const assessmentTrend = (assessments as any[]).map(a => ({
-    date: new Date(a.completed_at).toLocaleDateString('en', { month: 'short', day: 'numeric' }),
-    score: a.score,
-  }));
 
   const handleReflection = () => {
     if (reflectionText.trim()) {
