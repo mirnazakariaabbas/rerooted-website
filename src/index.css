@@ -270,3 +270,38 @@
   background-color: rgba(23, 56, 47, 0.85);
   border-color: rgba(255, 255, 255, 0.12);
 }
+
+/* ===== Adaptive-nav overrides for the original Deep Blue palette ===== */
+.theme-original .adaptive-nav { color: #1F299C; }
+.theme-original .adaptive-nav.on-blue { color: #FFFFFF; }
+.theme-original .adaptive-nav.solid {
+  background-color: rgba(250, 249, 246, 0.92);
+  border-bottom-color: rgba(31, 41, 156, 0.14);
+}
+.theme-original .adaptive-nav.solid.on-blue {
+  background-color: rgba(20, 26, 107, 0.75);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+.theme-original .adaptive-nav__cta { background-color: #1F299C; color: #FAF9F6; }
+.theme-original .adaptive-nav__cta:hover { background-color: rgba(31, 41, 156, 0.9); }
+.theme-original .adaptive-nav.on-blue .adaptive-nav__cta { background-color: #FFFFFF; color: #1F299C; }
+.theme-original .adaptive-nav__icon-btn {
+  border-color: rgba(31, 41, 156, 0.2);
+  background-color: rgba(31, 41, 156, 0.05);
+}
+.theme-original .adaptive-nav__icon-btn:hover { background-color: rgba(31, 41, 156, 0.1); }
+.theme-original .adaptive-nav__toggle {
+  background-color: rgba(31, 41, 156, 0.1);
+  border-color: rgba(31, 41, 156, 0.15);
+}
+.theme-original .adaptive-nav__toggle-label { color: rgba(31, 41, 156, 0.7); }
+.theme-original .adaptive-nav__toggle-label.is-active { color: #1F299C; }
+.theme-original .adaptive-nav.on-blue .adaptive-nav__toggle-label.is-active { color: #1F299C; }
+.theme-original .adaptive-nav__mobile {
+  background-color: rgba(250, 249, 246, 0.95);
+  border-color: rgba(31, 41, 156, 0.14);
+}
+.theme-original .adaptive-nav.on-blue .adaptive-nav__mobile {
+  background-color: rgba(20, 26, 107, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+}
