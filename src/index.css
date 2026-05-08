@@ -4,51 +4,52 @@
 
 @layer base {
   :root {
-    --background: 40 33% 97%;
-    --foreground: 0 0% 10%;
+    /* Re-Rooted® palette trial — Alpine Green primary */
+    --background: 44 33% 94%;          /* Bone White #F5F2EA */
+    --foreground: 140 8% 11%;          /* Graphite Ink #1B1F1C */
 
-    --card: 267 30% 95%;
-    --card-foreground: 0 0% 10%;
+    --card: 60 21% 96%;                /* Snow White #F7F7F3 */
+    --card-foreground: 140 8% 11%;
 
-    --popover: 40 33% 97%;
-    --popover-foreground: 0 0% 10%;
+    --popover: 60 21% 96%;
+    --popover-foreground: 140 8% 11%;
 
-    --primary: 233 67% 37%;
-    --primary-foreground: 40 33% 97%;
+    --primary: 167 41% 19%;            /* Alpine Green #1C4339 */
+    --primary-foreground: 60 21% 96%;
 
-    --secondary: 153 45% 45%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 162 41% 29%;          /* Structured Emerald #2C6A58 */
+    --secondary-foreground: 60 21% 96%;
 
-    --muted: 267 30% 95%;
-    --muted-foreground: 0 0% 42%;
+    --muted: 140 6% 86%;               /* Fog Grey #D8DCD9 */
+    --muted-foreground: 145 7% 32%;    /* Slate #4C5751 */
 
-    --accent: 267 27% 76%;
-    --accent-foreground: 233 67% 37%;
+    --accent: 30 33% 49%;              /* Warm Brass #A67C52 */
+    --accent-foreground: 60 21% 96%;
 
-    --destructive: 0 52% 58%;
+    --destructive: 0 52% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --warning: 36 80% 56%;
+    --warning: 30 33% 49%;             /* Warm Brass */
     --warning-foreground: 0 0% 100%;
 
-    --success: 153 45% 45%;
+    --success: 162 41% 29%;            /* Structured Emerald */
     --success-foreground: 0 0% 100%;
 
-    --border: 260 15% 88%;
-    --input: 260 15% 88%;
-    --ring: 233 67% 37%;
+    --border: 140 6% 86%;
+    --input: 140 6% 86%;
+    --ring: 167 41% 19%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 233 67% 37%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 153 45% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 233 50% 44%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 233 50% 30%;
-    --sidebar-ring: 40 33% 97%;
-    --sidebar-muted: 233 40% 50%;
+    --sidebar-background: 165 42% 16%; /* Dark Pine Ledger #17382F */
+    --sidebar-foreground: 60 21% 96%;
+    --sidebar-primary: 30 33% 49%;     /* Warm Brass */
+    --sidebar-primary-foreground: 60 21% 96%;
+    --sidebar-accent: 167 41% 19%;     /* Alpine Green */
+    --sidebar-accent-foreground: 60 21% 96%;
+    --sidebar-border: 165 42% 12%;
+    --sidebar-ring: 60 21% 96%;
+    --sidebar-muted: 162 30% 25%;
   }
 
   .dark {
@@ -108,7 +109,7 @@
     color 0.3s ease,
     -webkit-backdrop-filter 0.3s ease,
     backdrop-filter 0.3s ease;
-  color: #1F299C;
+  color: #1C4339;
 }
 
 .adaptive-nav.on-blue {
@@ -117,13 +118,13 @@
 
 .adaptive-nav.solid {
   background-color: rgba(250, 249, 246, 0.92);
-  border-bottom-color: rgba(31, 41, 156, 0.14);
+  border-bottom-color: rgba(28, 67, 57, 0.14);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
   backdrop-filter: saturate(160%) blur(14px);
 }
 
 .adaptive-nav.solid.on-blue {
-  background-color: rgba(20, 26, 107, 0.75);
+  background-color: rgba(23, 56, 47, 0.75);
   border-bottom-color: rgba(255, 255, 255, 0.12);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
   backdrop-filter: saturate(160%) blur(14px);
@@ -154,26 +155,26 @@
 
 /* CTA / icon button states */
 .adaptive-nav__cta {
-  background-color: #1F299C;
-  color: #FAF9F6;
+  background-color: #1C4339;
+  color: #F5F2EA;
 }
 .adaptive-nav__cta:hover {
-  background-color: rgba(31, 41, 156, 0.9);
+  background-color: rgba(28, 67, 57, 0.9);
 }
 .adaptive-nav.on-blue .adaptive-nav__cta {
   background-color: #FFFFFF;
-  color: #1F299C;
+  color: #1C4339;
 }
 .adaptive-nav.on-blue .adaptive-nav__cta:hover {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
 .adaptive-nav__icon-btn {
-  border-color: rgba(31, 41, 156, 0.2);
-  background-color: rgba(31, 41, 156, 0.05);
+  border-color: rgba(28, 67, 57, 0.2);
+  background-color: rgba(28, 67, 57, 0.05);
 }
 .adaptive-nav__icon-btn:hover {
-  background-color: rgba(31, 41, 156, 0.1);
+  background-color: rgba(28, 67, 57, 0.1);
 }
 .adaptive-nav.on-blue .adaptive-nav__icon-btn {
   border-color: rgba(255, 255, 255, 0.2);
@@ -185,8 +186,8 @@
 
 /* Audience toggle */
 .adaptive-nav__toggle {
-  background-color: rgba(31, 41, 156, 0.1);
-  border: 1px solid rgba(31, 41, 156, 0.15);
+  background-color: rgba(28, 67, 57, 0.1);
+  border: 1px solid rgba(28, 67, 57, 0.15);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .adaptive-nav.on-blue .adaptive-nav__toggle {
@@ -197,28 +198,28 @@
   background-color: #FFFFFF;
 }
 .adaptive-nav__toggle-label {
-  color: rgba(31, 41, 156, 0.7);
+  color: rgba(28, 67, 57, 0.7);
   transition: color 0.3s ease;
 }
 .adaptive-nav__toggle-label.is-active {
-  color: #1F299C;
+  color: #1C4339;
 }
 .adaptive-nav.on-blue .adaptive-nav__toggle-label {
   color: rgba(255, 255, 255, 0.8);
 }
 .adaptive-nav.on-blue .adaptive-nav__toggle-label.is-active {
-  color: #1F299C;
+  color: #1C4339;
 }
 
 /* Mobile drawer matches mode */
 .adaptive-nav__mobile {
   background-color: rgba(250, 249, 246, 0.95);
-  border-color: rgba(31, 41, 156, 0.14);
+  border-color: rgba(28, 67, 57, 0.14);
   -webkit-backdrop-filter: saturate(140%) blur(14px);
   backdrop-filter: saturate(140%) blur(14px);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .adaptive-nav.on-blue .adaptive-nav__mobile {
-  background-color: rgba(20, 26, 107, 0.85);
+  background-color: rgba(23, 56, 47, 0.85);
   border-color: rgba(255, 255, 255, 0.12);
 }
