@@ -109,12 +109,6 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
       caption: "Considered leaving their employer because of relocation stress.",
     },
     {
-      kind: "image",
-      src: cityImg,
-      eyebrow: " ",
-      tagline: "Roots that travel with you",
-    },
-    {
       kind: "stat-cream",
       number: (
         <>
@@ -123,6 +117,12 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
         </>
       ),
       caption: "Of expats report burnout symptoms during international assignments.",
+    },
+    {
+      kind: "image",
+      src: cityImg,
+      eyebrow: " ",
+      tagline: "Roots that travel with you",
     },
     {
       kind: "image",
