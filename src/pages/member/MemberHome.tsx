@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import DimensionDetail from '@/components/home/DimensionDetail';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
+import { ActionTile } from '@/components/layout/ActionTile';
 
 const MemberHome = () => {
   const { user, reflections, addReflection, dimensionProgress } = useUser();
@@ -434,7 +435,5 @@ function StatRow({
     </div>
   );
 }
-
-import { ActionTile } from '@/components/layout/ActionTile';
 
 export default MemberHome;
