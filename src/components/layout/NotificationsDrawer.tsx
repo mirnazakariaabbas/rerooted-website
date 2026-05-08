@@ -59,7 +59,7 @@ export function NotificationsDrawer({ open, onOpenChange }: { open: boolean; onO
       <SheetContent className="w-full sm:max-w-md">
         <SheetHeader>
           <div className="flex items-center justify-between">
-            <SheetTitle className="text-lg font-display font-bold">
+            <SheetTitle className="text-lg font-display font-black">
               Notifications
               {unreadCount > 0 && (
                 <Badge className="ml-2 bg-destructive text-destructive-foreground text-xs">{unreadCount}</Badge>

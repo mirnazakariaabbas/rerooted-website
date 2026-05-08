@@ -149,7 +149,7 @@ const AdminUsersPage = () => {
       className="p-8 lg:p-12 max-w-6xl mx-auto"
     >
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-foreground">Admin Users</h1>
+        <h1 className="text-3xl font-display font-black text-foreground">Admin Users</h1>
         <p className="text-muted-foreground mt-1">Manage admin access levels and approvals</p>
       </div>
 

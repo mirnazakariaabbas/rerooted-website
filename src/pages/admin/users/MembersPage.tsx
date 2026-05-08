@@ -105,7 +105,7 @@ const MembersPage = () => {
       className="p-8 lg:p-12 max-w-6xl mx-auto"
     >
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-foreground">Members</h1>
+        <h1 className="text-3xl font-display font-black text-foreground">Members</h1>
         <p className="text-muted-foreground mt-1">Signed-up users and their coaching status</p>
       </div>
 
@@ -186,7 +186,7 @@ const MembersPage = () => {
           {drawerProfile && (
             <>
               <SheetHeader className="mb-6">
-                <SheetTitle className="text-xl font-display font-bold">{drawerProfile.full_name || 'Unknown'}</SheetTitle>
+                <SheetTitle className="text-xl font-display font-black">{drawerProfile.full_name || 'Unknown'}</SheetTitle>
                 <div className="flex gap-2 mt-2">
                   <Badge className={`text-xs ${statusColor[drawerProfile.approval_status]}`}>{drawerProfile.approval_status}</Badge>
                   <Badge variant="outline" className="text-xs">{drawerProfile.user_type}</Badge>

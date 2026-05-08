@@ -198,7 +198,7 @@ export function AppSidebar() {
             <img src={logoWordmarkWhite} alt="Re-Rooted®" className="h-8 w-auto object-contain" />
           </a>
         ) : (
-          <a href="/" className="text-lg font-display font-bold text-sidebar-foreground text-center block hover:opacity-80 transition-opacity">R</a>
+          <a href="/" className="text-lg font-display font-black text-sidebar-foreground text-center block hover:opacity-80 transition-opacity">R</a>
         )}
       </SidebarHeader>
 

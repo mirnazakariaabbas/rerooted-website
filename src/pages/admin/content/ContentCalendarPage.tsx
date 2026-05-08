@@ -124,7 +124,7 @@ export default function ContentCalendarPage() {
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-display font-bold text-foreground">Content Calendar</h1>
+          <h1 className="text-2xl font-display font-black text-foreground">Content Calendar</h1>
           <p className="text-sm text-muted-foreground mt-1">Plan and schedule your content pipeline</p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>

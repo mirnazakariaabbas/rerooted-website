@@ -113,7 +113,7 @@ const AutomatedEmailsPage = () => {
       className="p-8 lg:p-12 max-w-6xl mx-auto"
     >
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-foreground">Automated Emails</h1>
+        <h1 className="text-3xl font-display font-black text-foreground">Automated Emails</h1>
         <p className="text-muted-foreground mt-1">Manage triggered email templates for your platform</p>
       </div>
 
@@ -163,7 +163,7 @@ const AutomatedEmailsPage = () => {
           {selectedTemplate && (
             <>
               <SheetHeader className="mb-6">
-                <SheetTitle className="text-xl font-display font-bold">{selectedTemplate.name}</SheetTitle>
+                <SheetTitle className="text-xl font-display font-black">{selectedTemplate.name}</SheetTitle>
                 <p className="text-sm text-muted-foreground">{selectedTemplate.trigger}</p>
               </SheetHeader>
 

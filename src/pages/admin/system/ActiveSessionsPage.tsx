@@ -62,7 +62,7 @@ const ActiveSessionsPage = () => {
     >
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">Active Sessions</h1>
+          <h1 className="text-3xl font-display font-black text-foreground">Active Sessions</h1>
           <p className="text-muted-foreground mt-1">Monitor and manage active user sessions</p>
         </div>
         <Button variant="outline" size="sm" onClick={fetchSessions}>
@@ -76,7 +76,7 @@ const ActiveSessionsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Active Now</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{activeSessions.length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{activeSessions.length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-success/10 flex items-center justify-center">
                 <Wifi className="h-5 w-5 text-success" />
@@ -89,7 +89,7 @@ const ActiveSessionsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Total Tracked</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{sessions.length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{sessions.length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
                 <Monitor className="h-5 w-5 text-primary" />
@@ -102,7 +102,7 @@ const ActiveSessionsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Terminated</p>
-                <p className="text-3xl font-display font-bold text-foreground mt-1">{sessions.filter(s => !s.is_active).length}</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">{sessions.filter(s => !s.is_active).length}</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-destructive/10 flex items-center justify-center">
                 <WifiOff className="h-5 w-5 text-destructive" />

@@ -17,7 +17,7 @@ const PendingApproval = () => {
     <div className="min-h-screen flex items-center justify-center bg-background px-6">
       <div className="max-w-md text-center space-y-6">
         <Clock className="h-16 w-16 text-primary mx-auto" />
-        <h1 className="text-2xl font-display font-bold text-foreground">Account Pending Approval</h1>
+        <h1 className="text-2xl font-display font-black text-foreground">Account Pending Approval</h1>
         <p className="text-muted-foreground">
           Your account is being reviewed by an administrator. You'll receive access once approved.
         </p>

@@ -91,7 +91,7 @@ export default function MarketingAnalyticsPage() {
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="p-6 lg:p-8 space-y-6">
       <div>
-        <h1 className="text-2xl font-display font-bold text-foreground">Marketing Analytics</h1>
+        <h1 className="text-2xl font-display font-black text-foreground">Marketing Analytics</h1>
         <p className="text-sm text-muted-foreground mt-1">Subscriber growth, email performance, and content metrics</p>
       </div>
 

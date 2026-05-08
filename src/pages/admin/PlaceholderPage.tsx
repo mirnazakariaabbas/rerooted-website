@@ -17,7 +17,7 @@ const PlaceholderPage = ({ title, description }: PlaceholderPageProps) => (
       <div className="h-16 w-16 rounded-2xl bg-muted flex items-center justify-center mb-6">
         <Construction className="h-8 w-8 text-muted-foreground" />
       </div>
-      <h1 className="text-2xl font-display font-bold text-foreground mb-2">{title}</h1>
+      <h1 className="text-2xl font-display font-black text-foreground mb-2">{title}</h1>
       <p className="text-muted-foreground max-w-md">{description}</p>
     </div>
   </motion.div>
