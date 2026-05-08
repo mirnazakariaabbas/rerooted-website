@@ -136,47 +136,63 @@ const CulturalCompanion = () => {
             <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Overview</CardTitle></CardHeader>
             <CardContent><p className="text-sm leading-relaxed text-foreground/80">{comparison.summary}</p></CardContent>
           </Card>
-          <div className="space-y-2">
-            {comparison.dimensions.map((dim: any) => {
+          <div className="space-y-3">
+            {comparison.dimensions.map((dim: any, idx: number) => {
               const expanded = expandedDim === dim.id;
-              // If swapped, score_a in DB is actually hostCountry and score_b is homeCountry
               const homeScore = swapped ? dim.score_b : dim.score_a;
               const hostScore = swapped ? dim.score_a : dim.score_b;
+              const tones = ['primary', 'cream', 'secondary', 'accent'] as const;
+              const tone = tones[idx % tones.length];
+              const toneClass =
+                tone === 'primary' ? 'bg-primary text-primary-foreground' :
+                tone === 'secondary' ? 'bg-secondary text-secondary-foreground' :
+                tone === 'accent' ? 'bg-accent text-accent-foreground' :
+                'bg-card text-foreground border border-border';
               return (
-                <Card key={dim.id} className="border border-border overflow-hidden">
-                  <button className="w-full text-left p-4 flex items-center justify-between" onClick={() => setExpandedDim(expanded ? null : dim.id)}>
-                    <span className="font-medium text-sm">{dim.name}</span>
-                    {expanded ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                <div key={dim.id} className={cn('rounded-2xl overflow-hidden transition-colors', toneClass)}>
+                  <button
+                    className="w-full text-left p-5 flex items-center gap-4"
+                    onClick={() => setExpandedDim(expanded ? null : dim.id)}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="text-lg font-[900] tracking-tight leading-tight">{dim.name}</div>
+                      <div className="text-xs opacity-80 mt-1">
+                        {homeCountry} {homeScore}/10 · {hostCountry} {hostScore}/10
+                      </div>
+                    </div>
+                    {expanded
+                      ? <ChevronUp className="h-5 w-5 opacity-70 shrink-0" />
+                      : <ChevronDown className="h-5 w-5 opacity-70 shrink-0" />}
                   </button>
                   {expanded && (
-                    <CardContent className="pt-0 pb-4 px-4">
+                    <div className="px-5 pb-5 -mt-1">
                       <div className="space-y-3 mb-4">
                         <div>
-                          <div className="flex justify-between text-xs mb-1">
-                            <span className="font-medium">{homeCountry}</span>
-                            <span className="text-muted-foreground">{homeScore}/10 · {dim.scale_low} → {dim.scale_high}</span>
+                          <div className="flex justify-between text-xs mb-1 opacity-90">
+                            <span className="font-semibold">{homeCountry}</span>
+                            <span>{homeScore}/10 · {dim.scale_low} → {dim.scale_high}</span>
                           </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-accent rounded-full transition-all" style={{ width: `${homeScore * 10}%` }} />
+                          <div className="h-2 bg-background/30 rounded-full overflow-hidden">
+                            <div className="h-full bg-current rounded-full opacity-80 transition-all" style={{ width: `${homeScore * 10}%` }} />
                           </div>
                         </div>
                         <div>
-                          <div className="flex justify-between text-xs mb-1">
-                            <span className="font-medium">{hostCountry}</span>
-                            <span className="text-muted-foreground">{hostScore}/10</span>
+                          <div className="flex justify-between text-xs mb-1 opacity-90">
+                            <span className="font-semibold">{hostCountry}</span>
+                            <span>{hostScore}/10</span>
                           </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${hostScore * 10}%` }} />
+                          <div className="h-2 bg-background/30 rounded-full overflow-hidden">
+                            <div className="h-full bg-current rounded-full opacity-80 transition-all" style={{ width: `${hostScore * 10}%` }} />
                           </div>
                         </div>
                       </div>
-                      <p className="text-sm text-foreground/80 mb-3">{dim.explanation}</p>
-                      <div className="bg-muted rounded-lg p-3">
-                        <p className="text-xs italic text-foreground/70">💡 {dim.tip}</p>
+                      <p className="text-sm opacity-90 mb-3">{dim.explanation}</p>
+                      <div className="bg-background/20 rounded-xl p-3">
+                        <p className="text-xs italic opacity-90">💡 {dim.tip}</p>
                       </div>
-                    </CardContent>
+                    </div>
                   )}
-                </Card>
+                </div>
               );
             })}
           </div>
