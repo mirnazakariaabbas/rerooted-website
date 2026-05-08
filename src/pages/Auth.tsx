@@ -21,7 +21,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [userType, setUserType] = useState<UserType>("individual");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [keepSignedIn, setKeepSignedIn] = useState(true);
   const [pending, setPending] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { signUp, signIn, resetPassword } = useAuth();
