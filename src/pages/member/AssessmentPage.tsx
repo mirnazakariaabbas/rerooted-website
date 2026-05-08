@@ -232,10 +232,13 @@ const AssessmentPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto"
+      className="pb-24"
     >
-      <h1 className="text-3xl font-[900] tracking-tight mb-2">Relocation Complexity Score</h1>
-      <p className="text-sm text-muted-foreground mb-10">Understand the full complexity of your relocation</p>
+      <PageHeader
+        title="Relocation Complexity Score"
+        subtitle="Understand the full complexity of your relocation"
+      />
+      <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
 
       {!assessment ? (
         <Card className="border border-border">
