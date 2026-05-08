@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 import DimensionDetail from '@/components/home/DimensionDetail';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
-import { ActionTile } from '@/components/layout/ActionTile';
 
 const MemberHome = () => {
   const { user, reflections, addReflection, dimensionProgress } = useUser();
@@ -433,6 +432,38 @@ function StatRow({
       </div>
       {trailing}
     </div>
+  );
+}
+
+function ActionTile({
+  title, subtitle, icon, tone, onClick,
+}: {
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  tone: 'primary' | 'secondary' | 'accent' | 'cream';
+  onClick: () => void;
+}) {
+  const styles: Record<string, string> = {
+    primary: 'bg-primary text-primary-foreground',
+    secondary: 'bg-secondary text-secondary-foreground',
+    accent: 'bg-accent text-accent-foreground',
+    cream: 'bg-card text-foreground border border-border',
+  };
+  return (
+    <motion.button
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.99 }}
+      onClick={onClick}
+      className={`w-full text-left rounded-2xl p-5 flex items-center gap-4 transition-colors ${styles[tone]}`}
+    >
+      <div className="flex-1 min-w-0">
+        <div className="text-lg font-[900] tracking-tight leading-tight">{title}</div>
+        <div className="text-xs opacity-80 mt-1">{subtitle}</div>
+      </div>
+      <div className="shrink-0 opacity-90">{icon}</div>
+      <ArrowRight className="h-4 w-4 opacity-60 shrink-0" />
+    </motion.button>
   );
 }
 
