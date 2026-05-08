@@ -60,6 +60,7 @@ import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
 import CookieBanner from "./components/CookieBanner";
 import ScrollToTop from "./components/ScrollToTop";
+import PaletteToggle from "./components/PaletteToggle";
 
 const queryClient = new QueryClient();
 
