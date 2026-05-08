@@ -12,7 +12,8 @@ import logoWhite from "@/assets/logo-wordmark-white.png";
 type Mode = "signin" | "signup" | "forgot";
 type UserType = "individual" | "organization";
 
-const STORAGE_KEY = "rerooted_remember";
+const STORAGE_KEY = "rerooted_remember_email";
+const KEEP_FLAG_KEY = "rerooted_keep_signed_in";
 
 const Auth = () => {
   const [mode, setMode] = useState<Mode>("signin");
