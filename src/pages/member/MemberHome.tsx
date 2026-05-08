@@ -332,29 +332,6 @@ const MemberHome = () => {
           </section>
         )}
 
-        {/* ============ Assessment Trend ============ */}
-        {assessmentTrend.length > 0 && (
-          <section className="mb-10">
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3 flex items-center gap-2">
-              <TrendingUp className="h-3.5 w-3.5" /> Score Trend
-            </p>
-            <Card className="border-0 bg-muted rounded-3xl">
-              <CardContent className="p-6">
-                <div className="h-48">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={assessmentTrend}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                      <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} />
-                      <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="score" stroke="hsl(var(--primary))" strokeWidth={2.5} dot={{ r: 4 }} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
-          </section>
-        )}
 
         {/* ============ Weekly Reflection ============ */}
         <section id="weekly-reflection" className="mb-10">
