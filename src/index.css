@@ -4,65 +4,6 @@
 
 @layer base {
   :root {
-    /* Re-Rooted® palette trial — Alpine Green primary */
-    --background: 44 33% 94%;          /* Bone White #F5F2EA */
-    --foreground: 140 8% 11%;          /* Graphite Ink #1B1F1C */
-
-    --card: 60 21% 96%;                /* Snow White #F7F7F3 */
-    --card-foreground: 140 8% 11%;
-
-    --popover: 60 21% 96%;
-    --popover-foreground: 140 8% 11%;
-
-    --primary: 167 41% 19%;            /* Alpine Green #1C4339 */
-    --primary-foreground: 60 21% 96%;
-
-    --secondary: 162 41% 29%;          /* Structured Emerald #2C6A58 */
-    --secondary-foreground: 60 21% 96%;
-
-    --muted: 140 6% 86%;               /* Fog Grey #D8DCD9 */
-    --muted-foreground: 145 7% 32%;    /* Slate #4C5751 */
-
-    --accent: 30 33% 49%;              /* Warm Brass #A67C52 */
-    --accent-foreground: 60 21% 96%;
-
-    --destructive: 0 52% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --warning: 30 33% 49%;             /* Warm Brass */
-    --warning-foreground: 0 0% 100%;
-
-    --success: 162 41% 29%;            /* Structured Emerald */
-    --success-foreground: 0 0% 100%;
-
-    --border: 140 6% 86%;
-    --input: 140 6% 86%;
-    --ring: 167 41% 19%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 165 42% 16%; /* Dark Pine Ledger #17382F */
-    --sidebar-foreground: 60 21% 96%;
-    --sidebar-primary: 30 33% 49%;     /* Warm Brass */
-    --sidebar-primary-foreground: 60 21% 96%;
-    --sidebar-accent: 167 41% 19%;     /* Alpine Green */
-    --sidebar-accent-foreground: 60 21% 96%;
-    --sidebar-border: 165 42% 12%;
-    --sidebar-ring: 60 21% 96%;
-    --sidebar-muted: 162 30% 25%;
-
-    /* ===== Brand hex tokens (used by inline styles) — Alpine ===== */
-    --brand-deep: #1C4339;     /* Alpine Green   (was Deep Blue #1F299C) */
-    --brand-accent: #2C6A58;   /* Emerald        (was Fresh Green #3DA776) */
-    --brand-surface: #F5F2EA;  /* Bone White     (was Warm White #FAF9F6) */
-    --brand-ink: #1B1F1C;      /* Graphite Ink   (was #1A1A1A) */
-    --brand-mute: #4C5751;     /* Slate          (was #6B6B6B) */
-    --brand-soft: #D8DCD9;     /* Fog Grey       (was Lavender #BCADD4) */
-    --brand-dark: #17382F;     /* Dark Pine      (was near-black #0A0A0A) */
-  }
-
-  /* ===== Original Re-Rooted® palette (Deep Blue) ===== */
-  .theme-original {
     --background: 40 33% 97%;
     --foreground: 0 0% 10%;
 
@@ -97,6 +38,8 @@
     --input: 260 15% 88%;
     --ring: 233 67% 37%;
 
+    --radius: 0.5rem;
+
     --sidebar-background: 233 67% 37%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 153 45% 45%;
@@ -106,15 +49,6 @@
     --sidebar-border: 233 50% 30%;
     --sidebar-ring: 40 33% 97%;
     --sidebar-muted: 233 40% 50%;
-
-    /* Brand hex tokens — Original Re-Rooted® */
-    --brand-deep: #1F299C;
-    --brand-accent: #3DA776;
-    --brand-surface: #FAF9F6;
-    --brand-ink: #1A1A1A;
-    --brand-mute: #6B6B6B;
-    --brand-soft: #BCADD4;
-    --brand-dark: #0A0A0A;
   }
 
   .dark {
@@ -159,22 +93,6 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    background-image:
-      /* fine grain noise */
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>"),
-      /* soft warm vignette */
-      radial-gradient(1200px 800px at 15% -10%, hsl(var(--primary) / 0.05), transparent 60%),
-      radial-gradient(1000px 700px at 110% 20%, hsl(var(--secondary) / 0.05), transparent 65%);
-    background-attachment: fixed, fixed, fixed;
-    background-size: 220px 220px, auto, auto;
-    background-blend-mode: multiply, normal, normal;
-  }
-
-  /* Subtle paper texture on solid surfaces (cards, headers, etc.) */
-  .texture-paper {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
-    background-size: 180px 180px;
-    background-blend-mode: overlay;
   }
 }
 
@@ -190,7 +108,7 @@
     color 0.3s ease,
     -webkit-backdrop-filter 0.3s ease,
     backdrop-filter 0.3s ease;
-  color: #1C4339;
+  color: #1F299C;
 }
 
 .adaptive-nav.on-blue {
@@ -199,13 +117,13 @@
 
 .adaptive-nav.solid {
   background-color: rgba(250, 249, 246, 0.92);
-  border-bottom-color: rgba(28, 67, 57, 0.14);
+  border-bottom-color: rgba(31, 41, 156, 0.14);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
   backdrop-filter: saturate(160%) blur(14px);
 }
 
 .adaptive-nav.solid.on-blue {
-  background-color: rgba(23, 56, 47, 0.75);
+  background-color: rgba(20, 26, 107, 0.75);
   border-bottom-color: rgba(255, 255, 255, 0.12);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
   backdrop-filter: saturate(160%) blur(14px);
@@ -236,26 +154,26 @@
 
 /* CTA / icon button states */
 .adaptive-nav__cta {
-  background-color: #1C4339;
-  color: #F5F2EA;
+  background-color: #1F299C;
+  color: #FAF9F6;
 }
 .adaptive-nav__cta:hover {
-  background-color: rgba(28, 67, 57, 0.9);
+  background-color: rgba(31, 41, 156, 0.9);
 }
 .adaptive-nav.on-blue .adaptive-nav__cta {
   background-color: #FFFFFF;
-  color: #1C4339;
+  color: #1F299C;
 }
 .adaptive-nav.on-blue .adaptive-nav__cta:hover {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
 .adaptive-nav__icon-btn {
-  border-color: rgba(28, 67, 57, 0.2);
-  background-color: rgba(28, 67, 57, 0.05);
+  border-color: rgba(31, 41, 156, 0.2);
+  background-color: rgba(31, 41, 156, 0.05);
 }
 .adaptive-nav__icon-btn:hover {
-  background-color: rgba(28, 67, 57, 0.1);
+  background-color: rgba(31, 41, 156, 0.1);
 }
 .adaptive-nav.on-blue .adaptive-nav__icon-btn {
   border-color: rgba(255, 255, 255, 0.2);
@@ -267,8 +185,8 @@
 
 /* Audience toggle */
 .adaptive-nav__toggle {
-  background-color: rgba(28, 67, 57, 0.1);
-  border: 1px solid rgba(28, 67, 57, 0.15);
+  background-color: rgba(31, 41, 156, 0.1);
+  border: 1px solid rgba(31, 41, 156, 0.15);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .adaptive-nav.on-blue .adaptive-nav__toggle {
@@ -279,115 +197,28 @@
   background-color: #FFFFFF;
 }
 .adaptive-nav__toggle-label {
-  color: rgba(28, 67, 57, 0.7);
+  color: rgba(31, 41, 156, 0.7);
   transition: color 0.3s ease;
 }
 .adaptive-nav__toggle-label.is-active {
-  color: #1C4339;
+  color: #1F299C;
 }
 .adaptive-nav.on-blue .adaptive-nav__toggle-label {
   color: rgba(255, 255, 255, 0.8);
 }
 .adaptive-nav.on-blue .adaptive-nav__toggle-label.is-active {
-  color: #1C4339;
+  color: #1F299C;
 }
 
 /* Mobile drawer matches mode */
 .adaptive-nav__mobile {
   background-color: rgba(250, 249, 246, 0.95);
-  border-color: rgba(28, 67, 57, 0.14);
+  border-color: rgba(31, 41, 156, 0.14);
   -webkit-backdrop-filter: saturate(140%) blur(14px);
   backdrop-filter: saturate(140%) blur(14px);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .adaptive-nav.on-blue .adaptive-nav__mobile {
-  background-color: rgba(23, 56, 47, 0.85);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-/* ===== Adaptive-nav overrides for the original Deep Blue palette ===== */
-.theme-original .adaptive-nav { color: #1F299C; }
-.theme-original .adaptive-nav.on-blue { color: #FFFFFF; }
-.theme-original .adaptive-nav.solid {
-  background-color: rgba(250, 249, 246, 0.92);
-  border-bottom-color: rgba(31, 41, 156, 0.14);
-}
-.theme-original .adaptive-nav.solid.on-blue {
-  background-color: rgba(20, 26, 107, 0.75);
-  border-bottom-color: rgba(255, 255, 255, 0.12);
-}
-.theme-original .adaptive-nav__cta { background-color: #1F299C; color: #FAF9F6; }
-.theme-original .adaptive-nav__cta:hover { background-color: rgba(31, 41, 156, 0.9); }
-.theme-original .adaptive-nav.on-blue .adaptive-nav__cta { background-color: #FFFFFF; color: #1F299C; }
-.theme-original .adaptive-nav__icon-btn {
-  border-color: rgba(31, 41, 156, 0.2);
-  background-color: rgba(31, 41, 156, 0.05);
-}
-.theme-original .adaptive-nav__icon-btn:hover { background-color: rgba(31, 41, 156, 0.1); }
-.theme-original .adaptive-nav__toggle {
-  background-color: rgba(31, 41, 156, 0.1);
-  border-color: rgba(31, 41, 156, 0.15);
-}
-.theme-original .adaptive-nav__toggle-label { color: rgba(31, 41, 156, 0.7); }
-.theme-original .adaptive-nav__toggle-label.is-active { color: #1F299C; }
-.theme-original .adaptive-nav.on-blue .adaptive-nav__toggle-label.is-active { color: #1F299C; }
-.theme-original .adaptive-nav__mobile {
-  background-color: rgba(250, 249, 246, 0.95);
-  border-color: rgba(31, 41, 156, 0.14);
-}
-.theme-original .adaptive-nav.on-blue .adaptive-nav__mobile {
   background-color: rgba(20, 26, 107, 0.85);
   border-color: rgba(255, 255, 255, 0.12);
-}
-
-/* ===== Alpine theme: global grain overlay ===== */
-/* Sits above section backgrounds but below content (pointer-events: none).
-   Uses soft-light blend so dark surfaces get a subtle film-grain feel
-   and light surfaces get a paper-like tooth. */
-:root:not(.theme-original) body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  background-size: 240px 240px;
-  mix-blend-mode: soft-light;
-  opacity: 0.85;
-}
-
-/* Make sure interactive content sits above the grain layer */
-:root:not(.theme-original) body > * {
-  position: relative;
-  z-index: 2;
-}
-
-/* ===== Embroidered logo effect ===== */
-/* Mimics raised satin-stitch thread: tight bevel highlight on top-left,
-   soft shadow on bottom-right, plus a stitched outline. */
-.logo-embroidered {
-  filter:
-    drop-shadow(-0.5px -0.5px 0 rgba(255, 255, 255, 0.55))
-    drop-shadow(0.5px 0.5px 0 rgba(0, 0, 0, 0.35))
-    drop-shadow(1px 1.5px 0 rgba(0, 0, 0, 0.25))
-    drop-shadow(2px 3px 2.5px rgba(0, 0, 0, 0.35))
-    drop-shadow(0 0 0.4px rgba(0, 0, 0, 0.6));
-  transition: filter 0.3s ease, transform 0.3s ease;
-}
-.logo-embroidered:hover {
-  filter:
-    drop-shadow(-0.5px -0.5px 0 rgba(255, 255, 255, 0.65))
-    drop-shadow(0.5px 0.5px 0 rgba(0, 0, 0, 0.4))
-    drop-shadow(1.5px 2px 0 rgba(0, 0, 0, 0.3))
-    drop-shadow(3px 4px 4px rgba(0, 0, 0, 0.4));
-  transform: translateY(-0.5px);
-}
-/* When the nav is over a dark hero, flip the bevel highlight to read against blue */
-.adaptive-nav.on-blue .logo-embroidered {
-  filter:
-    drop-shadow(-0.5px -0.5px 0 rgba(255, 255, 255, 0.7))
-    drop-shadow(0.5px 0.5px 0 rgba(0, 0, 0, 0.5))
-    drop-shadow(1.5px 2px 0 rgba(0, 0, 0, 0.45))
-    drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.55))
-    brightness(0) invert(1);
 }

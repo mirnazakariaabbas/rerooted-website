@@ -11,10 +11,10 @@ const AboutSection = () => {
   const isIndividual = audience === "individual";
 
   return (
-    <section id="about" className={`px-6 lg:px-12 ${isIndividual ? "py-32" : "py-28"}`} style={{ background: "var(--brand-deep)" }}>
+    <section id="about" className={`px-6 lg:px-12 ${isIndividual ? "py-32" : "py-28"}`} style={{ background: "#1F299C" }}>
       <div className="max-w-6xl mx-auto">
         {/* Top-left section eyebrow header — aligned with previous section */}
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20" style={{ color: "var(--brand-accent)" }}>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20" style={{ color: "#3DA776" }}>
           Meet the Re-Rooted® founder
         </p>
 
@@ -44,7 +44,7 @@ const AboutSection = () => {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.7, ease: "easeOut", delay: 0.15 }}
         >
-          <h2 className="font-extrabold text-3xl md:text-[40px] leading-tight mb-6" style={{ color: "var(--brand-surface)" }}>
+          <h2 className="font-extrabold text-3xl md:text-[40px] leading-tight mb-6" style={{ color: "#FAF9F6" }}>
             {isIndividual ? (
               <>
                 I've been where
@@ -103,7 +103,7 @@ const AboutSection = () => {
           <Link
             to="/about"
             className="inline-block mt-6 font-semibold hover:underline underline-offset-4"
-            style={{ color: "var(--brand-accent)" }}
+            style={{ color: "#3DA776" }}
           >
             {isIndividual ? "Hear my story →" : "Read the full story →"}
           </Link>

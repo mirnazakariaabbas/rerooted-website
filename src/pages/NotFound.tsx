@@ -11,7 +11,7 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-6" style={{ backgroundColor: "var(--brand-surface)" }}>
+    <div className="flex min-h-screen flex-col items-center justify-center px-6" style={{ backgroundColor: "#FAF9F6" }}>
       <motion.img
         src={logoBlue}
         alt="Re-Rooted®"

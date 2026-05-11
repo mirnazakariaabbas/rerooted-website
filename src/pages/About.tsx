@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
 
-const Section = ({ children, className = "", bg = "var(--brand-surface)" }: { children: React.ReactNode; className?: string; bg?: string }) => {
+const Section = ({ children, className = "", bg = "#FAF9F6" }: { children: React.ReactNode; className?: string; bg?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
@@ -30,24 +30,24 @@ const About = () => (
     <StickyNav />
 
     {/* Hero */}
-    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "var(--brand-deep)" }}>
+    <section className="pt-32 pb-16 px-6 lg:px-12" style={{ backgroundColor: "#1F299C" }}>
       <div className="container mx-auto max-w-4xl text-center">
         <h1 className="text-white font-black text-4xl md:text-5xl leading-tight" style={{ fontWeight: 900 }}>
           Built from experience. Designed for yours.
         </h1>
-        <p className="mt-4 text-lg italic" style={{ color: "var(--brand-accent)" }}>
+        <p className="mt-4 text-lg italic" style={{ color: "#3DA776" }}>
           The human side of relocation
         </p>
       </div>
     </section>
 
     {/* The Story */}
-    <Section className="py-20" bg="var(--brand-surface)">
+    <Section className="py-20" bg="#FAF9F6">
       <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-5 gap-12 items-start">
         <div className="md:col-span-2 aspect-[3/4] w-full max-w-md mx-auto rounded-2xl bg-muted flex items-center justify-center">
           <span className="text-muted-foreground text-lg font-semibold">Photo</span>
         </div>
-        <div className="md:col-span-3 space-y-5 text-base leading-[1.7]" style={{ color: "var(--brand-ink)" }}>
+        <div className="md:col-span-3 space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
           <p>
             Yasser Abbas has been an expat for close to two decades.
           </p>
@@ -65,8 +65,8 @@ const About = () => (
     </Section>
 
     {/* Professional */}
-    <Section className="py-20" bg="var(--brand-surface)">
-      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "var(--brand-ink)" }}>
+    <Section className="py-20" bg="#F3F0F7">
+      <div className="container mx-auto max-w-3xl space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
         <p>
           Yasser brings 17+ years of leadership experience leading businesses for global multinationals, most recently as General Manager for a leading global consumer health company in Switzerland and Austria. His career has spanned markets across the Middle East, North Africa, and Europe, always at the intersection of people, performance, and culture.
         </p>
@@ -81,12 +81,12 @@ const About = () => (
     </Section>
 
     {/* Mission */}
-    <Section className="py-20" bg="var(--brand-surface)">
+    <Section className="py-20" bg="#FAF9F6">
       <div className="container mx-auto max-w-3xl">
-        <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-6" style={{ color: "var(--brand-ink)", fontWeight: 800 }}>
+        <h2 className="font-extrabold text-3xl md:text-[36px] leading-tight mb-6" style={{ color: "#1A1A1A", fontWeight: 800 }}>
           We don't replace your mobility program. We complete it.
         </h2>
-        <div className="space-y-5 text-base leading-[1.7]" style={{ color: "var(--brand-ink)" }}>
+        <div className="space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
           <p>
             <strong>Re-Rooted®</strong> exists to close the gap between moving someone and supporting them.
           </p>
@@ -98,9 +98,9 @@ const About = () => (
     </Section>
 
     {/* How We Work */}
-    <Section className="py-20" bg="var(--brand-surface)">
+    <Section className="py-20" bg="#F3F0F7">
       <div className="container mx-auto max-w-3xl">
-        <div className="space-y-5 text-base leading-[1.7]" style={{ color: "var(--brand-ink)" }}>
+        <div className="space-y-5 text-base leading-[1.7]" style={{ color: "#1A1A1A" }}>
           <p>
             <strong>Re-Rooted®</strong> operates through a global network of coaches, each bringing local knowledge and lived experience. Whether your people are landing in Zurich, Dubai, São Paulo, or Singapore, they're supported by someone who understands the ground they're standing on.
           </p>
@@ -109,7 +109,7 @@ const About = () => (
           <Link
             to="/contact"
             className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: "var(--brand-deep)" }}
+            style={{ backgroundColor: "#1F299C" }}
           >
             Start a conversation →
           </Link>
