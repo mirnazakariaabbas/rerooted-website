@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Moon, Sun, LogOut, Bell } from 'lucide-react';
+import { useSidebar } from '@/components/ui/sidebar';
+import { Moon, Sun, LogOut, Bell, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { NotificationsDrawer } from '@/components/layout/NotificationsDrawer';
@@ -58,6 +58,21 @@ function getBreadcrumbs(pathname: string) {
   return segments;
 }
 
+function BurgerTrigger() {
+  const { toggleSidebar } = useSidebar();
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      className="h-9 w-9 text-muted-foreground hover:text-foreground"
+      onClick={toggleSidebar}
+      aria-label="Toggle menu"
+    >
+      <Menu className="h-5 w-5" />
+    </Button>
+  );
+}
+
 export function TopBar() {
   const location = useLocation();
   const breadcrumbs = getBreadcrumbs(location.pathname);
@@ -84,7 +99,7 @@ export function TopBar() {
   return (
     <>
       <header className="h-14 border-b border-border bg-background flex items-center px-4 gap-3 shrink-0">
-        <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
+        <BurgerTrigger />
 
         <nav className="flex items-center gap-1 text-sm flex-1 min-w-0">
           {breadcrumbs.map((crumb, i) => (

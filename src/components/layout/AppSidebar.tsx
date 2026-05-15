@@ -190,7 +190,7 @@ export function AppSidebar() {
   const roleBadge = isAdmin ? 'Admin' : isCoach ? 'Coach' : 'Member';
 
   return (
-    <Sidebar collapsible="icon" className="border-r-0">
+    <Sidebar collapsible="offcanvas" className="border-r-0">
       <SidebarHeader className="p-4">
         {!collapsed ? (
           <a href="/" className="flex items-center hover:opacity-80 transition-opacity">
