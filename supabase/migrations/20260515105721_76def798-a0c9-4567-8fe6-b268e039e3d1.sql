@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Service role can write calendar invites" ON storage.objects;

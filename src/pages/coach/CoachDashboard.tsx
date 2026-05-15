@@ -394,7 +394,7 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
   const [coach, setCoach] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ name: '', bio: '', specialties: '', certification_level: 'non-certified', photo_url: '' });
+  const [form, setForm] = useState({ name: '', bio: '', specialties: '', certification_level: 'non-certified', photo_url: '', meeting_link: '' });
 
   useEffect(() => {
     const fetch = async () => {
@@ -407,6 +407,7 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
           specialties: Array.isArray(data.specialties) ? (data.specialties as string[]).join(', ') : '',
           certification_level: (data as any).certification_level || 'non-certified',
           photo_url: data.photo_url || '',
+          meeting_link: (data as any).meeting_link || '',
         });
       }
       setLoading(false);
@@ -422,6 +423,7 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
       specialties: form.specialties ? form.specialties.split(',').map(s => s.trim()) : [],
       certification_level: form.certification_level,
       photo_url: form.photo_url || null,
+      meeting_link: form.meeting_link.trim() || null,
     } as any).eq('id', coachId);
     setSaving(false);
     if (error) { toast.error('Failed to save'); return; }
@@ -456,6 +458,17 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
         <div>
           <label className="text-xs font-medium text-muted-foreground">Specialties (comma-separated)</label>
           <Input value={form.specialties} onChange={e => setForm(f => ({ ...f, specialties: e.target.value }))} />
+        </div>
+        <div>
+          <label className="text-xs font-medium text-muted-foreground">Personal Meeting Link</label>
+          <Input
+            value={form.meeting_link}
+            onChange={e => setForm(f => ({ ...f, meeting_link: e.target.value }))}
+            placeholder="https://zoom.us/j/your-personal-room"
+          />
+          <p className="text-[11px] text-muted-foreground mt-1">
+            Used for all your coaching sessions. Paste your Zoom, Google Meet, or Teams personal room link.
+          </p>
         </div>
         <div>
           <label className="text-xs font-medium text-muted-foreground">Bio</label>
