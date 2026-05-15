@@ -29,7 +29,7 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
         >
           <span className="flex items-center gap-2 truncate">
             {value && getCountryFlag(value) && (
-              <img src={getCountryFlag(value)} alt="" className="h-4 w-6 object-cover rounded-sm shrink-0" />
+              <img src={getCountryFlag(value)} alt="" className="h-4 w-6 object-cover rounded-sm shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
             )}
             <span className="truncate">{value || 'Select'}</span>
           </span>
@@ -46,7 +46,7 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
             const flag = getCountryFlag(c);
             return (
               <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded-lg hover:bg-muted flex items-center gap-2" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
-                {flag && <img src={flag} alt="" className="h-4 w-6 object-cover rounded-sm shrink-0" />}
+                {flag && <img src={flag} alt="" className="h-4 w-6 object-cover rounded-sm shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />}
                 <span className="truncate">{c}</span>
               </button>
             );
