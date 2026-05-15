@@ -215,7 +215,7 @@ const CulturalCompanion = () => {
             })}
           </div>
           <p className="text-xs text-muted-foreground mt-6 text-center">
-            Cultural profiles use the Culture Map framework (Erin Meyer) as a guide. Scores are AI-assisted and intended as a practical starting point.
+            Cultural profiles use the Culture Map framework (Erin Meyer) as a guide. Scores are AI-assisted and intended as a practical starting point. They do not represent the views of Re-Rooted®
           </p>
         </>
       ) : null}
