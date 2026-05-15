@@ -84,9 +84,7 @@ export function TopBar() {
   return (
     <>
       <header className="h-14 border-b border-border bg-background flex items-center px-4 gap-3 shrink-0">
-        <SidebarTrigger className="text-muted-foreground hover:text-foreground">
-          <Menu className="h-5 w-5" />
-        </SidebarTrigger>
+        <BurgerTrigger />
 
         <nav className="flex items-center gap-1 text-sm flex-1 min-w-0">
           {breadcrumbs.map((crumb, i) => (
