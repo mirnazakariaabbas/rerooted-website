@@ -198,36 +198,6 @@ const MemberHome = () => {
           </CardContent>
         </Card>
 
-        {/* ============ Reflection Streak / Milestone ============ */}
-        <section className="mb-10">
-          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
-            Reflection Streak
-          </p>
-          <div className="flex items-end gap-4 mb-3">
-            <div className="text-5xl font-[900] tracking-tight text-foreground leading-none">
-              {reflections.length}
-            </div>
-            <div className="pb-1">
-              <p className="text-sm font-semibold text-foreground">
-                of {currentMilestone} reflections
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {currentMilestone - reflections.length > 0
-                  ? `${currentMilestone - reflections.length} more to your next milestone`
-                  : 'Milestone reached.'}
-              </p>
-            </div>
-          </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${milestonePct}%` }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="h-full bg-secondary rounded-full"
-            />
-          </div>
-        </section>
-
         {/* ============ Where You Are ============ */}
         <Card className="mb-10 border-0 bg-accent/40 rounded-3xl">
           <CardContent className="p-6">
