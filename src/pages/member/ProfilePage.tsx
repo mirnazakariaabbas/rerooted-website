@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar';
 import { CalendarIcon, Search, ChevronDown, Shield } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { RerootedTitle } from '@/components/layout/RerootedTitle';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -78,7 +79,8 @@ const ProfilePage = () => {
       className="pb-24"
     >
       <PageHeader
-        title="Profile"
+        eyebrow={false}
+        title={<RerootedTitle prefix="My" suffix="Profile" />}
         subtitle="Manage your personal details and preferences"
       >
         {isAdmin && (
