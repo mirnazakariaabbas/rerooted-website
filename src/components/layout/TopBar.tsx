@@ -99,27 +99,38 @@ export function TopBar() {
 
   return (
     <>
-      <header className="h-14 border-b border-border bg-background flex items-center px-4 gap-3 shrink-0">
-        <BurgerTrigger />
+      <header className="h-14 border-b border-border bg-background flex items-center px-4 gap-3 shrink-0 relative">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <BurgerTrigger />
 
-        <nav className="flex items-center gap-1 text-sm flex-1 min-w-0">
-          {breadcrumbs.map((crumb, i) => (
-            <span key={crumb.path} className="flex items-center gap-1">
-              {i > 0 && <span className="text-muted-foreground/50 mx-1">/</span>}
-              <span
-                className={
-                  i === breadcrumbs.length - 1
-                    ? 'font-semibold text-foreground truncate'
-                    : 'text-muted-foreground truncate'
-                }
-              >
-                {crumb.label}
+          <nav className="flex items-center gap-1 text-sm min-w-0">
+            {breadcrumbs.map((crumb, i) => (
+              <span key={crumb.path} className="flex items-center gap-1">
+                {i > 0 && <span className="text-muted-foreground/50 mx-1">/</span>}
+                <span
+                  className={
+                    i === breadcrumbs.length - 1
+                      ? 'font-semibold text-foreground truncate'
+                      : 'text-muted-foreground truncate'
+                  }
+                >
+                  {crumb.label}
+                </span>
               </span>
-            </span>
-          ))}
-        </nav>
+            ))}
+          </nav>
+        </div>
 
-        <div className="flex items-center gap-1">
+        {/* Centered Logo */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <img
+            src={logoWordmarkBlue}
+            alt="Re-Rooted"
+            className="h-6 w-auto object-contain"
+          />
+        </div>
+
+        <div className="flex items-center gap-1 flex-1 justify-end">
           {/* Dark mode toggle */}
           <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground" onClick={toggleDark}>
             {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
