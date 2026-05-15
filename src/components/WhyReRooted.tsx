@@ -43,7 +43,7 @@ export function WhyReRootedStatement() {
             className="font-display text-primary"
             style={{
               fontWeight: 500,
-              fontSize: "clamp(2.5rem, 6.5vw, 8rem)",
+              fontSize: "clamp(1.875rem, 4.875vw, 6rem)",
               lineHeight: 1.02,
               letterSpacing: "-0.022em",
               maxWidth: "100%",
