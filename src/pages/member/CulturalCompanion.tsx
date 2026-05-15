@@ -121,7 +121,13 @@ const CulturalCompanion = () => {
         eyebrow={false}
         title={
           <span>
-            Your Re-Rooted<sup className="text-[0.45em] font-bold align-super ml-0.5">®</sup> Cultural Companion
+            Your{' '}
+            <img
+              src={logoR}
+              alt="R"
+              className="inline-block h-[0.85em] w-auto align-baseline -mb-[0.05em]"
+            />
+            e-Rooted<sup className="text-[0.45em] font-bold align-super ml-0.5">®</sup> Cultural Companion
           </span>
         }
         subtitle="Explore cultural differences between countries"
