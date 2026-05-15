@@ -122,10 +122,20 @@ const CulturalCompanion = () => {
         title={
           <span>
             Your{' '}
-            <img
-              src={logoR}
-              alt="R"
-              className="inline-block h-[0.72em] w-auto align-baseline"
+            <span
+              role="img"
+              aria-label="R"
+              className="inline-block h-[0.72em] w-[0.94em] align-baseline bg-current translate-y-[0.08em]"
+              style={{
+                WebkitMaskImage: `url(${logoR})`,
+                maskImage: `url(${logoR})`,
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center',
+                maskPosition: 'center',
+              }}
             />
             e-Rooted<sup className="text-[0.45em] font-bold align-super ml-0.5">®</sup> Cultural Companion
           </span>
