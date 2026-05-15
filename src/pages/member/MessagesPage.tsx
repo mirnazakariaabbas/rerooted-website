@@ -36,7 +36,7 @@ export default function MessagesPage() {
   if (!assignment?.coaches?.user_id) {
     return (
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
-        <PageHeader title="Messages" subtitle="Chat with your coach" />
+        <PageHeader eyebrow={false} title="Messages" subtitle="Chat with your coach" />
         <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
           <div className="flex flex-col items-center justify-center py-16 gap-4 rounded-3xl bg-card border border-border">
             <MessageCircle className="h-12 w-12 text-muted-foreground/30" />
@@ -51,7 +51,7 @@ export default function MessagesPage() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="pb-24">
-      <PageHeader title="Messages" subtitle="Chat with your coach" />
+      <PageHeader eyebrow={false} title="Messages" subtitle="Chat with your coach" />
       <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
         <Card className="overflow-hidden border-0 bg-card rounded-3xl" style={{ height: 'calc(100vh - 18rem)' }}>
           <CardContent className="p-0 h-full">
