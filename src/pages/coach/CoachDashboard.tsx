@@ -394,7 +394,7 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
   const [coach, setCoach] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ name: '', bio: '', specialties: '', certification_level: 'non-certified', photo_url: '' });
+  const [form, setForm] = useState({ name: '', bio: '', specialties: '', certification_level: 'non-certified', photo_url: '', meeting_link: '' });
 
   useEffect(() => {
     const fetch = async () => {
