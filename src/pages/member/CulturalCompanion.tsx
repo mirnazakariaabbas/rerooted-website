@@ -125,7 +125,7 @@ const CulturalCompanion = () => {
             <img
               src={logoR}
               alt="R"
-              className="inline-block h-[0.85em] w-auto align-baseline -mb-[0.05em]"
+              className="inline-block h-[0.72em] w-auto align-baseline"
             />
             e-Rooted<sup className="text-[0.45em] font-bold align-super ml-0.5">®</sup> Cultural Companion
           </span>
