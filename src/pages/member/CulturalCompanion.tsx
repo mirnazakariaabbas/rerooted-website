@@ -123,12 +123,20 @@ const CulturalCompanion = () => {
         subtitle="Explore cultural differences between countries"
       />
       <div className="max-w-2xl mx-auto px-6 -mt-6 relative">
-      <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
-        <CountryPicker value={homeCountry} onChange={setHomeCountry} />
-        <button onClick={swap} className="p-1.5 rounded-full hover:bg-muted transition-colors">
+      <div className="mx-auto mb-6 flex w-full items-center justify-center gap-2 sm:gap-3 rounded-2xl border border-border bg-card p-3">
+        <div className="flex-1 max-w-[200px]">
+          <CountryPicker value={homeCountry} onChange={setHomeCountry} />
+        </div>
+        <button
+          onClick={swap}
+          aria-label="Swap countries"
+          className="shrink-0 rounded-full border border-border bg-background p-2 hover:bg-muted transition-colors"
+        >
           <ArrowRightLeft className="h-4 w-4 text-muted-foreground" />
         </button>
-        <CountryPicker value={hostCountry} onChange={setHostCountry} />
+        <div className="flex-1 max-w-[200px]">
+          <CountryPicker value={hostCountry} onChange={setHostCountry} />
+        </div>
       </div>
 
       {/* Cultural Comparison */}
