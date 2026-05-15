@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight, Download, ArrowRight } from 'lucide-react';
 import { generateAssessmentPdf } from '@/utils/assessmentPdf';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { RerootedTitle } from '@/components/layout/RerootedTitle';
 
 const SESSION_KEY = 'assessment-in-progress';
 
@@ -119,7 +120,7 @@ const AssessmentPage = () => {
     const answeredCount = Object.keys(answers).length;
     return (
       <div className="pb-24">
-        <PageHeader title="Relocation Complexity Score" subtitle="Resume your assessment" />
+        <PageHeader eyebrow={false} title={<RerootedTitle prefix="My" suffix="Relocation Complexity Score" />} subtitle="Resume your assessment" />
         <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
         <Card className="border-0 bg-card rounded-3xl">
           <CardContent className="py-10 text-center">
@@ -235,7 +236,8 @@ const AssessmentPage = () => {
       className="pb-24"
     >
       <PageHeader
-        title="Relocation Complexity Score"
+        eyebrow={false}
+        title={<RerootedTitle prefix="My" suffix="Relocation Complexity Score" />}
         subtitle="Understand the full complexity of your relocation"
       />
       <div className="max-w-2xl mx-auto px-6 -mt-10 relative">

@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Heart, Calendar, Check, FileText } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { RerootedTitle } from '@/components/layout/RerootedTitle';
 import { toast } from 'sonner';
 import { addDays, format, startOfDay, getDay } from 'date-fns';
 
@@ -128,7 +129,7 @@ const CoachPage = () => {
   if (loading) {
     return (
       <div className="pb-24">
-        <PageHeader title="Your Coach" subtitle="Loading…" />
+        <PageHeader eyebrow={false} title={<RerootedTitle prefix="My" suffix="Coach" />} subtitle="Loading…" />
       </div>
     );
   }
@@ -143,7 +144,8 @@ const CoachPage = () => {
       className="pb-24"
     >
       <PageHeader
-        title="Your Coach"
+        eyebrow={false}
+        title={<RerootedTitle prefix="My" suffix="Coach" />}
         subtitle="Your personal relocation coach and session booking"
       />
       <div className="max-w-2xl mx-auto px-6 -mt-10 relative">

@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import logoWordmarkWhite from '@/assets/logo-wordmark-white.png';
+
 import { differenceInMonths } from 'date-fns';
 import {
   ArrowRight, Globe, BarChart3, Heart, BookOpen, Calendar, Award,
@@ -141,11 +141,6 @@ const MemberHome = () => {
 
         <div className="relative max-w-2xl mx-auto">
           <AnnouncementBanner />
-          <img
-            src={logoWordmarkWhite}
-            alt="Re-Rooted®"
-            className="h-6 w-auto object-contain opacity-80 mb-3"
-          />
           <h1 className="text-4xl md:text-5xl font-[900] tracking-tight leading-tight">
             Hello, {greeting}.
           </h1>

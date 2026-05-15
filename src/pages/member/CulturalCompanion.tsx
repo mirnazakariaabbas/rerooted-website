@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
-import logoR from '@/assets/logo-r-white.png';
+import { RerootedTitle } from '@/components/layout/RerootedTitle';
 
 const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
   const [search, setSearch] = useState('');
@@ -119,17 +119,7 @@ const CulturalCompanion = () => {
     >
       <PageHeader
         eyebrow={false}
-        title={
-          <span>
-            Your&nbsp;&nbsp;
-            <img
-              src={logoR}
-              alt="R"
-              className="inline-block h-[0.72em] w-auto align-baseline"
-            />
-            e-Rooted<sup className="text-[0.45em] font-bold align-super ml-0.5">®</sup> Cultural Companion
-          </span>
-        }
+        title={<RerootedTitle prefix="Your" suffix="Cultural Companion" />}
         subtitle="Explore cultural differences between countries"
       />
       <div className="max-w-2xl mx-auto px-6 -mt-6 relative">
