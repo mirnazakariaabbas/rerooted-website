@@ -22,18 +22,22 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="font-medium">
-          {value || 'Select'} <ChevronDown className="ml-1 h-3 w-3" />
+        <Button
+          variant="outline"
+          className="h-10 min-w-[140px] justify-between rounded-xl border-border bg-background px-4 font-semibold text-foreground hover:bg-muted"
+        >
+          <span className="truncate">{value || 'Select'}</span>
+          <ChevronDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[250px] p-0" align="start">
+      <PopoverContent className="w-[260px] p-0 rounded-xl" align="center">
         <div className="flex items-center border-b px-3">
           <Search className="mr-2 h-4 w-4 text-muted-foreground" />
           <Input placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} className="border-0 focus-visible:ring-0 h-9 text-sm" />
         </div>
-        <div className="max-h-[200px] overflow-y-auto p-1">
+        <div className="max-h-[220px] overflow-y-auto p-1">
           {filtered.map(c => (
-            <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-muted" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
+            <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded-lg hover:bg-muted" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
               {c}
             </button>
           ))}
