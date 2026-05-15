@@ -116,14 +116,18 @@ const CoachPage = () => {
     const [startH, startM] = slot.start_time.split(':').map(Number);
     const [endH] = slot.end_time.split(':').map(Number);
     const duration = (endH * 60 + (endM || 0)) - (startH * 60 + startM);
-    const { error } = await supabase.from('meeting_bookings').insert({
+    const { data: inserted, error } = await supabase.from('meeting_bookings').insert({
       user_id: user.id, coach_id: coachId, scheduled_at: slotDate.toISOString(),
       duration_minutes: duration > 0 ? duration : 30, status: 'scheduled',
-    });
+    }).select('id').single();
     setBooking(false);
     if (error) { toast.error('Failed to book session'); return; }
-    toast.success('Session booked!');
+    toast.success('Session booked! Check your email for the confirmation.');
     setExistingBookings(prev => [...prev, { scheduled_at: slotDate.toISOString() }]);
+    if (inserted?.id) {
+      supabase.functions.invoke('send-booking-confirmation', { body: { bookingId: inserted.id } })
+        .catch(err => console.error('Confirmation email failed:', err));
+    }
   };
 
   if (loading) {
