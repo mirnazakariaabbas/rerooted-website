@@ -120,14 +120,8 @@ const CulturalCompanion = () => {
       <PageHeader
         eyebrow={false}
         title={
-          <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span>Your</span>
-            <img
-              src={logoWordmarkWhite}
-              alt="Re-Rooted"
-              className="inline-block h-8 md:h-10 w-auto object-contain align-middle relative -top-0.5"
-            />
-            <span>Cultural Companion</span>
+          <span>
+            Your Re-Rooted<sup className="text-[0.45em] font-bold align-super ml-0.5">®</sup> Cultural Companion
           </span>
         }
         subtitle="Explore cultural differences between countries"
