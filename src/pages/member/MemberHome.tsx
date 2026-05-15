@@ -183,22 +183,16 @@ const MemberHome = () => {
                 }
               />
               <StatRow
-                icon={<BookOpen className="h-5 w-5" />}
-                iconBg="bg-secondary text-secondary-foreground"
-                value={`${reflections.length}`}
-                label="Reflections journaled"
-              />
-              <StatRow
                 icon={<Calendar className="h-5 w-5" />}
                 iconBg="bg-accent text-accent-foreground"
                 value={`${completedSessions}`}
                 label="Coaching sessions"
               />
               <StatRow
-                icon={<Award className="h-5 w-5" />}
-                iconBg="bg-primary text-primary-foreground"
-                value={`${assessments.length}`}
-                label="Assessments completed"
+                icon={<BookOpen className="h-5 w-5" />}
+                iconBg="bg-secondary text-secondary-foreground"
+                value={`${reflections.length}`}
+                label="Reflections journaled"
               />
             </div>
           </CardContent>
