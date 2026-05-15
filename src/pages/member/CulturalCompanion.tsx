@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
+import logoWordmarkWhite from '@/assets/logo-wordmark-white.png';
 
 const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
   const [search, setSearch] = useState('');
@@ -103,11 +104,22 @@ const CulturalCompanion = () => {
       className="pb-24"
     >
       <PageHeader
-        title="Your Cultural Companion"
+        eyebrow={false}
+        title={
+          <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span>Your</span>
+            <img
+              src={logoWordmarkWhite}
+              alt="Re-Rooted"
+              className="inline-block h-8 md:h-10 w-auto object-contain align-middle relative -top-0.5"
+            />
+            <span>Cultural Companion</span>
+          </span>
+        }
         subtitle="Explore cultural differences between countries"
       />
-      <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
-      <div className="flex items-center gap-2 mb-8 flex-wrap">
+      <div className="max-w-2xl mx-auto px-6 -mt-6 relative">
+      <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
         <CountryPicker value={homeCountry} onChange={setHomeCountry} />
         <button onClick={swap} className="p-1.5 rounded-full hover:bg-muted transition-colors">
           <ArrowRightLeft className="h-4 w-4 text-muted-foreground" />

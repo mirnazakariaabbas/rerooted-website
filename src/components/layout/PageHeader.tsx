@@ -3,7 +3,7 @@ import logoWordmarkWhite from '@/assets/logo-wordmark-white.png';
 
 interface PageHeaderProps {
   eyebrow?: ReactNode;
-  title: string;
+  title: ReactNode;
   subtitle?: ReactNode;
   children?: ReactNode;
   /** When true, removes the negative bottom space so content can sit flush */
@@ -21,7 +21,7 @@ export const PageHeader = ({
   subtitle,
   children,
 }: PageHeaderProps) => (
-  <header className="relative bg-primary text-primary-foreground overflow-hidden rounded-b-[3rem] px-6 pt-10 pb-16 lg:pt-14 lg:pb-20">
+  <header className="relative bg-primary text-primary-foreground overflow-hidden rounded-b-[3rem] px-6 pt-6 pb-10 lg:pt-8 lg:pb-12">
     <div
       aria-hidden
       className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[180%] h-72 rounded-[50%] bg-primary-foreground/[0.04]"
