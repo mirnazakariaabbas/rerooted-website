@@ -407,6 +407,7 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
           specialties: Array.isArray(data.specialties) ? (data.specialties as string[]).join(', ') : '',
           certification_level: (data as any).certification_level || 'non-certified',
           photo_url: data.photo_url || '',
+          meeting_link: (data as any).meeting_link || '',
         });
       }
       setLoading(false);
