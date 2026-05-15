@@ -22,18 +22,22 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="font-medium">
-          {value || 'Select'} <ChevronDown className="ml-1 h-3 w-3" />
+        <Button
+          variant="outline"
+          className="h-10 w-full min-w-[120px] justify-between rounded-xl border-border bg-background px-4 font-semibold text-foreground hover:bg-muted"
+        >
+          <span className="truncate">{value || 'Select'}</span>
+          <ChevronDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[250px] p-0" align="start">
+      <PopoverContent className="w-[260px] p-0 rounded-xl" align="center">
         <div className="flex items-center border-b px-3">
           <Search className="mr-2 h-4 w-4 text-muted-foreground" />
           <Input placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} className="border-0 focus-visible:ring-0 h-9 text-sm" />
         </div>
-        <div className="max-h-[200px] overflow-y-auto p-1">
+        <div className="max-h-[220px] overflow-y-auto p-1">
           {filtered.map(c => (
-            <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-muted" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
+            <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded-lg hover:bg-muted" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
               {c}
             </button>
           ))}
@@ -119,12 +123,20 @@ const CulturalCompanion = () => {
         subtitle="Explore cultural differences between countries"
       />
       <div className="max-w-2xl mx-auto px-6 -mt-6 relative">
-      <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
-        <CountryPicker value={homeCountry} onChange={setHomeCountry} />
-        <button onClick={swap} className="p-1.5 rounded-full hover:bg-muted transition-colors">
+      <div className="mx-auto mb-6 flex w-full items-center justify-center gap-2 sm:gap-3 rounded-2xl border border-border bg-card p-3">
+        <div className="flex-1 max-w-[200px]">
+          <CountryPicker value={homeCountry} onChange={setHomeCountry} />
+        </div>
+        <button
+          onClick={swap}
+          aria-label="Swap countries"
+          className="shrink-0 rounded-full border border-border bg-background p-2 hover:bg-muted transition-colors"
+        >
           <ArrowRightLeft className="h-4 w-4 text-muted-foreground" />
         </button>
-        <CountryPicker value={hostCountry} onChange={setHostCountry} />
+        <div className="flex-1 max-w-[200px]">
+          <CountryPicker value={hostCountry} onChange={setHostCountry} />
+        </div>
       </div>
 
       {/* Cultural Comparison */}
