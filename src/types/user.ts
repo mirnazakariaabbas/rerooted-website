@@ -10,6 +10,8 @@ export interface UserProfile {
   stage: JourneyStage;
   familySetup: FamilySetup;
   hasChildren: boolean;
+  childrenCount?: number;
+  childrenAges?: number[];
   primaryLanguage: string;
   onboardingComplete: boolean;
   notifyReflections: boolean;
