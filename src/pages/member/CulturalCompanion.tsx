@@ -28,7 +28,9 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
           className="h-10 w-full min-w-[120px] justify-between rounded-xl border-border bg-background px-4 font-semibold text-foreground hover:bg-muted"
         >
           <span className="flex items-center gap-2 truncate">
-            {value && <span className="text-base leading-none">{getCountryFlag(value)}</span>}
+            {value && getCountryFlag(value) && (
+              <img src={getCountryFlag(value)} alt="" className="h-4 w-6 object-cover rounded-sm shrink-0" />
+            )}
             <span className="truncate">{value || 'Select'}</span>
           </span>
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
@@ -40,12 +42,15 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
           <Input placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} className="border-0 focus-visible:ring-0 h-9 text-sm" />
         </div>
         <div className="max-h-[220px] overflow-y-auto p-1">
-          {filtered.map(c => (
-            <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded-lg hover:bg-muted flex items-center gap-2" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
-              <span className="text-base leading-none">{getCountryFlag(c)}</span>
-              <span className="truncate">{c}</span>
-            </button>
-          ))}
+          {filtered.map(c => {
+            const flag = getCountryFlag(c);
+            return (
+              <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded-lg hover:bg-muted flex items-center gap-2" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
+                {flag && <img src={flag} alt="" className="h-4 w-6 object-cover rounded-sm shrink-0" />}
+                <span className="truncate">{c}</span>
+              </button>
+            );
+          })}
         </div>
       </PopoverContent>
     </Popover>
