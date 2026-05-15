@@ -121,7 +121,7 @@ const CulturalCompanion = () => {
         eyebrow={false}
         title={
           <span>
-            Your{' '}
+            Your&nbsp;
             <img
               src={logoR}
               alt="R"
