@@ -148,8 +148,62 @@ const ProfilePage = () => {
           </div>
           <div className="flex items-center justify-between">
             <Label className="text-sm">Children</Label>
-            <Switch checked={user.hasChildren} onCheckedChange={v => updateUser({ hasChildren: v })} />
+            <Switch
+              checked={user.hasChildren}
+              onCheckedChange={v =>
+                updateUser({
+                  hasChildren: v,
+                  childrenCount: v ? user.childrenCount : undefined,
+                  childrenAges: v ? user.childrenAges : [],
+                })
+              }
+            />
           </div>
+          {user.hasChildren && (
+            <>
+              <div className="space-y-1.5">
+                <Label className="text-sm">How many children?</Label>
+                <Input
+                  type="number"
+                  min={1}
+                  max={20}
+                  value={user.childrenCount ?? ''}
+                  onChange={e => {
+                    const n = Math.max(0, Math.min(20, parseInt(e.target.value || '0', 10) || 0));
+                    const ages = [...(user.childrenAges ?? [])];
+                    if (n > ages.length) while (ages.length < n) ages.push(0);
+                    else ages.length = n;
+                    updateUser({ childrenCount: n, childrenAges: ages });
+                  }}
+                  className="h-10 text-sm"
+                />
+              </div>
+              {!!user.childrenCount && user.childrenCount > 0 && (
+                <div className="space-y-1.5">
+                  <Label className="text-sm">Age of each child</Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {Array.from({ length: user.childrenCount }).map((_, i) => (
+                      <Input
+                        key={i}
+                        type="number"
+                        min={0}
+                        max={99}
+                        value={user.childrenAges?.[i] ?? ''}
+                        onChange={e => {
+                          const n = Math.max(0, Math.min(99, parseInt(e.target.value || '0', 10) || 0));
+                          const ages = [...(user.childrenAges ?? [])];
+                          ages[i] = n;
+                          updateUser({ childrenAges: ages });
+                        }}
+                        placeholder={`Child ${i + 1}`}
+                        className="h-10 text-sm"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
           <div className="space-y-1.5">
             <Label className="text-sm">Primary language</Label>
             <Input value={user.primaryLanguage} onChange={e => updateUser({ primaryLanguage: e.target.value })} className="h-10 text-sm" />

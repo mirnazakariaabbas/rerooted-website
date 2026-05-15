@@ -1103,6 +1103,8 @@ export type Database = {
         Row: {
           approval_status: Database["public"]["Enums"]["approval_status"]
           arrival_date: string | null
+          children_ages: number[] | null
+          children_count: number | null
           country_from: string | null
           country_to: string | null
           created_at: string
@@ -1120,6 +1122,8 @@ export type Database = {
         Insert: {
           approval_status?: Database["public"]["Enums"]["approval_status"]
           arrival_date?: string | null
+          children_ages?: number[] | null
+          children_count?: number | null
           country_from?: string | null
           country_to?: string | null
           created_at?: string
@@ -1137,6 +1141,8 @@ export type Database = {
         Update: {
           approval_status?: Database["public"]["Enums"]["approval_status"]
           arrival_date?: string | null
+          children_ages?: number[] | null
+          children_count?: number | null
           country_from?: string | null
           country_to?: string | null
           created_at?: string

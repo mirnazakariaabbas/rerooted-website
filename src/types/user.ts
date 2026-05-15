@@ -10,6 +10,8 @@ export interface UserProfile {
   stage: JourneyStage;
   familySetup: FamilySetup;
   hasChildren: boolean;
+  childrenCount?: number;
+  childrenAges?: number[];
   primaryLanguage: string;
   onboardingComplete: boolean;
   notifyReflections: boolean;
@@ -43,6 +45,8 @@ export const DEFAULT_USER: UserProfile = {
   stage: 'rooting-in',
   familySetup: 'alone',
   hasChildren: false,
+  childrenCount: undefined,
+  childrenAges: [],
   primaryLanguage: 'English',
   onboardingComplete: false,
   notifyReflections: true,

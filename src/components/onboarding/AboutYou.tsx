@@ -15,10 +15,35 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
   const [name, setName] = useState(user.name);
   const [family, setFamily] = useState<FamilySetup>(user.familySetup);
   const [hasChildren, setHasChildren] = useState(user.hasChildren);
+  const [childrenCount, setChildrenCount] = useState<number | undefined>(user.childrenCount);
+  const [childrenAges, setChildrenAges] = useState<number[]>(user.childrenAges ?? []);
   const [language, setLanguage] = useState(user.primaryLanguage);
 
+  const handleCountChange = (raw: string) => {
+    const n = Math.max(0, Math.min(20, parseInt(raw || '0', 10) || 0));
+    setChildrenCount(n);
+    setChildrenAges(prev => {
+      const next = [...prev];
+      if (n > next.length) while (next.length < n) next.push(0);
+      else next.length = n;
+      return next;
+    });
+  };
+
+  const handleAgeChange = (idx: number, raw: string) => {
+    const n = Math.max(0, Math.min(99, parseInt(raw || '0', 10) || 0));
+    setChildrenAges(prev => prev.map((v, i) => (i === idx ? n : v)));
+  };
+
   const handleNext = () => {
-    updateUser({ name, familySetup: family, hasChildren, primaryLanguage: language });
+    updateUser({
+      name,
+      familySetup: family,
+      hasChildren,
+      childrenCount: hasChildren ? childrenCount : undefined,
+      childrenAges: hasChildren ? childrenAges : [],
+      primaryLanguage: language,
+    });
     onNext();
   };
 
@@ -72,6 +97,41 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
             ))}
           </div>
         </div>
+        {hasChildren && (
+          <>
+            <div className="space-y-2">
+              <Label>How many children?</Label>
+              <Input
+                type="number"
+                min={1}
+                max={20}
+                value={childrenCount ?? ''}
+                onChange={e => handleCountChange(e.target.value)}
+                placeholder="e.g., 2"
+                className="h-12"
+              />
+            </div>
+            {childrenCount && childrenCount > 0 && (
+              <div className="space-y-2">
+                <Label>Age of each child</Label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {Array.from({ length: childrenCount }).map((_, i) => (
+                    <Input
+                      key={i}
+                      type="number"
+                      min={0}
+                      max={99}
+                      value={childrenAges[i] ?? ''}
+                      onChange={e => handleAgeChange(i, e.target.value)}
+                      placeholder={`Child ${i + 1}`}
+                      className="h-12"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
         <div className="space-y-2">
           <Label>Primary language</Label>
           <Input value={language} onChange={e => setLanguage(e.target.value)} placeholder="e.g., English" className="h-12" />
