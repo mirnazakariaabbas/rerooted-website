@@ -328,6 +328,7 @@ export type Database = {
           created_at: string
           email: string | null
           id: string
+          meeting_link: string | null
           name: string
           photo_url: string | null
           specialties: Json | null
@@ -339,6 +340,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           id?: string
+          meeting_link?: string | null
           name: string
           photo_url?: string | null
           specialties?: Json | null
@@ -350,6 +352,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           id?: string
+          meeting_link?: string | null
           name?: string
           photo_url?: string | null
           specialties?: Json | null
@@ -808,6 +811,8 @@ export type Database = {
           created_at: string
           duration_minutes: number
           id: string
+          reminder_1h_sent_at: string | null
+          reminder_24h_sent_at: string | null
           scheduled_at: string
           status: string
           user_id: string
@@ -817,6 +822,8 @@ export type Database = {
           created_at?: string
           duration_minutes?: number
           id?: string
+          reminder_1h_sent_at?: string | null
+          reminder_24h_sent_at?: string | null
           scheduled_at: string
           status?: string
           user_id: string
@@ -826,6 +833,8 @@ export type Database = {
           created_at?: string
           duration_minutes?: number
           id?: string
+          reminder_1h_sent_at?: string | null
+          reminder_24h_sent_at?: string | null
           scheduled_at?: string
           status?: string
           user_id?: string
