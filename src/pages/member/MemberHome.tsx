@@ -102,9 +102,6 @@ const MemberHome = () => {
   const completedSessions = (bookings as any[]).filter(
     b => b.status === 'completed' || new Date(b.scheduled_at) < new Date()
   ).length;
-  const reflectionMilestones = [10, 25, 50, 100];
-  const currentMilestone = reflectionMilestones.find(m => reflections.length < m) || 100;
-  const milestonePct = Math.min((reflections.length / currentMilestone) * 100, 100);
 
 
   const handleReflection = () => {
