@@ -139,7 +139,7 @@ const MemberHome = () => {
         <div className="relative max-w-2xl mx-auto">
           <AnnouncementBanner />
           <h1 className="text-4xl md:text-5xl font-[900] tracking-tight leading-tight">
-            Hello, {greeting}.
+            Hello, {greeting}!
           </h1>
           <p className="mt-2 text-base text-primary-foreground/80">
             Stage {stageInfo.number}: {stageInfo.name}
