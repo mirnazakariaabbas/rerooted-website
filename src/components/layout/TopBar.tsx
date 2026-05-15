@@ -58,6 +58,21 @@ function getBreadcrumbs(pathname: string) {
   return segments;
 }
 
+function BurgerTrigger() {
+  const { toggleSidebar } = useSidebar();
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      className="h-9 w-9 text-muted-foreground hover:text-foreground"
+      onClick={toggleSidebar}
+      aria-label="Toggle menu"
+    >
+      <Menu className="h-5 w-5" />
+    </Button>
+  );
+}
+
 export function TopBar() {
   const location = useLocation();
   const breadcrumbs = getBreadcrumbs(location.pathname);
