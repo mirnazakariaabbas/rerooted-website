@@ -9,6 +9,7 @@ import { useDarkMode } from '@/hooks/useDarkMode';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import logoWordmarkBlue from '@/assets/logo-wordmark-blue.png';
 
 const routeLabels: Record<string, string> = {
   '/app/home': 'Home',
