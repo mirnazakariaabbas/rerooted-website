@@ -423,6 +423,7 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
       specialties: form.specialties ? form.specialties.split(',').map(s => s.trim()) : [],
       certification_level: form.certification_level,
       photo_url: form.photo_url || null,
+      meeting_link: form.meeting_link.trim() || null,
     } as any).eq('id', coachId);
     setSaving(false);
     if (error) { toast.error('Failed to save'); return; }
