@@ -114,6 +114,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
         if ('stage' in updates) dbUpdates.stage = updates.stage;
         if ('familySetup' in updates) dbUpdates.family_setup = updates.familySetup;
         if ('hasChildren' in updates) dbUpdates.has_children = updates.hasChildren;
+        if ('childrenCount' in updates) (dbUpdates as any).children_count = updates.childrenCount ?? null;
+        if ('childrenAges' in updates) (dbUpdates as any).children_ages = updates.childrenAges ?? null;
         if ('primaryLanguage' in updates) dbUpdates.primary_language = updates.primaryLanguage;
         if ('onboardingComplete' in updates) dbUpdates.onboarding_complete = updates.onboardingComplete;
         if ('notifyReflections' in updates) dbUpdates.notify_reflections = updates.notifyReflections;
