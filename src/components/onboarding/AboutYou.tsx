@@ -97,6 +97,41 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
             ))}
           </div>
         </div>
+        {hasChildren && (
+          <>
+            <div className="space-y-2">
+              <Label>How many children?</Label>
+              <Input
+                type="number"
+                min={1}
+                max={20}
+                value={childrenCount ?? ''}
+                onChange={e => handleCountChange(e.target.value)}
+                placeholder="e.g., 2"
+                className="h-12"
+              />
+            </div>
+            {childrenCount && childrenCount > 0 && (
+              <div className="space-y-2">
+                <Label>Age of each child</Label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {Array.from({ length: childrenCount }).map((_, i) => (
+                    <Input
+                      key={i}
+                      type="number"
+                      min={0}
+                      max={99}
+                      value={childrenAges[i] ?? ''}
+                      onChange={e => handleAgeChange(i, e.target.value)}
+                      placeholder={`Child ${i + 1}`}
+                      className="h-12"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
         <div className="space-y-2">
           <Label>Primary language</Label>
           <Input value={language} onChange={e => setLanguage(e.target.value)} placeholder="e.g., English" className="h-12" />
