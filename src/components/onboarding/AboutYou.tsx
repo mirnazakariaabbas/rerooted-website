@@ -15,10 +15,35 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
   const [name, setName] = useState(user.name);
   const [family, setFamily] = useState<FamilySetup>(user.familySetup);
   const [hasChildren, setHasChildren] = useState(user.hasChildren);
+  const [childrenCount, setChildrenCount] = useState<number | undefined>(user.childrenCount);
+  const [childrenAges, setChildrenAges] = useState<number[]>(user.childrenAges ?? []);
   const [language, setLanguage] = useState(user.primaryLanguage);
 
+  const handleCountChange = (raw: string) => {
+    const n = Math.max(0, Math.min(20, parseInt(raw || '0', 10) || 0));
+    setChildrenCount(n);
+    setChildrenAges(prev => {
+      const next = [...prev];
+      if (n > next.length) while (next.length < n) next.push(0);
+      else next.length = n;
+      return next;
+    });
+  };
+
+  const handleAgeChange = (idx: number, raw: string) => {
+    const n = Math.max(0, Math.min(99, parseInt(raw || '0', 10) || 0));
+    setChildrenAges(prev => prev.map((v, i) => (i === idx ? n : v)));
+  };
+
   const handleNext = () => {
-    updateUser({ name, familySetup: family, hasChildren, primaryLanguage: language });
+    updateUser({
+      name,
+      familySetup: family,
+      hasChildren,
+      childrenCount: hasChildren ? childrenCount : undefined,
+      childrenAges: hasChildren ? childrenAges : [],
+      primaryLanguage: language,
+    });
     onNext();
   };
 
