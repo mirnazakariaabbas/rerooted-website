@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
-
+import logoR from '@/assets/logo-r-white.png';
 
 const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
   const [search, setSearch] = useState('');
