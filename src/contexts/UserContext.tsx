@@ -54,6 +54,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
           stage: (profile.stage as UserProfile['stage']) || 'rooting-in',
           familySetup: (profile.family_setup as UserProfile['familySetup']) || 'alone',
           hasChildren: profile.has_children || false,
+          childrenCount: (profile as any).children_count ?? undefined,
+          childrenAges: ((profile as any).children_ages as number[] | null) ?? [],
           primaryLanguage: profile.primary_language || 'English',
           onboardingComplete: profile.onboarding_complete || false,
           notifyReflections: profile.notify_reflections ?? true,
