@@ -45,6 +45,8 @@ export const DEFAULT_USER: UserProfile = {
   stage: 'rooting-in',
   familySetup: 'alone',
   hasChildren: false,
+  childrenCount: undefined,
+  childrenAges: [],
   primaryLanguage: 'English',
   onboardingComplete: false,
   notifyReflections: true,
