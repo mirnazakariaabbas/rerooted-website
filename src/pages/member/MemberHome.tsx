@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import logoWordmarkWhite from '@/assets/logo-wordmark-white.png';
+
 import { differenceInMonths } from 'date-fns';
 import {
   ArrowRight, Globe, BarChart3, Heart, BookOpen, Calendar, Award,
