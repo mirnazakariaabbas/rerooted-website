@@ -460,6 +460,17 @@ const ProfileTab = ({ coachId }: { coachId: string }) => {
           <Input value={form.specialties} onChange={e => setForm(f => ({ ...f, specialties: e.target.value }))} />
         </div>
         <div>
+          <label className="text-xs font-medium text-muted-foreground">Personal Meeting Link</label>
+          <Input
+            value={form.meeting_link}
+            onChange={e => setForm(f => ({ ...f, meeting_link: e.target.value }))}
+            placeholder="https://zoom.us/j/your-personal-room"
+          />
+          <p className="text-[11px] text-muted-foreground mt-1">
+            Used for all your coaching sessions. Paste your Zoom, Google Meet, or Teams personal room link.
+          </p>
+        </div>
+        <div>
           <label className="text-xs font-medium text-muted-foreground">Bio</label>
           <Textarea value={form.bio} onChange={e => setForm(f => ({ ...f, bio: e.target.value }))} rows={4} />
         </div>
