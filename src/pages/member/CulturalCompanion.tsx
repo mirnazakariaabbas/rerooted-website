@@ -27,7 +27,10 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
           variant="outline"
           className="h-10 w-full min-w-[120px] justify-between rounded-xl border-border bg-background px-4 font-semibold text-foreground hover:bg-muted"
         >
-          <span className="truncate">{value || 'Select'}</span>
+          <span className="flex items-center gap-2 truncate">
+            {value && <span className="text-base leading-none">{getCountryFlag(value)}</span>}
+            <span className="truncate">{value || 'Select'}</span>
+          </span>
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
         </Button>
       </PopoverTrigger>
@@ -38,8 +41,9 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
         </div>
         <div className="max-h-[220px] overflow-y-auto p-1">
           {filtered.map(c => (
-            <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded-lg hover:bg-muted" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
-              {c}
+            <button key={c} className="w-full text-left px-3 py-1.5 text-sm rounded-lg hover:bg-muted flex items-center gap-2" onClick={() => { onChange(c); setOpen(false); setSearch(''); }}>
+              <span className="text-base leading-none">{getCountryFlag(c)}</span>
+              <span className="truncate">{c}</span>
             </button>
           ))}
         </div>
