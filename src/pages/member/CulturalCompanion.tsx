@@ -24,7 +24,7 @@ const CountryPicker = ({ value, onChange }: { value: string; onChange: (v: strin
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className="h-10 min-w-[140px] justify-between rounded-xl border-border bg-background px-4 font-semibold text-foreground hover:bg-muted"
+          className="h-10 w-full min-w-[120px] justify-between rounded-xl border-border bg-background px-4 font-semibold text-foreground hover:bg-muted"
         >
           <span className="truncate">{value || 'Select'}</span>
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
