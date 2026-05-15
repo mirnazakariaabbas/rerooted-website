@@ -27,13 +27,13 @@ export const COUNTRY_ISO: Record<string, string> = {
   "Yemen": "YE", "Zambia": "ZM", "Zimbabwe": "ZW",
 };
 
-/** Returns the emoji flag for a country name, or empty string if unknown. */
+/** Returns the ISO 3166-1 alpha-2 code (lowercase) for a country, or empty string. */
+export const getCountryCode = (name: string): string =>
+  (COUNTRY_ISO[name] || "").toLowerCase();
+
+/** Returns a flag image URL for a country name, or empty string if unknown. */
 export const getCountryFlag = (name: string): string => {
-  const code = COUNTRY_ISO[name];
-  if (!code) return "";
-  return code
-    .toUpperCase()
-    .split("")
-    .map(c => String.fromCodePoint(127397 + c.charCodeAt(0)))
-    .join("");
+  const code = getCountryCode(name);
+  return code ? `https://flagcdn.com/w40/${code}.png` : "";
 };
+
