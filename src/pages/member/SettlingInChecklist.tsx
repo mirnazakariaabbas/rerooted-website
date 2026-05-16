@@ -35,11 +35,19 @@ interface Preferences {
   onboarding_complete: boolean;
 }
 
-const PHASES: { id: Phase; name: string; icon: typeof Sprout; description: string }[] = [
-  { id: 'laying-the-ground', name: 'Laying the Ground', icon: Sprout, description: 'The essentials. Get these sorted and everything else gets easier.' },
-  { id: 'tending-the-garden', name: 'Tending the Garden', icon: Leaf, description: 'Daily life is taking shape. These are the things that make it feel like yours.' },
-  { id: 'starting-to-bloom', name: 'Starting to Bloom', icon: Flower2, description: 'The part that makes it all worth it. Connection, discovery, belonging.' },
+type Tone = 'primary' | 'accent' | 'secondary' | 'cream';
+const PHASES: { id: Phase; name: string; icon: typeof Sprout; description: string; tone: Tone }[] = [
+  { id: 'laying-the-ground', name: 'Laying the Ground', icon: Sprout, description: 'The essentials. Get these sorted and everything else gets easier.', tone: 'primary' },
+  { id: 'tending-the-garden', name: 'Tending the Garden', icon: Leaf, description: 'Daily life is taking shape. These are the things that make it feel like yours.', tone: 'accent' },
+  { id: 'starting-to-bloom', name: 'Starting to Bloom', icon: Flower2, description: 'The part that makes it all worth it. Connection, discovery, belonging.', tone: 'secondary' },
 ];
+
+const TONE_STYLES: Record<Tone, { header: string; subtitle: string; iconBg: string; chevron: string }> = {
+  primary: { header: 'bg-primary text-primary-foreground', subtitle: 'text-primary-foreground/80', iconBg: 'text-primary-foreground', chevron: 'text-primary-foreground/80' },
+  secondary: { header: 'bg-secondary text-secondary-foreground', subtitle: 'text-secondary-foreground/80', iconBg: 'text-secondary-foreground', chevron: 'text-secondary-foreground/80' },
+  accent: { header: 'bg-accent text-accent-foreground', subtitle: 'text-accent-foreground/80', iconBg: 'text-accent-foreground', chevron: 'text-accent-foreground/80' },
+  cream: { header: 'bg-card text-foreground border border-border', subtitle: 'text-muted-foreground', iconBg: 'text-foreground', chevron: 'text-foreground/60' },
+};
 
 const REWARD_MESSAGES = [
   'One more thing settled.',
