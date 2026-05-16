@@ -546,6 +546,7 @@ const ItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onCh
       setReward(msg);
       if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
       timeoutRef.current = window.setTimeout(() => setReward(null), 3000);
+      onCompleted?.(item.id);
     }
     onChange();
   };
