@@ -339,6 +339,9 @@ const ChecklistOnboarding = ({ onDone }: { onDone: () => void }) => {
 // ============= CHECKLIST VIEW =============
 const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChange: () => void }) => {
   const { user } = useUser();
+  const { user: authUser } = useAuth();
+  const qc = useQueryClient();
+  const [resetting, setResetting] = useState(false);
 
   const monthsSinceArrival = user.arrivalDate ? differenceInMonths(new Date(), new Date(user.arrivalDate)) : 0;
   const defaultPhase: Phase = monthsSinceArrival > 3 ? 'starting-to-bloom' : monthsSinceArrival >= 1 ? 'tending-the-garden' : 'laying-the-ground';
@@ -354,6 +357,23 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
     items.forEach(i => { map[i.phase]?.push(i); });
     return map;
   }, [items]);
+
+  const handleReset = async () => {
+    if (!authUser) return;
+    setResetting(true);
+    try {
+      await (supabase as any)
+        .from('checklist_preferences')
+        .update({ onboarding_complete: false })
+        .eq('user_id', authUser.id);
+      onChange();
+      toast.success('You can now reselect your priorities');
+    } catch (e) {
+      toast.error('Could not reset preferences. Please try again.');
+    } finally {
+      setResetting(false);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -371,6 +391,17 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
           }}
         />
       ))}
+
+      <div className="pt-6 flex justify-center">
+        <Button
+          variant="ghost"
+          onClick={handleReset}
+          disabled={resetting}
+          className="text-muted-foreground hover:text-foreground text-sm"
+        >
+          {resetting ? 'Resetting…' : 'My priorities changed, reselect options for checklist'}
+        </Button>
+      </div>
     </div>
   );
 };
