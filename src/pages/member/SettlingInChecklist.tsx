@@ -568,7 +568,13 @@ const ItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onCh
   };
 
   return (
-    <div>
+    <motion.div
+      layout
+      initial={false}
+      exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      style={{ overflow: 'hidden' }}
+    >
       <div
         className={`flex items-start gap-3 p-3 rounded-2xl transition-all duration-300 ${
           item.is_completed ? 'opacity-60' : ''
