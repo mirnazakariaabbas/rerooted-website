@@ -35,6 +35,7 @@ import { cn } from '@/lib/utils';
 const memberNav = [
   { path: '/app/home', label: 'Home', icon: Home },
   { path: '/app/cultural', label: 'Cultural Companion', icon: Globe },
+  { path: '/app/settling-in', label: 'Settling-In Checklist', icon: ClipboardCheck },
   { path: '/app/coach', label: 'My Coach', icon: Heart },
   { path: '/app/assessment', label: 'Assessment', icon: BarChart3 },
   { path: '/app/messages', label: 'Messages', icon: MessageCircle },
