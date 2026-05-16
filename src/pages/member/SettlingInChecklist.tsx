@@ -387,32 +387,29 @@ const PhaseSection = ({
 }) => {
   const Icon = phase.icon;
   const allComplete = items.length > 0 && items.every(i => i.is_completed);
+  const tone = TONE_STYLES[phase.tone];
 
   return (
-    <Card className="border-0 bg-card rounded-3xl overflow-hidden">
+    <div className="rounded-2xl overflow-hidden">
       <button
         onClick={onExpand}
-        className="w-full text-left p-6 flex items-start gap-3 hover:bg-muted/40 transition-colors"
+        className={`w-full text-left p-5 flex items-center gap-4 transition-colors ${tone.header}`}
         aria-expanded={expanded}
       >
-        <div className={`h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 ${
-          expanded ? 'bg-secondary/15 text-secondary' : 'bg-muted text-foreground/70'
-        }`}>
-          <Icon className="h-5 w-5" />
-        </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-[900] tracking-tight text-foreground">{phase.name}</h3>
-          {expanded && (
-            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{phase.description}</p>
-          )}
+          <div className="text-lg font-[900] tracking-tight leading-tight">{phase.name}</div>
+          <div className={`text-xs opacity-80 mt-1 ${tone.subtitle}`}>{phase.description}</div>
         </div>
         {allComplete && (
-          <span className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-secondary mt-2">
+          <span className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold opacity-90 shrink-0">
             <Check className="h-3 w-3" /> Done
           </span>
         )}
+        <div className={`shrink-0 ${tone.iconBg} opacity-90`}>
+          <Icon className="h-7 w-7" />
+        </div>
         <ChevronDown
-          className={`h-5 w-5 text-foreground/60 shrink-0 mt-2 transition-transform duration-300 ${
+          className={`h-5 w-5 shrink-0 transition-transform duration-300 ${tone.chevron} ${
             expanded ? 'rotate-180' : 'rotate-0'
           }`}
         />
@@ -425,9 +422,9 @@ const PhaseSection = ({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
+            className="overflow-hidden bg-card"
           >
-            <div className="px-6 pb-6">
+            <div className="p-5 border-x border-b border-border rounded-b-2xl">
               <AnimatePresence>
                 {allComplete && (
                   <PhaseCelebration phase={phase.id} itemCount={items.length} onAdvance={onAdvance} />
@@ -446,7 +443,7 @@ const PhaseSection = ({
           </motion.div>
         )}
       </AnimatePresence>
-    </Card>
+    </div>
   );
 };
 
