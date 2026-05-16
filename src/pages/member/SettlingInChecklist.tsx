@@ -436,7 +436,7 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
 };
 
 const PhaseSection = ({
-  phase, items, expanded, onExpand, onChange, onAdvance,
+  phase, items, expanded, onExpand, onChange, onAdvance, onCompleted,
 }: {
   phase: typeof PHASES[number];
   items: ChecklistItemRow[];
@@ -444,9 +444,10 @@ const PhaseSection = ({
   onExpand: () => void;
   onChange: () => void;
   onAdvance: () => void;
+  onCompleted: (id: string) => void;
 }) => {
   const Icon = phase.icon;
-  const allComplete = items.length > 0 && items.every(i => i.is_completed);
+  const allComplete = items.length === 0 || items.every(i => i.is_completed);
   const tone = TONE_STYLES[phase.tone];
 
   return (
@@ -486,18 +487,20 @@ const PhaseSection = ({
           >
             <div className="p-5 border-x border-b border-border rounded-b-2xl">
               <AnimatePresence>
-                {allComplete && (
+                {items.length > 0 && items.every(i => i.is_completed) && (
                   <PhaseCelebration phase={phase.id} itemCount={items.length} onAdvance={onAdvance} />
                 )}
               </AnimatePresence>
 
               <div className="space-y-1">
                 {items.length === 0 && (
-                  <p className="text-xs text-muted-foreground text-center py-4">No items in this phase yet.</p>
+                  <p className="text-xs text-muted-foreground text-center py-4">All done here. See your accomplishments below.</p>
                 )}
-                {items.map(item => (
-                  <ItemRow key={item.id} item={item} onChange={onChange} />
-                ))}
+                <AnimatePresence initial={false}>
+                  {items.map(item => (
+                    <ItemRow key={item.id} item={item} onChange={onChange} onCompleted={onCompleted} />
+                  ))}
+                </AnimatePresence>
               </div>
             </div>
           </motion.div>
