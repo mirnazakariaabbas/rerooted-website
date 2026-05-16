@@ -335,7 +335,7 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
   const monthsSinceArrival = user.arrivalDate ? differenceInMonths(new Date(), new Date(user.arrivalDate)) : 0;
   const defaultPhase: Phase = monthsSinceArrival > 3 ? 'starting-to-bloom' : monthsSinceArrival >= 1 ? 'tending-the-garden' : 'laying-the-ground';
 
-  const [expanded, setExpanded] = useState<Phase>(defaultPhase);
+  const [expanded, setExpanded] = useState<Phase | null>(defaultPhase);
 
   const grouped = useMemo(() => {
     const map: Record<Phase, ChecklistItemRow[]> = {
