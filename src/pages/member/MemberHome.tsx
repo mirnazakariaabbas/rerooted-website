@@ -226,6 +226,13 @@ const MemberHome = () => {
               onClick={() => navigate('/app/cultural')}
             />
             <ActionTile
+              title="Settling-In Checklist"
+              subtitle="Your personal settling-in guide"
+              icon={<ClipboardCheck className="h-7 w-7" />}
+              tone="accent"
+              onClick={() => navigate('/app/settling-in')}
+            />
+            <ActionTile
               title="Daily Reflection"
               subtitle="Journal this week's prompt"
               icon={<Sparkles className="h-7 w-7" />}
