@@ -441,6 +441,18 @@ const ItemRow = ({ item, onChange }: { item: ChecklistItemRow; onChange: () => v
   const recentRef = useRef<string[]>([]);
   const timeoutRef = useRef<number | null>(null);
 
+  const { data: scheduled = false } = useQuery({
+    queryKey: ['checklist-item-scheduled', item.id],
+    queryFn: async () => {
+      const { count } = await (supabase as any)
+        .from('calendar_events')
+        .select('id', { count: 'exact', head: true })
+        .eq('checklist_item_id', item.id);
+      return (count ?? 0) > 0;
+    },
+    enabled: !!authUser,
+  });
+
   const toggle = async (checked: boolean) => {
     await (supabase as any)
       .from('checklist_items')
@@ -473,6 +485,7 @@ const ItemRow = ({ item, onChange }: { item: ChecklistItemRow; onChange: () => v
     });
     setDatePickerOpen(false);
     qc.invalidateQueries({ queryKey: ['mini-cal-events', authUser?.id] });
+    qc.invalidateQueries({ queryKey: ['checklist-item-scheduled', item.id] });
     toast.success('Added to your calendar');
   };
 
@@ -501,8 +514,12 @@ const ItemRow = ({ item, onChange }: { item: ChecklistItemRow; onChange: () => v
         <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
           <PopoverTrigger asChild>
             <button
-              className="h-8 w-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors shrink-0"
-              aria-label="Schedule"
+              className={`h-8 w-8 rounded-full flex items-center justify-center transition-colors shrink-0 ${
+                scheduled
+                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              }`}
+              aria-label={scheduled ? 'Scheduled' : 'Schedule'}
             >
               <CalendarIcon className="h-4 w-4" />
             </button>
