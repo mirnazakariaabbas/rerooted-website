@@ -257,6 +257,128 @@ export type Database = {
         }
         Relationships: []
       }
+      calendar_events: {
+        Row: {
+          checklist_item_id: string | null
+          created_at: string
+          event_date: string
+          event_time: string | null
+          event_type: string
+          id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          checklist_item_id?: string | null
+          created_at?: string
+          event_date: string
+          event_time?: string | null
+          event_type: string
+          id?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          checklist_item_id?: string | null
+          created_at?: string
+          event_date?: string
+          event_time?: string | null
+          event_type?: string
+          id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "calendar_events_checklist_item_id_fkey"
+            columns: ["checklist_item_id"]
+            isOneToOne: false
+            referencedRelation: "checklist_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      checklist_items: {
+        Row: {
+          category: string
+          completed_at: string | null
+          country_specific: boolean
+          created_at: string
+          description: string | null
+          id: string
+          is_completed: boolean
+          is_family_only: boolean
+          is_partner_only: boolean
+          is_solo_only: boolean
+          phase: string
+          sort_order: number
+          title: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          completed_at?: string | null
+          country_specific?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_completed?: boolean
+          is_family_only?: boolean
+          is_partner_only?: boolean
+          is_solo_only?: boolean
+          phase: string
+          sort_order?: number
+          title: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          completed_at?: string | null
+          country_specific?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_completed?: boolean
+          is_family_only?: boolean
+          is_partner_only?: boolean
+          is_solo_only?: boolean
+          phase?: string
+          sort_order?: number
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      checklist_preferences: {
+        Row: {
+          created_at: string
+          feeling: string
+          id: string
+          onboarding_complete: boolean
+          priorities: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feeling?: string
+          id?: string
+          onboarding_complete?: boolean
+          priorities?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          feeling?: string
+          id?: string
+          onboarding_complete?: boolean
+          priorities?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       coach_assignments: {
         Row: {
           assigned_at: string

@@ -16,9 +16,10 @@ import { Badge } from '@/components/ui/badge';
 import { differenceInMonths } from 'date-fns';
 import {
   ArrowRight, Globe, BarChart3, Heart, BookOpen, Calendar,
-  MessageCircle, Sparkles,
+  MessageCircle, Sparkles, ClipboardCheck,
 } from 'lucide-react';
 import DimensionDetail from '@/components/home/DimensionDetail';
+import MiniCalendar from '@/components/home/MiniCalendar';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 
 const MemberHome = () => {
@@ -204,6 +205,10 @@ const MemberHome = () => {
             <p className="text-sm leading-relaxed text-foreground/80">
               {STAGE_DESCRIPTIONS[user.stage]}
             </p>
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-primary mt-6 mb-3">
+              Your Month
+            </p>
+            <MiniCalendar />
           </CardContent>
         </Card>
 
@@ -219,6 +224,13 @@ const MemberHome = () => {
               icon={<Globe className="h-7 w-7" />}
               tone="primary"
               onClick={() => navigate('/app/cultural')}
+            />
+            <ActionTile
+              title="Settling-In Checklist"
+              subtitle="Your personal settling-in guide"
+              icon={<ClipboardCheck className="h-7 w-7" />}
+              tone="accent"
+              onClick={() => navigate('/app/settling-in')}
             />
             <ActionTile
               title="Daily Reflection"
