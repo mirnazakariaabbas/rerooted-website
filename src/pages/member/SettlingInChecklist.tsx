@@ -11,7 +11,18 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Sprout, Leaf, Flower2, CalendarPlus, CalendarCheck, Trophy, HeartHandshake, Shuffle, Check, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import {
+  SproutMark as Sprout,
+  LeafMark as Leaf,
+  BloomMark as Flower2,
+  CalendarPlusMark as CalendarPlus,
+  CalendarCheckMark as CalendarCheck,
+  TrophyMark as Trophy,
+  HandshakeHeartMark as HeartHandshake,
+  ShuffleMark as Shuffle,
+  CheckMark as Check,
+} from '@/components/icons/ChecklistIcons';
 import { toast } from 'sonner';
 
 type Phase = 'laying-the-ground' | 'tending-the-garden' | 'starting-to-bloom';
