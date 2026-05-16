@@ -699,4 +699,67 @@ const PhaseCelebration = ({ phase, itemCount, onAdvance }: { phase: Phase; itemC
   );
 };
 
+const AccomplishmentsSection = ({
+  items, expanded, onExpand, onChange,
+}: {
+  items: ChecklistItemRow[];
+  expanded: boolean;
+  onExpand: () => void;
+  onChange: () => void;
+}) => {
+  const tone = TONE_STYLES.secondary;
+  return (
+    <div className="rounded-2xl overflow-hidden">
+      <button
+        onClick={onExpand}
+        className={`w-full text-left p-5 flex items-center gap-4 transition-colors ${tone.header}`}
+        aria-expanded={expanded}
+      >
+        <div className="flex-1 min-w-0">
+          <div className="text-lg font-[900] tracking-tight leading-tight">My Accomplishments</div>
+          <div className={`text-xs opacity-80 mt-1 ${tone.subtitle}`}>
+            {items.length === 0
+              ? 'Each completed task lands here. Watch them stack up.'
+              : `${items.length} ${items.length === 1 ? 'thing' : 'things'} you've already done.`}
+          </div>
+        </div>
+        <div className={`shrink-0 ${tone.iconBg} opacity-90`}>
+          <Sparkles className="h-7 w-7" />
+        </div>
+        <ChevronDown
+          className={`h-5 w-5 shrink-0 transition-transform duration-300 ${tone.chevron} ${
+            expanded ? 'rotate-180' : 'rotate-0'
+          }`}
+        />
+      </button>
+
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden bg-card"
+          >
+            <div className="p-5 border-x border-b border-border rounded-b-2xl">
+              {items.length === 0 ? (
+                <p className="text-xs text-muted-foreground text-center py-4">
+                  Nothing here yet. Complete a task and it will appear here.
+                </p>
+              ) : (
+                <div className="space-y-1">
+                  {items.map(item => (
+                    <ItemRow key={item.id} item={item} onChange={onChange} />
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 export default SettlingInChecklist;
