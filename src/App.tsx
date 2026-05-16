@@ -93,6 +93,7 @@ const App = () => (
                 <Route index element={<Navigate to="/app/home" replace />} />
                 <Route path="home" element={<MemberHome />} />
                 <Route path="cultural" element={<CulturalCompanion />} />
+                <Route path="settling-in" element={<SettlingInChecklist />} />
                 <Route path="coach" element={<CoachPage />} />
                 <Route path="assessment" element={<AssessmentPage />} />
                 <Route path="progress" element={<Navigate to="/app/home" replace />} />
