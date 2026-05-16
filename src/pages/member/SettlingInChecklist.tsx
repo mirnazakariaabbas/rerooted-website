@@ -485,6 +485,7 @@ const ItemRow = ({ item, onChange }: { item: ChecklistItemRow; onChange: () => v
     });
     setDatePickerOpen(false);
     qc.invalidateQueries({ queryKey: ['mini-cal-events', authUser?.id] });
+    qc.invalidateQueries({ queryKey: ['checklist-item-scheduled', item.id] });
     toast.success('Added to your calendar');
   };
 
