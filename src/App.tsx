@@ -16,6 +16,7 @@ import CoachPage from "./pages/member/CoachPage";
 import AssessmentPage from "./pages/member/AssessmentPage";
 import ProgressPage from "./pages/member/ProgressPage";
 import ProfilePage from "./pages/member/ProfilePage";
+import SettlingInChecklist from "./pages/member/SettlingInChecklist";
 import CoachDashboard from "./pages/coach/CoachDashboard";
 import AdminHome from "./pages/admin/AdminHome";
 import ContactsPage from "./pages/admin/users/ContactsPage";
