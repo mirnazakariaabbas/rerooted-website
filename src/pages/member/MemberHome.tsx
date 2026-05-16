@@ -205,12 +205,20 @@ const MemberHome = () => {
             <p className="text-sm leading-relaxed text-foreground/80">
               {STAGE_DESCRIPTIONS[user.stage]}
             </p>
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-primary mt-6 mb-3">
-              Your Month
-            </p>
-            <MiniCalendar />
           </CardContent>
         </Card>
+
+        {/* ============ Your Month (Calendar) ============ */}
+        <section className="mb-10">
+          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
+            Your Month
+          </p>
+          <Card className="border-0 bg-muted rounded-3xl">
+            <CardContent className="p-6">
+              <MiniCalendar />
+            </CardContent>
+          </Card>
+        </section>
 
         {/* ============ Action Tiles (phone screenshot style) ============ */}
         <section className="mb-10">
