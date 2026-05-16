@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { ChevronLeft, ChevronRight, Heart, ClipboardCheck } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 type CoachingEvent = { id: string; date: Date; time: string; coachName: string };
 type ChecklistEvent = { id: string; date: Date; time: string | null; title: string };
@@ -119,6 +120,7 @@ export const MiniCalendar = () => {
   const selectedRow = selectedIndex >= 0 ? Math.floor(selectedIndex / 7) : -1;
 
   return (
+    <TooltipProvider delayDuration={150}>
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
@@ -186,7 +188,7 @@ export const MiniCalendar = () => {
                           ? 'text-muted-foreground'
                           : 'text-foreground';
 
-                  return (
+                  const dayButton = (
                     <button
                       key={i}
                       disabled={!hasEvents}
@@ -194,19 +196,16 @@ export const MiniCalendar = () => {
                         if (selectedDay && isSameDay(selectedDay, cell.date)) setSelectedDay(null);
                         else setSelectedDay(cell.date);
                       }}
-                      className={`relative h-10 flex items-center justify-center text-sm transition-transform ${
-                        hasEvents ? 'hover:scale-105 cursor-pointer' : 'cursor-default'
+                      className={`relative h-10 w-full flex items-center justify-center text-sm transition-transform ${
+                        hasEvents ? 'hover:scale-110 cursor-pointer' : 'cursor-default'
                       }`}
                     >
-                      {/* Past day soft highlight pill (Duolingo-like) */}
                       {isPast && cell.inMonth && !hasEvents && (
                         <span className="absolute inset-1 rounded-full bg-muted/60" aria-hidden />
                       )}
-                      {/* Today subtle outline */}
                       {isToday && !hasEvents && (
                         <span className="absolute inset-1 rounded-full ring-2 ring-primary/40" aria-hidden />
                       )}
-                      {/* Event circle (solid or split) */}
                       {hasEvents && (
                         <span
                           className={`absolute inset-1 rounded-full ${isSelected ? 'ring-2 ring-offset-2 ring-foreground/30 ring-offset-background' : ''}`}
@@ -218,6 +217,35 @@ export const MiniCalendar = () => {
                         {cell.date.getDate()}
                       </span>
                     </button>
+                  );
+
+                  if (!hasEvents) return <div key={i}>{dayButton}</div>;
+
+                  return (
+                    <Tooltip key={i} delayDuration={150}>
+                      <TooltipTrigger asChild>{dayButton}</TooltipTrigger>
+                      <TooltipContent side="top" className="bg-card text-foreground border border-border rounded-xl px-3 py-2 max-w-[220px]">
+                        <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground mb-1">
+                          {cell.date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+                        </p>
+                        <div className="space-y-1">
+                          {coaching.map(ev => (
+                            <div key={ev.id} className="flex items-center gap-2">
+                              <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
+                              <span className="text-xs text-foreground truncate">
+                                Coaching with {ev.coachName}
+                              </span>
+                            </div>
+                          ))}
+                          {checklist.map(ev => (
+                            <div key={ev.id} className="flex items-center gap-2">
+                              <span className="h-2 w-2 rounded-full bg-secondary shrink-0" />
+                              <span className="text-xs text-foreground truncate">{ev.title}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
                   );
                 })}
               </div>
@@ -289,6 +317,7 @@ export const MiniCalendar = () => {
         </div>
       </div>
     </div>
+    </TooltipProvider>
   );
 };
 
