@@ -3,12 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, ClipboardCheck } from 'lucide-react';
 
 type CoachingEvent = { id: string; date: Date; time: string; coachName: string };
 type ChecklistEvent = { id: string; date: Date; time: string | null; title: string };
 
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+// Re-Rooted brand tokens: Deep Blue = primary, Fresh Green = secondary
+const COACHING_COLOR = 'hsl(var(--primary))';
+const CHECKLIST_COLOR = 'hsl(var(--secondary))';
 
 function startOfMonth(d: Date) { return new Date(d.getFullYear(), d.getMonth(), 1); }
 function endOfMonth(d: Date) { return new Date(d.getFullYear(), d.getMonth() + 1, 0); }
@@ -81,11 +85,9 @@ export const MiniCalendar = () => {
     enabled: !!authUser,
   });
 
-  // Build calendar grid (Mon-Sun weeks)
   const cells = useMemo(() => {
     const result: { date: Date; inMonth: boolean }[] = [];
     const first = monthStart;
-    // Mon=0 .. Sun=6
     const leading = (first.getDay() + 6) % 7;
     for (let i = leading; i > 0; i--) {
       result.push({ date: new Date(first.getFullYear(), first.getMonth(), 1 - i), inMonth: false });
@@ -101,6 +103,7 @@ export const MiniCalendar = () => {
   }, [monthStart, monthEnd]);
 
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const monthLabel = cursor.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
 
   const eventsOnDay = (d: Date) => ({
@@ -111,97 +114,180 @@ export const MiniCalendar = () => {
   const selectedEvents = selectedDay ? eventsOnDay(selectedDay) : { coaching: [], checklist: [] };
   const hasSelectedEvents = selectedEvents.coaching.length + selectedEvents.checklist.length > 0;
 
+  // Find index of selected day to anchor the popover under the correct row
+  const selectedIndex = selectedDay ? cells.findIndex(c => isSameDay(c.date, selectedDay)) : -1;
+  const selectedRow = selectedIndex >= 0 ? Math.floor(selectedIndex / 7) : -1;
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
         <button
           aria-label="Previous month"
           onClick={() => { setCursor(addMonths(cursor, -1)); setSelectedDay(null); }}
-          className="h-7 w-7 rounded-full flex items-center justify-center hover:bg-background/60 transition-colors"
+          className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
         >
           <ChevronLeft className="h-4 w-4 text-foreground/70" />
         </button>
-        <p className="text-sm font-semibold text-foreground">{monthLabel}</p>
+        <p className="text-base font-[900] tracking-tight text-foreground">{monthLabel}</p>
         <button
           aria-label="Next month"
           onClick={() => { setCursor(addMonths(cursor, 1)); setSelectedDay(null); }}
-          className="h-7 w-7 rounded-full flex items-center justify-center hover:bg-background/60 transition-colors"
+          className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
         >
           <ChevronRight className="h-4 w-4 text-foreground/70" />
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 mb-1">
+      {/* Day labels */}
+      <div className="grid grid-cols-7 gap-1 mb-2">
         {DAY_LABELS.map(d => (
-          <div key={d} className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold text-center">
+          <div key={d} className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold text-center">
             {d}
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1">
-        {cells.map((cell, i) => {
-          const { coaching, checklist } = eventsOnDay(cell.date);
-          const hasCoaching = coaching.length > 0;
-          const hasChecklist = checklist.length > 0;
-          const hasEvents = hasCoaching || hasChecklist;
-          const isToday = isSameDay(cell.date, today);
-          const isSelected = selectedDay && isSameDay(cell.date, selectedDay);
+      {/* Calendar grid, split into weeks so popover can slot between rows */}
+      <div className="space-y-1">
+        {Array.from({ length: cells.length / 7 }).map((_, rowIdx) => {
+          const rowCells = cells.slice(rowIdx * 7, rowIdx * 7 + 7);
           return (
-            <button
-              key={i}
-              disabled={!hasEvents}
-              onClick={() => {
-                if (selectedDay && isSameDay(selectedDay, cell.date)) setSelectedDay(null);
-                else setSelectedDay(cell.date);
-              }}
-              className={`relative h-9 flex flex-col items-center justify-center rounded-full text-xs transition-colors ${
-                cell.inMonth ? 'text-foreground' : 'text-muted-foreground/30'
-              } ${isToday ? 'ring-1 ring-primary/30' : ''} ${
-                isSelected ? 'bg-background/70' : hasEvents ? 'hover:bg-background/40 cursor-pointer' : 'cursor-default'
-              }`}
-            >
-              <span className="leading-none">{cell.date.getDate()}</span>
-              {hasEvents && (
-                <span className="flex gap-0.5 mt-0.5">
-                  {hasCoaching && <span className="h-1 w-1 rounded-full bg-primary" />}
-                  {hasChecklist && <span className="h-1 w-1 rounded-full bg-secondary" />}
-                </span>
-              )}
-            </button>
+            <div key={rowIdx}>
+              <div className="grid grid-cols-7 gap-1">
+                {rowCells.map((cell, i) => {
+                  const { coaching, checklist } = eventsOnDay(cell.date);
+                  const hasCoaching = coaching.length > 0;
+                  const hasChecklist = checklist.length > 0;
+                  const hasEvents = hasCoaching || hasChecklist;
+                  const isToday = isSameDay(cell.date, today);
+                  const isPast = cell.date < today;
+                  const isSelected = selectedDay && isSameDay(cell.date, selectedDay);
+
+                  // Build the ring background:
+                  // - two events: split circle (half primary, half secondary)
+                  // - one event: solid color
+                  let ringStyle: React.CSSProperties = {};
+                  if (hasCoaching && hasChecklist) {
+                    ringStyle.background = `conic-gradient(${COACHING_COLOR} 0deg 180deg, ${CHECKLIST_COLOR} 180deg 360deg)`;
+                  } else if (hasCoaching) {
+                    ringStyle.background = COACHING_COLOR;
+                  } else if (hasChecklist) {
+                    ringStyle.background = CHECKLIST_COLOR;
+                  }
+
+                  const dayNumberClass = hasEvents
+                    ? 'text-primary-foreground font-bold'
+                    : isToday
+                      ? 'text-primary font-bold'
+                      : !cell.inMonth
+                        ? 'text-muted-foreground/30'
+                        : isPast
+                          ? 'text-muted-foreground'
+                          : 'text-foreground';
+
+                  return (
+                    <button
+                      key={i}
+                      disabled={!hasEvents}
+                      onClick={() => {
+                        if (selectedDay && isSameDay(selectedDay, cell.date)) setSelectedDay(null);
+                        else setSelectedDay(cell.date);
+                      }}
+                      className={`relative h-10 flex items-center justify-center text-sm transition-transform ${
+                        hasEvents ? 'hover:scale-105 cursor-pointer' : 'cursor-default'
+                      }`}
+                    >
+                      {/* Past day soft highlight pill (Duolingo-like) */}
+                      {isPast && cell.inMonth && !hasEvents && (
+                        <span className="absolute inset-1 rounded-full bg-muted/60" aria-hidden />
+                      )}
+                      {/* Today subtle outline */}
+                      {isToday && !hasEvents && (
+                        <span className="absolute inset-1 rounded-full ring-2 ring-primary/40" aria-hidden />
+                      )}
+                      {/* Event circle (solid or split) */}
+                      {hasEvents && (
+                        <span
+                          className={`absolute inset-1 rounded-full ${isSelected ? 'ring-2 ring-offset-2 ring-foreground/30 ring-offset-background' : ''}`}
+                          style={ringStyle}
+                          aria-hidden
+                        />
+                      )}
+                      <span className={`relative leading-none ${dayNumberClass}`}>
+                        {cell.date.getDate()}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Popover bubble under the row containing the selected day */}
+              <AnimatePresence>
+                {selectedDay && hasSelectedEvents && selectedRow === rowIdx && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative mt-2"
+                  >
+                    {/* Bubble pointer */}
+                    <div
+                      className="absolute -top-1.5 h-3 w-3 rotate-45 bg-card border-l border-t border-border"
+                      style={{
+                        left: `calc(${((selectedIndex % 7) + 0.5) * (100 / 7)}% - 6px)`,
+                      }}
+                      aria-hidden
+                    />
+                    <div className="rounded-2xl bg-card border border-border p-4 space-y-2">
+                      <p className="text-[10px] uppercase tracking-[0.18em] font-bold text-muted-foreground">
+                        {selectedDay.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
+                      </p>
+                      {selectedEvents.coaching.map(ev => (
+                        <div key={ev.id} className="flex items-start gap-3">
+                          <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+                            <Heart className="h-4 w-4" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-foreground leading-tight">
+                              Coaching with {ev.coachName}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-0.5">{fmtTime(ev.time)}</p>
+                          </div>
+                        </div>
+                      ))}
+                      {selectedEvents.checklist.map(ev => (
+                        <div key={ev.id} className="flex items-start gap-3">
+                          <div className="h-8 w-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center shrink-0">
+                            <ClipboardCheck className="h-4 w-4" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-foreground leading-tight">{ev.title}</p>
+                            {ev.time && <p className="text-xs text-muted-foreground mt-0.5">{fmtTime(ev.time)}</p>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           );
         })}
       </div>
 
-      <AnimatePresence>
-        {selectedDay && hasSelectedEvents && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="overflow-hidden"
-          >
-            <div className="mt-3 space-y-2 pt-3 border-t border-border/50">
-              <p className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground">
-                {selectedDay.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
-              </p>
-              {selectedEvents.coaching.map(ev => (
-                <div key={ev.id} className="bg-background/60 rounded-xl pl-3 pr-3 py-2 border-l-2 border-primary">
-                  <p className="text-xs font-semibold text-foreground">Coaching session with {ev.coachName}</p>
-                  <p className="text-[10px] text-muted-foreground">{fmtTime(ev.time)}</p>
-                </div>
-              ))}
-              {selectedEvents.checklist.map(ev => (
-                <div key={ev.id} className="bg-background/60 rounded-xl pl-3 pr-3 py-2 border-l-2 border-secondary">
-                  <p className="text-xs font-semibold text-foreground">{ev.title}</p>
-                  {ev.time && <p className="text-[10px] text-muted-foreground">{fmtTime(ev.time)}</p>}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Legend */}
+      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border/50">
+        <div className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+          <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Coaching</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
+          <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Checklist</span>
+        </div>
+      </div>
     </div>
   );
 };
