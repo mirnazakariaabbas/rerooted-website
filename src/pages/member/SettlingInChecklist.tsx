@@ -626,7 +626,7 @@ const ItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onCh
           </motion.p>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
