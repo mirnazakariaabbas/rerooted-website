@@ -215,9 +215,6 @@ export const MiniCalendar = () => {
                         hasEvents ? 'hover:scale-110 cursor-pointer' : 'cursor-default'
                       }`}
                     >
-                      {isPast && cell.inMonth && !hasEvents && !isToday && (
-                        <span className="absolute inset-1.5 rounded-full bg-primary/5" aria-hidden />
-                      )}
                       {isToday && !hasEvents && (
                         <span className="absolute inset-1 rounded-full ring-2 ring-primary/40" aria-hidden />
                       )}
