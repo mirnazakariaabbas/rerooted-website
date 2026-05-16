@@ -510,7 +510,7 @@ const PhaseSection = ({
   );
 };
 
-const ItemRow = ({ item, onChange }: { item: ChecklistItemRow; onChange: () => void }) => {
+const ItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onChange: () => void; onCompleted?: (id: string) => void }) => {
   const { user: authUser } = useAuth();
   const qc = useQueryClient();
   const [reward, setReward] = useState<string | null>(null);
