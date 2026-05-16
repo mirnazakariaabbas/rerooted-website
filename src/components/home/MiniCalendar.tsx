@@ -154,9 +154,24 @@ export const MiniCalendar = () => {
       <div className="space-y-1">
         {Array.from({ length: cells.length / 7 }).map((_, rowIdx) => {
           const rowCells = cells.slice(rowIdx * 7, rowIdx * 7 + 7);
+          const pastIdxs = rowCells
+            .map((c, i) => (c.inMonth && c.date < today ? i : -1))
+            .filter(i => i >= 0);
+          const pastStart = pastIdxs.length ? pastIdxs[0] : -1;
+          const pastEnd = pastIdxs.length ? pastIdxs[pastIdxs.length - 1] : -1;
           return (
             <div key={rowIdx}>
-              <div className="grid grid-cols-7 gap-1">
+              <div className="relative grid grid-cols-7 gap-1">
+                {pastStart >= 0 && (
+                  <span
+                    aria-hidden
+                    className="absolute top-1 bottom-1 rounded-full bg-primary/10 pointer-events-none"
+                    style={{
+                      left: `calc(${(pastStart / 7) * 100}% + 4px)`,
+                      width: `calc(${((pastEnd - pastStart + 1) / 7) * 100}% - 8px)`,
+                    }}
+                  />
+                )}
                 {rowCells.map((cell, i) => {
                   const { coaching, checklist } = eventsOnDay(cell.date);
                   const hasCoaching = coaching.length > 0;
