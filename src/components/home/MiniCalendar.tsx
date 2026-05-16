@@ -317,6 +317,7 @@ export const MiniCalendar = () => {
         </div>
       </div>
     </div>
+    </TooltipProvider>
   );
 };
 
