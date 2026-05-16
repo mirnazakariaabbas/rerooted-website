@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Sprout, Leaf, Flower2, Calendar as CalendarIcon, Sparkles, Check, ChevronDown } from 'lucide-react';
+import { Sprout, Leaf, Flower2, CalendarPlus, CalendarCheck, Trophy, HeartHandshake, Shuffle, Check, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
 
 type Phase = 'laying-the-ground' | 'tending-the-garden' | 'starting-to-bloom';
@@ -428,6 +428,7 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
           disabled={resetting}
           className="text-muted-foreground hover:text-foreground text-sm"
         >
+          <Shuffle className="h-4 w-4 mr-2" />
           {resetting ? 'Resetting…' : 'My priorities changed, reselect options for checklist'}
         </Button>
       </div>
@@ -605,7 +606,7 @@ const ItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onCh
               }`}
               aria-label={scheduled ? 'Scheduled' : 'Schedule'}
             >
-              <CalendarIcon className="h-4 w-4" />
+              {scheduled ? <CalendarCheck className="h-4 w-4" /> : <CalendarPlus className="h-4 w-4" />}
             </button>
           </PopoverTrigger>
           <PopoverContent align="end" className="w-auto p-0">
@@ -687,7 +688,7 @@ const PhaseCelebration = ({ phase, itemCount, onAdvance }: { phase: Phase; itemC
           disabled={sharing}
           className="rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
         >
-          <Sparkles className="h-4 w-4 mr-2" />
+          <HeartHandshake className="h-4 w-4 mr-2" />
           {sharing ? 'Sharing…' : copy.button}
         </Button>
       ) : (
@@ -724,7 +725,7 @@ const AccomplishmentsSection = ({
           </div>
         </div>
         <div className={`shrink-0 ${tone.iconBg} opacity-90`}>
-          <Sparkles className="h-7 w-7" />
+          <Trophy className="h-7 w-7" />
         </div>
         <ChevronDown
           className={`h-5 w-5 shrink-0 transition-transform duration-300 ${tone.chevron} ${
