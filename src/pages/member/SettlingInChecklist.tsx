@@ -441,6 +441,18 @@ const ItemRow = ({ item, onChange }: { item: ChecklistItemRow; onChange: () => v
   const recentRef = useRef<string[]>([]);
   const timeoutRef = useRef<number | null>(null);
 
+  const { data: scheduled = false } = useQuery({
+    queryKey: ['checklist-item-scheduled', item.id],
+    queryFn: async () => {
+      const { count } = await (supabase as any)
+        .from('calendar_events')
+        .select('id', { count: 'exact', head: true })
+        .eq('checklist_item_id', item.id);
+      return (count ?? 0) > 0;
+    },
+    enabled: !!authUser,
+  });
+
   const toggle = async (checked: boolean) => {
     await (supabase as any)
       .from('checklist_items')
