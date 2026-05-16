@@ -11,7 +11,7 @@ import {
   LogOut, TrendingUp, Search as SearchIcon,
   Monitor, ShieldCheck, Rss, Linkedin, History, UserCheck,
   HelpCircle, PenLine, MessageSquareQuote, Layout, MessageCircle, Megaphone,
-  CalendarDays, Sparkles, LineChart,
+  CalendarDays, Sparkles, LineChart, ClipboardCheck,
 } from 'lucide-react';
 import {
   Sidebar,
