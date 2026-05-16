@@ -380,55 +380,64 @@ const PhaseSection = ({
   const Icon = phase.icon;
   const allComplete = items.length > 0 && items.every(i => i.is_completed);
 
-  if (!expanded) {
-    return (
+  return (
+    <Card className="border-0 bg-card rounded-3xl overflow-hidden">
       <button
         onClick={onExpand}
-        className="w-full text-left bg-muted rounded-3xl p-4 flex items-center gap-3 hover:bg-muted/70 transition-colors"
+        className="w-full text-left p-6 flex items-start gap-3 hover:bg-muted/40 transition-colors"
+        aria-expanded={expanded}
       >
-        <div className="h-10 w-10 rounded-2xl bg-background flex items-center justify-center">
-          <Icon className="h-5 w-5 text-foreground/70" />
+        <div className={`h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 ${
+          expanded ? 'bg-secondary/15 text-secondary' : 'bg-muted text-foreground/70'
+        }`}>
+          <Icon className="h-5 w-5" />
         </div>
-        <div className="flex-1">
-          <p className="text-sm font-semibold text-foreground">{phase.name}</p>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-[900] tracking-tight text-foreground">{phase.name}</h3>
+          {expanded && (
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{phase.description}</p>
+          )}
         </div>
         {allComplete && (
-          <span className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-secondary">
-            <Check className="h-3 w-3" /> Completed
+          <span className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-secondary mt-2">
+            <Check className="h-3 w-3" /> Done
           </span>
         )}
+        <ChevronDown
+          className={`h-5 w-5 text-foreground/60 shrink-0 mt-2 transition-transform duration-300 ${
+            expanded ? 'rotate-180' : 'rotate-0'
+          }`}
+        />
       </button>
-    );
-  }
 
-  return (
-    <Card className="border-0 bg-card rounded-3xl">
-      <CardContent className="p-6">
-        <div className="flex items-start gap-3 mb-4">
-          <div className="h-11 w-11 rounded-2xl bg-secondary/15 text-secondary flex items-center justify-center shrink-0">
-            <Icon className="h-5 w-5" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-lg font-[900] tracking-tight text-foreground">{phase.name}</h3>
-            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{phase.description}</p>
-          </div>
-        </div>
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 pb-6">
+              <AnimatePresence>
+                {allComplete && (
+                  <PhaseCelebration phase={phase.id} itemCount={items.length} onAdvance={onAdvance} />
+                )}
+              </AnimatePresence>
 
-        <AnimatePresence>
-          {allComplete && (
-            <PhaseCelebration phase={phase.id} itemCount={items.length} onAdvance={onAdvance} />
-          )}
-        </AnimatePresence>
-
-        <div className="space-y-1 mt-2">
-          {items.length === 0 && (
-            <p className="text-xs text-muted-foreground text-center py-4">No items in this phase yet.</p>
-          )}
-          {items.map(item => (
-            <ItemRow key={item.id} item={item} onChange={onChange} />
-          ))}
-        </div>
-      </CardContent>
+              <div className="space-y-1">
+                {items.length === 0 && (
+                  <p className="text-xs text-muted-foreground text-center py-4">No items in this phase yet.</p>
+                )}
+                {items.map(item => (
+                  <ItemRow key={item.id} item={item} onChange={onChange} />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Card>
   );
 };
