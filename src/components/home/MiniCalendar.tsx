@@ -120,6 +120,7 @@ export const MiniCalendar = () => {
   const selectedRow = selectedIndex >= 0 ? Math.floor(selectedIndex / 7) : -1;
 
   return (
+    <TooltipProvider delayDuration={150}>
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
