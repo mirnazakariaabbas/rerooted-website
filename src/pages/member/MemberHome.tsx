@@ -205,6 +205,10 @@ const MemberHome = () => {
             <p className="text-sm leading-relaxed text-foreground/80">
               {STAGE_DESCRIPTIONS[user.stage]}
             </p>
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-primary mt-6 mb-3">
+              Your Month
+            </p>
+            <MiniCalendar />
           </CardContent>
         </Card>
 
