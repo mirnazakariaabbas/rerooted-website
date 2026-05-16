@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Sprout, Leaf, Flower2, Calendar as CalendarIcon, Sparkles, Check } from 'lucide-react';
+import { Sprout, Leaf, Flower2, Calendar as CalendarIcon, Sparkles, Check, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
 
 type Phase = 'laying-the-ground' | 'tending-the-garden' | 'starting-to-bloom';
