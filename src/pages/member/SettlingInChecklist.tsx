@@ -406,12 +406,20 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
           expanded={expanded === phase.id}
           onExpand={() => setExpanded(expanded === phase.id ? null : phase.id)}
           onChange={onChange}
+          onCompleted={markLingering}
           onAdvance={() => {
             const idx = PHASES.findIndex(p => p.id === phase.id);
             if (idx < PHASES.length - 1) setExpanded(PHASES[idx + 1].id);
           }}
         />
       ))}
+
+      <AccomplishmentsSection
+        items={accomplishments}
+        expanded={expanded === 'accomplishments'}
+        onExpand={() => setExpanded(expanded === 'accomplishments' ? null : 'accomplishments')}
+        onChange={onChange}
+      />
 
       <div className="pt-6 flex justify-center">
         <Button
