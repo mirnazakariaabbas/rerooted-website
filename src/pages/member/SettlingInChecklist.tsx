@@ -346,7 +346,19 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
   const monthsSinceArrival = user.arrivalDate ? differenceInMonths(new Date(), new Date(user.arrivalDate)) : 0;
   const defaultPhase: Phase = monthsSinceArrival > 3 ? 'starting-to-bloom' : monthsSinceArrival >= 1 ? 'tending-the-garden' : 'laying-the-ground';
 
-  const [expanded, setExpanded] = useState<Phase | null>(defaultPhase);
+  const [expanded, setExpanded] = useState<Phase | 'accomplishments' | null>(defaultPhase);
+  const [lingering, setLingering] = useState<Set<string>>(new Set());
+
+  const markLingering = (id: string) => {
+    setLingering(prev => new Set(prev).add(id));
+    window.setTimeout(() => {
+      setLingering(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }, 3000);
+  };
 
   const grouped = useMemo(() => {
     const map: Record<Phase, ChecklistItemRow[]> = {
@@ -354,9 +366,18 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
       'tending-the-garden': [],
       'starting-to-bloom': [],
     };
-    items.forEach(i => { map[i.phase]?.push(i); });
+    items.forEach(i => {
+      // Hide completed items unless they're still showing their reward message
+      if (i.is_completed && !lingering.has(i.id)) return;
+      map[i.phase]?.push(i);
+    });
     return map;
-  }, [items]);
+  }, [items, lingering]);
+
+  const accomplishments = useMemo(
+    () => items.filter(i => i.is_completed && !lingering.has(i.id)),
+    [items, lingering]
+  );
 
   const handleReset = async () => {
     if (!authUser) return;
