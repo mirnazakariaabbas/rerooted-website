@@ -355,7 +355,7 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
           phase={phase}
           items={grouped[phase.id]}
           expanded={expanded === phase.id}
-          onExpand={() => setExpanded(phase.id)}
+          onExpand={() => setExpanded(expanded === phase.id ? null : phase.id)}
           onChange={onChange}
           onAdvance={() => {
             const idx = PHASES.findIndex(p => p.id === phase.id);
