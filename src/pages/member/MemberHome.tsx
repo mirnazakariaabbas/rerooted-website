@@ -40,6 +40,10 @@ const MemberHome = () => {
   const [shareWithCoach, setShareWithCoach] = useState(false);
   const [selectedDimension, setSelectedDimension] = useState<string | null>(null);
   const [journalOpen, setJournalOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editPrompt, setEditPrompt] = useState('');
+  const [editResponse, setEditResponse] = useState('');
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     const dim = searchParams.get('dimension');
