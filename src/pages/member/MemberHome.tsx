@@ -12,6 +12,9 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { BookMarked } from 'lucide-react';
 
 import { differenceInMonths } from 'date-fns';
 import {
@@ -30,6 +33,7 @@ const MemberHome = () => {
   const [reflectionText, setReflectionText] = useState('');
   const [shareWithCoach, setShareWithCoach] = useState(false);
   const [selectedDimension, setSelectedDimension] = useState<string | null>(null);
+  const [journalOpen, setJournalOpen] = useState(false);
 
   useEffect(() => {
     const dim = searchParams.get('dimension');
@@ -353,25 +357,61 @@ const MemberHome = () => {
           </section>
         )}
 
-        {/* ============ Recent Reflections ============ */}
-        {reflections.length > 0 && (
-          <section>
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
-              Recent Reflections
-            </p>
-            <div className="space-y-3">
-              {reflections.slice(0, 8).map(r => (
-                <div key={r.id} className="flex items-start gap-3 p-3 rounded-2xl bg-background border border-border">
-                  <div className="w-2 h-2 rounded-full bg-secondary mt-2 shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-foreground truncate">{r.prompt}</p>
-                    <p className="text-[10px] text-muted-foreground">{new Date(r.date).toLocaleDateString()}</p>
-                  </div>
-                </div>
-              ))}
+        {/* ============ My Journal ============ */}
+        <section>
+          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
+            My Journal
+          </p>
+          <motion.button
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.99 }}
+            onClick={() => setJournalOpen(true)}
+            className="w-full text-left rounded-2xl p-5 flex items-center gap-4 bg-card border border-border transition-colors hover:bg-muted/40"
+          >
+            <div className="h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 bg-secondary text-secondary-foreground">
+              <BookMarked className="h-5 w-5" />
             </div>
-          </section>
-        )}
+            <div className="flex-1 min-w-0">
+              <div className="text-lg font-[900] tracking-tight leading-tight text-foreground">My Journal</div>
+              <div className="text-xs text-muted-foreground mt-1">
+                {reflections.length === 0
+                  ? 'No entries yet. Start with this week\'s prompt above.'
+                  : `${reflections.length} ${reflections.length === 1 ? 'entry' : 'entries'}, tap to read`}
+              </div>
+            </div>
+            <ArrowRight className="h-4 w-4 opacity-60 shrink-0 text-foreground" />
+          </motion.button>
+        </section>
+
+        <Dialog open={journalOpen} onOpenChange={setJournalOpen}>
+          <DialogContent className="max-w-2xl max-h-[85vh] flex flex-col">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-[900] tracking-tight">My Journal</DialogTitle>
+            </DialogHeader>
+            <ScrollArea className="flex-1 -mx-6 px-6">
+              {reflections.length === 0 ? (
+                <p className="text-sm text-muted-foreground text-center py-12">
+                  No journal entries yet. Answer this week's reflection prompt to get started.
+                </p>
+              ) : (
+                <div className="space-y-4 pb-2">
+                  {reflections.map(r => (
+                    <div key={r.id} className="p-4 rounded-2xl bg-muted">
+                      <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-2">
+                        {new Date(r.date).toLocaleDateString('en', { month: 'long', day: 'numeric', year: 'numeric' })}
+                      </p>
+                      <p className="text-sm italic text-foreground/80 font-serif mb-3">"{r.prompt}"</p>
+                      <p className="text-sm text-foreground whitespace-pre-wrap">{r.response}</p>
+                      {r.sharedWithCoach && (
+                        <Badge variant="outline" className="text-[10px] mt-3">Shared with coach</Badge>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </ScrollArea>
+          </DialogContent>
+        </Dialog>
       </div>
     </motion.div>
   );
