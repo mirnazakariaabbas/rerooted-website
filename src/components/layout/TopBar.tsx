@@ -99,7 +99,7 @@ export function TopBar() {
 
   return (
     <>
-      <header className="h-14 border-b border-border bg-background flex items-center px-4 gap-3 shrink-0 relative">
+      <header className="sticky top-0 z-40 h-14 border-b border-border/40 bg-background/70 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 flex items-center px-4 gap-3 shrink-0 relative">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <BurgerTrigger />
 
