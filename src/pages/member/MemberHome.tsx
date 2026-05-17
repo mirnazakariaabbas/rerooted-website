@@ -16,7 +16,7 @@ import { Badge } from '@/components/ui/badge';
 import { differenceInMonths } from 'date-fns';
 import {
   ArrowRight, Globe, BarChart3, Heart, BookOpen, Calendar,
-  MessageCircle, Sparkles, ClipboardCheck,
+  MessageCircle, ClipboardCheck,
 } from 'lucide-react';
 import DimensionDetail from '@/components/home/DimensionDetail';
 import MiniCalendar from '@/components/home/MiniCalendar';
@@ -241,27 +241,18 @@ const MemberHome = () => {
               onClick={() => navigate('/app/settling-in')}
             />
             <ActionTile
-              title="Daily Reflection"
-              subtitle="Journal this week's prompt"
-              icon={<Sparkles className="h-7 w-7" />}
-              tone="cream"
-              onClick={() => {
-                document.getElementById('weekly-reflection')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            />
-            <ActionTile
-              title="Complexity Assessment"
-              subtitle="28-question diagnostic"
-              icon={<BarChart3 className="h-7 w-7" />}
-              tone="secondary"
-              onClick={() => navigate('/app/assessment')}
-            />
-            <ActionTile
               title="My Coach"
               subtitle="Sessions and notes"
               icon={<Heart className="h-7 w-7" />}
               tone="accent"
               onClick={() => navigate('/app/coach')}
+            />
+            <ActionTile
+              title="Assessment"
+              subtitle="28-question diagnostic"
+              icon={<BarChart3 className="h-7 w-7" />}
+              tone="secondary"
+              onClick={() => navigate('/app/assessment')}
             />
             <ActionTile
               title="Messages"
