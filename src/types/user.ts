@@ -24,6 +24,7 @@ export interface ReflectionEntry {
   prompt: string;
   response: string;
   sharedWithCoach?: boolean;
+  isFavorite?: boolean;
 }
 
 export interface AssessmentResult {
