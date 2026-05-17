@@ -8,6 +8,8 @@ interface UserContextType {
   updateUser: (updates: Partial<UserProfile>) => void;
   reflections: ReflectionEntry[];
   addReflection: (entry: Omit<ReflectionEntry, 'id' | 'date'>) => void;
+  updateReflection: (id: string, updates: Partial<Pick<ReflectionEntry, 'prompt' | 'response' | 'sharedWithCoach' | 'isFavorite'>>) => void;
+  deleteReflection: (id: string) => void;
   assessment: AssessmentResult | null;
   setAssessment: (result: AssessmentResult) => void;
   dimensionProgress: DimensionProgress[];
