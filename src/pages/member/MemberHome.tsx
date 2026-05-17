@@ -32,7 +32,7 @@ import MiniCalendar from '@/components/home/MiniCalendar';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 
 const MemberHome = () => {
-  const { user, reflections, addReflection, dimensionProgress } = useUser();
+  const { user, reflections, addReflection, updateReflection, deleteReflection, dimensionProgress } = useUser();
   const { user: authUser } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
