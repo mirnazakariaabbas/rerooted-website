@@ -150,7 +150,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     if ('response' in updates) dbUpdates.response = updates.response;
     if ('sharedWithCoach' in updates) dbUpdates.shared_with_coach = updates.sharedWithCoach;
     if ('isFavorite' in updates) dbUpdates.is_favorite = updates.isFavorite;
-    supabase.from('reflections').update(dbUpdates).eq('id', id).then();
+    supabase.from('reflections').update(dbUpdates as any).eq('id', id).then();
   }, []);
 
   const deleteReflection = useCallback((id: string) => {
