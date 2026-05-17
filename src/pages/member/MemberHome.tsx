@@ -44,6 +44,30 @@ const MemberHome = () => {
   const [editPrompt, setEditPrompt] = useState('');
   const [editResponse, setEditResponse] = useState('');
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const PAGE_SIZE = 15;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const scrollViewportRef = useRef<HTMLDivElement | null>(null);
+
+  const sortedReflections = useMemo(
+    () => [...reflections].sort((a, b) => Number(!!b.isFavorite) - Number(!!a.isFavorite)),
+    [reflections]
+  );
+  const visibleReflections = useMemo(
+    () => sortedReflections.slice(0, visibleCount),
+    [sortedReflections, visibleCount]
+  );
+  const hasMore = visibleCount < sortedReflections.length;
+
+  useEffect(() => {
+    if (journalOpen) setVisibleCount(PAGE_SIZE);
+  }, [journalOpen]);
+
+  const handleJournalScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    if (el.scrollHeight - el.scrollTop - el.clientHeight < 200 && hasMore) {
+      setVisibleCount(c => Math.min(c + PAGE_SIZE, sortedReflections.length));
+    }
+  };
 
   useEffect(() => {
     const dim = searchParams.get('dimension');
