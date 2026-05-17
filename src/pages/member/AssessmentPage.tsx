@@ -120,7 +120,7 @@ const AssessmentPage = () => {
     const answeredCount = Object.keys(answers).length;
     return (
       <div className="pb-24">
-        <PageHeader eyebrow={false} title={<RerootedTitle prefix="My" suffix="Relocation Complexity Score" />} subtitle="Resume your assessment" />
+        <PageHeader eyebrow={false} title={<RerootedTitle suffix="Relocation Complexity Score" showBreak />} subtitle="Resume your assessment" />
         <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
         <Card className="border-0 bg-card rounded-3xl">
           <CardContent className="py-10 text-center">
@@ -237,7 +237,7 @@ const AssessmentPage = () => {
     >
       <PageHeader
         eyebrow={false}
-        title={<RerootedTitle prefix="My" suffix="Relocation Complexity Score" />}
+        title={<RerootedTitle suffix="Relocation Complexity Score" showBreak />}
         subtitle="Understand the full complexity of your relocation"
       />
       <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
