@@ -405,18 +405,126 @@ const MemberHome = () => {
                 </p>
               ) : (
                 <div className="space-y-4 pb-2">
-                  {reflections.map(r => (
-                    <div key={r.id} className="p-4 rounded-2xl bg-muted">
-                      <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-2">
-                        {new Date(r.date).toLocaleDateString('en', { month: 'long', day: 'numeric', year: 'numeric' })}
-                      </p>
-                      <p className="text-sm italic text-foreground/80 font-serif mb-3">"{r.prompt}"</p>
-                      <p className="text-sm text-foreground whitespace-pre-wrap">{r.response}</p>
-                      {r.sharedWithCoach && (
-                        <Badge variant="outline" className="text-[10px] mt-3">Shared with coach</Badge>
-                      )}
-                    </div>
-                  ))}
+                  {[...reflections].sort((a, b) => Number(!!b.isFavorite) - Number(!!a.isFavorite)).map(r => {
+                    const isEditing = editingId === r.id;
+                    return (
+                      <div key={r.id} className="p-4 rounded-2xl bg-muted">
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">
+                            {new Date(r.date).toLocaleDateString('en', { month: 'long', day: 'numeric', year: 'numeric' })}
+                          </p>
+                          {!isEditing && (
+                            <div className="flex items-center gap-1 -mt-1 -mr-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => updateReflection(r.id, { isFavorite: !r.isFavorite })}
+                                title={r.isFavorite ? 'Unfavorite' : 'Favorite'}
+                              >
+                                <Star className={`h-3.5 w-3.5 ${r.isFavorite ? 'fill-secondary text-secondary' : ''}`} />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => {
+                                  if (r.sharedWithCoach) {
+                                    updateReflection(r.id, { sharedWithCoach: false });
+                                    toast('Removed from coach');
+                                  } else {
+                                    updateReflection(r.id, { sharedWithCoach: true });
+                                    toast.success('Shared with your coach');
+                                  }
+                                }}
+                                title={r.sharedWithCoach ? 'Unshare with coach' : 'Send to coach'}
+                              >
+                                <Share2 className={`h-3.5 w-3.5 ${r.sharedWithCoach ? 'text-primary' : ''}`} />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => {
+                                  setEditingId(r.id);
+                                  setEditPrompt(r.prompt);
+                                  setEditResponse(r.response);
+                                }}
+                                title="Edit"
+                              >
+                                <Pencil className="h-3.5 w-3.5" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7 text-destructive hover:text-destructive"
+                                onClick={() => setDeletingId(r.id)}
+                                title="Delete"
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+
+                        {isEditing ? (
+                          <div className="space-y-2">
+                            <Input
+                              value={editPrompt}
+                              onChange={e => setEditPrompt(e.target.value)}
+                              placeholder="Prompt"
+                              className="text-sm italic font-serif bg-background"
+                            />
+                            <Textarea
+                              value={editResponse}
+                              onChange={e => setEditResponse(e.target.value)}
+                              placeholder="Your response"
+                              className="min-h-[100px] text-sm bg-background"
+                            />
+                            <div className="flex justify-end gap-2 pt-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setEditingId(null)}
+                                className="rounded-full"
+                              >
+                                <X className="h-3.5 w-3.5 mr-1" /> Cancel
+                              </Button>
+                              <Button
+                                size="sm"
+                                onClick={() => {
+                                  updateReflection(r.id, {
+                                    prompt: editPrompt.trim() || r.prompt,
+                                    response: editResponse.trim(),
+                                  });
+                                  setEditingId(null);
+                                  toast.success('Entry updated');
+                                }}
+                                className="rounded-full"
+                              >
+                                <Check className="h-3.5 w-3.5 mr-1" /> Save
+                              </Button>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <p className="text-sm italic text-foreground/80 font-serif mb-3">"{r.prompt}"</p>
+                            <p className="text-sm text-foreground whitespace-pre-wrap">{r.response}</p>
+                            <div className="flex flex-wrap gap-1.5 mt-3">
+                              {r.isFavorite && (
+                                <Badge className="text-[10px] bg-secondary text-secondary-foreground">
+                                  <Star className="h-2.5 w-2.5 mr-1 fill-current" /> Favorite
+                                </Badge>
+                              )}
+                              {r.sharedWithCoach && (
+                                <Badge variant="outline" className="text-[10px]">Shared with coach</Badge>
+                              )}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </ScrollArea>
