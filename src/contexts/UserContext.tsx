@@ -79,6 +79,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
           prompt: r.prompt,
           response: r.response || '',
           sharedWithCoach: r.shared_with_coach || false,
+          isFavorite: (r as any).is_favorite || false,
         })));
       }
 
