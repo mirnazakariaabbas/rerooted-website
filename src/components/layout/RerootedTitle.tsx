@@ -10,18 +10,23 @@ import logoR from '@/assets/logo-r-white.png';
 export const RerootedTitle = ({
   prefix,
   suffix,
+  showBreak = false,
 }: {
-  prefix: string;
+  prefix?: string;
   suffix: string;
+  showBreak?: boolean;
 }) => (
-  <span>
-    {prefix}&nbsp;&nbsp;
-    <img
-      src={logoR}
-      alt="R"
-      className="inline-block h-[0.72em] w-auto align-baseline"
-    />
-    e-Rooted<sup className="text-[0.45em] font-bold align-super ml-0.5">®</sup>{' '}
+  <span className={showBreak ? "inline-block text-left align-middle" : ""}>
+    {prefix && <>{prefix}&nbsp;&nbsp;</>}
+    <span className="whitespace-nowrap">
+      <img
+        src={logoR}
+        alt="R"
+        className="inline-block h-[0.72em] w-auto align-baseline"
+      />
+      e-Rooted<sup className="text-[0.45em] font-bold align-super ml-0.5">®</sup>
+    </span>
+    {showBreak ? <br /> : ' '}
     {suffix}
   </span>
 );
