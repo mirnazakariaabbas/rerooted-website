@@ -33,6 +33,7 @@ const MemberHome = () => {
   const [reflectionText, setReflectionText] = useState('');
   const [shareWithCoach, setShareWithCoach] = useState(false);
   const [selectedDimension, setSelectedDimension] = useState<string | null>(null);
+  const [journalOpen, setJournalOpen] = useState(false);
 
   useEffect(() => {
     const dim = searchParams.get('dimension');
