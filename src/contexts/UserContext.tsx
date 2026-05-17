@@ -8,6 +8,8 @@ interface UserContextType {
   updateUser: (updates: Partial<UserProfile>) => void;
   reflections: ReflectionEntry[];
   addReflection: (entry: Omit<ReflectionEntry, 'id' | 'date'>) => void;
+  updateReflection: (id: string, updates: Partial<Pick<ReflectionEntry, 'prompt' | 'response' | 'sharedWithCoach' | 'isFavorite'>>) => void;
+  deleteReflection: (id: string) => void;
   assessment: AssessmentResult | null;
   setAssessment: (result: AssessmentResult) => void;
   dimensionProgress: DimensionProgress[];
@@ -77,6 +79,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
           prompt: r.prompt,
           response: r.response || '',
           sharedWithCoach: r.shared_with_coach || false,
+          isFavorite: (r as any).is_favorite || false,
         })));
       }
 
@@ -140,6 +143,21 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }).then();
   }, [authUser]);
 
+  const updateReflection = useCallback((id: string, updates: Partial<Pick<ReflectionEntry, 'prompt' | 'response' | 'sharedWithCoach' | 'isFavorite'>>) => {
+    setReflections(prev => prev.map(r => r.id === id ? { ...r, ...updates } : r));
+    const dbUpdates: Record<string, unknown> = {};
+    if ('prompt' in updates) dbUpdates.prompt = updates.prompt;
+    if ('response' in updates) dbUpdates.response = updates.response;
+    if ('sharedWithCoach' in updates) dbUpdates.shared_with_coach = updates.sharedWithCoach;
+    if ('isFavorite' in updates) dbUpdates.is_favorite = updates.isFavorite;
+    supabase.from('reflections').update(dbUpdates as any).eq('id', id).then();
+  }, []);
+
+  const deleteReflection = useCallback((id: string) => {
+    setReflections(prev => prev.filter(r => r.id !== id));
+    supabase.from('reflections').delete().eq('id', id).then();
+  }, []);
+
   const setAssessment = useCallback((result: AssessmentResult) => {
     setAssessmentState(result);
     if (authUser) {
@@ -165,7 +183,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, updateUser, reflections, addReflection, assessment, setAssessment, dimensionProgress, updateDimensionProgress, profileLoading, approvalStatus }}>
+    <UserContext.Provider value={{ user, updateUser, reflections, addReflection, updateReflection, deleteReflection, assessment, setAssessment, dimensionProgress, updateDimensionProgress, profileLoading, approvalStatus }}>
       {children}
     </UserContext.Provider>
   );
