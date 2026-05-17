@@ -1285,6 +1285,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          is_favorite: boolean
           prompt: string
           response: string | null
           shared_with_coach: boolean | null
@@ -1293,6 +1294,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          is_favorite?: boolean
           prompt: string
           response?: string | null
           shared_with_coach?: boolean | null
@@ -1301,6 +1303,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          is_favorite?: boolean
           prompt?: string
           response?: string | null
           shared_with_coach?: boolean | null
