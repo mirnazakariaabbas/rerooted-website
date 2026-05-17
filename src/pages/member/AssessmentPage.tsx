@@ -237,7 +237,7 @@ const AssessmentPage = () => {
     >
       <PageHeader
         eyebrow={false}
-        title={<RerootedTitle prefix="My" suffix="Relocation Complexity Score" />}
+        title={<RerootedTitle suffix="Relocation Complexity Score" showBreak />}
         subtitle="Understand the full complexity of your relocation"
       />
       <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
