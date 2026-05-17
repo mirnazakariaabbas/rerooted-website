@@ -530,6 +530,32 @@ const MemberHome = () => {
             </ScrollArea>
           </DialogContent>
         </Dialog>
+
+        <AlertDialog open={!!deletingId} onOpenChange={(o) => !o && setDeletingId(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete this journal entry?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently remove the prompt and your response. This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  if (deletingId) {
+                    deleteReflection(deletingId);
+                    toast('Entry deleted');
+                  }
+                  setDeletingId(null);
+                }}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </motion.div>
   );
