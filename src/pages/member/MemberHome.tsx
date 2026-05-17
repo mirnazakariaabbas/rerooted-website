@@ -16,7 +16,7 @@ import { Badge } from '@/components/ui/badge';
 import { differenceInMonths } from 'date-fns';
 import {
   ArrowRight, Globe, BarChart3, Heart, BookOpen, Calendar,
-  MessageCircle, Sparkles, ClipboardCheck,
+  MessageCircle, ClipboardCheck,
 } from 'lucide-react';
 import DimensionDetail from '@/components/home/DimensionDetail';
 import MiniCalendar from '@/components/home/MiniCalendar';
