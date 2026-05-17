@@ -143,6 +143,21 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }).then();
   }, [authUser]);
 
+  const updateReflection = useCallback((id: string, updates: Partial<Pick<ReflectionEntry, 'prompt' | 'response' | 'sharedWithCoach' | 'isFavorite'>>) => {
+    setReflections(prev => prev.map(r => r.id === id ? { ...r, ...updates } : r));
+    const dbUpdates: Record<string, unknown> = {};
+    if ('prompt' in updates) dbUpdates.prompt = updates.prompt;
+    if ('response' in updates) dbUpdates.response = updates.response;
+    if ('sharedWithCoach' in updates) dbUpdates.shared_with_coach = updates.sharedWithCoach;
+    if ('isFavorite' in updates) dbUpdates.is_favorite = updates.isFavorite;
+    supabase.from('reflections').update(dbUpdates).eq('id', id).then();
+  }, []);
+
+  const deleteReflection = useCallback((id: string) => {
+    setReflections(prev => prev.filter(r => r.id !== id));
+    supabase.from('reflections').delete().eq('id', id).then();
+  }, []);
+
   const setAssessment = useCallback((result: AssessmentResult) => {
     setAssessmentState(result);
     if (authUser) {
@@ -168,7 +183,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, updateUser, reflections, addReflection, assessment, setAssessment, dimensionProgress, updateDimensionProgress, profileLoading, approvalStatus }}>
+    <UserContext.Provider value={{ user, updateUser, reflections, addReflection, updateReflection, deleteReflection, assessment, setAssessment, dimensionProgress, updateDimensionProgress, profileLoading, approvalStatus }}>
       {children}
     </UserContext.Provider>
   );
