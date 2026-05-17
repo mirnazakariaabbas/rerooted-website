@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
@@ -44,6 +44,30 @@ const MemberHome = () => {
   const [editPrompt, setEditPrompt] = useState('');
   const [editResponse, setEditResponse] = useState('');
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const PAGE_SIZE = 15;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const scrollViewportRef = useRef<HTMLDivElement | null>(null);
+
+  const sortedReflections = useMemo(
+    () => [...reflections].sort((a, b) => Number(!!b.isFavorite) - Number(!!a.isFavorite)),
+    [reflections]
+  );
+  const visibleReflections = useMemo(
+    () => sortedReflections.slice(0, visibleCount),
+    [sortedReflections, visibleCount]
+  );
+  const hasMore = visibleCount < sortedReflections.length;
+
+  useEffect(() => {
+    if (journalOpen) setVisibleCount(PAGE_SIZE);
+  }, [journalOpen]);
+
+  const handleJournalScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    if (el.scrollHeight - el.scrollTop - el.clientHeight < 200 && hasMore) {
+      setVisibleCount(c => Math.min(c + PAGE_SIZE, sortedReflections.length));
+    }
+  };
 
   useEffect(() => {
     const dim = searchParams.get('dimension');
@@ -398,14 +422,18 @@ const MemberHome = () => {
             <DialogHeader>
               <DialogTitle className="text-2xl font-[900] tracking-tight">My Journal</DialogTitle>
             </DialogHeader>
-            <ScrollArea className="flex-1 -mx-6 px-6">
+            <div
+              ref={scrollViewportRef}
+              onScroll={handleJournalScroll}
+              className="flex-1 overflow-y-auto -mx-6 px-6"
+            >
               {reflections.length === 0 ? (
                 <p className="text-sm text-muted-foreground text-center py-12">
                   No journal entries yet. Answer this week's reflection prompt to get started.
                 </p>
               ) : (
                 <div className="space-y-4 pb-2">
-                  {[...reflections].sort((a, b) => Number(!!b.isFavorite) - Number(!!a.isFavorite)).map(r => {
+                  {visibleReflections.map(r => {
                     const isEditing = editingId === r.id;
                     return (
                       <div key={r.id} className="p-4 rounded-2xl bg-muted">
@@ -525,9 +553,14 @@ const MemberHome = () => {
                       </div>
                     );
                   })}
+                  {hasMore && (
+                    <p className="text-center text-xs text-muted-foreground py-3">
+                      Loading more,
+                    </p>
+                  )}
                 </div>
               )}
-            </ScrollArea>
+            </div>
           </DialogContent>
         </Dialog>
 
