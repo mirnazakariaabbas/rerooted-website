@@ -64,12 +64,10 @@ const MemberContent = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <div className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 min-w-0 h-screen overflow-auto">
           <TopBar />
-          <main className="flex-1 overflow-auto">
-            <Outlet />
-          </main>
-        </div>
+          <Outlet />
+        </main>
       </div>
       <OnboardingTour />
     </SidebarProvider>
