@@ -553,9 +553,14 @@ const MemberHome = () => {
                       </div>
                     );
                   })}
+                  {hasMore && (
+                    <p className="text-center text-xs text-muted-foreground py-3">
+                      Loading more,
+                    </p>
+                  )}
                 </div>
               )}
-            </ScrollArea>
+            </div>
           </DialogContent>
         </Dialog>
 
