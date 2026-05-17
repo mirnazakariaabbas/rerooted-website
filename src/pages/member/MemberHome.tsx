@@ -422,14 +422,18 @@ const MemberHome = () => {
             <DialogHeader>
               <DialogTitle className="text-2xl font-[900] tracking-tight">My Journal</DialogTitle>
             </DialogHeader>
-            <ScrollArea className="flex-1 -mx-6 px-6">
+            <div
+              ref={scrollViewportRef}
+              onScroll={handleJournalScroll}
+              className="flex-1 overflow-y-auto -mx-6 px-6"
+            >
               {reflections.length === 0 ? (
                 <p className="text-sm text-muted-foreground text-center py-12">
                   No journal entries yet. Answer this week's reflection prompt to get started.
                 </p>
               ) : (
                 <div className="space-y-4 pb-2">
-                  {[...reflections].sort((a, b) => Number(!!b.isFavorite) - Number(!!a.isFavorite)).map(r => {
+                  {visibleReflections.map(r => {
                     const isEditing = editingId === r.id;
                     return (
                       <div key={r.id} className="p-4 rounded-2xl bg-muted">
