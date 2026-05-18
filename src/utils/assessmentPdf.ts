@@ -109,7 +109,7 @@ export function generateAssessmentPdf(
   const band = getScoreBand(assessment.score);
 
   // ═══════════════════════════════════════════════
-  // PAGE 1 — Cover / Summary
+  // PAGE 1, Cover / Summary
   // ═══════════════════════════════════════════════
 
   // ── Blue header block ──
@@ -255,7 +255,7 @@ export function generateAssessmentPdf(
   });
 
   // ═══════════════════════════════════════════════
-  // PAGE 2+ — Answer Breakdown
+  // PAGE 2+, Answer Breakdown
   // ═══════════════════════════════════════════════
   doc.addPage();
 

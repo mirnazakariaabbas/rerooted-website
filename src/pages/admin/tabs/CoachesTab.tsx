@@ -130,13 +130,13 @@ const CoachesTab = () => {
             {coaches.map(c => (
               <TableRow key={c.id}>
                 <TableCell className="font-medium">{c.name}</TableCell>
-                <TableCell className="text-sm">{c.email || '—'}</TableCell>
+                <TableCell className="text-sm">{c.email || ', '}</TableCell>
                 <TableCell>
                   <Badge className={`text-xs ${certBadgeColor[c.certification_level] || certBadgeColor['non-certified']}`}>
                     {c.certification_level === 'non-certified' ? 'Non-certified' : c.certification_level}
                   </Badge>
                 </TableCell>
-                <TableCell className="text-sm text-muted-foreground">{Array.isArray(c.specialties) ? (c.specialties as string[]).join(', ') : '—'}</TableCell>
+                <TableCell className="text-sm text-muted-foreground">{Array.isArray(c.specialties) ? (c.specialties as string[]).join(', ') : ', '}</TableCell>
                 <TableCell>
                   {c.user_id ? (
                     <Badge variant="secondary" className="text-xs gap-1"><CheckCircle2 className="h-3 w-3" />Linked</Badge>

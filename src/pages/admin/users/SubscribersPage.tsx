@@ -196,7 +196,7 @@ const SubscribersPage = () => {
               filtered.map(s => (
                 <TableRow key={s.id}>
                   <TableCell className="text-sm font-medium">{s.email}</TableCell>
-                  <TableCell className="text-sm">{[s.first_name, s.last_name].filter(Boolean).join(' ') || '—'}</TableCell>
+                  <TableCell className="text-sm">{[s.first_name, s.last_name].filter(Boolean).join(' ') || ', '}</TableCell>
                   <TableCell><Badge variant="outline" className="text-xs capitalize">{s.source || 'website'}</Badge></TableCell>
                   <TableCell className="text-sm text-muted-foreground">{format(new Date(s.subscribed_at), 'dd MMM yyyy')}</TableCell>
                   <TableCell>

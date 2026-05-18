@@ -90,7 +90,7 @@ const AssessmentPage = () => {
     if (currentIdx < newVisible.length - 1) {
       setTimeout(() => setCurrentIdx(i => i + 1), 300);
     }
-    // On last question, don't auto-submit — wait for explicit Submit click
+    // On last question, don't auto-submit, wait for explicit Submit click
   };
 
   const handleMultiToggle = (questionId: string, optionIndex: number) => {

@@ -103,8 +103,8 @@ const IpAllowlistPage = () => {
               <p className="text-sm font-medium">Allowlist Status</p>
               <p className="text-xs text-muted-foreground">
                 {entries.filter(e => e.is_active).length > 0
-                  ? `${entries.filter(e => e.is_active).length} active rule(s) — only listed IPs can access the admin portal`
-                  : 'No active rules — all IPs are allowed'}
+                  ? `${entries.filter(e => e.is_active).length} active rule(s), only listed IPs can access the admin portal`
+                  : 'No active rules, all IPs are allowed'}
               </p>
             </div>
           </div>
@@ -139,7 +139,7 @@ const IpAllowlistPage = () => {
               entries.map(e => (
                 <TableRow key={e.id}>
                   <TableCell className="font-mono text-sm">{e.ip_address}</TableCell>
-                  <TableCell className="text-sm">{e.label || '—'}</TableCell>
+                  <TableCell className="text-sm">{e.label || ', '}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{format(new Date(e.created_at), 'dd MMM yyyy')}</TableCell>
                   <TableCell>
                     <Badge

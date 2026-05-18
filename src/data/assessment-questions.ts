@@ -32,9 +32,9 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     id: 'q2', text: 'What changes come with this role?', category: 'Assignment Context', type: 'multi',
     multiSelectCap: 10, ignoreIfAlsoSelected: 1,
     options: [
-      { label: 'Location change only — same role, same function', value: 1 },
+      { label: 'Location change only, same role, same function', value: 1 },
       { label: 'Different market, region, or business unit', value: 2 },
-      { label: 'Promotion — step up in scope or seniority', value: 3 },
+      { label: 'Promotion, step up in scope or seniority', value: 3 },
       { label: 'New function or discipline (e.g. marketing → operations)', value: 3 },
       { label: 'First time managing people', value: 4 },
       { label: 'Managing a significantly larger or more complex team', value: 3 },
@@ -43,10 +43,10 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   {
     id: 'q3', text: 'What is the strategic impact of this assignment?', category: 'Assignment Context', type: 'single',
     options: [
-      { label: 'Routine — a standard move with predictable expectations', value: 2 },
-      { label: 'Meaningful — an important role within normal business operations', value: 4 },
-      { label: 'High impact — market entry, turnaround, or significant P&L responsibility', value: 7 },
-      { label: 'Business critical — transformation mandate, senior leadership scrutiny from day one', value: 10 },
+      { label: 'Routine, a standard move with predictable expectations', value: 2 },
+      { label: 'Meaningful, an important role within normal business operations', value: 4 },
+      { label: 'High impact, market entry, turnaround, or significant P&L responsibility', value: 7 },
+      { label: 'Business critical, transformation mandate, senior leadership scrutiny from day one', value: 10 },
     ],
   },
   {
@@ -55,7 +55,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
       { label: 'Taking over a stable, well-documented role', value: 1 },
       { label: 'Replacing a predecessor with a standard handover', value: 4 },
       { label: 'Replacing a predecessor who failed, exited abruptly, or was removed', value: 7 },
-      { label: 'Newly created position — no predecessor, building from scratch', value: 8 },
+      { label: 'Newly created position, no predecessor, building from scratch', value: 8 },
     ],
   },
   {
@@ -63,8 +63,8 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     options: [
       { label: 'Generous ramp-up (3+ months to settle before full performance expected)', value: 1 },
       { label: 'Standard expectations (1–3 months to reach full speed)', value: 4 },
-      { label: 'Accelerated — meaningful delivery expected within weeks', value: 7 },
-      { label: 'Immediate — crisis response or urgent business need', value: 10 },
+      { label: 'Accelerated, meaningful delivery expected within weeks', value: 7 },
+      { label: 'Immediate, crisis response or urgent business need', value: 10 },
     ],
   },
   {
@@ -72,8 +72,8 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     options: [
       { label: 'Single reporting line, locally based', value: 1 },
       { label: 'Reports to HQ in a similar time zone', value: 3 },
-      { label: 'Matrix — dual reporting (local + regional/global)', value: 6 },
-      { label: 'Complex matrix — multiple stakeholders across time zones', value: 9 },
+      { label: 'Matrix, dual reporting (local + regional/global)', value: 6 },
+      { label: 'Complex matrix, multiple stakeholders across time zones', value: 9 },
     ],
   },
 
@@ -81,19 +81,19 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   {
     id: 'q7', text: 'How culturally distant is the host country from home?', category: 'Cultural Distance', type: 'single',
     options: [
-      { label: 'Very similar — minor differences, easy to navigate', value: 1 },
-      { label: 'Noticeably different — requires conscious adjustment in social and professional settings', value: 4 },
-      { label: 'Quite different — frequent misunderstandings likely, significant adaptation needed', value: 7 },
-      { label: 'Fundamentally different — deeply different worldview, daily life requires major behavioral change', value: 10 },
+      { label: 'Very similar, minor differences, easy to navigate', value: 1 },
+      { label: 'Noticeably different, requires conscious adjustment in social and professional settings', value: 4 },
+      { label: 'Quite different, frequent misunderstandings likely, significant adaptation needed', value: 7 },
+      { label: 'Fundamentally different, deeply different worldview, daily life requires major behavioral change', value: 10 },
     ],
   },
   {
     id: 'q8', text: 'In the host country, how easy is it to find food, products, and routines from home?', category: 'Cultural Distance', type: 'single',
     options: [
-      { label: 'Easily available — large diaspora community, international shops and restaurants', value: 1 },
-      { label: 'Available with some effort — specialty stores, online ordering, occasional trips', value: 4 },
-      { label: 'Very limited — requires imports, care packages, or travel to find', value: 7 },
-      { label: 'Virtually unavailable — will need to fully adapt to local alternatives', value: 10 },
+      { label: 'Easily available, large diaspora community, international shops and restaurants', value: 1 },
+      { label: 'Available with some effort, specialty stores, online ordering, occasional trips', value: 4 },
+      { label: 'Very limited, requires imports, care packages, or travel to find', value: 7 },
+      { label: 'Virtually unavailable, will need to fully adapt to local alternatives', value: 10 },
     ],
   },
   {
@@ -121,8 +121,8 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     options: [
       { label: 'Very similar work culture and business practices', value: 1 },
       { label: 'Some differences in communication, hierarchy, or meeting style', value: 4 },
-      { label: 'Significantly different — feedback norms, decision-making, power distance', value: 7 },
-      { label: 'Fundamentally different — requires rethinking how they operate and lead', value: 10 },
+      { label: 'Significantly different, feedback norms, decision-making, power distance', value: 7 },
+      { label: 'Fundamentally different, requires rethinking how they operate and lead', value: 10 },
     ],
   },
   {
@@ -130,8 +130,8 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     options: [
       { label: 'Strong alignment between local and HQ', value: 1 },
       { label: 'Some tension or misalignment', value: 4 },
-      { label: 'Significant disconnect — caught between two organizational cultures', value: 7 },
-      { label: 'Resistant local environment — HQ directives met with friction', value: 10 },
+      { label: 'Significant disconnect, caught between two organizational cultures', value: 7 },
+      { label: 'Resistant local environment, HQ directives met with friction', value: 10 },
     ],
   },
 
@@ -140,8 +140,8 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     id: 'q13', text: "How well do they speak the host country's primary language?", category: 'Language', type: 'single',
     options: [
       { label: 'Fluent or native speaker', value: 1 },
-      { label: 'Conversational — can manage daily life', value: 3 },
-      { label: 'Basic — survival phrases only', value: 7 },
+      { label: 'Conversational, can manage daily life', value: 3 },
+      { label: 'Basic, survival phrases only', value: 7 },
       { label: 'No proficiency at all', value: 10 },
     ],
   },
@@ -150,7 +150,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     options: [
       { label: 'Same as their native language', value: 1 },
       { label: "A language they're fully fluent in", value: 2 },
-      { label: 'Mixed — formal meetings in a known language, informal interactions in local language', value: 5 },
+      { label: 'Mixed, formal meetings in a known language, informal interactions in local language', value: 5 },
       { label: "Predominantly a language they don't speak well", value: 9 },
     ],
   },
@@ -159,11 +159,11 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   {
     id: 'q15', text: 'Who is making this move?', category: 'Family & Accompanying', type: 'single',
     options: [
-      { label: 'Solo — no partner or dependents', value: 4 },
+      { label: 'Solo, no partner or dependents', value: 4 },
       { label: 'With partner, no children', value: 3 },
       { label: 'With partner and children', value: 7 },
       { label: 'Single parent with children', value: 9 },
-      { label: 'Relocating alone — partner and/or family staying in home country', value: 8 },
+      { label: 'Relocating alone, partner and/or family staying in home country', value: 8 },
     ],
   },
   {
@@ -181,7 +181,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     id: 'q17', text: "What is the impact on the partner's career?", category: 'Family & Accompanying', type: 'single',
     conditional: { questionId: 'q15', values: [3, 7] },
     options: [
-      { label: 'Partner works remotely — minimal career disruption', value: 2 },
+      { label: 'Partner works remotely, minimal career disruption', value: 2 },
       { label: 'Partner choosing a career break', value: 4 },
       { label: 'Partner giving up career with uncertain prospects in host country', value: 7 },
       { label: 'Partner unable to work (no work permit or limited opportunities)', value: 9 },
@@ -232,7 +232,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
       { label: 'Very similar to home', value: 1 },
       { label: 'Moderate adjustment needed', value: 3 },
       { label: 'Significant difference requiring lifestyle changes', value: 6 },
-      { label: 'Extreme — requires major adaptation (heat, altitude, humidity, reversed seasons)', value: 8 },
+      { label: 'Extreme, requires major adaptation (heat, altitude, humidity, reversed seasons)', value: 8 },
     ],
   },
 
@@ -240,8 +240,8 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   {
     id: 'q23', text: 'Do they have an existing social network in the host country?', category: 'Social Readiness', type: 'single',
     options: [
-      { label: 'Strong network — close friends or family there', value: 1 },
-      { label: 'Some contacts — colleagues or acquaintances', value: 4 },
+      { label: 'Strong network, close friends or family there', value: 1 },
+      { label: 'Some contacts, colleagues or acquaintances', value: 4 },
       { label: 'Online connections only', value: 6 },
       { label: 'Nobody at all', value: 9 },
     ],
@@ -252,7 +252,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
       { label: 'Large, well-organized expat community with social groups and events', value: 1 },
       { label: 'Moderate expat presence, some organized activities', value: 4 },
       { label: 'Small or fragmented expat community', value: 7 },
-      { label: 'Very isolated — few expats, limited social infrastructure', value: 9 },
+      { label: 'Very isolated, few expats, limited social infrastructure', value: 9 },
     ],
   },
 
@@ -278,7 +278,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   {
     id: 'q27', text: 'How do they typically respond to major life changes?', category: 'Resilience & Adaptability', type: 'single',
     options: [
-      { label: 'Energized — sees change as opportunity', value: 2 },
+      { label: 'Energized, sees change as opportunity', value: 2 },
       { label: 'Adapts after an adjustment period', value: 4 },
       { label: 'Finds change stressful but works through it', value: 6 },
       { label: 'Change is very difficult and disruptive', value: 9 },
@@ -289,8 +289,8 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     options: [
       { label: 'Rarely experiences it', value: 2 },
       { label: 'Occasional and manageable', value: 4 },
-      { label: 'Frequent — takes noticeable effort to manage', value: 7 },
-      { label: 'Intense and prolonged — significantly affects wellbeing', value: 9 },
+      { label: 'Frequent, takes noticeable effort to manage', value: 7 },
+      { label: 'Intense and prolonged, significantly affects wellbeing', value: 9 },
     ],
   },
 ];
@@ -338,7 +338,7 @@ export function getVisibleQuestions(answers: Record<string, number | number[]>):
     const depAnswer = answers[q.conditional.questionId];
     if (depAnswer === undefined) return false;
     if (Array.isArray(depAnswer)) {
-      // Multi-select stores indices — resolve to values for conditional check
+      // Multi-select stores indices, resolve to values for conditional check
       const depQuestion = ASSESSMENT_QUESTIONS.find(dq => dq.id === q.conditional!.questionId);
       if (!depQuestion) return false;
       const values = depAnswer.map(idx =>
@@ -360,7 +360,7 @@ export function getScoreInterpretation(score: number, countryFrom: string, count
   if (score <= 65) {
     return `The relocation from ${countryFrom} to ${countryTo} shows significant complexity across multiple dimensions. A structured Re-Rooted® coaching program is recommended to support the transition across professional, cultural, and personal domains.`;
   }
-  return `The move from ${countryFrom} to ${countryTo} is one of the most complex relocation profiles — compounding factors across assignment, culture, family, and readiness. A full Re-Rooted® program with ongoing support across all pillars is strongly recommended.`;
+  return `The move from ${countryFrom} to ${countryTo} is one of the most complex relocation profiles, compounding factors across assignment, culture, family, and readiness. A full Re-Rooted® program with ongoing support across all pillars is strongly recommended.`;
 }
 
 export function getScoreBand(score: number): { label: string; recommendation: string } {

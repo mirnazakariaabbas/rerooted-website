@@ -152,14 +152,14 @@ const CoachesPage = () => {
               coaches.map(c => (
                 <TableRow key={c.id} className="cursor-pointer" onClick={() => setDrawerCoach(c)}>
                   <TableCell className="font-medium">{c.name}</TableCell>
-                  <TableCell className="text-sm">{c.email || '—'}</TableCell>
+                  <TableCell className="text-sm">{c.email || ', '}</TableCell>
                   <TableCell>
                     <Badge className={`text-xs ${certBadgeColor[c.certification_level] || certBadgeColor['non-certified']}`}>
                       {c.certification_level === 'non-certified' ? 'Non-certified' : c.certification_level}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">
-                    {Array.isArray(c.specialties) ? (c.specialties as string[]).join(', ') : '—'}
+                    {Array.isArray(c.specialties) ? (c.specialties as string[]).join(', ') : ', '}
                   </TableCell>
                   <TableCell>
                     {c.user_id ? (
@@ -247,19 +247,19 @@ const CoachesPage = () => {
                 </TabsList>
                 <TabsContent value="bio" className="space-y-4">
                   <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div><span className="text-muted-foreground block">Email</span>{drawerCoach.email || '—'}</div>
-                    <div><span className="text-muted-foreground block">Photo</span>{drawerCoach.photo_url ? 'Set' : '—'}</div>
+                    <div><span className="text-muted-foreground block">Email</span>{drawerCoach.email || ', '}</div>
+                    <div><span className="text-muted-foreground block">Photo</span>{drawerCoach.photo_url ? 'Set' : ', '}</div>
                     <div className="col-span-2">
                       <span className="text-muted-foreground block">Specialties</span>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {Array.isArray(drawerCoach.specialties) && drawerCoach.specialties.length > 0
                           ? (drawerCoach.specialties as string[]).map((s, i) => <Badge key={i} variant="outline" className="text-xs">{s}</Badge>)
-                          : '—'}
+                          : ', '}
                       </div>
                     </div>
                     <div className="col-span-2">
                       <span className="text-muted-foreground block">Bio</span>
-                      <p className="mt-1">{drawerCoach.bio || '—'}</p>
+                      <p className="mt-1">{drawerCoach.bio || ', '}</p>
                     </div>
                   </div>
                 </TabsContent>

@@ -260,7 +260,7 @@ const NewsletterPage = () => {
                       <TableCell>
                         <Badge className={`text-xs capitalize ${statusBadge(nl.status)}`}>{nl.status}</Badge>
                       </TableCell>
-                      <TableCell className="text-sm">{nl.recipient_count || '—'}</TableCell>
+                      <TableCell className="text-sm">{nl.recipient_count || ', '}</TableCell>
                       <TableCell className="text-sm">{nl.open_count}</TableCell>
                       <TableCell className="text-sm">{nl.click_count}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">

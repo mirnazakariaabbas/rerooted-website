@@ -277,11 +277,11 @@ export default function CompetitiveAnalysisPage() {
                       <tr key={c.id} className="border-b border-border last:border-0">
                         <td className="py-2.5 text-foreground font-medium">{c.name}</td>
                         <td className="py-2.5 text-center">
-                          <Badge variant="outline">{a.threat_level || '—'}</Badge>
+                          <Badge variant="outline">{a.threat_level || ', '}</Badge>
                         </td>
                         <td className="py-2.5 text-center text-muted-foreground">{(a.swot?.strengths || []).length}</td>
                         <td className="py-2.5 text-center text-muted-foreground text-xs">
-                          {c.last_analyzed_at ? new Date(c.last_analyzed_at).toLocaleDateString() : '—'}
+                          {c.last_analyzed_at ? new Date(c.last_analyzed_at).toLocaleDateString() : ', '}
                         </td>
                       </tr>
                     );

@@ -205,13 +205,13 @@ const ContactsPage = () => {
               filtered.map(c => (
                 <TableRow key={c.id} className="cursor-pointer" onClick={() => setDrawerContact(c)}>
                   <TableCell className="font-medium">{c.first_name} {c.last_name}</TableCell>
-                  <TableCell className="text-sm">{c.email || '—'}</TableCell>
+                  <TableCell className="text-sm">{c.email || ', '}</TableCell>
                   <TableCell>
                     <Badge className={`text-xs ${sourceColors[c.source] || 'bg-muted text-muted-foreground'}`}>
                       {c.source.replace(/_/g, ' ')}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-sm capitalize">{c.journey_stage?.replace(/-/g, ' ') || '—'}</TableCell>
+                  <TableCell className="text-sm capitalize">{c.journey_stage?.replace(/-/g, ' ') || ', '}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{format(new Date(c.created_at), 'dd MMM yyyy')}</TableCell>
                   <TableCell>
                     <Button
@@ -289,10 +289,10 @@ const ContactsPage = () => {
 
                 <TabsContent value="details" className="space-y-4">
                   <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div><span className="text-muted-foreground block">Email</span>{drawerContact.email || '—'}</div>
-                    <div><span className="text-muted-foreground block">Phone</span>{drawerContact.phone || '—'}</div>
-                    <div><span className="text-muted-foreground block">Job Title</span>{drawerContact.job_title || '—'}</div>
-                    <div><span className="text-muted-foreground block">Country</span>{drawerContact.country || '—'}</div>
+                    <div><span className="text-muted-foreground block">Email</span>{drawerContact.email || ', '}</div>
+                    <div><span className="text-muted-foreground block">Phone</span>{drawerContact.phone || ', '}</div>
+                    <div><span className="text-muted-foreground block">Job Title</span>{drawerContact.job_title || ', '}</div>
+                    <div><span className="text-muted-foreground block">Country</span>{drawerContact.country || ', '}</div>
                     <div><span className="text-muted-foreground block">GDPR Consent</span>{drawerContact.gdpr_consent ? 'Yes' : 'No'}</div>
                     <div><span className="text-muted-foreground block">Added</span>{format(new Date(drawerContact.created_at), 'dd MMM yyyy')}</div>
                   </div>

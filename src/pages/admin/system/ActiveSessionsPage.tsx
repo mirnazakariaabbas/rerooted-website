@@ -141,14 +141,14 @@ const ActiveSessionsPage = () => {
                 <TableRow key={s.id}>
                   <TableCell>
                     <div>
-                      <p className="text-sm font-medium">{s.user_name || '—'}</p>
+                      <p className="text-sm font-medium">{s.user_name || ', '}</p>
                       <p className="text-xs text-muted-foreground">{s.user_email || ''}</p>
                     </div>
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline" className="text-xs capitalize">{s.user_role || 'user'}</Badge>
                   </TableCell>
-                  <TableCell className="text-sm font-mono text-muted-foreground">{s.ip_address || '—'}</TableCell>
+                  <TableCell className="text-sm font-mono text-muted-foreground">{s.ip_address || ', '}</TableCell>
                   <TableCell className="text-sm">{parseBrowser(s.user_agent)}</TableCell>
                   <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
                     {format(new Date(s.started_at), 'dd MMM HH:mm')}

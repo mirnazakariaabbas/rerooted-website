@@ -112,14 +112,14 @@ export default function SeoAnalyticsPage() {
       <div className="bg-warning/10 border border-warning/30 rounded-lg px-4 py-3 flex items-center gap-3">
         <AlertTriangle className="h-4 w-4 text-warning shrink-0" />
         <p className="text-sm text-foreground">
-          <strong>Sample Data</strong> — Connect Google Search Console for live metrics.
+          <strong>Sample Data</strong>, Connect Google Search Console for live metrics.
         </p>
         <Button size="sm" variant="outline" className="ml-auto shrink-0">
           <ExternalLink className="h-3 w-3 mr-1.5" /> Connect GSC
         </Button>
       </div>
 
-      <PageHeader title="SEO Analytics" subtitle="re-rooted.com — Performance overview" />
+      <PageHeader title="SEO Analytics" subtitle="re-rooted.com, Performance overview" />
       <div className="max-w-7xl mx-auto px-6 -mt-10 relative space-y-6">
 
       {/* Health Score + Breakdowns */}

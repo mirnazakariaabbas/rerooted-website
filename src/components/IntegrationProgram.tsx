@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 /**
- * The ReRooted Journey — vertical tree-timeline.
+ * The ReRooted Journey, vertical tree-timeline.
  * Corporate-only signature 6-step program. Replaces the previous horizontal
  * sticky-scroll. Keeps id="program" for the Hero "See how it works" anchor.
  */

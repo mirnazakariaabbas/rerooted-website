@@ -71,7 +71,7 @@ const ContactsTab = () => {
               <TableRow key={c.id} className={c.status === 'unread' ? 'font-semibold' : ''}>
                 <TableCell>{c.name}</TableCell>
                 <TableCell className="text-sm">{c.email}</TableCell>
-                <TableCell className="text-sm">{c.subject || '—'}</TableCell>
+                <TableCell className="text-sm">{c.subject || ', '}</TableCell>
                 <TableCell>
                   <Badge variant={c.status === 'unread' ? 'destructive' : c.status === 'replied' ? 'default' : 'secondary'} className="text-xs">
                     {c.status}

@@ -16,7 +16,7 @@ const IndividualHome = () => (
     <ProblemStats
       label="You're Not Alone"
       headline="What nobody told you before you moved"
-      closingLine="These aren't just numbers — they're people like you, navigating the same challenges you face right now."
+      closingLine="These aren't just numbers, they're people like you, navigating the same challenges you face right now."
     />
     <WhyReRootedPillars />
     <ExpatJourney />
@@ -33,13 +33,13 @@ const IndividualHome = () => (
       body={
         <>
           <p>
-            You've handled the logistics — the visa, the flight, the apartment.
+            You've handled the logistics, the visa, the flight, the apartment.
             <br />
             But nobody told you about the <strong>emotional side</strong>.
           </p>
           <p>
             <strong>Re-Rooted®</strong> helps you navigate the human challenges
-            of relocation — so you can feel at home, not just live somewhere new.
+            of relocation, so you can feel at home, not just live somewhere new.
           </p>
         </>
       }

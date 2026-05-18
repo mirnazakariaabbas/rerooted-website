@@ -78,7 +78,7 @@ const ProgressPage = () => {
         <Card className="border border-border">
           <CardContent className="pt-6 pb-4 text-center">
             <BarChart3 className="h-5 w-5 text-primary mx-auto mb-2" />
-            <div className="text-2xl font-bold text-foreground">{latestScore != null ? `${latestScore}%` : '—'}</div>
+            <div className="text-2xl font-bold text-foreground">{latestScore != null ? `${latestScore}%` : ', '}</div>
             <p className="text-xs text-muted-foreground">Latest Score</p>
             {scoreDiff != null && (
               <Badge className={`mt-1 text-[10px] ${scoreDiff >= 0 ? 'bg-secondary text-secondary-foreground' : 'bg-destructive text-destructive-foreground'}`}>

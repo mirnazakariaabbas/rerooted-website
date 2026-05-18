@@ -56,7 +56,7 @@ const AboutYou = ({ onNext }: AboutYouProps) => {
   return (
     <div className="flex-1 flex flex-col px-6 lg:px-12 pt-10">
       <h2 className="text-3xl font-black tracking-tight mb-2">A little about you</h2>
-      <p className="text-muted-foreground mb-8">Optional — you can always update this later.</p>
+      <p className="text-muted-foreground mb-8">Optional, you can always update this later.</p>
       <div className="space-y-6 flex-1">
         <div className="space-y-2">
           <Label>What should we call you?</Label>

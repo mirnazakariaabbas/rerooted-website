@@ -225,10 +225,10 @@ const LinkedInContactsPage = () => {
                       )}
                     </div>
                   </TableCell>
-                  <TableCell className="text-sm">{c.company || '—'}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{c.position || '—'}</TableCell>
-                  <TableCell className="text-sm">{c.email || '—'}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{c.connected_on ? format(new Date(c.connected_on), 'dd MMM yyyy') : '—'}</TableCell>
+                  <TableCell className="text-sm">{c.company || ', '}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{c.position || ', '}</TableCell>
+                  <TableCell className="text-sm">{c.email || ', '}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{c.connected_on ? format(new Date(c.connected_on), 'dd MMM yyyy') : ', '}</TableCell>
                   <TableCell>
                     {c.converted_to_contact_id ? (
                       <Badge className="bg-success/15 text-success">Converted</Badge>

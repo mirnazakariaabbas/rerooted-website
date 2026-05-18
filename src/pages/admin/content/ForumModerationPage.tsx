@@ -57,7 +57,7 @@ export default function ForumModerationPage() {
 
   const profileMap = new Map(profiles.map(p => [p.id, p.full_name || 'Anonymous']));
   const getName = (id: string) => profileMap.get(id) || id.slice(0, 8);
-  const getCatName = (id: string) => categories.find(c => c.id === id)?.name || '—';
+  const getCatName = (id: string) => categories.find(c => c.id === id)?.name || ', ';
 
   const saveCatMutation = useMutation({
     mutationFn: async () => {
@@ -151,7 +151,7 @@ export default function ForumModerationPage() {
                       <TableCell className="text-muted-foreground">{c.display_order}</TableCell>
                       <TableCell className="font-medium">{c.name}</TableCell>
                       <TableCell className="text-muted-foreground text-sm">{c.slug}</TableCell>
-                      <TableCell className="text-muted-foreground text-sm max-w-[200px] truncate">{c.description || '—'}</TableCell>
+                      <TableCell className="text-muted-foreground text-sm max-w-[200px] truncate">{c.description || ', '}</TableCell>
                       <TableCell>
                         <div className="flex gap-1">
                           <Button variant="ghost" size="icon" onClick={() => openEditCat(c)}><Pencil className="h-4 w-4" /></Button>
@@ -190,7 +190,7 @@ export default function ForumModerationPage() {
                       <TableCell className="text-sm text-muted-foreground">{getName(post.author_id)}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">{format(new Date(post.created_at), 'MMM d')}</TableCell>
                       <TableCell>
-                        {post.is_pinned ? <Badge variant="default" className="text-xs">Pinned</Badge> : <span className="text-muted-foreground text-xs">—</span>}
+                        {post.is_pinned ? <Badge variant="default" className="text-xs">Pinned</Badge> : <span className="text-muted-foreground text-xs">, </span>}
                       </TableCell>
                       <TableCell>
                         <div className="flex gap-1">

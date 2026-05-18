@@ -71,7 +71,7 @@ const AdminHome = () => {
         <MetricCard icon={Users} label="Total Contacts" value={contactCount} />
         <MetricCard icon={UsersRound} label="Total Members" value={memberCount} />
         <MetricCard icon={GraduationCap} label="Active Coaches" value={coachCount} />
-        <MetricCard icon={Mail} label="Emails Sent" value="—" change="Coming in Phase 2" />
+        <MetricCard icon={Mail} label="Emails Sent" value=", " change="Coming in Phase 2" />
       </div>
 
       {/* Secondary cards */}
