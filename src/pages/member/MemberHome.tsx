@@ -681,26 +681,50 @@ const MemberHome = () => {
 
 // ===== Helpers =====
 
-function StatRow({
-  icon, iconBg, value, label, trailing,
+function FunkyStatCard({
+  bg, textColor, icon, value, label, trailing,
 }: {
+  bg: string;
+  textColor: string;
   icon: React.ReactNode;
-  iconBg: string;
   value: string;
   label: string;
   trailing?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-4">
-      <div className={`h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 ${iconBg}`}>
-        {icon}
+    <motion.div
+      whileHover={{ y: -3, rotate: -0.5 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className="relative overflow-hidden rounded-3xl p-6 min-h-[150px] flex flex-col justify-between"
+      style={{ backgroundColor: bg, color: textColor }}
+    >
+      {/* playful decorative blobs */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-10 -right-10 h-32 w-32 rounded-full opacity-25"
+        style={{ backgroundColor: textColor }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-full opacity-10"
+        style={{ backgroundColor: textColor }}
+      />
+      <div className="relative flex items-start justify-between">
+        <div
+          className="h-11 w-11 rounded-2xl flex items-center justify-center"
+          style={{ backgroundColor: `${textColor}22` }}
+        >
+          {icon}
+        </div>
+        {trailing}
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="text-xl font-[900] tracking-tight text-foreground leading-tight">{value}</div>
-        <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="relative mt-4">
+        <div className="text-4xl md:text-5xl font-[900] tracking-tight leading-none">
+          {value}
+        </div>
+        <div className="text-sm font-semibold mt-2 opacity-85">{label}</div>
       </div>
-      {trailing}
-    </div>
+    </motion.div>
   );
 }
 
