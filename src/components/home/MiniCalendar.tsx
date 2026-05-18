@@ -293,7 +293,7 @@ export const MiniCalendar = () => {
                       </p>
                       {selectedEvents.coaching.map(ev => (
                         <div key={ev.id} className="flex items-start gap-3">
-                          <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+                          <div className="h-9 w-9 rounded-full text-white flex items-center justify-center shrink-0" style={{ backgroundColor: COACHING_COLOR }}>
                             <Heart className="h-4 w-4" />
                           </div>
                           <div className="flex-1 min-w-0">
