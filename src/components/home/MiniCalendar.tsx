@@ -11,9 +11,11 @@ type ChecklistEvent = { id: string; date: Date; time: string | null; title: stri
 
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-// Re-Rooted brand tokens: Deep Blue = primary, Fresh Green = secondary
-const COACHING_COLOR = 'hsl(var(--primary))';
-const CHECKLIST_COLOR = 'hsl(var(--secondary))';
+// Funky palette
+const COACHING_COLOR = '#E97A6F'; // coral
+const CHECKLIST_COLOR = '#F7C84A'; // gold
+const PAST_PILL_COLOR = '#E8E3F3'; // soft lavender
+const TODAY_DOT = '#3DA776'; // fresh green
 
 function startOfMonth(d: Date) { return new Date(d.getFullYear(), d.getMonth(), 1); }
 function endOfMonth(d: Date) { return new Date(d.getFullYear(), d.getMonth() + 1, 0); }
