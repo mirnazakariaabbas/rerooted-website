@@ -5,8 +5,8 @@ import cityImg from "@/assets/problem-city.webp";
 import planeImg from "@/assets/problem-plane.jpg";
 
 // Cubic ease-out count-up
-function useCountUp(end: number, duration = 1800, start = false, delay = 0) {
-  const [value, setValue] = useState(0);
+function useCountUp(end: number, duration = 1800, start = false, delay = 0, from = 0) {
+  const [value, setValue] = useState(from);
   useEffect(() => {
     if (!start) return;
     let raf: number;
@@ -16,7 +16,7 @@ function useCountUp(end: number, duration = 1800, start = false, delay = 0) {
       const tick = (now: number) => {
         const p = Math.min((now - t0) / duration, 1);
         const eased = 1 - Math.pow(1 - p, 3);
-        setValue(Math.round(eased * end));
+        setValue(Math.round(from + eased * (end - from)));
         if (p < 1) raf = requestAnimationFrame(tick);
       };
       raf = requestAnimationFrame(tick);
@@ -26,9 +26,10 @@ function useCountUp(end: number, duration = 1800, start = false, delay = 0) {
       window.clearTimeout(timeoutId);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [start, end, duration, delay]);
+  }, [start, end, duration, delay, from]);
   return value;
 }
+
 
 function useOneInCountdown(target: number, duration = 1800, start = false, delay = 0) {
   const [value, setValue] = useState(10);
@@ -71,14 +72,15 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
 
   const oneIn = useOneInCountdown(3, 1800, inView, 200);
   const stat42 = useCountUp(42, 1800, inView, 300);
-  const stat98 = useCountUp(98, 2000, inView, 400);
+  const stat98 = useCountUp(98, 2000, inView, 400, 90);
   const stat80 = useCountUp(80, 1800, inView, 500);
 
   // Tile types for the 3x2 grid
   type Tile =
-    | { kind: "stat-blue"; number: ReactNode; caption: string }
-    | { kind: "stat-cream"; number: ReactNode; caption: string }
+    | { kind: "stat-blue"; number: ReactNode; caption: ReactNode }
+    | { kind: "stat-cream"; number: ReactNode; caption: ReactNode }
     | { kind: "image"; src: string; eyebrow: string; tagline: string };
+
 
   const tiles: Tile[] = [
     {
@@ -113,11 +115,17 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
       number: (
         <>
           <span className="text-primary">{stat98}</span>
-          <span className="text-secondary">%</span>
+          <span className="text-secondary" style={{ fontSize: "0.55em" }}>%</span>
         </>
       ),
-      caption: "Of expats report burnout symptoms during international assignments.",
+      caption: (
+        <>
+          OF <strong className="font-extrabold">EXPATS</strong> REPORT BURNOUT SYMPTOMS
+        </>
+      ),
     },
+
+
     {
       kind: "image",
       src: cityImg,
@@ -191,25 +199,31 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
               return (
                 <motion.div
                   key={i}
-                  className={`${common} bg-[#FAF9F6] flex flex-col justify-between p-6 md:p-8`}
+                  className={`${common} bg-[#FAF9F6] flex flex-col justify-center items-center gap-4 p-6 md:p-8`}
                   initial={{ opacity: 0, y: 24 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.06 }}
                 >
-                  <div className="flex-1 flex items-center justify-center">
+                  <div className="flex-1 flex items-center justify-center w-full">
                     <div
-                      className="leading-none flex items-baseline"
-                      style={{ ...serif, fontStyle: "italic", fontSize: "clamp(110px, 14vw, 200px)" }}
+                      className="leading-none flex items-start"
+                      style={{
+                        fontFamily: '"Allura", cursive',
+                        fontWeight: 400,
+                        fontSize: "clamp(150px, 19vw, 280px)",
+                        lineHeight: 0.9,
+                      }}
                     >
                       {tile.number}
                     </div>
                   </div>
-                  <p className="text-primary/80 text-sm md:text-base text-center max-w-[26ch] mx-auto leading-snug">
+                  <p className="text-primary text-xs md:text-sm text-center max-w-[26ch] mx-auto leading-tight font-semibold uppercase tracking-[0.06em]">
                     {tile.caption}
                   </p>
                 </motion.div>
               );
             }
+
             // image tile
             const isPlane = tile.src === planeImg;
             return (
