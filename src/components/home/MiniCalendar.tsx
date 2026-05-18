@@ -131,7 +131,7 @@ export const MiniCalendar = () => {
         >
           <ChevronLeft className="h-4 w-4 text-foreground/70" />
         </button>
-        <p className="text-base font-[900] tracking-tight text-foreground">{monthLabel}</p>
+        <p className="text-lg font-[900] tracking-tight text-primary">{monthLabel}</p>
         <button
           aria-label="Next month"
           onClick={() => { setCursor(addMonths(cursor, 1)); setSelectedDay(null); }}
@@ -142,9 +142,9 @@ export const MiniCalendar = () => {
       </div>
 
       {/* Day labels */}
-      <div className="grid grid-cols-7 gap-1 mb-2">
+      <div className="grid grid-cols-7 gap-1 mb-3">
         {DAY_LABELS.map(d => (
-          <div key={d} className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold text-center">
+          <div key={d} className="text-xs text-foreground/50 uppercase tracking-wider font-bold text-center">
             {d}
           </div>
         ))}
@@ -165,7 +165,7 @@ export const MiniCalendar = () => {
                 {pastStart >= 0 && (
                   <span
                     aria-hidden
-                    className="absolute top-1 bottom-1 rounded-full bg-primary/10 pointer-events-none"
+                    className="absolute top-1 bottom-1 rounded-full bg-accent/40 pointer-events-none"
                     style={{
                       left: `calc(${(pastStart / 7) * 100}% + 4px)`,
                       width: `calc(${((pastEnd - pastStart + 1) / 7) * 100}% - 8px)`,
@@ -198,9 +198,9 @@ export const MiniCalendar = () => {
                     : isToday
                       ? 'text-primary font-bold'
                       : !cell.inMonth
-                        ? 'text-muted-foreground/30'
+                        ? 'text-foreground/25'
                         : isPast
-                          ? 'text-muted-foreground'
+                          ? 'text-foreground/55'
                           : 'text-foreground';
 
                   const dayButton = (
@@ -211,13 +211,10 @@ export const MiniCalendar = () => {
                         if (selectedDay && isSameDay(selectedDay, cell.date)) setSelectedDay(null);
                         else setSelectedDay(cell.date);
                       }}
-                      className={`relative h-10 w-full flex items-center justify-center text-sm transition-transform ${
+                      className={`relative h-11 w-full flex flex-col items-center justify-center text-sm transition-transform ${
                         hasEvents ? 'hover:scale-110 cursor-pointer' : 'cursor-default'
                       }`}
                     >
-                      {isToday && !hasEvents && (
-                        <span className="absolute inset-1 rounded-full ring-2 ring-primary/40" aria-hidden />
-                      )}
                       {hasEvents && (
                         <span
                           className={`absolute inset-1 rounded-full ${isSelected ? 'ring-2 ring-offset-2 ring-foreground/30 ring-offset-background' : ''}`}
@@ -228,6 +225,9 @@ export const MiniCalendar = () => {
                       <span className={`relative leading-none ${dayNumberClass}`}>
                         {cell.date.getDate()}
                       </span>
+                      {isToday && !hasEvents && (
+                        <span className="relative mt-1 h-1.5 w-1.5 rounded-full bg-secondary" aria-hidden />
+                      )}
                     </button>
                   );
 

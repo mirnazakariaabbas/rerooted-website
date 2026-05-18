@@ -166,3 +166,20 @@ export const WEEKLY_PROMPTS = [
   "If you could tell your pre-move self one thing, what would it be?",
   "What's one boundary you need to set to protect your energy?",
 ];
+
+export const DAILY_QUOTES = [
+  "Roots grow at the pace they grow. You're doing more than you can see.",
+  "Belonging is built one small ordinary day at a time.",
+  "You are allowed to miss home and love where you are.",
+  "The quiet weeks count too. Settling is not always visible.",
+  "Be patient with the version of you that is still arriving.",
+  "Every familiar street started as a stranger.",
+  "Rest is part of the work of rooting in.",
+];
+
+export function getDailyQuote(date: Date = new Date()): string {
+  const start = new Date(date.getFullYear(), 0, 0);
+  const diff = date.getTime() - start.getTime();
+  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
+}
