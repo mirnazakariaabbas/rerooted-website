@@ -211,7 +211,7 @@ const ContactCTA = () => {
           )}
 
           <div className="mt-8 space-y-1 text-xs" style={{ color: "rgba(255,255,255,0.7)" }}>
-            <p>hello@rerooted.com</p>
+            <p>hello@rerooted.ch</p>
             <p>Based in Switzerland. Working with organizations globally.</p>
           </div>
         </motion.div>

@@ -36,7 +36,7 @@ const emptyDraft = {
   subject: '',
   body_html: '',
   from_name: 'Re-Rooted®',
-  reply_to: 'hello@rerooted.com',
+  reply_to: 'hello@rerooted.ch',
   recipient_segment: 'all_subscribers',
 };
 
