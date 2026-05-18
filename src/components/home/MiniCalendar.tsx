@@ -131,7 +131,7 @@ export const MiniCalendar = () => {
         >
           <ChevronLeft className="h-4 w-4 text-foreground/70" />
         </button>
-        <p className="text-base font-[900] tracking-tight text-foreground">{monthLabel}</p>
+        <p className="text-lg font-[900] tracking-tight text-primary">{monthLabel}</p>
         <button
           aria-label="Next month"
           onClick={() => { setCursor(addMonths(cursor, 1)); setSelectedDay(null); }}
