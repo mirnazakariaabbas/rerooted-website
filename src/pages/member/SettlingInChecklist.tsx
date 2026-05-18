@@ -378,7 +378,14 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
   const monthsSinceArrival = user.arrivalDate ? differenceInMonths(new Date(), new Date(user.arrivalDate)) : 0;
   const defaultPhase: Phase = monthsSinceArrival > 3 ? 'starting-to-bloom' : monthsSinceArrival >= 1 ? 'tending-the-garden' : 'laying-the-ground';
 
-  const [expanded, setExpanded] = useState<Phase | 'accomplishments' | null>(defaultPhase);
+  const [expanded, setExpanded] = useState<Set<Phase | 'accomplishments'>>(new Set([defaultPhase]));
+  const toggleExpanded = (key: Phase | 'accomplishments') => {
+    setExpanded(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+  };
   const [lingering, setLingering] = useState<Set<string>>(new Set());
 
   // Local optimistic ordering. Synced from server props, mutated during drag.
