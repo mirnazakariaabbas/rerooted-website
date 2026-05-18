@@ -1,0 +1,2 @@
+ALTER TABLE public.checklist_items DROP CONSTRAINT IF EXISTS checklist_items_phase_check;
+ALTER TABLE public.checklist_items ADD CONSTRAINT checklist_items_phase_check CHECK (phase = ANY (ARRAY['my-tasks'::text, 'laying-the-ground'::text, 'tending-the-garden'::text, 'starting-to-bloom'::text]));
