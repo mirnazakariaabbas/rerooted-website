@@ -8,10 +8,11 @@ import { supabase } from '@/integrations/supabase/client';
 import PageHeader from '@/components/layout/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, GripVertical, Plus, ListChecks } from 'lucide-react';
 import {
   SproutMark as Sprout,
   LeafMark as Leaf,
@@ -24,8 +25,26 @@ import {
   CheckMark as Check,
 } from '@/components/icons/ChecklistIcons';
 import { toast } from 'sonner';
+import {
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  closestCorners,
+  type DragEndEvent,
+  type DragOverEvent,
+  type DragStartEvent,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  useSortable,
+  arrayMove,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-type Phase = 'laying-the-ground' | 'tending-the-garden' | 'starting-to-bloom';
+type Phase = 'my-tasks' | 'laying-the-ground' | 'tending-the-garden' | 'starting-to-bloom';
 
 interface ChecklistItemRow {
   id: string;
@@ -47,7 +66,8 @@ interface Preferences {
 }
 
 type Tone = 'primary' | 'accent' | 'secondary' | 'cream';
-const PHASES: { id: Phase; name: string; icon: typeof Sprout; description: string; tone: Tone }[] = [
+const PHASES: { id: Phase; name: string; icon: React.ComponentType<any>; description: string; tone: Tone }[] = [
+  { id: 'my-tasks', name: 'My Tasks', icon: ListChecks, description: 'Tasks you\'ve added. Drag any of them into the buckets below.', tone: 'cream' },
   { id: 'laying-the-ground', name: 'Laying the Ground', icon: Sprout, description: 'The essentials. Get these sorted and everything else gets easier.', tone: 'primary' },
   { id: 'tending-the-garden', name: 'Tending the Garden', icon: Leaf, description: 'Daily life is taking shape. These are the things that make it feel like yours.', tone: 'accent' },
   { id: 'starting-to-bloom', name: 'Starting to Bloom', icon: Flower2, description: 'The part that makes it all worth it. Connection, discovery, belonging.', tone: 'secondary' },
@@ -347,7 +367,7 @@ const ChecklistOnboarding = ({ onDone }: { onDone: () => void }) => {
   );
 };
 
-// ============= CHECKLIST VIEW =============
+// ============= CHECKLIST VIEW (with drag-and-drop) =============
 const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChange: () => void }) => {
   const { user } = useUser();
   const { user: authUser } = useAuth();
@@ -359,6 +379,16 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
 
   const [expanded, setExpanded] = useState<Phase | 'accomplishments' | null>(defaultPhase);
   const [lingering, setLingering] = useState<Set<string>>(new Set());
+
+  // Local optimistic ordering. Synced from server props, mutated during drag.
+  const [localItems, setLocalItems] = useState<ChecklistItemRow[]>(items);
+  useEffect(() => { setLocalItems(items); }, [items]);
+
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+  );
 
   const markLingering = (id: string) => {
     setLingering(prev => new Set(prev).add(id));
@@ -373,22 +403,116 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
 
   const grouped = useMemo(() => {
     const map: Record<Phase, ChecklistItemRow[]> = {
+      'my-tasks': [],
       'laying-the-ground': [],
       'tending-the-garden': [],
       'starting-to-bloom': [],
     };
-    items.forEach(i => {
-      // Hide completed items unless they're still showing their reward message
+    localItems.forEach(i => {
       if (i.is_completed && !lingering.has(i.id)) return;
-      map[i.phase]?.push(i);
+      if (!map[i.phase]) return;
+      map[i.phase].push(i);
     });
     return map;
-  }, [items, lingering]);
+  }, [localItems, lingering]);
 
   const accomplishments = useMemo(
-    () => items.filter(i => i.is_completed && !lingering.has(i.id)),
-    [items, lingering]
+    () => localItems.filter(i => i.is_completed && !lingering.has(i.id)),
+    [localItems, lingering]
   );
+
+  const activeItem = useMemo(
+    () => localItems.find(i => i.id === activeId) || null,
+    [localItems, activeId]
+  );
+
+  // Find which phase an over-id belongs to (could be an item id or a phase container id)
+  const findContainer = (id: string): Phase | null => {
+    if ((PHASES as { id: string }[]).some(p => p.id === id)) return id as Phase;
+    const item = localItems.find(i => i.id === id);
+    return item ? item.phase : null;
+  };
+
+  const handleDragStart = (e: DragStartEvent) => {
+    setActiveId(String(e.active.id));
+  };
+
+  const handleDragOver = (e: DragOverEvent) => {
+    const { active, over } = e;
+    if (!over) return;
+    const activeIdStr = String(active.id);
+    const overIdStr = String(over.id);
+    const fromPhase = findContainer(activeIdStr);
+    const toPhase = findContainer(overIdStr);
+    if (!fromPhase || !toPhase || fromPhase === toPhase) return;
+
+    // Move across containers in local state
+    setLocalItems(prev => {
+      const next = prev.map(i => ({ ...i }));
+      const idx = next.findIndex(i => i.id === activeIdStr);
+      if (idx === -1) return prev;
+      next[idx].phase = toPhase;
+      return next;
+    });
+  };
+
+  const persistOrder = async (changed: ChecklistItemRow[]) => {
+    if (!authUser) return;
+    try {
+      await Promise.all(
+        changed.map(it =>
+          (supabase as any)
+            .from('checklist_items')
+            .update({ phase: it.phase, sort_order: it.sort_order })
+            .eq('id', it.id)
+        )
+      );
+      qc.invalidateQueries({ queryKey: ['checklist-items', authUser.id] });
+    } catch (e) {
+      console.error(e);
+      toast.error('Could not save the new order');
+      onChange();
+    }
+  };
+
+  const handleDragEnd = (e: DragEndEvent) => {
+    const { active, over } = e;
+    setActiveId(null);
+    if (!over) return;
+    const activeIdStr = String(active.id);
+    const overIdStr = String(over.id);
+
+    const toPhase = findContainer(overIdStr);
+    if (!toPhase) return;
+
+    setLocalItems(prev => {
+      // Reorder within the destination phase
+      const phaseItems = prev.filter(i => i.phase === toPhase && !(i.is_completed && !lingering.has(i.id)));
+      const oldIndex = phaseItems.findIndex(i => i.id === activeIdStr);
+      let newIndex = phaseItems.findIndex(i => i.id === overIdStr);
+      if (newIndex === -1) newIndex = phaseItems.length - 1;
+      if (oldIndex === -1) return prev;
+
+      const reordered = arrayMove(phaseItems, oldIndex, newIndex);
+
+      // Reassign sort_order within phase (spaced by 10)
+      const updated = prev.map(i => {
+        if (i.phase !== toPhase) return i;
+        const idx = reordered.findIndex(r => r.id === i.id);
+        if (idx === -1) return i;
+        return { ...i, sort_order: (idx + 1) * 10 };
+      });
+
+      // Persist anything whose phase or sort_order changed compared to original `items`
+      const changed = updated.filter(u => {
+        const orig = items.find(o => o.id === u.id);
+        return !orig || orig.phase !== u.phase || orig.sort_order !== u.sort_order;
+      });
+      if (changed.length) persistOrder(changed);
+
+      return updated;
+    });
+  };
 
   const handleReset = async () => {
     if (!authUser) return;
@@ -409,21 +533,37 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
 
   return (
     <div className="space-y-4">
-      {PHASES.map(phase => (
-        <PhaseSection
-          key={phase.id}
-          phase={phase}
-          items={grouped[phase.id]}
-          expanded={expanded === phase.id}
-          onExpand={() => setExpanded(expanded === phase.id ? null : phase.id)}
-          onChange={onChange}
-          onCompleted={markLingering}
-          onAdvance={() => {
-            const idx = PHASES.findIndex(p => p.id === phase.id);
-            if (idx < PHASES.length - 1) setExpanded(PHASES[idx + 1].id);
-          }}
-        />
-      ))}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
+        {PHASES.map(phase => (
+          <PhaseSection
+            key={phase.id}
+            phase={phase}
+            items={grouped[phase.id]}
+            expanded={expanded === phase.id}
+            onExpand={() => setExpanded(expanded === phase.id ? null : phase.id)}
+            onChange={onChange}
+            onCompleted={markLingering}
+            onAdvance={() => {
+              const idx = PHASES.findIndex(p => p.id === phase.id);
+              if (idx < PHASES.length - 1) setExpanded(PHASES[idx + 1].id);
+            }}
+          />
+        ))}
+
+        <DragOverlay>
+          {activeItem ? (
+            <div className="rounded-2xl bg-card border border-border shadow-lg px-3 py-3 max-w-md">
+              <p className="text-sm font-semibold text-foreground">{activeItem.title}</p>
+            </div>
+          ) : null}
+        </DragOverlay>
+      </DndContext>
 
       <AccomplishmentsSection
         items={accomplishments}
@@ -461,6 +601,7 @@ const PhaseSection = ({
   const Icon = phase.icon;
   const allComplete = items.length === 0 || items.every(i => i.is_completed);
   const tone = TONE_STYLES[phase.tone];
+  const isMyTasks = phase.id === 'my-tasks';
 
   return (
     <div className="rounded-2xl overflow-hidden">
@@ -473,7 +614,7 @@ const PhaseSection = ({
           <div className="text-lg font-[900] tracking-tight leading-tight">{phase.name}</div>
           <div className={`text-xs opacity-80 mt-1 ${tone.subtitle}`}>{phase.description}</div>
         </div>
-        {allComplete && (
+        {!isMyTasks && allComplete && (
           <span className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold opacity-90 shrink-0">
             <Check className="h-3 w-3" /> Done
           </span>
@@ -499,21 +640,20 @@ const PhaseSection = ({
           >
             <div className="p-5 border-x border-b border-border rounded-b-2xl">
               <AnimatePresence>
-                {items.length > 0 && items.every(i => i.is_completed) && (
+                {!isMyTasks && items.length > 0 && items.every(i => i.is_completed) && (
                   <PhaseCelebration phase={phase.id} itemCount={items.length} onAdvance={onAdvance} />
                 )}
               </AnimatePresence>
 
-              <div className="space-y-1">
-                {items.length === 0 && (
-                  <p className="text-xs text-muted-foreground text-center py-4">All done here. See your accomplishments below.</p>
-                )}
-                <AnimatePresence initial={false}>
-                  {items.map(item => (
-                    <ItemRow key={item.id} item={item} onChange={onChange} onCompleted={onCompleted} />
-                  ))}
-                </AnimatePresence>
-              </div>
+              <PhaseDroppableList
+                phaseId={phase.id}
+                items={items}
+                onChange={onChange}
+                onCompleted={onCompleted}
+                isMyTasks={isMyTasks}
+              />
+
+              <AddTaskInput phaseId={phase.id} onAdded={onChange} />
             </div>
           </motion.div>
         )}
@@ -522,7 +662,151 @@ const PhaseSection = ({
   );
 };
 
-const ItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onChange: () => void; onCompleted?: (id: string) => void }) => {
+// ============= DROPPABLE PHASE LIST =============
+const PhaseDroppableList = ({
+  phaseId, items, onChange, onCompleted, isMyTasks,
+}: {
+  phaseId: Phase;
+  items: ChecklistItemRow[];
+  onChange: () => void;
+  onCompleted: (id: string) => void;
+  isMyTasks: boolean;
+}) => {
+  // Sortable context needs the phase id as a droppable target too — we register the phase id
+  // as a sentinel item so empty containers still accept drops.
+  const ids = items.map(i => i.id);
+  // Add the phase id itself as a droppable id by giving SortableContext the phase id as a fallback
+  // (handled via useDroppable in EmptyDroppable below).
+  return (
+    <SortableContext items={ids} strategy={verticalListSortingStrategy}>
+      <div className="space-y-1 min-h-[40px]">
+        {items.length === 0 ? (
+          <EmptyDroppable phaseId={phaseId} isMyTasks={isMyTasks} />
+        ) : (
+          <AnimatePresence initial={false}>
+            {items.map(item => (
+              <SortableItemRow key={item.id} item={item} onChange={onChange} onCompleted={onCompleted} />
+            ))}
+          </AnimatePresence>
+        )}
+      </div>
+    </SortableContext>
+  );
+};
+
+// Empty drop zone — registered as a droppable using the phase id so DndKit can target it.
+import { useDroppable } from '@dnd-kit/core';
+const EmptyDroppable = ({ phaseId, isMyTasks }: { phaseId: Phase; isMyTasks: boolean }) => {
+  const { setNodeRef, isOver } = useDroppable({ id: phaseId });
+  return (
+    <div
+      ref={setNodeRef}
+      className={`text-xs text-muted-foreground text-center py-6 border-2 border-dashed rounded-xl transition-colors ${
+        isOver ? 'border-primary bg-primary/5' : 'border-border'
+      }`}
+    >
+      {isMyTasks
+        ? 'Add a task below, then drag it into a bucket.'
+        : 'Drop a task here, or add one below.'}
+    </div>
+  );
+};
+
+// ============= ADD TASK INPUT =============
+const AddTaskInput = ({ phaseId, onAdded }: { phaseId: Phase; onAdded: () => void }) => {
+  const { user: authUser } = useAuth();
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  const save = async () => {
+    if (!authUser || !title.trim()) return;
+    setSaving(true);
+    try {
+      await (supabase as any).from('checklist_items').insert({
+        user_id: authUser.id,
+        phase: phaseId,
+        category: 'custom',
+        title: title.trim(),
+        description: null,
+        is_completed: false,
+        sort_order: 9999,
+        is_family_only: false,
+        is_partner_only: false,
+        is_solo_only: false,
+        country_specific: false,
+      });
+      setTitle('');
+      setOpen(false);
+      onAdded();
+    } catch (e) {
+      toast.error('Could not add task');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="mt-3">
+      {open ? (
+        <div className="flex items-center gap-2">
+          <Input
+            autoFocus
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            placeholder="New task"
+            onKeyDown={e => {
+              if (e.key === 'Enter') save();
+              if (e.key === 'Escape') { setOpen(false); setTitle(''); }
+            }}
+            className="rounded-full h-9 text-sm"
+          />
+          <Button
+            onClick={save}
+            disabled={saving || !title.trim()}
+            size="sm"
+            className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            Add
+          </Button>
+          <Button
+            onClick={() => { setOpen(false); setTitle(''); }}
+            size="sm"
+            variant="ghost"
+            className="rounded-full"
+          >
+            Cancel
+          </Button>
+        </div>
+      ) : (
+        <button
+          onClick={() => setOpen(true)}
+          className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Plus className="h-3.5 w-3.5" />
+          Add a task
+        </button>
+      )}
+    </div>
+  );
+};
+
+// ============= SORTABLE ITEM =============
+const SortableItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onChange: () => void; onCompleted?: (id: string) => void }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  };
+  return (
+    <div ref={setNodeRef} style={style}>
+      <ItemRow item={item} onChange={onChange} onCompleted={onCompleted} dragHandleProps={{ ...attributes, ...listeners }} />
+    </div>
+  );
+};
+
+const ItemRow = ({ item, onChange, onCompleted, dragHandleProps }: { item: ChecklistItemRow; onChange: () => void; onCompleted?: (id: string) => void; dragHandleProps?: any }) => {
   const { user: authUser } = useAuth();
   const qc = useQueryClient();
   const [reward, setReward] = useState<string | null>(null);
@@ -550,7 +834,6 @@ const ItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onCh
     qc.invalidateQueries({ queryKey: ['checklist-items', authUser?.id] });
 
     if (checked) {
-      // Pick a reward not shown recently
       const pool = REWARD_MESSAGES.filter(m => !recentRef.current.includes(m));
       const choices = pool.length ? pool : REWARD_MESSAGES;
       const msg = choices[Math.floor(Math.random() * choices.length)];
@@ -588,10 +871,20 @@ const ItemRow = ({ item, onChange, onCompleted }: { item: ChecklistItemRow; onCh
       style={{ overflow: 'hidden' }}
     >
       <div
-        className={`flex items-start gap-3 p-3 rounded-2xl transition-all duration-300 ${
+        className={`flex items-start gap-2 p-3 rounded-2xl transition-all duration-300 hover:bg-muted/30 ${
           item.is_completed ? 'opacity-60' : ''
         }`}
       >
+        {dragHandleProps && (
+          <button
+            {...dragHandleProps}
+            className="shrink-0 mt-0.5 h-5 w-5 flex items-center justify-center text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing touch-none"
+            aria-label="Drag to reorder"
+            onClick={(e) => e.preventDefault()}
+          >
+            <GripVertical className="h-4 w-4" />
+          </button>
+        )}
         <Checkbox
           checked={item.is_completed}
           onCheckedChange={(c) => toggle(c === true)}
