@@ -1,14 +1,24 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { LogIn } from "lucide-react";
 import { useAudience } from "@/contexts/AudienceContext";
 import logoWhite from "@/assets/logo-wordmark-white.png";
 
 const AudienceGate = () => {
-  const { gateOpen, setGateOpen, setAudience } = useAudience();
+  const { gateOpen, setGateOpen, setAudience, audience } = useAudience();
   const [hoveredButton, setHoveredButton] = useState<"org" | "individual" | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Auto-dismiss the gate when user arrives via a hash anchor (e.g. /#journey)
+  useEffect(() => {
+    if (gateOpen && location.hash) {
+      if (!audience) setAudience("organization");
+      setGateOpen(false);
+    }
+  }, [location.hash, gateOpen, audience, setAudience, setGateOpen]);
+
 
   useEffect(() => {
     if (gateOpen) {
