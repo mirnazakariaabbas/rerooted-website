@@ -250,7 +250,7 @@ export const MiniCalendar = () => {
                         <div className="space-y-1">
                           {coaching.map(ev => (
                             <div key={ev.id} className="flex items-center gap-2">
-                              <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
+                              <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: COACHING_COLOR }} />
                               <span className="text-xs text-foreground truncate">
                                 Coaching with {ev.coachName}
                               </span>
@@ -258,7 +258,7 @@ export const MiniCalendar = () => {
                           ))}
                           {checklist.map(ev => (
                             <div key={ev.id} className="flex items-center gap-2">
-                              <span className="h-2 w-2 rounded-full bg-secondary shrink-0" />
+                              <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: CHECKLIST_COLOR }} />
                               <span className="text-xs text-foreground truncate">{ev.title}</span>
                             </div>
                           ))}
