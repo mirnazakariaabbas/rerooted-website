@@ -378,13 +378,15 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
   const monthsSinceArrival = user.arrivalDate ? differenceInMonths(new Date(), new Date(user.arrivalDate)) : 0;
   const defaultPhase: Phase = monthsSinceArrival > 3 ? 'starting-to-bloom' : monthsSinceArrival >= 1 ? 'tending-the-garden' : 'laying-the-ground';
 
-  const [expanded, setExpanded] = useState<Set<Phase | 'accomplishments'>>(new Set([defaultPhase]));
+  const [expanded, setExpanded] = useState<Record<Phase | 'accomplishments', boolean>>({
+    'my-tasks': defaultPhase === 'my-tasks',
+    'laying-the-ground': defaultPhase === 'laying-the-ground',
+    'tending-the-garden': defaultPhase === 'tending-the-garden',
+    'starting-to-bloom': defaultPhase === 'starting-to-bloom',
+    accomplishments: false,
+  });
   const toggleExpanded = (key: Phase | 'accomplishments') => {
-    setExpanded(prev => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key); else next.add(key);
-      return next;
-    });
+    setExpanded(prev => ({ ...prev, [key]: !prev[key] }));
   };
   const [lingering, setLingering] = useState<Set<string>>(new Set());
 
@@ -553,13 +555,16 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
             key={phase.id}
             phase={phase}
             items={grouped[phase.id]}
-            expanded={expanded.has(phase.id)}
+            expanded={expanded[phase.id]}
             onExpand={() => toggleExpanded(phase.id)}
             onChange={onChange}
             onCompleted={markLingering}
             onAdvance={() => {
               const idx = PHASES.findIndex(p => p.id === phase.id);
-              if (idx < PHASES.length - 1) setExpanded(prev => new Set(prev).add(PHASES[idx + 1].id));
+              if (idx < PHASES.length - 1) {
+                const nextPhase = PHASES[idx + 1].id;
+                setExpanded(prev => ({ ...prev, [nextPhase]: true }));
+              }
             }}
           />
         ))}
@@ -575,7 +580,7 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
 
       <AccomplishmentsSection
         items={accomplishments}
-        expanded={expanded.has('accomplishments')}
+        expanded={expanded.accomplishments}
         onExpand={() => toggleExpanded('accomplishments')}
         onChange={onChange}
       />
