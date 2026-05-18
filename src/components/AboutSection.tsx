@@ -15,8 +15,9 @@ const AboutSection = () => {
       <div className="max-w-6xl mx-auto">
         {/* Top-left section eyebrow header, aligned with previous section */}
         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20" style={{ color: "#3DA776" }}>
-          ​​
+          ​
         </p>
+
 
 
         <div
