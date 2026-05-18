@@ -5,8 +5,8 @@ import cityImg from "@/assets/problem-city.webp";
 import planeImg from "@/assets/problem-plane.jpg";
 
 // Cubic ease-out count-up
-function useCountUp(end: number, duration = 1800, start = false, delay = 0) {
-  const [value, setValue] = useState(0);
+function useCountUp(end: number, duration = 1800, start = false, delay = 0, from = 0) {
+  const [value, setValue] = useState(from);
   useEffect(() => {
     if (!start) return;
     let raf: number;
@@ -16,7 +16,7 @@ function useCountUp(end: number, duration = 1800, start = false, delay = 0) {
       const tick = (now: number) => {
         const p = Math.min((now - t0) / duration, 1);
         const eased = 1 - Math.pow(1 - p, 3);
-        setValue(Math.round(eased * end));
+        setValue(Math.round(from + eased * (end - from)));
         if (p < 1) raf = requestAnimationFrame(tick);
       };
       raf = requestAnimationFrame(tick);
@@ -26,9 +26,10 @@ function useCountUp(end: number, duration = 1800, start = false, delay = 0) {
       window.clearTimeout(timeoutId);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [start, end, duration, delay]);
+  }, [start, end, duration, delay, from]);
   return value;
 }
+
 
 function useOneInCountdown(target: number, duration = 1800, start = false, delay = 0) {
   const [value, setValue] = useState(10);
