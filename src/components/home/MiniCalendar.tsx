@@ -167,10 +167,11 @@ export const MiniCalendar = () => {
                 {pastStart >= 0 && (
                   <span
                     aria-hidden
-                    className="absolute top-1 bottom-1 rounded-full bg-accent/40 pointer-events-none"
+                    className="absolute top-1 bottom-1 rounded-full pointer-events-none"
                     style={{
                       left: `calc(${(pastStart / 7) * 100}% + 4px)`,
                       width: `calc(${((pastEnd - pastStart + 1) / 7) * 100}% - 8px)`,
+                      backgroundColor: PAST_PILL_COLOR,
                     }}
                   />
                 )}
@@ -184,7 +185,7 @@ export const MiniCalendar = () => {
                   const isSelected = selectedDay && isSameDay(cell.date, selectedDay);
 
                   // Build the ring background:
-                  // - two events: split circle (half primary, half secondary)
+                  // - two events: split circle (half coral, half gold)
                   // - one event: solid color
                   let ringStyle: React.CSSProperties = {};
                   if (hasCoaching && hasChecklist) {
@@ -196,14 +197,14 @@ export const MiniCalendar = () => {
                   }
 
                   const dayNumberClass = hasEvents
-                    ? 'text-primary-foreground font-bold'
+                    ? 'text-white font-bold'
                     : isToday
-                      ? 'text-primary font-bold'
+                      ? 'text-primary font-[900]'
                       : !cell.inMonth
-                        ? 'text-foreground/25'
+                        ? 'text-primary/25'
                         : isPast
-                          ? 'text-foreground/55'
-                          : 'text-foreground';
+                          ? 'text-primary/55'
+                          : 'text-primary/90 font-semibold';
 
                   const dayButton = (
                     <button
@@ -217,9 +218,16 @@ export const MiniCalendar = () => {
                         hasEvents ? 'hover:scale-110 cursor-pointer' : 'cursor-default'
                       }`}
                     >
+                      {isToday && !hasEvents && (
+                        <span
+                          aria-hidden
+                          className="absolute inset-1 rounded-full border-2"
+                          style={{ borderColor: TODAY_DOT }}
+                        />
+                      )}
                       {hasEvents && (
                         <span
-                          className={`absolute inset-1 rounded-full ${isSelected ? 'ring-2 ring-offset-2 ring-foreground/30 ring-offset-background' : ''}`}
+                          className={`absolute inset-1 rounded-full ${isSelected ? 'ring-2 ring-offset-2 ring-primary/40 ring-offset-transparent' : ''}`}
                           style={ringStyle}
                           aria-hidden
                         />
@@ -227,9 +235,6 @@ export const MiniCalendar = () => {
                       <span className={`relative leading-none ${dayNumberClass}`}>
                         {cell.date.getDate()}
                       </span>
-                      {isToday && !hasEvents && (
-                        <span className="relative mt-1 h-1.5 w-1.5 rounded-full bg-secondary" aria-hidden />
-                      )}
                     </button>
                   );
 
