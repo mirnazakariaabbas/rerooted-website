@@ -146,7 +146,7 @@ export const MiniCalendar = () => {
       {/* Day labels */}
       <div className="grid grid-cols-7 gap-1 mb-3">
         {DAY_LABELS.map(d => (
-          <div key={d} className="text-xs text-foreground/50 uppercase tracking-wider font-bold text-center">
+          <div key={d} className="text-[10px] text-primary/60 uppercase tracking-wider font-bold text-center">
             {d}
           </div>
         ))}
