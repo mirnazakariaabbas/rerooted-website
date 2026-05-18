@@ -281,13 +281,13 @@ export const MiniCalendar = () => {
                   >
                     {/* Bubble pointer */}
                     <div
-                      className="absolute -top-1.5 h-3 w-3 rotate-45 bg-card border-l border-t border-border"
+                      className="absolute -top-1.5 h-3 w-3 rotate-45 bg-white"
                       style={{
                         left: `calc(${((selectedIndex % 7) + 0.5) * (100 / 7)}% - 6px)`,
                       }}
                       aria-hidden
                     />
-                    <div className="rounded-2xl bg-card border border-border p-4 space-y-2">
+                    <div className="rounded-2xl bg-white p-4 space-y-2">
                       <p className="text-[10px] uppercase tracking-[0.18em] font-bold text-muted-foreground">
                         {selectedDay.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
                       </p>
