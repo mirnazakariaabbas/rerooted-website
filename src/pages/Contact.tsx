@@ -113,7 +113,7 @@ const Contact = () => {
           <div className="mt-10 flex flex-col items-center gap-3 text-center">
             <div className="flex items-center gap-2 text-sm" style={{ color: "#6B6B6B" }}>
               <Mail size={14} />
-              <span>hello@re-rooted.com</span>
+              <span>hello@rerooted.com</span>
             </div>
             <div className="flex items-center gap-2 text-sm" style={{ color: "#6B6B6B" }}>
               <MapPin size={14} />
@@ -123,8 +123,8 @@ const Contact = () => {
 
           <p className="mt-10 text-center text-sm" style={{ color: "#6B6B6B" }}>
             Not ready for a form? Email us directly at{" "}
-            <a href="mailto:hello@re-rooted.com" className="font-semibold hover:underline" style={{ color: "#3DA776" }}>
-              hello@re-rooted.com
+            <a href="mailto:hello@rerooted.com" className="font-semibold hover:underline" style={{ color: "#3DA776" }}>
+              hello@rerooted.com
             </a>
           </p>
         </motion.div>
