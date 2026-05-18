@@ -1,81 +1,59 @@
-# Settling-In Checklist + Homepage Calendar
+# Member App Home Redesign
 
-Two new features for the member app: a personalized, phased Settling-In Checklist with its own onboarding flow, and a compact monthly calendar embedded in the homepage "Where You Are" card.
+Refresh the look and feel of the in-app Home screen so it feels handcrafted, warm, and on-brand, while keeping every existing feature working.
 
-## Feature 1: Settling-In Checklist
+## What changes
 
-### Navigation & entry points
-- Add `/app/settling-in` route in `src/App.tsx`.
-- Add `Settling-In Checklist` item to sidebar (`AppSidebar.tsx`), directly below Cultural Companion, using `ClipboardCheck` icon.
-- Add an `ActionTile` on `MemberHome.tsx` in the "My App" section, after Cultural Companion, tone `accent`.
+### 1. Hero / greeting block
+- Replace the deep blue curved header with a soft warm cream block ("Hello, Mirna!" style from the screenshot).
+- Headline goes very large, navy, bold DM Sans 900: `Hello, {name}!`
+- Subhead becomes warmer: "It's good to see you back. Take what you need from today." (stage info moves into the "Where You Are" card).
+- Add subtle blurred Deep Blue + Fresh Green blob decorations on the right for life, no gradients on the surface itself.
 
-### Database (new migration)
-Three tables, all with RLS so users only see their own rows:
-- `checklist_preferences` — one row per user: priorities (text[]), feeling, onboarding_complete.
-- `checklist_items` — generated items per user: phase, category, title, description, completion state, sort order, audience flags (family/partner/solo/country-specific).
-- `calendar_events` — user-scheduled events linked optionally to a checklist item: title, date, time, type (checklist/coaching/custom).
+### 2. New two-column row directly under hero
+A 2/3 + 1/3 layout that stacks to one column on mobile:
 
-### Onboarding flow (shown first visit when `onboarding_complete = false`)
-4 gentle screens with framer-motion fade + slide-up:
-1. Welcome — "Let's build your settling-in guide".
-2. Priorities — 5 pill options (multi-select 2–3). "Helping my family settle" only shows when user has children or non-solo family setup.
-3. Feeling — 4 full-width card options.
-4. Confirmation — "Your guide is ready". On click: save preferences, generate items via edge function, mark onboarding complete.
+- Left, "Where You Are" card (warm cream, rounded 3xl, no shadow): small pin icon, navy headline with the action verb in bold, supporting line in muted navy. Pulls from current `STAGE_DESCRIPTIONS`.
+- Right, new "Daily Quote" card (Fresh Green background, white text): eyebrow "DAILY QUOTE", a short italic quote, and a coach mini-row (avatar initials + next session time) with an "Open" pill button that routes to `/app/coach`. Quote rotates daily from a small new constant `DAILY_QUOTES` in `src/data/coaching-content.ts`.
 
-### Generating items
-- Call new edge function `settling-checklist` with `{ countryTo, familySetup, hasChildren, priorities }`.
-- Function uses Lovable AI (same pattern as `cultural-tips`) to produce country-specific items, returns JSON array.
-- Insert returned items into `checklist_items`; filter audience flags against user profile; lower sort_order for items matching selected priorities.
-- Fallback to a hardcoded generic set if AI call fails.
+### 3. Weekly Reflection block, redesigned
+Match the screenshot: Deep Blue card, split 40/60:
+- Left, eyebrow "THIS WEEK'S PROMPT", large italic prompt (kept in DM Sans italic, not a serif), small status row "Refreshes Sunday  Week N of Month".
+- Right, large white textarea with light placeholder.
+- Bottom: "Share with my coach" checkbox + "Save to journal" pill on the right.
 
-### Checklist page (`SettlingInChecklist.tsx`)
-- Uses existing `<PageHeader>` ("Settling In" / "Your personal guide to making this place home") and the standard `max-w-2xl` overlap container.
-- Three phases with icons: Laying the Ground (Sprout), Tending the Garden (Leaf), Starting to Bloom (Flower2).
-- One phase expanded at a time; others collapsed as `bg-muted rounded-3xl` summaries. Default expanded phase chosen by months since arrival (<1 mo → P1, 1–3 mo → P2, >3 mo → P3).
-- Each item row: circular checkbox, title, optional description, calendar icon button to schedule (opens date picker → inserts into `calendar_events`).
-- Completed items: line-through, 60% opacity, stay visible (no disappearance).
+### 4. My Journal section, redesigned
+- Card title in DM Sans 900 navy: "Whenever you want to write." with eyebrow "MY JOURNAL" and a "See all ->" link on the right (opens existing dialog).
+- Replace the single tile with a 2-column grid of the latest 4 entries.
+- Each entry card: warm cream background, navy text, date eyebrow top-left, a colored category pill top-right.
+- Category pills map to the user's **Priority Focus Areas from the assessment** (`getPriorityDimensions(score, answers)` against `ROOTING_IN_DIMENSIONS`). Each dimension gets a soft pastel pill color derived from existing tokens (primary/secondary/accent variants). Default to "Daily Life" when no dimension is tagged. Sharing/favorite stays; existing dialog stays for full list.
 
-### Reward + transitions (no progress bars, no due dates, no warnings)
-- On check-off: inline encouraging message fades in (300ms) and auto-fades after 3s. Random pick from rotating pool, avoiding last 5 (tracked in local state).
-- When all items in a phase complete: inline celebration card (not a modal) with phase-specific copy and a button to continue to the next phase. Phase 3 completion offers a "Share with my coach" button that creates a shared reflection summary.
+### 5. Calendar ("Your Month") refresh
+Keep all behavior (past-day rounded pill highlight, ringed event days, popover details, two event types). Update only the surface:
+- Card sits on a warm cream surface instead of muted purple.
+- Past-day pill becomes a soft Deep Blue tint with rounded ends (already close, just lighten).
+- Event rings keep the existing primary / secondary / split conic-gradient logic but get a slight halo to feel less flat.
+- Today indicator becomes a small Fresh Green dot under the number instead of a thin ring, so empty days don't feel pixelated.
+- Headers/labels gain a touch more size and weight for legibility (text-sm instead of text-[10px] for weekday labels, text-base 900 for month label).
 
-### Edge function `supabase/functions/settling-checklist/index.ts`
-- Same structure as `cultural-tips`: CORS, Lovable AI call (`google/gemini-2.5-flash`), JSON parse, error handling, hardcoded fallback.
+### 6. Typography + legibility pass
+- Confirm DM Sans everywhere (already set in `tailwind.config.ts`); remove any remaining `font-serif` usages on this page so prompts use DM Sans italic.
+- Bump base text sizes on Home: small labels from text-xs to text-sm, body from text-sm to text-base.
+- Strengthen muted-foreground contrast for this page by using `text-foreground/70` instead of `text-muted-foreground` on key copy.
+- Action tiles keep their structure but lose the all-cap "MY APP" eyebrow being so faint; eyebrow goes Fresh Green (per existing eyebrow rule).
 
-### Tone & style rules
-- No due dates, no overdue states, no red/orange/warning colors, no push notifications, no percentage counters.
-- Conversational copy, Manrope, semantic tokens only, `rounded-3xl border-0` cards, `text-xs uppercase tracking-[0.18em] font-bold` section labels.
-
-## Feature 2: Homepage MiniCalendar
-
-### Placement
-- Inside the existing "Where You Are" card on `MemberHome.tsx`, BELOW the stage description. Do not change existing content.
-- Add section label "Your Month" above the calendar.
-
-### `MiniCalendar` component (`src/components/home/MiniCalendar.tsx`)
-- Built with plain Tailwind grid; no external calendar library.
-- Header: ChevronLeft / Month Year / ChevronRight.
-- 7-column day-name row (Mon–Sun).
-- Day grid with ~36×36 cells. Today gets `ring-1 ring-primary/30 rounded-full`. Out-of-month days dimmed.
-- Event dots below day numbers: primary blue for coaching, secondary green for checklist events. Two dots if both exist on a day.
-
-### Data
-- React Query for the visible month:
-  - `meeting_bookings` rows in month, `status != 'cancelled'`.
-  - `calendar_events` rows in month.
-- For tapped day with events: framer-motion slide-down detail panel listing each event as a small card (deep-blue left border for coaching with coach name + time from joined `coaches`, green left border for checklist with title + time). Tapping same day or another day collapses/switches. Days without events are not tappable.
-
-### Restrictions
-- No "Add event" button, no times in the grid view, no external library, no modification of the stage description text or card chrome.
+## What stays the same
+- All data hooks (assessments, bookings, coaching notes, reflections, dimension progress).
+- All routing destinations from the action tiles.
+- The journal dialog, edit/delete/share/favorite flows.
+- The calendar's event sources, popover, and legend semantics.
+- Brand tokens: Deep Blue #1F299C, Fresh Green #3DA776, Warm White #FAF9F6. No gradients, no drop shadows. DM Sans only.
 
 ## Technical notes
-
-- Frontend: React + TS + Vite, Tailwind semantic tokens, shadcn/ui, framer-motion, lucide-react, React Query.
-- Backend: Supabase migration with RLS; new edge function deployed automatically.
-- New files:
-  - `src/pages/member/SettlingInChecklist.tsx`
-  - `src/components/settling/` (onboarding screens, phase card, item row, celebration card, reward toast)
-  - `src/components/home/MiniCalendar.tsx`
-  - `supabase/functions/settling-checklist/index.ts`
-- Edited files: `App.tsx`, `AppSidebar.tsx`, `MemberHome.tsx`.
-- Migration created via supabase migration tool (separate approval step before code changes).
+- Files touched:
+  - `src/pages/member/MemberHome.tsx` (hero, new two-column row, Daily Quote card, journal grid, typography pass).
+  - `src/components/home/MiniCalendar.tsx` (surface, today dot, label sizing; logic untouched).
+  - `src/data/coaching-content.ts` (add `DAILY_QUOTES` array + tiny helper to pick by day-of-year).
+- New helper inside `MemberHome.tsx`: `getDimensionPillStyle(dimensionId)` returning a Tailwind class set per dimension id, sourced from existing semantic tokens (e.g. `bg-secondary/15 text-secondary-foreground`, `bg-primary/10 text-primary`, `bg-accent/40 text-accent-foreground`).
+- For journal cards: use `reflections.slice(0, 4)`; tag each with the most relevant priority dimension by simple keyword match on prompt/response, falling back to the first priority dimension from `getPriorityDimensions`.
+- No backend, no schema, no RLS changes.
