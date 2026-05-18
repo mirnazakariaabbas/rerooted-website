@@ -379,7 +379,7 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
   const defaultPhase: Phase = monthsSinceArrival > 3 ? 'starting-to-bloom' : monthsSinceArrival >= 1 ? 'tending-the-garden' : 'laying-the-ground';
 
   const [expanded, setExpanded] = useState<Record<Phase | 'accomplishments', boolean>>({
-    'my-tasks': defaultPhase === 'my-tasks',
+    'my-tasks': false,
     'laying-the-ground': defaultPhase === 'laying-the-ground',
     'tending-the-garden': defaultPhase === 'tending-the-garden',
     'starting-to-bloom': defaultPhase === 'starting-to-bloom',
