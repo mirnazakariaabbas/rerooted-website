@@ -67,8 +67,10 @@ const ExpatJourney = () => {
             <div>
               <div className="mb-6">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: "#3DA776" }}>
-                  {isIndividual ? "RE-ROOTED® STAGES" : "RE-ROOTED® PACKAGES"}
+                  ​
                 </span>
+
+
               </div>
               <h2
                 className="font-display"

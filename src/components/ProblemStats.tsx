@@ -149,8 +149,9 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
           transition={{ duration: 0.6 }}
         >
           <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-secondary">
-            {label}
+            ​
           </span>
+
           <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)]">
             The problem most companies
             <br />
