@@ -325,7 +325,7 @@ const MemberHome = () => {
           <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
             Your Month
           </p>
-          <Card className="border-0 bg-card rounded-3xl">
+          <Card className="border-0 rounded-3xl overflow-hidden" style={{ backgroundColor: '#F4E9D2' }}>
             <CardContent className="p-6">
               <MiniCalendar />
             </CardContent>

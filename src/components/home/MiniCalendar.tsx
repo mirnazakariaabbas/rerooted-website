@@ -11,9 +11,11 @@ type ChecklistEvent = { id: string; date: Date; time: string | null; title: stri
 
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-// Re-Rooted brand tokens: Deep Blue = primary, Fresh Green = secondary
-const COACHING_COLOR = 'hsl(var(--primary))';
-const CHECKLIST_COLOR = 'hsl(var(--secondary))';
+// Funky palette
+const COACHING_COLOR = '#E97A6F'; // coral
+const CHECKLIST_COLOR = '#F7C84A'; // gold
+const PAST_PILL_COLOR = '#E8E3F3'; // soft lavender
+const TODAY_DOT = '#3DA776'; // fresh green
 
 function startOfMonth(d: Date) { return new Date(d.getFullYear(), d.getMonth(), 1); }
 function endOfMonth(d: Date) { return new Date(d.getFullYear(), d.getMonth() + 1, 0); }
@@ -127,24 +129,24 @@ export const MiniCalendar = () => {
         <button
           aria-label="Previous month"
           onClick={() => { setCursor(addMonths(cursor, -1)); setSelectedDay(null); }}
-          className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+          className="h-9 w-9 rounded-full flex items-center justify-center bg-white/60 hover:bg-white transition-colors"
         >
-          <ChevronLeft className="h-4 w-4 text-foreground/70" />
+          <ChevronLeft className="h-4 w-4 text-primary" />
         </button>
         <p className="text-lg font-[900] tracking-tight text-primary">{monthLabel}</p>
         <button
           aria-label="Next month"
           onClick={() => { setCursor(addMonths(cursor, 1)); setSelectedDay(null); }}
-          className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+          className="h-9 w-9 rounded-full flex items-center justify-center bg-white/60 hover:bg-white transition-colors"
         >
-          <ChevronRight className="h-4 w-4 text-foreground/70" />
+          <ChevronRight className="h-4 w-4 text-primary" />
         </button>
       </div>
 
       {/* Day labels */}
       <div className="grid grid-cols-7 gap-1 mb-3">
         {DAY_LABELS.map(d => (
-          <div key={d} className="text-xs text-foreground/50 uppercase tracking-wider font-bold text-center">
+          <div key={d} className="text-[10px] text-primary/60 uppercase tracking-wider font-bold text-center">
             {d}
           </div>
         ))}
@@ -165,10 +167,11 @@ export const MiniCalendar = () => {
                 {pastStart >= 0 && (
                   <span
                     aria-hidden
-                    className="absolute top-1 bottom-1 rounded-full bg-accent/40 pointer-events-none"
+                    className="absolute top-1 bottom-1 rounded-full pointer-events-none"
                     style={{
                       left: `calc(${(pastStart / 7) * 100}% + 4px)`,
                       width: `calc(${((pastEnd - pastStart + 1) / 7) * 100}% - 8px)`,
+                      backgroundColor: PAST_PILL_COLOR,
                     }}
                   />
                 )}
@@ -182,7 +185,7 @@ export const MiniCalendar = () => {
                   const isSelected = selectedDay && isSameDay(cell.date, selectedDay);
 
                   // Build the ring background:
-                  // - two events: split circle (half primary, half secondary)
+                  // - two events: split circle (half coral, half gold)
                   // - one event: solid color
                   let ringStyle: React.CSSProperties = {};
                   if (hasCoaching && hasChecklist) {
@@ -194,14 +197,14 @@ export const MiniCalendar = () => {
                   }
 
                   const dayNumberClass = hasEvents
-                    ? 'text-primary-foreground font-bold'
+                    ? 'text-white font-bold'
                     : isToday
-                      ? 'text-primary font-bold'
+                      ? 'text-primary font-[900]'
                       : !cell.inMonth
-                        ? 'text-foreground/25'
+                        ? 'text-primary/25'
                         : isPast
-                          ? 'text-foreground/55'
-                          : 'text-foreground';
+                          ? 'text-primary/55'
+                          : 'text-primary/90 font-semibold';
 
                   const dayButton = (
                     <button
@@ -215,9 +218,16 @@ export const MiniCalendar = () => {
                         hasEvents ? 'hover:scale-110 cursor-pointer' : 'cursor-default'
                       }`}
                     >
+                      {isToday && !hasEvents && (
+                        <span
+                          aria-hidden
+                          className="absolute inset-1 rounded-full border-2"
+                          style={{ borderColor: TODAY_DOT }}
+                        />
+                      )}
                       {hasEvents && (
                         <span
-                          className={`absolute inset-1 rounded-full ${isSelected ? 'ring-2 ring-offset-2 ring-foreground/30 ring-offset-background' : ''}`}
+                          className={`absolute inset-1 rounded-full ${isSelected ? 'ring-2 ring-offset-2 ring-primary/40 ring-offset-transparent' : ''}`}
                           style={ringStyle}
                           aria-hidden
                         />
@@ -225,9 +235,6 @@ export const MiniCalendar = () => {
                       <span className={`relative leading-none ${dayNumberClass}`}>
                         {cell.date.getDate()}
                       </span>
-                      {isToday && !hasEvents && (
-                        <span className="relative mt-1 h-1.5 w-1.5 rounded-full bg-secondary" aria-hidden />
-                      )}
                     </button>
                   );
 
@@ -243,7 +250,7 @@ export const MiniCalendar = () => {
                         <div className="space-y-1">
                           {coaching.map(ev => (
                             <div key={ev.id} className="flex items-center gap-2">
-                              <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
+                              <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: COACHING_COLOR }} />
                               <span className="text-xs text-foreground truncate">
                                 Coaching with {ev.coachName}
                               </span>
@@ -251,7 +258,7 @@ export const MiniCalendar = () => {
                           ))}
                           {checklist.map(ev => (
                             <div key={ev.id} className="flex items-center gap-2">
-                              <span className="h-2 w-2 rounded-full bg-secondary shrink-0" />
+                              <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: CHECKLIST_COLOR }} />
                               <span className="text-xs text-foreground truncate">{ev.title}</span>
                             </div>
                           ))}
@@ -274,19 +281,19 @@ export const MiniCalendar = () => {
                   >
                     {/* Bubble pointer */}
                     <div
-                      className="absolute -top-1.5 h-3 w-3 rotate-45 bg-card border-l border-t border-border"
+                      className="absolute -top-1.5 h-3 w-3 rotate-45 bg-white"
                       style={{
                         left: `calc(${((selectedIndex % 7) + 0.5) * (100 / 7)}% - 6px)`,
                       }}
                       aria-hidden
                     />
-                    <div className="rounded-2xl bg-card border border-border p-4 space-y-2">
+                    <div className="rounded-2xl bg-white p-4 space-y-2">
                       <p className="text-[10px] uppercase tracking-[0.18em] font-bold text-muted-foreground">
                         {selectedDay.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
                       </p>
                       {selectedEvents.coaching.map(ev => (
                         <div key={ev.id} className="flex items-start gap-3">
-                          <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+                          <div className="h-9 w-9 rounded-full text-white flex items-center justify-center shrink-0" style={{ backgroundColor: COACHING_COLOR }}>
                             <Heart className="h-4 w-4" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -299,7 +306,7 @@ export const MiniCalendar = () => {
                       ))}
                       {selectedEvents.checklist.map(ev => (
                         <div key={ev.id} className="flex items-start gap-3">
-                          <div className="h-8 w-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center shrink-0">
+                          <div className="h-9 w-9 rounded-full text-primary flex items-center justify-center shrink-0" style={{ backgroundColor: CHECKLIST_COLOR }}>
                             <ClipboardCheck className="h-4 w-4" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -318,14 +325,18 @@ export const MiniCalendar = () => {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border/50">
+      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-primary/10">
         <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-primary" />
-          <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Coaching</span>
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: COACHING_COLOR }} />
+          <span className="text-[10px] text-primary/70 uppercase tracking-wider font-semibold">Coaching</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
-          <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Checklist</span>
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: CHECKLIST_COLOR }} />
+          <span className="text-[10px] text-primary/70 uppercase tracking-wider font-semibold">Checklist</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: PAST_PILL_COLOR }} />
+          <span className="text-[10px] text-primary/70 uppercase tracking-wider font-semibold">Past</span>
         </div>
       </div>
     </div>
