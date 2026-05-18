@@ -325,14 +325,18 @@ export const MiniCalendar = () => {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border/50">
+      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-primary/10">
         <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-primary" />
-          <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Coaching</span>
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: COACHING_COLOR }} />
+          <span className="text-[10px] text-primary/70 uppercase tracking-wider font-semibold">Coaching</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
-          <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Checklist</span>
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: CHECKLIST_COLOR }} />
+          <span className="text-[10px] text-primary/70 uppercase tracking-wider font-semibold">Checklist</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: PAST_PILL_COLOR }} />
+          <span className="text-[10px] text-primary/70 uppercase tracking-wider font-semibold">Past</span>
         </div>
       </div>
     </div>
