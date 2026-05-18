@@ -300,11 +300,11 @@ const Services = () => {
           <h2>Ready to start?</h2>
           <p>Book a discovery call. We'll map the move, the person, and the right next step together.</p>
           <div className={s.ctaButtons}>
-            <Link to="/contact" className={cn(s.btn, s.btnGreen)}>
+            <Link to="/#contact" className={cn(s.btn, s.btnGreen)}>
               Book a discovery call{" "}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
             </Link>
-            <Link to="/contact" className={cn(s.btn, s.btnGhost)}>For employers</Link>
+            <Link to="/#contact" className={cn(s.btn, s.btnGhost)}>For employers</Link>
           </div>
         </div>
       </section>

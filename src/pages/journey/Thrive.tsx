@@ -20,7 +20,7 @@ const Thrive = () => (
         <p className="text-base leading-relaxed" style={{ color: "#6B6B6B" }}>
           This journey page is coming soon. In the meantime, reach out to talk about where you are.
         </p>
-        <Link to="/contact" className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90" style={{ backgroundColor: "#1F299C" }}>
+        <Link to="/#contact" className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90" style={{ backgroundColor: "#1F299C" }}>
           Start a conversation →
         </Link>
       </div>

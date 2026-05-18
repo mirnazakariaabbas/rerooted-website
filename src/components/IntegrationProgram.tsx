@@ -108,8 +108,8 @@ const ProgramCTAs = () => {
     <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
       <Button size="lg" onClick={() => navigate("/services")}>Get a program overview</Button>
       <a
-        href="/contact"
-        onClick={(e) => { e.preventDefault(); navigate("/contact"); }}
+        href="/#contact"
+        onClick={(e) => { e.preventDefault(); navigate("/#contact"); }}
         className="text-sm font-medium text-primary hover:underline underline-offset-4"
       >
         Or start with a conversation
