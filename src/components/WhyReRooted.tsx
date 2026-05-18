@@ -259,7 +259,7 @@ export function WhyReRootedPillars() {
       <div className="mx-auto max-w-[1760px] px-6 pb-24 pt-20 sm:px-8 md:px-10 md:pb-28 md:pt-24 lg:px-14 lg:pb-32 lg:pt-36 xl:px-16 xl:pt-44">
         <div className="mb-12 flex flex-col gap-6 md:mb-16">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
-            ​​
+            ​
           </p>
           <h2
             className="font-display text-primary"
