@@ -152,7 +152,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
             ​
           </span>
 
-          <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)]">
+          <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-justify">
             The problem most companies
             <br />
             <em className="italic text-secondary">live with.</em>
