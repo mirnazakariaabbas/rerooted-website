@@ -113,7 +113,10 @@
 
 .adaptive-nav.on-blue {
   color: #FFFFFF;
+  background-color: #1F299C;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
+
 
 .adaptive-nav.solid {
   background-color: rgba(250, 249, 246, 0.92);
