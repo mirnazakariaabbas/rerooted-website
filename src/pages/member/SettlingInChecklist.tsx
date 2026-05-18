@@ -378,7 +378,14 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
   const monthsSinceArrival = user.arrivalDate ? differenceInMonths(new Date(), new Date(user.arrivalDate)) : 0;
   const defaultPhase: Phase = monthsSinceArrival > 3 ? 'starting-to-bloom' : monthsSinceArrival >= 1 ? 'tending-the-garden' : 'laying-the-ground';
 
-  const [expanded, setExpanded] = useState<Phase | 'accomplishments' | null>(defaultPhase);
+  const [expanded, setExpanded] = useState<Set<Phase | 'accomplishments'>>(new Set([defaultPhase]));
+  const toggleExpanded = (key: Phase | 'accomplishments') => {
+    setExpanded(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+  };
   const [lingering, setLingering] = useState<Set<string>>(new Set());
 
   // Local optimistic ordering. Synced from server props, mutated during drag.
@@ -546,13 +553,13 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
             key={phase.id}
             phase={phase}
             items={grouped[phase.id]}
-            expanded={expanded === phase.id}
-            onExpand={() => setExpanded(expanded === phase.id ? null : phase.id)}
+            expanded={expanded.has(phase.id)}
+            onExpand={() => toggleExpanded(phase.id)}
             onChange={onChange}
             onCompleted={markLingering}
             onAdvance={() => {
               const idx = PHASES.findIndex(p => p.id === phase.id);
-              if (idx < PHASES.length - 1) setExpanded(PHASES[idx + 1].id);
+              if (idx < PHASES.length - 1) setExpanded(prev => new Set(prev).add(PHASES[idx + 1].id));
             }}
           />
         ))}
@@ -568,8 +575,8 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
 
       <AccomplishmentsSection
         items={accomplishments}
-        expanded={expanded === 'accomplishments'}
-        onExpand={() => setExpanded(expanded === 'accomplishments' ? null : 'accomplishments')}
+        expanded={expanded.has('accomplishments')}
+        onExpand={() => toggleExpanded('accomplishments')}
         onChange={onChange}
       />
 
