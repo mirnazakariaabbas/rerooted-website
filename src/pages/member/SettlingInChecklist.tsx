@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ChevronDown, GripVertical, Plus } from 'lucide-react';
+import { ChevronDown, GripVertical, Plus, ListChecks } from 'lucide-react';
 import {
   SproutMark as Sprout,
   LeafMark as Leaf,
@@ -23,7 +23,6 @@ import {
   HandshakeHeartMark as HeartHandshake,
   ShuffleMark as Shuffle,
   CheckMark as Check,
-  PinMark as Pin,
 } from '@/components/icons/ChecklistIcons';
 import { toast } from 'sonner';
 import {
