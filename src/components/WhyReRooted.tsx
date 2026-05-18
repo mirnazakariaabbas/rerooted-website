@@ -31,11 +31,11 @@ export function WhyReRootedStatement() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, hsl(var(--primary) / 0.82) 0%, hsl(var(--primary) / 0.55) 45%, hsl(var(--primary) / 0.15) 75%, hsl(var(--primary) / 0) 100%)",
+            "linear-gradient(90deg, hsl(var(--primary) / 0.55) 0%, hsl(var(--primary) / 0.28) 45%, hsl(var(--primary) / 0.06) 75%, hsl(var(--primary) / 0) 100%)",
         }}
       />
 
-      {/* Decorative white arcs (echoes the PPT slide) */}
+      {/* Decorative white swirl (echoes the PPT slide) */}
       <svg
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full"
@@ -43,8 +43,18 @@ export function WhyReRootedStatement() {
         preserveAspectRatio="xMidYMid slice"
         fill="none"
       >
-        <path d="M 1600 -50 Q 700 250 900 950" stroke="rgba(255,255,255,0.7)" strokeWidth="2" />
-        <path d="M 1700 350 Q 900 500 1050 1000" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" />
+        {/* Large tilted ellipse loop */}
+        <path
+          d="M 820 -40 C 1480 60 1720 360 1500 560 C 1260 780 720 760 540 600 C 380 460 460 220 820 -40 Z"
+          stroke="rgba(255,255,255,0.85)"
+          strokeWidth="2"
+        />
+        {/* Crossing arc that swings from mid-right down past the bottom */}
+        <path
+          d="M 640 560 C 920 600 1160 700 1180 1020"
+          stroke="rgba(255,255,255,0.85)"
+          strokeWidth="2"
+        />
       </svg>
 
       <motion.div
