@@ -84,12 +84,10 @@ const BlogPreview = () => {
       style={{ backgroundColor: "#FAF9F6" }}
     >
       <div className="container mx-auto px-6 lg:px-12">
-        <p
-          className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20"
-          style={{ color: "#3DA776" }}
-        >
-          The thought behind Re-Rooted®
-        </p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20" style={{ color: "#3DA776" }}>
+            ​​
+          </p>
+
 
         <h2
           className="text-center font-extrabold tracking-tight"
