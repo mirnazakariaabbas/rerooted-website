@@ -366,37 +366,54 @@ const MemberHome = () => {
         )}
 
 
-        {/* ============ Weekly Reflection ============ */}
+        {/* ============ Weekly Reflection (Deep Blue split card) ============ */}
         <section id="weekly-reflection" className="mb-10">
-          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
-            Weekly Reflection
-          </p>
-          <Card className="border-0 bg-card rounded-3xl">
-            <CardContent className="p-6">
-              <p className="text-base italic mb-4 text-foreground/80 font-serif">"{weeklyPrompt}"</p>
-              <Textarea
-                value={reflectionText}
-                onChange={e => setReflectionText(e.target.value)}
-                placeholder="Write your thoughts..."
-                className="min-h-[80px] text-sm resize-none mb-3 bg-background border-border rounded-2xl"
-              />
-              <div className="flex items-center gap-2 mb-3">
-                <Checkbox
-                  id="share-coach"
-                  checked={shareWithCoach}
-                  onCheckedChange={c => setShareWithCoach(c === true)}
-                />
-                <label htmlFor="share-coach" className="text-xs text-muted-foreground cursor-pointer">
-                  Share this entry with my coach
-                </label>
+          <Card className="border-0 bg-primary text-primary-foreground rounded-3xl relative overflow-hidden">
+            <div aria-hidden className="pointer-events-none absolute -top-10 -left-10 h-48 w-48 rounded-full bg-primary-foreground/[0.04]" />
+            <div aria-hidden className="pointer-events-none absolute bottom-0 right-10 h-32 w-32 rounded-full bg-secondary/15 blur-2xl" />
+            <CardContent className="p-7 lg:p-9 relative">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <div className="md:col-span-2">
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold opacity-80 mb-3">
+                    This Week's Prompt
+                  </p>
+                  <p className="text-2xl md:text-3xl italic font-[900] leading-tight tracking-tight">
+                    "{weeklyPrompt}"
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-xs opacity-75">
+                    <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                    Refreshes Sunday
+                    <span className="opacity-50">·</span>
+                    Week {weekIndex + 1}
+                  </div>
+                </div>
+                <div className="md:col-span-3 flex flex-col">
+                  <Textarea
+                    value={reflectionText}
+                    onChange={e => setReflectionText(e.target.value)}
+                    placeholder="Take your time. There's no right answer."
+                    className="min-h-[160px] text-base resize-none bg-primary-foreground text-foreground placeholder:text-foreground/40 border-0 rounded-2xl"
+                  />
+                  <div className="mt-4 flex items-center justify-between gap-3 flex-wrap">
+                    <label className="flex items-center gap-2 text-sm cursor-pointer">
+                      <Checkbox
+                        id="share-coach"
+                        checked={shareWithCoach}
+                        onCheckedChange={c => setShareWithCoach(c === true)}
+                        className="border-primary-foreground/40 data-[state=checked]:bg-secondary data-[state=checked]:border-secondary"
+                      />
+                      <span>Share with my coach</span>
+                    </label>
+                    <Button
+                      onClick={handleReflection}
+                      disabled={!reflectionText.trim()}
+                      className="rounded-full bg-primary-foreground/15 hover:bg-primary-foreground/25 text-primary-foreground border-0 px-7"
+                    >
+                      Save to journal
+                    </Button>
+                  </div>
+                </div>
               </div>
-              <Button
-                onClick={handleReflection}
-                disabled={!reflectionText.trim()}
-                className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                Save to journal
-              </Button>
             </CardContent>
           </Card>
         </section>
@@ -409,7 +426,7 @@ const MemberHome = () => {
             </p>
             <div className="space-y-3">
               {(notes as any[]).map(n => (
-                <div key={n.id} className="p-4 rounded-2xl bg-muted">
+                <div key={n.id} className="p-4 rounded-2xl bg-card">
                   <Badge variant="outline" className="text-[10px] mb-2">
                     {new Date(n.session_date).toLocaleDateString()}
                   </Badge>
@@ -420,30 +437,68 @@ const MemberHome = () => {
           </section>
         )}
 
-        {/* ============ My Journal ============ */}
-        <section>
-          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-3">
-            My Journal
-          </p>
-          <motion.button
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.99 }}
-            onClick={() => setJournalOpen(true)}
-            className="w-full text-left rounded-2xl p-5 flex items-center gap-4 bg-card border border-border transition-colors hover:bg-muted/40"
-          >
-            <div className="h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 bg-secondary text-secondary-foreground">
-              <BookMarked className="h-5 w-5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-lg font-[900] tracking-tight leading-tight text-foreground">My Journal</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                {reflections.length === 0
-                  ? 'No entries yet. Start with this week\'s prompt above.'
-                  : `${reflections.length} ${reflections.length === 1 ? 'entry' : 'entries'}, tap to read`}
+        {/* ============ My Journal grid ============ */}
+        <section className="mb-10">
+          <Card className="border-0 bg-card rounded-3xl">
+            <CardContent className="p-7">
+              <div className="flex items-end justify-between mb-5">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-2">
+                    My Journal
+                  </p>
+                  <h3 className="text-2xl md:text-3xl font-[900] tracking-tight text-primary leading-tight">
+                    Whenever you want to write.
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setJournalOpen(true)}
+                  className="text-sm font-semibold text-primary hover:opacity-80 flex items-center gap-1 shrink-0"
+                >
+                  See all <ArrowRight className="h-4 w-4" />
+                </button>
               </div>
-            </div>
-            <ArrowRight className="h-4 w-4 opacity-60 shrink-0 text-foreground" />
-          </motion.button>
+
+              {reflections.length === 0 ? (
+                <div className="rounded-2xl bg-background/50 border border-dashed border-border p-8 text-center">
+                  <BookMarked className="h-6 w-6 mx-auto mb-2 text-secondary" />
+                  <p className="text-sm text-foreground/70">
+                    No entries yet. Start with this week's prompt above.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {sortedReflections.slice(0, 4).map(r => {
+                    const tag = tagFor(`${r.prompt} ${r.response}`);
+                    const pillStyle = getDimensionPillStyle(tag?.id);
+                    return (
+                      <button
+                        key={r.id}
+                        onClick={() => setJournalOpen(true)}
+                        className="text-left rounded-2xl bg-background hover:bg-accent/20 transition-colors p-5 border border-border/40"
+                      >
+                        <div className="flex items-start justify-between gap-3 mb-3">
+                          <p className="text-[10px] uppercase tracking-[0.18em] font-bold text-foreground/50">
+                            {new Date(r.date).toLocaleDateString('en', { month: 'short', day: 'numeric' })}
+                          </p>
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            {r.sharedWithCoach && (
+                              <Badge variant="outline" className="text-[10px]">Shared</Badge>
+                            )}
+                            {tag && (
+                              <Badge className={`text-[10px] ${pillStyle}`}>{tag.name}</Badge>
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-sm text-primary line-clamp-3 leading-relaxed">
+                          {r.response}
+                        </p>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </section>
 
         <Dialog open={journalOpen} onOpenChange={setJournalOpen}>
