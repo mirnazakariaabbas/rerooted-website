@@ -143,16 +143,17 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
       <div className="max-w-[1320px] mx-auto px-6 md:px-12">
         {/* Header row: eyebrow left, headline right */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-[1fr_3fr] items-baseline gap-6 mb-14 md:mb-20"
+          className="mb-14 md:mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-secondary">
+          <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-secondary mb-6">
             ​
           </span>
 
-          <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-justify">
+          <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-left">
+
             The problem most companies
             <br />
             <em className="italic text-secondary">live with.</em>
