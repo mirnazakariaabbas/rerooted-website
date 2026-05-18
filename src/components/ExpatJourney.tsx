@@ -67,8 +67,9 @@ const ExpatJourney = () => {
             <div>
               <div className="mb-6">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: "#3DA776" }}>
-                  ​​
+                  ​
                 </span>
+
 
               </div>
               <h2
