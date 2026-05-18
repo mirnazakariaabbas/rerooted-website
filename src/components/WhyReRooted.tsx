@@ -1,52 +1,93 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import rootsIcon from "@/assets/roots-icon.png";
 import offeringCoach from "@/assets/offering-coach.png";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
+import heroBg from "@/assets/hero-tree-suitcase.png";
+import logoWordmarkWhite from "@/assets/logo-wordmark-white.png";
 
 export function WhyReRootedStatement() {
   return (
-    <>
-      {/* Section 1: Statement with tree background */}
-      <section
-        id="why-rerooted"
-        className="relative overflow-hidden"
-        style={{ minHeight: "100vh" }}
+    <section
+      id="why-rerooted"
+      className="relative overflow-hidden bg-primary text-primary-foreground"
+      style={{ minHeight: "100vh" }}
+    >
+      {/* Background photo */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      {/* Deep blue tint overlay, fading to the right so the tree stays visible */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, hsl(var(--primary) / 0.82) 0%, hsl(var(--primary) / 0.55) 45%, hsl(var(--primary) / 0.15) 75%, hsl(var(--primary) / 0) 100%)",
+        }}
+      />
+
+      {/* Decorative white arcs (echoes the PPT slide) */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="0 0 1600 900"
+        preserveAspectRatio="xMidYMid slice"
+        fill="none"
       >
-        {/* Background image */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url(/why-rerooted-bg.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-        {/* Flat warm-white veil */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{ background: "rgba(250, 249, 246, 0.82)" }}
-        />
+        <path d="M 1600 -50 Q 700 250 900 950" stroke="rgba(255,255,255,0.7)" strokeWidth="2" />
+        <path d="M 1700 350 Q 900 500 1050 1000" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" />
+      </svg>
 
-        <div
-          className="relative mx-auto flex w-full flex-col gap-12"
-          style={{ maxWidth: 1800, padding: "160px 64px" }}
-        >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
-            {" "}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 1.1, ease: [0.65, 0, 0.35, 1], delay: 0.15 }}
+        className="relative mx-auto flex min-h-screen w-full flex-col justify-between gap-10"
+        style={{
+          maxWidth: 1800,
+          padding: "clamp(48px, 8vh, 110px) clamp(24px, 5vw, 88px)",
+        }}
+      >
+        {/* Top: wordmark + tagline */}
+        <div className="flex flex-col gap-3">
+          <img
+            src={logoWordmarkWhite}
+            alt="Re-Rooted®"
+            className="h-auto w-[min(720px,72vw)] select-none"
+            draggable={false}
+          />
+          <p
+            className="font-semibold uppercase tracking-[0.18em] text-primary-foreground"
+            style={{ fontSize: "clamp(0.85rem, 1.25vw, 1.25rem)" }}
+          >
+            The human side of global mobility
           </p>
+        </div>
 
-          <h2
+        {/* Middle: quote card */}
+        <div
+          className="max-w-[760px]"
+          style={{
+            background: "rgba(250, 249, 246, 0.88)",
+            padding: "clamp(20px, 2.4vw, 36px) clamp(24px, 2.8vw, 44px)",
+          }}
+        >
+          <h1
             className="font-display text-primary"
             style={{
               fontWeight: 500,
-              fontSize: "clamp(1.875rem, 4.875vw, 6rem)",
-              lineHeight: 1.02,
-              letterSpacing: "-0.022em",
-              maxWidth: "100%",
+              fontSize: "clamp(1.5rem, 3vw, 2.75rem)",
+              lineHeight: 1.15,
+              letterSpacing: "-0.018em",
             }}
           >
             A relocation is{" "}
@@ -55,15 +96,13 @@ export function WhyReRootedStatement() {
             <span className="text-accent">replanted.</span> We tend to the{" "}
             <em className="italic text-secondary">roots,</em> so the move takes
             hold.
-          </h2>
-
+          </h1>
           <p
-            className="text-foreground/90"
+            className="mt-5 text-primary/80"
             style={{
-              fontSize: "clamp(1rem, 1.4vw, 1.25rem)",
+              fontSize: "clamp(0.8rem, 0.95vw, 0.95rem)",
               lineHeight: 1.55,
-              maxWidth: "56ch",
-              margin: 0,
+              maxWidth: "62ch",
             }}
           >
             Global mobility is usually treated as logistics, visa, shipping,
@@ -71,8 +110,10 @@ export function WhyReRootedStatement() {
             belonging, family, balance, confidence in a new work assignment.
           </p>
         </div>
-      </section>
-    </>
+
+        <div />
+      </motion.div>
+    </section>
   );
 }
 

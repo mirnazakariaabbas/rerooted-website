@@ -42,9 +42,9 @@ const AudienceGate = () => {
       {gateOpen && (
         <motion.div
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-primary px-6 pb-24"
-          initial={{ y: 0 }}
-          exit={{ y: "-100%" }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          initial={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.08, filter: "blur(8px)" }}
+          transition={{ duration: 1.2, ease: [0.65, 0, 0.35, 1] }}
         >
           {/* Login button, top right */}
           <motion.button
