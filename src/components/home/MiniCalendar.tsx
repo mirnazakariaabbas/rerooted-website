@@ -129,17 +129,17 @@ export const MiniCalendar = () => {
         <button
           aria-label="Previous month"
           onClick={() => { setCursor(addMonths(cursor, -1)); setSelectedDay(null); }}
-          className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+          className="h-9 w-9 rounded-full flex items-center justify-center bg-white/60 hover:bg-white transition-colors"
         >
-          <ChevronLeft className="h-4 w-4 text-foreground/70" />
+          <ChevronLeft className="h-4 w-4 text-primary" />
         </button>
         <p className="text-lg font-[900] tracking-tight text-primary">{monthLabel}</p>
         <button
           aria-label="Next month"
           onClick={() => { setCursor(addMonths(cursor, 1)); setSelectedDay(null); }}
-          className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+          className="h-9 w-9 rounded-full flex items-center justify-center bg-white/60 hover:bg-white transition-colors"
         >
-          <ChevronRight className="h-4 w-4 text-foreground/70" />
+          <ChevronRight className="h-4 w-4 text-primary" />
         </button>
       </div>
 
