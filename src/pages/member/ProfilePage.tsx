@@ -123,7 +123,7 @@ const ProfilePage = () => {
         <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Journey Stage</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="p-3 rounded-lg border border-primary bg-muted">
-            <p className="font-medium text-sm">Stage {STAGE_LABELS[user.stage].number}: {STAGE_LABELS[user.stage].name}</p>
+            <p className="font-medium text-sm">{STAGE_LABELS[user.stage].name}</p>
             <p className="text-xs text-muted-foreground mt-1">{STAGE_LABELS[user.stage].tagline}</p>
           </div>
           <div className="flex items-center justify-between">
