@@ -12,7 +12,8 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ChevronDown, GripVertical, Plus, ListChecks } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { ChevronDown, GripVertical, Plus, ListChecks, Pencil, Trash2, X } from 'lucide-react';
 import {
   SproutMark as Sprout,
   LeafMark as Leaf,
