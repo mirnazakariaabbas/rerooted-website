@@ -208,9 +208,9 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
                     <div
                       className="leading-none flex items-start"
                       style={{
-                        fontFamily: '"Allura", cursive',
+                        fontFamily: '"Yellowtail", cursive',
                         fontWeight: 400,
-                        fontSize: "clamp(150px, 19vw, 280px)",
+                        fontSize: "clamp(160px, 20vw, 300px)",
                         lineHeight: 0.9,
                       }}
                     >
