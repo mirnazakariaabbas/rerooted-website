@@ -283,47 +283,42 @@ const MemberHome = () => {
           </Card>
         </div>
 
-        {/* ============ Your Stats ============ */}
-        <Card className="border-0 bg-card rounded-3xl mb-10">
-          <CardContent className="p-6">
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
-              Your Stats
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <StatRow
-                icon={<BarChart3 className="h-5 w-5" />}
-                iconBg="bg-primary text-primary-foreground"
-                value={latestScore != null ? `${latestScore}%` : '—'}
-                label="Latest complexity score"
-                trailing={
-                  scoreDiff != null ? (
-                    <Badge
-                      className={`text-[10px] ${
-                        scoreDiff >= 0
-                          ? 'bg-secondary text-secondary-foreground'
-                          : 'bg-destructive text-destructive-foreground'
-                      }`}
-                    >
-                      {scoreDiff >= 0 ? '+' : ''}{scoreDiff}
-                    </Badge>
-                  ) : null
-                }
-              />
-              <StatRow
-                icon={<Calendar className="h-5 w-5" />}
-                iconBg="bg-secondary text-secondary-foreground"
-                value={`${completedSessions}`}
-                label="Coaching sessions"
-              />
-              <StatRow
-                icon={<BookOpen className="h-5 w-5" />}
-                iconBg="bg-accent text-accent-foreground"
-                value={`${reflections.length}`}
-                label="Reflections journaled"
-              />
-            </div>
-          </CardContent>
-        </Card>
+        {/* ============ Your Stats: 3 funky standalone cards ============ */}
+        <section className="mb-10">
+          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
+            Your Stats
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <FunkyStatCard
+              bg="#E97A6F"
+              textColor="#FAF9F6"
+              icon={<BarChart3 className="h-6 w-6" />}
+              value={latestScore != null ? `${latestScore}%` : '...'}
+              label="Latest complexity score"
+              trailing={
+                scoreDiff != null ? (
+                  <span className="inline-flex items-center rounded-full bg-white/25 px-2 py-0.5 text-[11px] font-bold">
+                    {scoreDiff >= 0 ? '+' : ''}{scoreDiff}
+                  </span>
+                ) : null
+              }
+            />
+            <FunkyStatCard
+              bg="#F4E9D2"
+              textColor="#1F299C"
+              icon={<Calendar className="h-6 w-6" />}
+              value={`${completedSessions}`}
+              label="Coaching sessions"
+            />
+            <FunkyStatCard
+              bg="#F7C84A"
+              textColor="#1F299C"
+              icon={<BookOpen className="h-6 w-6" />}
+              value={`${reflections.length}`}
+              label="Reflections journaled"
+            />
+          </div>
+        </section>
 
         {/* ============ Your Month (Calendar) ============ */}
         <section className="mb-10">
