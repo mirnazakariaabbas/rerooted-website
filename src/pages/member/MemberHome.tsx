@@ -201,7 +201,10 @@ const MemberHome = () => {
           <AnnouncementBanner />
         </div>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-3xl bg-accent/40 px-8 py-12 lg:px-12 lg:py-16">
+          <div
+            className="relative overflow-hidden rounded-3xl px-8 py-12 lg:px-12 lg:py-16"
+            style={{ backgroundColor: '#F4E9D2' }}
+          >
             {/* Soft brand blobs, no gradients */}
             <div aria-hidden className="pointer-events-none absolute -top-10 right-10 h-40 w-40 rounded-full bg-primary/15 blur-3xl" />
             <div aria-hidden className="pointer-events-none absolute bottom-0 right-32 h-32 w-32 rounded-full bg-secondary/25 blur-3xl" />
