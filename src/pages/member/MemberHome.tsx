@@ -130,6 +130,7 @@ const MemberHome = () => {
   const greeting = user.name ? user.name.split(' ')[0] : 'Welcome';
   const weekIndex = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000)) % WEEKLY_PROMPTS.length;
   const weeklyPrompt = WEEKLY_PROMPTS[weekIndex];
+  const dailyQuote = getDailyQuote();
 
   const isRootingIn = user.stage === 'rooting-in';
   const dimensions = ROOTING_IN_DIMENSIONS.filter(d => !d.requiresChildren || user.hasChildren);
@@ -141,6 +142,37 @@ const MemberHome = () => {
   const completedSessions = (bookings as any[]).filter(
     b => b.status === 'completed' || new Date(b.scheduled_at) < new Date()
   ).length;
+
+  // Priority focus areas from assessment, used to tag journal entries
+  const priorityDimensionIds = useMemo(() => {
+    if (!assessment) return [];
+    return getPriorityDimensions(assessment.score, assessment.answers);
+  }, [assessment]);
+
+  const priorityDimensions = useMemo(
+    () => priorityDimensionIds.map(id => ROOTING_IN_DIMENSIONS.find(d => d.id === id)).filter(Boolean) as typeof ROOTING_IN_DIMENSIONS,
+    [priorityDimensionIds],
+  );
+
+  // Tag a reflection with the most relevant priority dimension (by keyword), fallback to first priority
+  const tagFor = (text: string): { id: string; name: string } | null => {
+    if (priorityDimensions.length === 0) return null;
+    const lower = text.toLowerCase();
+    const match = priorityDimensions.find(d =>
+      lower.includes(d.name.toLowerCase().split(' ')[0]) ||
+      lower.includes(d.id.split('-')[0]),
+    );
+    const chosen = match || priorityDimensions[0];
+    return { id: chosen.id, name: chosen.name };
+  };
+
+  // Next upcoming coaching booking, for Daily Quote card footer
+  const nextBooking = useMemo(() => {
+    const future = (bookings as any[])
+      .filter(b => b.status !== 'cancelled' && new Date(b.scheduled_at) >= new Date())
+      .sort((a, b) => new Date(a.scheduled_at).getTime() - new Date(b.scheduled_at).getTime());
+    return future[0] || null;
+  }, [bookings]);
 
 
   const handleReflection = () => {
