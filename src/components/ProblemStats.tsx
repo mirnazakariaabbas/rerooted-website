@@ -121,8 +121,9 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
         <>
           OF <strong className="font-extrabold">EXPATS</strong> REPORT BURNOUT SYMPTOMS
         </>
-      ) as unknown as string,
+      ),
     },
+
 
     {
       kind: "image",
