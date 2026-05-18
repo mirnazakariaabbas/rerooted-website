@@ -1,131 +1,150 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import rootsIcon from "@/assets/roots-icon.png";
 import offeringCoach from "@/assets/offering-coach.png";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
-import heroBg from "@/assets/hero-tree-suitcase.jpg";
-import logoWordmarkWhite from "@/assets/logo-wordmark-white.png";
+import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
 
 export function WhyReRootedStatement() {
+  const navigate = useNavigate();
+
+  const handleCta = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate(href);
+    }
+  };
+
   return (
     <section
       id="why-rerooted"
-      className="relative overflow-hidden bg-primary text-primary-foreground"
-      style={{ minHeight: "100vh" }}
+      className="relative overflow-hidden"
+      style={{
+        background: "#FAF9F6",
+        minHeight: "calc(100vh - 84px)",
+      }}
     >
-      {/* Background photo */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url(${heroBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
-      {/* Deep blue tint overlay, fading to the right so the tree stays visible */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(90deg, hsl(var(--primary) / 0.55) 0%, hsl(var(--primary) / 0.28) 45%, hsl(var(--primary) / 0.06) 75%, hsl(var(--primary) / 0) 100%)",
-        }}
-      />
-
-      {/* Decorative white swirl (echoes the PPT slide) */}
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        viewBox="0 0 1600 900"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        {/* Large tilted ellipse loop */}
-        <path
-          d="M 820 -40 C 1480 60 1720 360 1500 560 C 1260 780 720 760 540 600 C 380 460 460 220 820 -40 Z"
-          stroke="rgba(255,255,255,0.85)"
-          strokeWidth="2"
-        />
-        {/* Crossing arc that swings from mid-right down past the bottom */}
-        <path
-          d="M 640 560 C 920 600 1160 700 1180 1020"
-          stroke="rgba(255,255,255,0.85)"
-          strokeWidth="2"
-        />
-      </svg>
-
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
-        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-        transition={{ duration: 1.1, ease: [0.65, 0, 0.35, 1], delay: 0.15 }}
-        className="relative mx-auto flex min-h-screen w-full flex-col justify-between gap-10"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto flex w-full flex-col"
         style={{
-          maxWidth: 1800,
-          padding: "clamp(48px, 8vh, 110px) clamp(24px, 5vw, 88px)",
+          maxWidth: 1600,
+          paddingLeft: "clamp(28px, 4vw, 56px)",
+          paddingRight: "clamp(28px, 4vw, 56px)",
+          paddingTop: "clamp(64px, 9vh, 96px)",
+          paddingBottom: "clamp(48px, 8vh, 80px)",
+          fontFamily: '"DM Sans", sans-serif',
         }}
       >
-        {/* Top: wordmark + tagline */}
-        <div className="flex flex-col gap-3">
-          <img
-            src={logoWordmarkWhite}
-            alt="Re-Rooted®"
-            className="h-auto w-[min(720px,72vw)] select-none"
-            draggable={false}
-          />
-          <p
-            className="font-semibold uppercase tracking-[0.18em] text-primary-foreground"
-            style={{ fontSize: "clamp(0.85rem, 1.25vw, 1.25rem)" }}
-          >
-            The human side of global mobility
-          </p>
-        </div>
+        {/* 1. Masthead lockup */}
+        <img
+          src={logoWordmarkBlue}
+          alt="Re-Rooted® Switzerland"
+          className="block h-auto w-full select-none"
+          style={{ maxWidth: 1400 }}
+          draggable={false}
+        />
 
-        {/* Middle: quote card */}
-        <div
-          className="max-w-[760px]"
+        {/* 2. Centered tagline */}
+        <p
+          className="text-center"
           style={{
-            background: "rgba(250, 249, 246, 0.88)",
-            padding: "clamp(20px, 2.4vw, 36px) clamp(24px, 2.8vw, 44px)",
+            color: "#1F299C",
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 800,
+            fontSize: "clamp(20px, 1.9vw, 28px)",
+            letterSpacing: "0.28em",
+            marginTop: 56,
+            marginBottom: 36,
+            textTransform: "uppercase",
           }}
         >
-          <h1
-            className="font-display text-primary"
-            style={{
-              fontWeight: 500,
-              fontSize: "clamp(1.5rem, 3vw, 2.75rem)",
-              lineHeight: 1.15,
-              letterSpacing: "-0.018em",
-            }}
-          >
-            A relocation is{" "}
-            <em className="italic text-secondary">not a shipment.</em> It&apos;s
-            a person being{" "}
-            <span className="text-accent">replanted.</span> We tend to the{" "}
-            <em className="italic text-secondary">roots,</em> so the move takes
-            hold.
-          </h1>
-          <p
-            className="mt-5 text-primary/80"
-            style={{
-              fontSize: "clamp(0.8rem, 0.95vw, 0.95rem)",
-              lineHeight: 1.55,
-              maxWidth: "62ch",
-            }}
-          >
-            Global mobility is usually treated as logistics, visa, shipping,
-            tax. But the hardest parts of moving are personal: identity,
-            belonging, family, balance, confidence in a new work assignment.
-          </p>
-        </div>
+          The Human Side of Relocation
+        </p>
 
-        <div />
+        {/* 3. Left-aligned editorial paragraph */}
+        <p
+          style={{
+            color: "#1F299C",
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 400,
+            fontSize: "clamp(28px, 3.2vw, 46px)",
+            lineHeight: 1.16,
+            letterSpacing: "-0.018em",
+            maxWidth: "22ch",
+            marginBottom: 40,
+            textAlign: "left",
+          }}
+        >
+          Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
+        </p>
+
+        {/* 4. CTAs */}
+        <div className="flex flex-wrap items-center" style={{ gap: 12 }}>
+          <a
+            href="#program"
+            onClick={handleCta("#program")}
+            className="inline-flex items-center gap-2 transition-all"
+            style={{
+              background: "#1F299C",
+              color: "#FFFFFF",
+              padding: "14px 22px",
+              borderRadius: 999,
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 500,
+              fontSize: 14,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#141A6B";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#1F299C";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            Start your journey
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+          <a
+            href="#approach"
+            onClick={handleCta("#approach")}
+            className="inline-flex items-center transition-colors"
+            style={{
+              background: "transparent",
+              color: "#1F299C",
+              padding: "14px 22px",
+              borderRadius: 999,
+              border: "1px solid rgba(31, 41, 156, 0.10)",
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 500,
+              fontSize: 14,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(31, 41, 156, 0.05)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+            }}
+          >
+            How it works
+          </a>
+        </div>
       </motion.div>
     </section>
   );
 }
+
 
 const PILLARS = [
   {
