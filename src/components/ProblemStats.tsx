@@ -113,11 +113,16 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
       number: (
         <>
           <span className="text-primary">{stat98}</span>
-          <span className="text-secondary">%</span>
+          <span className="text-secondary" style={{ fontSize: "0.55em" }}>%</span>
         </>
       ),
-      caption: "Of expats report burnout symptoms during international assignments.",
+      caption: (
+        <>
+          OF <strong className="font-extrabold">EXPATS</strong> REPORT BURNOUT SYMPTOMS
+        </>
+      ) as unknown as string,
     },
+
     {
       kind: "image",
       src: cityImg,
