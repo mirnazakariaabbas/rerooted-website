@@ -41,10 +41,36 @@ const AudienceGate = () => {
     <AnimatePresence>
       {gateOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-primary px-6 pb-24"
-          initial={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.08, filter: "blur(8px)" }}
-          transition={{ duration: 1.2, ease: [0.65, 0, 0.35, 1] }}
+          className="fixed inset-0 z-50 overflow-hidden"
+          initial={false}
+          exit={{ transition: { duration: 0 } }}
+        >
+          {/* Left curtain panel */}
+          <motion.div
+            className="absolute inset-y-0 left-0 w-1/2 bg-primary"
+            initial={{ x: 0 }}
+            exit={{ x: "-101%" }}
+            transition={{ duration: 1.1, ease: [0.83, 0, 0.17, 1], delay: 0.25 }}
+          />
+          {/* Right curtain panel */}
+          <motion.div
+            className="absolute inset-y-0 right-0 w-1/2 bg-primary"
+            initial={{ x: 0 }}
+            exit={{ x: "101%" }}
+            transition={{ duration: 1.1, ease: [0.83, 0, 0.17, 1], delay: 0.25 }}
+          />
+          {/* Thin gold seam that flashes at the split */}
+          <motion.div
+            className="pointer-events-none absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-primary-foreground"
+            initial={{ opacity: 0, scaleY: 0 }}
+            exit={{ opacity: [0, 1, 0], scaleY: [0, 1, 1] }}
+            transition={{ duration: 0.6, ease: "easeOut", times: [0, 0.4, 1] }}
+            style={{ transformOrigin: "center" }}
+          />
+        <motion.div
+          className="absolute inset-0 flex flex-col items-center justify-center px-6 pb-24"
+          initial={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -24, filter: "blur(6px)", transition: { duration: 0.45, ease: "easeIn" } }}
         >
           {/* Login button, top right */}
           <motion.button
@@ -153,6 +179,7 @@ const AudienceGate = () => {
           >
             Not sure? Start here →
           </motion.p>
+        </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
