@@ -91,7 +91,7 @@ const sections = [
       <p>For questions about these terms, please contact:<br /><br />
       <strong>Re-Rooted®</strong><br />
       Zug, Switzerland<br />
-      Email: hello@rerooted.ch</p>
+      Email: hello@rerooted.com</p>
     ),
   },
 ];

@@ -54,6 +54,12 @@ const faqData: FaqGroup[] = [
       { q: "Do you collect data about my children?", a: "Only if you choose to include your family in coaching. When you enter your children's names in the Re-Rooted® app to book family coaching sessions, we store that information with your explicit consent. Children never have direct access to the app. You can request deletion of your children's data at any time. See our Privacy Policy for full details." },
     ],
   },
+  {
+    heading: "Contact",
+    items: [
+      { q: "How do I get in touch with Re-Rooted®?", a: "You can reach us at hello@rerooted.com. We are based in Zug, Switzerland, and work with organizations and individuals globally." },
+    ],
+  },
 ];
 
 const FAQ = () => {
