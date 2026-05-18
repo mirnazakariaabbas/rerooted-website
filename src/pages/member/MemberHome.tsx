@@ -201,7 +201,10 @@ const MemberHome = () => {
           <AnnouncementBanner />
         </div>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-3xl bg-accent/40 px-8 py-12 lg:px-12 lg:py-16">
+          <div
+            className="relative overflow-hidden rounded-3xl px-8 py-12 lg:px-12 lg:py-16"
+            style={{ backgroundColor: '#F4E9D2' }}
+          >
             {/* Soft brand blobs, no gradients */}
             <div aria-hidden className="pointer-events-none absolute -top-10 right-10 h-40 w-40 rounded-full bg-primary/15 blur-3xl" />
             <div aria-hidden className="pointer-events-none absolute bottom-0 right-32 h-32 w-32 rounded-full bg-secondary/25 blur-3xl" />
@@ -219,10 +222,13 @@ const MemberHome = () => {
         {/* ============ Where You Are + Daily Quote row ============ */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
           {/* Where You Are, 2/3 */}
-          <Card className="lg:col-span-2 border-0 bg-card rounded-3xl">
+          <Card
+            className="lg:col-span-2 border-0 rounded-3xl"
+            style={{ backgroundColor: '#E8E3F3' }}
+          >
             <CardContent className="p-7">
               <div className="flex items-start gap-4">
-                <div className="h-11 w-11 rounded-full bg-accent/60 flex items-center justify-center shrink-0">
+                <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                   <MapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -232,7 +238,7 @@ const MemberHome = () => {
                   <p className="text-xl md:text-2xl font-[900] tracking-tight text-primary leading-snug">
                     Stage {stageInfo.number}: <span className="text-primary">{stageInfo.name}</span>
                   </p>
-                  <p className="mt-3 text-base leading-relaxed text-foreground/75">
+                  <p className="mt-3 text-base leading-relaxed text-primary/75">
                     {STAGE_DESCRIPTIONS[user.stage]}
                   </p>
                 </div>
@@ -277,47 +283,42 @@ const MemberHome = () => {
           </Card>
         </div>
 
-        {/* ============ Your Stats ============ */}
-        <Card className="border-0 bg-card rounded-3xl mb-10">
-          <CardContent className="p-6">
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
-              Your Stats
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <StatRow
-                icon={<BarChart3 className="h-5 w-5" />}
-                iconBg="bg-primary text-primary-foreground"
-                value={latestScore != null ? `${latestScore}%` : '—'}
-                label="Latest complexity score"
-                trailing={
-                  scoreDiff != null ? (
-                    <Badge
-                      className={`text-[10px] ${
-                        scoreDiff >= 0
-                          ? 'bg-secondary text-secondary-foreground'
-                          : 'bg-destructive text-destructive-foreground'
-                      }`}
-                    >
-                      {scoreDiff >= 0 ? '+' : ''}{scoreDiff}
-                    </Badge>
-                  ) : null
-                }
-              />
-              <StatRow
-                icon={<Calendar className="h-5 w-5" />}
-                iconBg="bg-secondary text-secondary-foreground"
-                value={`${completedSessions}`}
-                label="Coaching sessions"
-              />
-              <StatRow
-                icon={<BookOpen className="h-5 w-5" />}
-                iconBg="bg-accent text-accent-foreground"
-                value={`${reflections.length}`}
-                label="Reflections journaled"
-              />
-            </div>
-          </CardContent>
-        </Card>
+        {/* ============ Your Stats: 3 funky standalone cards ============ */}
+        <section className="mb-10">
+          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
+            Your Stats
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <FunkyStatCard
+              bg="#E97A6F"
+              textColor="#FAF9F6"
+              icon={<BarChart3 className="h-6 w-6" />}
+              value={latestScore != null ? `${latestScore}%` : '...'}
+              label="Latest complexity score"
+              trailing={
+                scoreDiff != null ? (
+                  <span className="inline-flex items-center rounded-full bg-white/25 px-2 py-0.5 text-[11px] font-bold">
+                    {scoreDiff >= 0 ? '+' : ''}{scoreDiff}
+                  </span>
+                ) : null
+              }
+            />
+            <FunkyStatCard
+              bg="#F4E9D2"
+              textColor="#1F299C"
+              icon={<Calendar className="h-6 w-6" />}
+              value={`${completedSessions}`}
+              label="Coaching sessions"
+            />
+            <FunkyStatCard
+              bg="#F7C84A"
+              textColor="#1F299C"
+              icon={<BookOpen className="h-6 w-6" />}
+              value={`${reflections.length}`}
+              label="Reflections journaled"
+            />
+          </div>
+        </section>
 
         {/* ============ Your Month (Calendar) ============ */}
         <section className="mb-10">
@@ -680,26 +681,50 @@ const MemberHome = () => {
 
 // ===== Helpers =====
 
-function StatRow({
-  icon, iconBg, value, label, trailing,
+function FunkyStatCard({
+  bg, textColor, icon, value, label, trailing,
 }: {
+  bg: string;
+  textColor: string;
   icon: React.ReactNode;
-  iconBg: string;
   value: string;
   label: string;
   trailing?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-4">
-      <div className={`h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 ${iconBg}`}>
-        {icon}
+    <motion.div
+      whileHover={{ y: -3, rotate: -0.5 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className="relative overflow-hidden rounded-3xl p-6 min-h-[150px] flex flex-col justify-between"
+      style={{ backgroundColor: bg, color: textColor }}
+    >
+      {/* playful decorative blobs */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-10 -right-10 h-32 w-32 rounded-full opacity-25"
+        style={{ backgroundColor: textColor }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-full opacity-10"
+        style={{ backgroundColor: textColor }}
+      />
+      <div className="relative flex items-start justify-between">
+        <div
+          className="h-11 w-11 rounded-2xl flex items-center justify-center"
+          style={{ backgroundColor: `${textColor}22` }}
+        >
+          {icon}
+        </div>
+        {trailing}
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="text-xl font-[900] tracking-tight text-foreground leading-tight">{value}</div>
-        <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="relative mt-4">
+        <div className="text-4xl md:text-5xl font-[900] tracking-tight leading-none">
+          {value}
+        </div>
+        <div className="text-sm font-semibold mt-2 opacity-85">{label}</div>
       </div>
-      {trailing}
-    </div>
+    </motion.div>
   );
 }
 
