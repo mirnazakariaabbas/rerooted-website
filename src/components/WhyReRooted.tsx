@@ -4,7 +4,7 @@ import rootsIcon from "@/assets/roots-icon.png";
 import offeringCoach from "@/assets/offering-coach.png";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
-import heroBg from "@/assets/hero-tree-suitcase.png";
+import heroBg from "@/assets/hero-tree-suitcase.jpg";
 import logoWordmarkWhite from "@/assets/logo-wordmark-white.png";
 
 export function WhyReRootedStatement() {
