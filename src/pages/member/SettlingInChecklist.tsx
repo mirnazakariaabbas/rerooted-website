@@ -619,6 +619,7 @@ const PhaseSection = ({
   return (
     <div className="rounded-2xl overflow-hidden">
       <button
+        type="button"
         onClick={onExpand}
         className={`w-full text-left p-5 flex items-center gap-4 transition-colors ${tone.header}`}
         aria-expanded={expanded}
@@ -642,35 +643,27 @@ const PhaseSection = ({
         />
       </button>
 
-      <AnimatePresence initial={false}>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden bg-card"
-          >
-            <div className="p-5 border-x border-b border-border rounded-b-2xl">
-              <AnimatePresence>
-                {!isMyTasks && items.length > 0 && items.every(i => i.is_completed) && (
-                  <PhaseCelebration phase={phase.id} itemCount={items.length} onAdvance={onAdvance} />
-                )}
-              </AnimatePresence>
+      {expanded ? (
+        <div className="overflow-hidden bg-card">
+          <div className="p-5 border-x border-b border-border rounded-b-2xl">
+            <AnimatePresence>
+              {!isMyTasks && items.length > 0 && items.every(i => i.is_completed) && (
+                <PhaseCelebration phase={phase.id} itemCount={items.length} onAdvance={onAdvance} />
+              )}
+            </AnimatePresence>
 
-              <PhaseDroppableList
-                phaseId={phase.id}
-                items={items}
-                onChange={onChange}
-                onCompleted={onCompleted}
-                isMyTasks={isMyTasks}
-              />
+            <PhaseDroppableList
+              phaseId={phase.id}
+              items={items}
+              onChange={onChange}
+              onCompleted={onCompleted}
+              isMyTasks={isMyTasks}
+            />
 
-              <AddTaskInput phaseId={phase.id} onAdded={onChange} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <AddTaskInput phaseId={phase.id} onAdded={onChange} />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -1138,6 +1131,7 @@ const AccomplishmentsSection = ({
   return (
     <div className="rounded-2xl overflow-hidden">
       <button
+        type="button"
         onClick={onExpand}
         className={`w-full text-left p-5 flex items-center gap-4 transition-colors ${tone.header}`}
         aria-expanded={expanded}
@@ -1160,31 +1154,23 @@ const AccomplishmentsSection = ({
         />
       </button>
 
-      <AnimatePresence initial={false}>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden bg-card"
-          >
-            <div className="p-5 border-x border-b border-border rounded-b-2xl">
-              {items.length === 0 ? (
-                <p className="text-xs text-muted-foreground text-center py-4">
-                  Nothing here yet. Complete a task and it will appear here.
-                </p>
-              ) : (
-                <div className="space-y-1">
-                  {items.map(item => (
-                    <ItemRow key={item.id} item={item} onChange={onChange} />
-                  ))}
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {expanded ? (
+        <div className="overflow-hidden bg-card">
+          <div className="p-5 border-x border-b border-border rounded-b-2xl">
+            {items.length === 0 ? (
+              <p className="text-xs text-muted-foreground text-center py-4">
+                Nothing here yet. Complete a task and it will appear here.
+              </p>
+            ) : (
+              <div className="space-y-1">
+                {items.map(item => (
+                  <ItemRow key={item.id} item={item} onChange={onChange} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
