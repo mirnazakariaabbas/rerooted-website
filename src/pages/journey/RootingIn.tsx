@@ -147,7 +147,7 @@ const RootingIn = () => (
         </p>
         <div className="pt-4">
           <Link
-            to="/contact"
+            to="/#contact"
             className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-lg text-white transition-colors hover:opacity-90"
             style={{ backgroundColor: "#1F299C" }}
           >

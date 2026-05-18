@@ -10,7 +10,7 @@ const corporateLinks: FooterLink[] = [
   { label: "The Journey", href: "#journey", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
-  { label: "Contact", href: "/contact", type: "route" },
+  { label: "Contact", href: "#contact", type: "hash" },
   { label: "FAQ", href: "/faq", type: "route" },
   { label: "Privacy Policy", href: "/privacy", type: "route" },
   { label: "Terms & Conditions", href: "/terms", type: "route" },
@@ -21,7 +21,7 @@ const individualLinks: FooterLink[] = [
   { label: "Support", href: "#support", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
-  { label: "Contact", href: "/contact", type: "route" },
+  { label: "Contact", href: "#contact", type: "hash" },
   { label: "FAQ", href: "/faq", type: "route" },
   { label: "Privacy Policy", href: "/privacy", type: "route" },
   { label: "Terms & Conditions", href: "/terms", type: "route" },
@@ -80,7 +80,7 @@ const Footer = () => {
 
           <div className="flex flex-col items-center gap-4 md:items-end">
             <Link
-              to="/contact"
+              to="/#contact"
               className="text-sm font-semibold transition-colors hover:opacity-80"
               style={{ color: "#3DA776" }}
             >
