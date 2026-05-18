@@ -180,6 +180,7 @@ const AudienceGate = () => {
             Not sure? Start here →
           </motion.p>
         </motion.div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
