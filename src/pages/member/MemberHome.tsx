@@ -703,36 +703,22 @@ function StatRow({
   );
 }
 
-function ActionTile({
-  title, subtitle, icon, tone, onClick,
-}: {
-  title: string;
-  subtitle: string;
-  icon: React.ReactNode;
-  tone: 'primary' | 'secondary' | 'accent' | 'cream';
-  onClick: () => void;
-}) {
-  const styles: Record<string, string> = {
-    primary: 'bg-primary text-primary-foreground',
-    secondary: 'bg-secondary text-secondary-foreground',
-    accent: 'bg-accent text-accent-foreground',
-    cream: 'bg-card text-foreground border border-border',
-  };
-  return (
-    <motion.button
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.99 }}
-      onClick={onClick}
-      className={`w-full text-left rounded-2xl p-5 flex items-center gap-4 transition-colors ${styles[tone]}`}
-    >
-      <div className="flex-1 min-w-0">
-        <div className="text-lg font-[900] tracking-tight leading-tight">{title}</div>
-        <div className="text-xs opacity-80 mt-1">{subtitle}</div>
-      </div>
-      <div className="shrink-0 opacity-90">{icon}</div>
-      <ArrowRight className="h-4 w-4 opacity-60 shrink-0" />
-    </motion.button>
-  );
+// Map a dimension id to a soft pastel pill class set drawn from brand tokens.
+function getDimensionPillStyle(dimensionId: string | undefined): string {
+  if (!dimensionId) return 'bg-accent/40 text-primary';
+  // Stable hash so the same dimension always gets the same color
+  let h = 0;
+  for (let i = 0; i < dimensionId.length; i++) h = (h * 31 + dimensionId.charCodeAt(i)) >>> 0;
+  const palette = [
+    'bg-secondary/20 text-secondary',
+    'bg-primary/15 text-primary',
+    'bg-accent/60 text-primary',
+    'bg-warning/20 text-warning',
+    'bg-destructive/15 text-destructive',
+    'bg-secondary/30 text-secondary',
+  ];
+  return palette[h % palette.length];
+}
 }
 
 export default MemberHome;
