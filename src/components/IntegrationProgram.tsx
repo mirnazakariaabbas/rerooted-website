@@ -213,7 +213,7 @@ const IntegrationProgram = () => {
               whiteSpace: "nowrap",
             }}
           >
-            ​​
+            ​
           </div>
           <h2
             className="font-display"
