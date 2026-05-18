@@ -222,10 +222,13 @@ const MemberHome = () => {
         {/* ============ Where You Are + Daily Quote row ============ */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
           {/* Where You Are, 2/3 */}
-          <Card className="lg:col-span-2 border-0 bg-card rounded-3xl">
+          <Card
+            className="lg:col-span-2 border-0 rounded-3xl"
+            style={{ backgroundColor: '#E8E3F3' }}
+          >
             <CardContent className="p-7">
               <div className="flex items-start gap-4">
-                <div className="h-11 w-11 rounded-full bg-accent/60 flex items-center justify-center shrink-0">
+                <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                   <MapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -235,7 +238,7 @@ const MemberHome = () => {
                   <p className="text-xl md:text-2xl font-[900] tracking-tight text-primary leading-snug">
                     Stage {stageInfo.number}: <span className="text-primary">{stageInfo.name}</span>
                   </p>
-                  <p className="mt-3 text-base leading-relaxed text-foreground/75">
+                  <p className="mt-3 text-base leading-relaxed text-primary/75">
                     {STAGE_DESCRIPTIONS[user.stage]}
                   </p>
                 </div>
