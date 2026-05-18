@@ -76,9 +76,10 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
 
   // Tile types for the 3x2 grid
   type Tile =
-    | { kind: "stat-blue"; number: ReactNode; caption: string }
-    | { kind: "stat-cream"; number: ReactNode; caption: string }
+    | { kind: "stat-blue"; number: ReactNode; caption: ReactNode }
+    | { kind: "stat-cream"; number: ReactNode; caption: ReactNode }
     | { kind: "image"; src: string; eyebrow: string; tagline: string };
+
 
   const tiles: Tile[] = [
     {
