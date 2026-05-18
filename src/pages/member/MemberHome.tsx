@@ -195,46 +195,99 @@ const MemberHome = () => {
       transition={{ duration: 0.4 }}
       className="pb-24"
     >
-      {/* ============ Curved Deep Blue Header ============ */}
-      <header className="relative bg-primary text-primary-foreground overflow-hidden rounded-b-[3rem] px-6 pt-10 pb-16 lg:pt-14 lg:pb-20">
-        {/* Concentric arched accents */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[180%] h-72 rounded-[50%] bg-primary-foreground/[0.04]"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-[140%] h-72 rounded-[50%] bg-primary-foreground/[0.06]"
-        />
-
-        <div className="relative max-w-2xl mx-auto">
+      {/* ============ Warm hero greeting ============ */}
+      <header className="relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 pt-6 lg:pt-8">
           <AnnouncementBanner />
-          <h1 className="text-4xl md:text-5xl font-[900] tracking-tight leading-tight">
-            Hello, {greeting}!
-          </h1>
-          <p className="mt-2 text-base text-primary-foreground/80">
-            Stage {stageInfo.number}: {stageInfo.name}
-            {user.countryFrom && user.countryTo && (
-              <span className="block text-sm text-primary-foreground/60 mt-0.5">
-                {user.countryFrom} to {user.countryTo}, {arrivalText}
-              </span>
-            )}
-          </p>
+        </div>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="relative overflow-hidden rounded-3xl bg-accent/40 px-8 py-12 lg:px-12 lg:py-16">
+            {/* Soft brand blobs, no gradients */}
+            <div aria-hidden className="pointer-events-none absolute -top-10 right-10 h-40 w-40 rounded-full bg-primary/15 blur-3xl" />
+            <div aria-hidden className="pointer-events-none absolute bottom-0 right-32 h-32 w-32 rounded-full bg-secondary/25 blur-3xl" />
+            <h1 className="relative text-5xl md:text-6xl font-[900] tracking-tight leading-[1.05] text-primary">
+              Hello, {greeting}!
+            </h1>
+            <p className="relative mt-3 text-base md:text-lg text-primary/70 max-w-xl">
+              It's good to see you back. Take what you need from today.
+            </p>
+          </div>
         </div>
       </header>
 
-      <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
-        {/* ============ Stats Card (Headspace style) ============ */}
-        <Card className="border-0 bg-muted rounded-3xl mb-10">
+      <div className="max-w-6xl mx-auto px-6 pt-8">
+        {/* ============ Where You Are + Daily Quote row ============ */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+          {/* Where You Are, 2/3 */}
+          <Card className="lg:col-span-2 border-0 bg-card rounded-3xl">
+            <CardContent className="p-7">
+              <div className="flex items-start gap-4">
+                <div className="h-11 w-11 rounded-full bg-accent/60 flex items-center justify-center shrink-0">
+                  <MapPin className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-2">
+                    Where You Are
+                  </p>
+                  <p className="text-xl md:text-2xl font-[900] tracking-tight text-primary leading-snug">
+                    Stage {stageInfo.number}: <span className="text-primary">{stageInfo.name}</span>
+                  </p>
+                  <p className="mt-3 text-base leading-relaxed text-foreground/75">
+                    {STAGE_DESCRIPTIONS[user.stage]}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Daily Quote, 1/3 */}
+          <Card className="border-0 bg-secondary text-secondary-foreground rounded-3xl relative overflow-hidden">
+            <div aria-hidden className="pointer-events-none absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-secondary-foreground/10" />
+            <div aria-hidden className="pointer-events-none absolute top-8 right-6 h-16 w-16 rounded-full bg-secondary-foreground/5" />
+            <CardContent className="p-7 relative h-full flex flex-col">
+              <p className="text-xs uppercase tracking-[0.18em] font-bold opacity-80 mb-3">
+                Daily Quote
+              </p>
+              <Quote className="h-5 w-5 opacity-60 mb-2" />
+              <p className="text-lg md:text-xl font-[900] tracking-tight leading-snug flex-1">
+                "{dailyQuote}"
+              </p>
+              {nextBooking && (
+                <div className="mt-5 flex items-center gap-3">
+                  <div className="h-9 w-9 rounded-full bg-secondary-foreground/15 flex items-center justify-center text-sm font-bold shrink-0">
+                    {(nextBooking.coaches?.name || 'YA').split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()}
+                  </div>
+                  <div className="flex-1 min-w-0 text-xs leading-tight opacity-90">
+                    <div className="font-semibold truncate">
+                      {nextBooking.coaches?.name || 'Your coach'}
+                    </div>
+                    <div className="opacity-80">
+                      Next session: {new Date(nextBooking.scheduled_at).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => navigate('/app/coach')}
+                    className="rounded-full bg-secondary-foreground/20 hover:bg-secondary-foreground/30 transition-colors text-xs font-semibold px-4 py-1.5"
+                  >
+                    Open
+                  </button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* ============ Your Stats ============ */}
+        <Card className="border-0 bg-card rounded-3xl mb-10">
           <CardContent className="p-6">
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-muted-foreground mb-4">
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
               Your Stats
             </p>
-            <div className="space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <StatRow
                 icon={<BarChart3 className="h-5 w-5" />}
                 iconBg="bg-primary text-primary-foreground"
-                value={latestScore != null ? `${latestScore}%` : ', '}
+                value={latestScore != null ? `${latestScore}%` : '—'}
                 label="Latest complexity score"
                 trailing={
                   scoreDiff != null ? (
@@ -252,29 +305,17 @@ const MemberHome = () => {
               />
               <StatRow
                 icon={<Calendar className="h-5 w-5" />}
-                iconBg="bg-accent text-accent-foreground"
+                iconBg="bg-secondary text-secondary-foreground"
                 value={`${completedSessions}`}
                 label="Coaching sessions"
               />
               <StatRow
                 icon={<BookOpen className="h-5 w-5" />}
-                iconBg="bg-secondary text-secondary-foreground"
+                iconBg="bg-accent text-accent-foreground"
                 value={`${reflections.length}`}
                 label="Reflections journaled"
               />
             </div>
-          </CardContent>
-        </Card>
-
-        {/* ============ Where You Are ============ */}
-        <Card className="mb-10 border-0 bg-accent/40 rounded-3xl">
-          <CardContent className="p-6">
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-primary mb-2">
-              Where You Are
-            </p>
-            <p className="text-sm leading-relaxed text-foreground/80">
-              {STAGE_DESCRIPTIONS[user.stage]}
-            </p>
           </CardContent>
         </Card>
 
@@ -283,55 +324,11 @@ const MemberHome = () => {
           <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
             Your Month
           </p>
-          <Card className="border-0 bg-muted rounded-3xl">
+          <Card className="border-0 bg-card rounded-3xl">
             <CardContent className="p-6">
               <MiniCalendar />
             </CardContent>
           </Card>
-        </section>
-
-        {/* ============ Action Tiles (phone screenshot style) ============ */}
-        <section className="mb-10">
-          <p className="text-xs uppercase tracking-[0.18em] font-bold text-secondary mb-4">
-            My App
-          </p>
-          <div className="space-y-3">
-            <ActionTile
-              title="Cultural Companion"
-              subtitle="Compare 195 cultures"
-              icon={<Globe className="h-7 w-7" />}
-              tone="primary"
-              onClick={() => navigate('/app/cultural')}
-            />
-            <ActionTile
-              title="Settling-In Checklist"
-              subtitle="Your personal settling-in guide"
-              icon={<ClipboardCheck className="h-7 w-7" />}
-              tone="accent"
-              onClick={() => navigate('/app/settling-in')}
-            />
-            <ActionTile
-              title="My Coach"
-              subtitle="Sessions and notes"
-              icon={<Heart className="h-7 w-7" />}
-              tone="accent"
-              onClick={() => navigate('/app/coach')}
-            />
-            <ActionTile
-              title="Assessment"
-              subtitle="28-question diagnostic"
-              icon={<BarChart3 className="h-7 w-7" />}
-              tone="secondary"
-              onClick={() => navigate('/app/assessment')}
-            />
-            <ActionTile
-              title="Messages"
-              subtitle="Talk with your coach"
-              icon={<MessageCircle className="h-7 w-7" />}
-              tone="cream"
-              onClick={() => navigate('/app/messages')}
-            />
-          </div>
         </section>
 
         {/* ============ Focus Areas (Rooting In dimensions) ============ */}
