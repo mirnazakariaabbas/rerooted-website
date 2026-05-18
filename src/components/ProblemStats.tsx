@@ -72,7 +72,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
 
   const oneIn = useOneInCountdown(3, 1800, inView, 200);
   const stat42 = useCountUp(42, 1800, inView, 300);
-  const stat98 = useCountUp(98, 2000, inView, 400);
+  const stat98 = useCountUp(98, 2000, inView, 400, 90);
   const stat80 = useCountUp(80, 1800, inView, 500);
 
   // Tile types for the 3x2 grid
