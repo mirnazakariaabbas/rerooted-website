@@ -553,13 +553,13 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
             key={phase.id}
             phase={phase}
             items={grouped[phase.id]}
-            expanded={expanded === phase.id}
-            onExpand={() => setExpanded(expanded === phase.id ? null : phase.id)}
+            expanded={expanded.has(phase.id)}
+            onExpand={() => toggleExpanded(phase.id)}
             onChange={onChange}
             onCompleted={markLingering}
             onAdvance={() => {
               const idx = PHASES.findIndex(p => p.id === phase.id);
-              if (idx < PHASES.length - 1) setExpanded(PHASES[idx + 1].id);
+              if (idx < PHASES.length - 1) setExpanded(prev => new Set(prev).add(PHASES[idx + 1].id));
             }}
           />
         ))}
