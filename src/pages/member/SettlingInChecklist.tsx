@@ -135,7 +135,7 @@ const SettlingInChecklist = () => {
 
   return (
     <>
-      <PageHeader title="Settling In" subtitle="Your personal guide to making this place home" />
+      <PageHeader eyebrow={false} title="Settling In" subtitle="Your personal guide to making this place home" />
       <div className="max-w-2xl mx-auto px-6 -mt-10 relative pb-24">
         {prefsLoading || itemsLoading ? (
           <Card className="border-0 bg-card rounded-3xl">
