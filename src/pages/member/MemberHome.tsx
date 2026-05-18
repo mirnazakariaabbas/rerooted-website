@@ -6,7 +6,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { STAGE_LABELS } from '@/types/user';
-import { STAGE_DESCRIPTIONS, ROOTING_IN_DIMENSIONS, WEEKLY_PROMPTS } from '@/data/coaching-content';
+import { STAGE_DESCRIPTIONS, ROOTING_IN_DIMENSIONS, WEEKLY_PROMPTS, getDailyQuote } from '@/data/coaching-content';
+import { getPriorityDimensions } from '@/data/assessment-questions';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -20,12 +21,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { toast } from 'sonner';
-import { BookMarked, Star, Pencil, Trash2, Share2, Check, X } from 'lucide-react';
+import { BookMarked, Star, Pencil, Trash2, Share2, Check, X, MapPin, Quote } from 'lucide-react';
 
 import { differenceInMonths } from 'date-fns';
 import {
-  ArrowRight, Globe, BarChart3, Heart, BookOpen, Calendar,
-  MessageCircle, ClipboardCheck,
+  ArrowRight, BarChart3, Calendar, BookOpen,
 } from 'lucide-react';
 import DimensionDetail from '@/components/home/DimensionDetail';
 import MiniCalendar from '@/components/home/MiniCalendar';
