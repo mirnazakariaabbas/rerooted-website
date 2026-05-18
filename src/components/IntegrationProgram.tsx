@@ -213,7 +213,7 @@ const IntegrationProgram = () => {
               whiteSpace: "nowrap",
             }}
           >
-            The Re-Rooted® Program
+            ​​
           </div>
           <h2
             className="font-display"
