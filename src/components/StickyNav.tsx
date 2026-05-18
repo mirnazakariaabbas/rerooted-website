@@ -89,15 +89,22 @@ const StickyNav = () => {
     setMobileOpen(false);
     if (link.type === "route") {
       navigate(link.href);
+      return;
+    }
+    // hash link: ensure gate is dismissed, then scroll
+    if (gateOpen) setGateOpen(false);
+    const scrollToHash = () => {
+      const el = document.querySelector(link.href);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    if (isHomePage) {
+      // small delay in case gate is closing
+      requestAnimationFrame(() => setTimeout(scrollToHash, gateOpen ? 100 : 0));
     } else {
-      if (isHomePage) {
-        const el = document.querySelector(link.href);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-      } else {
-        navigate("/" + link.href);
-      }
+      navigate("/" + link.href);
     }
   };
+
 
   // Single scroll listener: drives .solid and .on-blue via React state.
   useEffect(() => {
