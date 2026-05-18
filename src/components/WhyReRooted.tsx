@@ -23,6 +23,7 @@ export function WhyReRootedStatement() {
   return (
     <section
       id="why-rerooted"
+      data-dark="1"
       className="relative overflow-hidden"
       style={{
         background: "#FAF9F6",
@@ -38,7 +39,7 @@ export function WhyReRootedStatement() {
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
           paddingRight: "clamp(28px, 4vw, 56px)",
-          paddingTop: "clamp(64px, 9vh, 96px)",
+          paddingTop: "clamp(160px, 18vh, 220px)",
           paddingBottom: "clamp(48px, 8vh, 80px)",
           fontFamily: '"DM Sans", sans-serif',
         }}
