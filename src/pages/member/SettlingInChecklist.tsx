@@ -66,7 +66,7 @@ interface Preferences {
 }
 
 type Tone = 'primary' | 'accent' | 'secondary' | 'cream';
-const PHASES: { id: Phase; name: string; icon: typeof Sprout; description: string; tone: Tone }[] = [
+const PHASES: { id: Phase; name: string; icon: React.ComponentType<any>; description: string; tone: Tone }[] = [
   { id: 'my-tasks', name: 'My Tasks', icon: ListChecks, description: 'Tasks you\'ve added. Drag any of them into the buckets below.', tone: 'cream' },
   { id: 'laying-the-ground', name: 'Laying the Ground', icon: Sprout, description: 'The essentials. Get these sorted and everything else gets easier.', tone: 'primary' },
   { id: 'tending-the-garden', name: 'Tending the Garden', icon: Leaf, description: 'Daily life is taking shape. These are the things that make it feel like yours.', tone: 'accent' },
