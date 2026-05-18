@@ -165,7 +165,7 @@ const AuditLogPage = () => {
                   </TableCell>
                   <TableCell>
                     <div>
-                      <p className="text-sm font-medium">{e.user_name || '—'}</p>
+                      <p className="text-sm font-medium">{e.user_name || ', '}</p>
                       {e.user_role && <p className="text-xs text-muted-foreground capitalize">{e.user_role}</p>}
                     </div>
                   </TableCell>
@@ -174,9 +174,9 @@ const AuditLogPage = () => {
                       {e.action_type}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-sm">{e.section || '—'}</TableCell>
-                  <TableCell className="text-sm max-w-[200px] truncate">{e.record_name || '—'}</TableCell>
-                  <TableCell className="text-xs text-muted-foreground font-mono">{e.ip_address || '—'}</TableCell>
+                  <TableCell className="text-sm">{e.section || ', '}</TableCell>
+                  <TableCell className="text-sm max-w-[200px] truncate">{e.record_name || ', '}</TableCell>
+                  <TableCell className="text-xs text-muted-foreground font-mono">{e.ip_address || ', '}</TableCell>
                 </TableRow>
               ))
             )}

@@ -36,7 +36,7 @@ const SecurityMetricsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Total Logins</p>
-                <p className="text-3xl font-display font-black text-foreground mt-1">—</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">, </p>
                 <p className="text-xs text-muted-foreground mt-1">Data collection starting</p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -51,7 +51,7 @@ const SecurityMetricsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Unique Users</p>
-                <p className="text-3xl font-display font-black text-foreground mt-1">—</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">, </p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-success/10 flex items-center justify-center">
                 <Shield className="h-5 w-5 text-success" />
@@ -65,7 +65,7 @@ const SecurityMetricsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Failed Logins</p>
-                <p className="text-3xl font-display font-black text-foreground mt-1">—</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">, </p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-destructive/10 flex items-center justify-center">
                 <AlertTriangle className="h-5 w-5 text-destructive" />
@@ -96,7 +96,7 @@ const SecurityMetricsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Password Resets</p>
-                <p className="text-3xl font-display font-black text-foreground mt-1">—</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">, </p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-accent/30 flex items-center justify-center">
                 <Key className="h-5 w-5 text-accent-foreground" />
@@ -110,7 +110,7 @@ const SecurityMetricsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">New Admin Accounts</p>
-                <p className="text-3xl font-display font-black text-foreground mt-1">—</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">, </p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
                 <Shield className="h-5 w-5 text-primary" />
@@ -124,7 +124,7 @@ const SecurityMetricsPage = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-muted-foreground font-medium">Avg Session Duration</p>
-                <p className="text-3xl font-display font-black text-foreground mt-1">—</p>
+                <p className="text-3xl font-display font-black text-foreground mt-1">, </p>
               </div>
               <div className="h-10 w-10 rounded-xl bg-success/10 flex items-center justify-center">
                 <Timer className="h-5 w-5 text-success" />

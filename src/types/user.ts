@@ -58,7 +58,7 @@ export const STAGE_LABELS: Record<JourneyStage, { name: string; tagline: string;
   'pre-rooted': { name: 'Pre-Rooted', tagline: "Should I go or should I stay!", number: 1 },
   'rooting-in': { name: 'Rooting In', tagline: "Landing in a new country and I want to make it home!", number: 2 },
   'thrive': { name: 'Thrive', tagline: "I've been here 2+ years, settled and ready to take off!", number: 3 },
-  'rooting-back': { name: 'Rooting Back', tagline: "Going back home — managing reverse culture shock", number: 4 },
+  'rooting-back': { name: 'Rooting Back', tagline: "Going back home, managing reverse culture shock", number: 4 },
 };
 
 export function calculateStage(arrivalDate: string, isReturning: boolean): JourneyStage {

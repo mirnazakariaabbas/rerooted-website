@@ -13,7 +13,7 @@ const AboutSection = () => {
   return (
     <section id="about" className={`px-6 lg:px-12 ${isIndividual ? "py-32" : "py-28"}`} style={{ background: "#1F299C" }}>
       <div className="max-w-6xl mx-auto">
-        {/* Top-left section eyebrow header — aligned with previous section */}
+        {/* Top-left section eyebrow header, aligned with previous section */}
         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] mb-16 md:mb-20" style={{ color: "#3DA776" }}>
           Meet the Re-Rooted® founder
         </p>
@@ -22,7 +22,7 @@ const AboutSection = () => {
           ref={ref}
           className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
         >
-        {/* Left — Photo placeholder */}
+        {/* Left, Photo placeholder */}
         <motion.div
           className="aspect-[3/4] w-full max-w-md mx-auto md:mx-0 rounded-2xl overflow-hidden"
           initial={{ opacity: 0, x: -60 }}
@@ -38,7 +38,7 @@ const AboutSection = () => {
           />
         </motion.div>
 
-        {/* Right — Text */}
+        {/* Right, Text */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -64,7 +64,7 @@ const AboutSection = () => {
             {isIndividual ? (
               <>
                 <p>
-                  I'm Yasser Abbas — an Egyptian expat who has spent close to two decades living
+                  I'm Yasser Abbas, an Egyptian expat who has spent close to two decades living
                   across Saudi Arabia, Dubai, and Switzerland. I know the loneliness, the identity
                   questions, the invisible weight of starting over in a place that doesn't know your name.
                 </p>
@@ -76,7 +76,7 @@ const AboutSection = () => {
                 </p>
                 <p>
                   Today, <strong>Re-Rooted®</strong> connects you with coaches who've walked this
-                  path — people with local knowledge and lived experience, not just textbook answers.
+                  path, people with local knowledge and lived experience, not just textbook answers.
                 </p>
               </>
             ) : (

@@ -117,7 +117,7 @@ const Auth = () => {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-md w-full -mt-16"
       >
-        {/* Logo + Slogan group — pushed upward */}
+        {/* Logo + Slogan group, pushed upward */}
         <div className="text-center">
           <button onClick={() => navigate("/")} className="cursor-pointer mx-auto block">
             <img src={logoWhite} alt="Re-Rooted®" className="mx-auto h-40 w-auto object-contain md:h-52" />
@@ -130,7 +130,7 @@ const Auth = () => {
           </p>
         </div>
 
-        {/* Welcome text + form — separated */}
+        {/* Welcome text + form, separated */}
         <div className="mt-10 text-center">
           <h1 className="text-2xl font-bold text-primary-foreground">
             {mode === "signin" ? "Welcome back" : mode === "signup" ? "Request access" : "Reset password"}

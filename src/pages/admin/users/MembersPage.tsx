@@ -144,12 +144,12 @@ const MembersPage = () => {
             ) : (
               filtered.map(p => (
                 <TableRow key={p.id} className="cursor-pointer" onClick={() => setDrawerProfile(p)}>
-                  <TableCell className="font-medium">{p.full_name || '—'}</TableCell>
+                  <TableCell className="font-medium">{p.full_name || ', '}</TableCell>
                   <TableCell>
                     <Badge className={`text-xs ${statusColor[p.approval_status] || ''}`}>{p.approval_status}</Badge>
                   </TableCell>
-                  <TableCell className="text-sm">{assignments[p.id]?.coachName || '—'}</TableCell>
-                  <TableCell className="text-sm capitalize">{p.stage?.replace(/-/g, ' ') || '—'}</TableCell>
+                  <TableCell className="text-sm">{assignments[p.id]?.coachName || ', '}</TableCell>
+                  <TableCell className="text-sm capitalize">{p.stage?.replace(/-/g, ' ') || ', '}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{format(new Date(p.created_at), 'dd MMM yyyy')}</TableCell>
                   <TableCell>
                     <div className="flex gap-1" onClick={e => e.stopPropagation()}>
@@ -198,10 +198,10 @@ const MembersPage = () => {
                 </TabsList>
                 <TabsContent value="profile" className="space-y-4">
                   <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div><span className="text-muted-foreground block">Stage</span><span className="capitalize">{drawerProfile.stage?.replace(/-/g, ' ') || '—'}</span></div>
-                    <div><span className="text-muted-foreground block">From</span>{drawerProfile.country_from || '—'}</div>
-                    <div><span className="text-muted-foreground block">To</span>{drawerProfile.country_to || '—'}</div>
-                    <div><span className="text-muted-foreground block">Family</span>{drawerProfile.family_setup || '—'}</div>
+                    <div><span className="text-muted-foreground block">Stage</span><span className="capitalize">{drawerProfile.stage?.replace(/-/g, ' ') || ', '}</span></div>
+                    <div><span className="text-muted-foreground block">From</span>{drawerProfile.country_from || ', '}</div>
+                    <div><span className="text-muted-foreground block">To</span>{drawerProfile.country_to || ', '}</div>
+                    <div><span className="text-muted-foreground block">Family</span>{drawerProfile.family_setup || ', '}</div>
                     <div><span className="text-muted-foreground block">Joined</span>{format(new Date(drawerProfile.created_at), 'dd MMM yyyy')}</div>
                   </div>
                 </TabsContent>

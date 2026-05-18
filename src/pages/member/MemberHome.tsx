@@ -202,7 +202,7 @@ const MemberHome = () => {
               <StatRow
                 icon={<BarChart3 className="h-5 w-5" />}
                 iconBg="bg-primary text-primary-foreground"
-                value={latestScore != null ? `${latestScore}%` : '—'}
+                value={latestScore != null ? `${latestScore}%` : ', '}
                 label="Latest complexity score"
                 trailing={
                   scoreDiff != null ? (

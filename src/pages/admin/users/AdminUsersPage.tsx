@@ -244,8 +244,8 @@ const AdminUsersPage = () => {
                 ) : (
                   requests.map(r => (
                     <TableRow key={r.id}>
-                      <TableCell className="font-medium">{r.user_name || '—'}</TableCell>
-                      <TableCell className="text-sm">{r.user_email || '—'}</TableCell>
+                      <TableCell className="font-medium">{r.user_name || ', '}</TableCell>
+                      <TableCell className="text-sm">{r.user_email || ', '}</TableCell>
                       <TableCell>
                         <Badge variant="outline" className="text-xs capitalize">{r.requested_role}</Badge>
                       </TableCell>
@@ -303,16 +303,16 @@ const AdminUsersPage = () => {
                 ) : (
                   history.map(h => (
                     <TableRow key={h.id}>
-                      <TableCell className="font-medium">{h.user_name || '—'}</TableCell>
-                      <TableCell className="text-sm">{h.user_email || '—'}</TableCell>
+                      <TableCell className="font-medium">{h.user_name || ', '}</TableCell>
+                      <TableCell className="text-sm">{h.user_email || ', '}</TableCell>
                       <TableCell>
                         <Badge className={`text-xs ${h.status === 'approved' ? 'bg-success/15 text-success' : 'bg-destructive/15 text-destructive'}`}>
                           {h.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">{h.review_reason || '—'}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">{h.review_reason || ', '}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">
-                        {h.reviewed_at ? format(new Date(h.reviewed_at), 'dd MMM yyyy') : '—'}
+                        {h.reviewed_at ? format(new Date(h.reviewed_at), 'dd MMM yyyy') : ', '}
                       </TableCell>
                     </TableRow>
                   ))

@@ -136,7 +136,7 @@ export default function TestimonialsPage() {
                 <TableRow key={t.id}>
                   <TableCell className="text-muted-foreground"><GripVertical className="h-4 w-4" /></TableCell>
                   <TableCell className="font-medium">{t.client_name}</TableCell>
-                  <TableCell className="text-muted-foreground">{t.company || '—'}</TableCell>
+                  <TableCell className="text-muted-foreground">{t.company || ', '}</TableCell>
                   <TableCell>
                     <div className="flex gap-0.5">
                       {Array.from({ length: t.rating }).map((_, i) => (

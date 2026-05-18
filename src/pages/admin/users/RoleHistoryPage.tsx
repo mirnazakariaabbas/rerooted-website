@@ -119,7 +119,7 @@ const RoleHistoryPage = () => {
                   </TableCell>
                   <TableCell>
                     <div>
-                      <p className="text-sm font-medium">{e.user_name || '—'}</p>
+                      <p className="text-sm font-medium">{e.user_name || ', '}</p>
                       <p className="text-xs text-muted-foreground">{e.user_email || ''}</p>
                     </div>
                   </TableCell>
@@ -138,8 +138,8 @@ const RoleHistoryPage = () => {
                       </Badge>
                     </div>
                   </TableCell>
-                  <TableCell className="text-sm">{e.changed_by_name || '—'}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">{e.reason || '—'}</TableCell>
+                  <TableCell className="text-sm">{e.changed_by_name || ', '}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">{e.reason || ', '}</TableCell>
                 </TableRow>
               ))
             )}

@@ -236,7 +236,7 @@ export default function MarketingAnalyticsPage() {
                 <tbody>
                   {sentNewsletters.slice(0, 10).map((n, i) => (
                     <tr key={i} className="border-b border-border last:border-0">
-                      <td className="py-2 text-foreground">{n.sent_at ? new Date(n.sent_at).toLocaleDateString() : '—'}</td>
+                      <td className="py-2 text-foreground">{n.sent_at ? new Date(n.sent_at).toLocaleDateString() : ', '}</td>
                       <td className="py-2 text-right text-foreground">{n.recipient_count || 0}</td>
                       <td className="py-2 text-right text-foreground">{n.open_count || 0}</td>
                       <td className="py-2 text-right text-foreground">{n.click_count || 0}</td>

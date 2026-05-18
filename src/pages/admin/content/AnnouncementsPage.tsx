@@ -193,7 +193,7 @@ export default function AnnouncementsPage() {
                   <TableRow key={g.id}>
                     <TableCell className="font-medium">{g.name}</TableCell>
                     <TableCell><Badge variant="outline" className="capitalize">{g.group_type}</Badge></TableCell>
-                    <TableCell className="text-muted-foreground text-sm max-w-[200px] truncate">{g.description || '—'}</TableCell>
+                    <TableCell className="text-muted-foreground text-sm max-w-[200px] truncate">{g.description || ', '}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
                         <Button variant="ghost" size="icon" onClick={() => { setEditingGrp(g); setGrpForm({ name: g.name, description: g.description || '', group_type: g.group_type }); setGrpSheet(true); }}><Pencil className="h-4 w-4" /></Button>

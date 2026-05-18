@@ -180,7 +180,7 @@ export default function BlogManagerPage() {
               ) : posts.map(post => (
                 <TableRow key={post.id}>
                   <TableCell className="font-medium">{post.title}</TableCell>
-                  <TableCell><Badge variant="outline">{post.category || '—'}</Badge></TableCell>
+                  <TableCell><Badge variant="outline">{post.category || ', '}</Badge></TableCell>
                   <TableCell>
                     <Badge variant={post.status === 'published' ? 'default' : 'secondary'}>{post.status}</Badge>
                   </TableCell>

@@ -678,7 +678,7 @@ const PhaseDroppableList = ({
   onCompleted: (id: string) => void;
   isMyTasks: boolean;
 }) => {
-  // Sortable context needs the phase id as a droppable target too — we register the phase id
+  // Sortable context needs the phase id as a droppable target too, we register the phase id
   // as a sentinel item so empty containers still accept drops.
   const ids = items.map(i => i.id);
   // Add the phase id itself as a droppable id by giving SortableContext the phase id as a fallback
@@ -700,7 +700,7 @@ const PhaseDroppableList = ({
   );
 };
 
-// Empty drop zone — registered as a droppable using the phase id so DndKit can target it.
+// Empty drop zone, registered as a droppable using the phase id so DndKit can target it.
 import { useDroppable } from '@dnd-kit/core';
 const EmptyDroppable = ({ phaseId, isMyTasks }: { phaseId: Phase; isMyTasks: boolean }) => {
   const { setNodeRef, isOver } = useDroppable({ id: phaseId });

@@ -36,7 +36,7 @@ const defaultTemplates: EmailTemplate[] = [
   },
   {
     id: '3', name: 'Contact Form (Organization)', trigger: 'Organization contact form submission',
-    subject: 'Re-Rooted® — Your inquiry has been received',
+    subject: 'Re-Rooted®, Your inquiry has been received',
     body: 'Dear {{name}},\n\nThank you for your interest in Re-Rooted® corporate programs. A member of our team will be in touch shortly.\n\nBest regards,\nRe-Rooted® Team',
     isActive: true, variables: ['name', 'company_name', 'email'],
   },
@@ -48,25 +48,25 @@ const defaultTemplates: EmailTemplate[] = [
   },
   {
     id: '5', name: 'Coach Match Request', trigger: 'Admin matches coach with member',
-    subject: 'New coaching opportunity — {{coachee_name}}',
+    subject: 'New coaching opportunity, {{coachee_name}}',
     body: 'Dear {{coach_name}},\n\nYou\'ve been matched with a new coachee:\n\nName: {{coachee_name}}\nJourney Stage: {{journey_stage}}\n\nPlease respond with your availability.\n\nBest,\nRe-Rooted® Team',
     isActive: true, variables: ['coach_name', 'coachee_name', 'journey_stage'],
   },
   {
-    id: '6', name: 'Match Confirmed — Coach', trigger: 'Admin confirms match after coach accepts',
+    id: '6', name: 'Match Confirmed, Coach', trigger: 'Admin confirms match after coach accepts',
     subject: 'Match confirmed with {{coachee_name}}',
     body: 'Dear {{coach_name}},\n\nYour match with {{coachee_name}} has been confirmed. You can now schedule your first session.\n\nBest,\nRe-Rooted® Team',
     isActive: false, variables: ['coach_name', 'coachee_name'],
   },
   {
-    id: '7', name: 'Match Confirmed — Member', trigger: 'Admin confirms match',
+    id: '7', name: 'Match Confirmed, Member', trigger: 'Admin confirms match',
     subject: 'Your coach is ready, {{first_name}}!',
     body: 'Dear {{first_name}},\n\nGreat news! You\'ve been matched with {{coach_name}}. Visit the app to book your first session.\n\nBest,\nRe-Rooted® Team',
     isActive: false, variables: ['first_name', 'coach_name'],
   },
   {
     id: '8', name: 'Admin Access Approved', trigger: 'New admin approved',
-    subject: 'Admin access granted — Re-Rooted®',
+    subject: 'Admin access granted, Re-Rooted®',
     body: 'Dear {{admin_name}},\n\nYour admin access has been approved. You can now log in to the admin dashboard.\n\nBest,\nRe-Rooted® Team',
     isActive: true, variables: ['admin_name'],
   },

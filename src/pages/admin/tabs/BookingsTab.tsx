@@ -65,8 +65,8 @@ const BookingsTab = () => {
         <TableBody>
           {bookings.map(b => (
             <TableRow key={b.id}>
-              <TableCell className="font-medium">{b.profiles?.full_name || '—'}</TableCell>
-              <TableCell>{b.coaches?.name || '—'}</TableCell>
+              <TableCell className="font-medium">{b.profiles?.full_name || ', '}</TableCell>
+              <TableCell>{b.coaches?.name || ', '}</TableCell>
               <TableCell className="text-sm">{format(new Date(b.scheduled_at), 'MMM d, yyyy HH:mm')}</TableCell>
               <TableCell className="text-sm">{b.duration_minutes}m</TableCell>
               <TableCell><Badge variant={statusColor(b.status)} className="text-xs">{b.status}</Badge></TableCell>

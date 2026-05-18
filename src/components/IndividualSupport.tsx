@@ -7,14 +7,14 @@ const cards = [
     icon: Heart,
     title: "A coach who gets it",
     description:
-      "Someone who's lived the expat experience — not just studied it. Your coach helps you navigate the emotional side of relocation: identity, belonging, loneliness, and building a life that feels like yours.",
+      "Someone who's lived the expat experience, not just studied it. Your coach helps you navigate the emotional side of relocation: identity, belonging, loneliness, and building a life that feels like yours.",
     cta: { label: "Find your coach →", href: "#contact" },
   },
   {
     icon: Smartphone,
     title: "Your new country, side by side with home",
     description:
-      "A companion app that helps you settle in — from cultural tips and local know-how to daily check-ins and guided reflections. Think of it as a friend who already lives where you're going.",
+      "A companion app that helps you settle in, from cultural tips and local know-how to daily check-ins and guided reflections. Think of it as a friend who already lives where you're going.",
     cta: { label: "Explore the app →", href: "#contact" },
   },
 ];

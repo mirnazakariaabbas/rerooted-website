@@ -96,11 +96,11 @@ const UsersTab = () => {
           <TableBody>
             {profiles.map(p => (
               <TableRow key={p.id}>
-                <TableCell className="font-medium">{p.full_name || '—'}</TableCell>
+                <TableCell className="font-medium">{p.full_name || ', '}</TableCell>
                 <TableCell><Badge variant="outline" className="text-xs">{p.user_type}</Badge></TableCell>
                 <TableCell><Badge variant={statusColor(p.approval_status)} className="text-xs">{p.approval_status}</Badge></TableCell>
-                <TableCell className="text-sm">{assignments[p.id]?.coachName || '—'}</TableCell>
-                <TableCell className="text-sm text-muted-foreground">{p.stage || '—'}</TableCell>
+                <TableCell className="text-sm">{assignments[p.id]?.coachName || ', '}</TableCell>
+                <TableCell className="text-sm text-muted-foreground">{p.stage || ', '}</TableCell>
                 <TableCell>
                   <div className="flex gap-1">
                     {p.approval_status === 'pending' && (

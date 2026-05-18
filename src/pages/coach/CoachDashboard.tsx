@@ -131,10 +131,10 @@ const CoacheesTab = ({ coachId }: { coachId: string }) => {
           <TableBody>
             {coachees.map(c => (
               <TableRow key={c.id}>
-                <TableCell className="font-medium">{c.full_name || '—'}</TableCell>
+                <TableCell className="font-medium">{c.full_name || ', '}</TableCell>
                 <TableCell className="text-sm">{c.country_from || '?'} → {c.country_to || '?'}</TableCell>
-                <TableCell><Badge variant="secondary" className="text-xs">{c.stage || '—'}</Badge></TableCell>
-                <TableCell className="text-sm">{c.score != null ? `${c.score}%` : '—'}</TableCell>
+                <TableCell><Badge variant="secondary" className="text-xs">{c.stage || ', '}</Badge></TableCell>
+                <TableCell className="text-sm">{c.score != null ? `${c.score}%` : ', '}</TableCell>
                 <TableCell>
                   <AddNoteDialog coachId={coachId} coacheeId={c.id} coacheeName={c.full_name || 'Unknown'} />
                 </TableCell>
@@ -206,7 +206,7 @@ const JournalTab = ({ coachId }: { coachId: string }) => {
               <span className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleDateString()}</span>
             </div>
             <p className="text-sm font-medium text-primary mb-1">{r.prompt}</p>
-            <p className="text-sm text-foreground/80">{r.response || '—'}</p>
+            <p className="text-sm text-foreground/80">{r.response || ', '}</p>
           </CardContent>
         </Card>
       ))}

@@ -110,8 +110,8 @@ const OrganizationsPage = () => {
               orgs.map(o => (
                 <TableRow key={o.id} className="cursor-pointer" onClick={() => setDrawerOrg(o)}>
                   <TableCell className="font-medium">{o.name}</TableCell>
-                  <TableCell className="text-sm">{o.industry || '—'}</TableCell>
-                  <TableCell className="text-sm">{o.country || '—'}</TableCell>
+                  <TableCell className="text-sm">{o.industry || ', '}</TableCell>
+                  <TableCell className="text-sm">{o.country || ', '}</TableCell>
                   <TableCell><Badge className="text-xs bg-success/15 text-success">{o.status}</Badge></TableCell>
                   <TableCell className="text-sm text-muted-foreground">{format(new Date(o.created_at), 'dd MMM yyyy')}</TableCell>
                   <TableCell>
@@ -153,11 +153,11 @@ const OrganizationsPage = () => {
                 <SheetTitle className="text-xl font-display font-black">{drawerOrg.name}</SheetTitle>
               </SheetHeader>
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div><span className="text-muted-foreground block">Industry</span>{drawerOrg.industry || '—'}</div>
-                <div><span className="text-muted-foreground block">Country</span>{drawerOrg.country || '—'}</div>
-                <div><span className="text-muted-foreground block">Website</span>{drawerOrg.website || '—'}</div>
+                <div><span className="text-muted-foreground block">Industry</span>{drawerOrg.industry || ', '}</div>
+                <div><span className="text-muted-foreground block">Country</span>{drawerOrg.country || ', '}</div>
+                <div><span className="text-muted-foreground block">Website</span>{drawerOrg.website || ', '}</div>
                 <div><span className="text-muted-foreground block">Status</span>{drawerOrg.status}</div>
-                <div className="col-span-2"><span className="text-muted-foreground block">Notes</span>{drawerOrg.notes || '—'}</div>
+                <div className="col-span-2"><span className="text-muted-foreground block">Notes</span>{drawerOrg.notes || ', '}</div>
               </div>
             </>
           )}

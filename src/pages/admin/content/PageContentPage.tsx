@@ -23,8 +23,8 @@ interface PageContentRow {
 }
 
 const SECTIONS = [
-  { page_key: 'home', section_key: 'hero_corporate', label: 'Hero — Corporate', description: 'Headlines and body text for corporate visitors' },
-  { page_key: 'home', section_key: 'hero_individual', label: 'Hero — Individual', description: 'Headlines and body text for individual visitors' },
+  { page_key: 'home', section_key: 'hero_corporate', label: 'Hero, Corporate', description: 'Headlines and body text for corporate visitors' },
+  { page_key: 'home', section_key: 'hero_individual', label: 'Hero, Individual', description: 'Headlines and body text for individual visitors' },
   { page_key: 'home', section_key: 'about', label: 'About Section', description: 'About section heading and body copy' },
   { page_key: 'home', section_key: 'cta', label: 'Call to Action', description: 'Bottom CTA heading and button text' },
 ];

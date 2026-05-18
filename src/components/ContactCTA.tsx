@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { useAudience } from "@/contexts/AudienceContext";
 
 const journeyStages = [
-  "Pre-Rooted — preparing to move",
-  "Re-Rooted — just arrived",
-  "Thriving — settling in",
-  "Rooting Back — giving back or returning",
+  "Pre-Rooted, preparing to move",
+  "Re-Rooted, just arrived",
+  "Thriving, settling in",
+  "Rooting Back, giving back or returning",
 ];
 
 const ContactCTA = () => {
