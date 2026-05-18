@@ -11,7 +11,7 @@ const sections = [
         <p className="mt-3">Data Controller:<br />
         <strong>Re-Rooted®</strong><br />
         Zug, Switzerland<br />
-        Email: hello@rerooted.com</p>
+        Email: hello@rerooted.ch</p>
         <p className="mt-3">This privacy policy explains how we collect, use, store, and protect your personal data when you visit our website, use our services, or interact with us. This policy is designed to comply with the Swiss Federal Act on Data Protection (FADP) and, where applicable, the EU General Data Protection Regulation (GDPR).</p>
       </>
     ),
@@ -119,7 +119,7 @@ const sections = [
           <li><strong>Right to object:</strong> You can object to processing based on our legitimate interests.</li>
           <li><strong>Right to withdraw consent:</strong> Where processing is based on your consent, you can withdraw it at any time.</li>
         </ul>
-        <p className="mt-3">To exercise any of these rights, please contact us at: hello@rerooted.com</p>
+        <p className="mt-3">To exercise any of these rights, please contact us at: hello@rerooted.ch</p>
       </>
     ),
   },
@@ -150,10 +150,10 @@ const sections = [
         </ul>
         <h4 className="mt-4 font-bold text-foreground">Parental rights:</h4>
         <ul className="mt-2 list-disc pl-6 space-y-2">
-          <li>Parents or legal guardians may request access to, correction of, or deletion of their children's data at any time by contacting us at hello@rerooted.com.</li>
+          <li>Parents or legal guardians may request access to, correction of, or deletion of their children's data at any time by contacting us at hello@rerooted.ch.</li>
           <li>If a parent or guardian withdraws consent for the processing of their child's data, we will promptly delete all related information, except where retention is required by law.</li>
         </ul>
-        <p className="mt-3">If you believe that data about a child has been collected without proper parental consent, please contact us immediately at hello@rerooted.com and we will take prompt action to investigate and delete the data if appropriate.</p>
+        <p className="mt-3">If you believe that data about a child has been collected without proper parental consent, please contact us immediately at hello@rerooted.ch and we will take prompt action to investigate and delete the data if appropriate.</p>
       </>
     ),
   },
@@ -169,7 +169,7 @@ const sections = [
       <p>If you have any questions about this privacy policy or our data practices, please contact:<br /><br />
       <strong>Re-Rooted®</strong><br />
       Zug, Switzerland<br />
-      Email: hello@rerooted.com</p>
+      Email: hello@rerooted.ch</p>
     ),
   },
 ];

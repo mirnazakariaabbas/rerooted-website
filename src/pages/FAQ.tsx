@@ -57,7 +57,7 @@ const faqData: FaqGroup[] = [
   {
     heading: "Contact",
     items: [
-      { q: "How do I get in touch with Re-Rooted®?", a: "You can reach us at hello@rerooted.com. We are based in Zug, Switzerland, and work with organizations and individuals globally." },
+      { q: "How do I get in touch with Re-Rooted®?", a: "You can reach us at hello@rerooted.ch. We are based in Zug, Switzerland, and work with organizations and individuals globally." },
     ],
   },
 ];
