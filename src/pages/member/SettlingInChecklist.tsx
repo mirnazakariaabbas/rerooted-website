@@ -575,8 +575,8 @@ const ChecklistView = ({ items, onChange }: { items: ChecklistItemRow[]; onChang
 
       <AccomplishmentsSection
         items={accomplishments}
-        expanded={expanded === 'accomplishments'}
-        onExpand={() => setExpanded(expanded === 'accomplishments' ? null : 'accomplishments')}
+        expanded={expanded.has('accomplishments')}
+        onExpand={() => toggleExpanded('accomplishments')}
         onChange={onChange}
       />
 
