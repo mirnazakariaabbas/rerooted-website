@@ -12,7 +12,8 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ChevronDown, GripVertical, Plus, ListChecks } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { ChevronDown, GripVertical, Plus, ListChecks, Pencil, Trash2 } from 'lucide-react';
 import {
   SproutMark as Sprout,
   LeafMark as Leaf,
@@ -811,6 +812,11 @@ const ItemRow = ({ item, onChange, onCompleted, dragHandleProps }: { item: Check
   const qc = useQueryClient();
   const [reward, setReward] = useState<string | null>(null);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(item.title);
+  const [editDescription, setEditDescription] = useState(item.description || '');
+  const [editCompleted, setEditCompleted] = useState(item.is_completed);
+  const [saving, setSaving] = useState(false);
   const recentRef = useRef<string[]>([]);
   const timeoutRef = useRef<number | null>(null);
 
@@ -862,6 +868,50 @@ const ItemRow = ({ item, onChange, onCompleted, dragHandleProps }: { item: Check
     toast.success('Added to your calendar');
   };
 
+  const openEdit = () => {
+    setEditTitle(item.title);
+    setEditDescription(item.description || '');
+    setEditCompleted(item.is_completed);
+    setEditing(true);
+  };
+
+  const saveEdit = async () => {
+    if (!editTitle.trim()) return;
+    setSaving(true);
+    try {
+      await (supabase as any)
+        .from('checklist_items')
+        .update({
+          title: editTitle.trim(),
+          description: editDescription.trim() || null,
+          is_completed: editCompleted,
+          completed_at: editCompleted ? (item.is_completed ? undefined : new Date().toISOString()) : null,
+        })
+        .eq('id', item.id);
+      qc.invalidateQueries({ queryKey: ['checklist-items', authUser?.id] });
+      setEditing(false);
+      onChange();
+      toast.success('Task updated');
+    } catch (e) {
+      toast.error('Could not update task');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const deleteItem = async () => {
+    if (!window.confirm('Delete this task?')) return;
+    try {
+      await (supabase as any).from('checklist_items').delete().eq('id', item.id);
+      qc.invalidateQueries({ queryKey: ['checklist-items', authUser?.id] });
+      setEditing(false);
+      onChange();
+      toast.success('Task deleted');
+    } catch (e) {
+      toast.error('Could not delete task');
+    }
+  };
+
   return (
     <motion.div
       layout
@@ -870,54 +920,114 @@ const ItemRow = ({ item, onChange, onCompleted, dragHandleProps }: { item: Check
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       style={{ overflow: 'hidden' }}
     >
-      <div
-        className={`flex items-start gap-2 p-3 rounded-2xl transition-all duration-300 hover:bg-muted/30 ${
-          item.is_completed ? 'opacity-60' : ''
-        }`}
-      >
-        {dragHandleProps && (
-          <button
-            {...dragHandleProps}
-            className="shrink-0 mt-0.5 h-5 w-5 flex items-center justify-center text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing touch-none"
-            aria-label="Drag to reorder"
-            onClick={(e) => e.preventDefault()}
-          >
-            <GripVertical className="h-4 w-4" />
-          </button>
-        )}
-        <Checkbox
-          checked={item.is_completed}
-          onCheckedChange={(c) => toggle(c === true)}
-          className="rounded-full h-5 w-5 mt-0.5"
-        />
-        <div className="flex-1 min-w-0">
-          <p className={`text-sm font-semibold text-foreground ${item.is_completed ? 'line-through' : ''}`}>
-            {item.title}
-          </p>
-          {item.description && (
-            <p className={`text-xs text-muted-foreground mt-0.5 ${item.is_completed ? 'line-through' : ''}`}>
-              {item.description}
-            </p>
-          )}
-        </div>
-        <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
-          <PopoverTrigger asChild>
-            <button
-              className={`h-8 w-8 rounded-full flex items-center justify-center transition-colors shrink-0 ${
-                scheduled
-                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-              aria-label={scheduled ? 'Scheduled' : 'Schedule'}
+      {editing ? (
+        <div className="p-3 rounded-2xl bg-muted/40 border border-border space-y-3">
+          <Input
+            autoFocus
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+            placeholder="Task title"
+            className="rounded-full h-9 text-sm"
+          />
+          <Textarea
+            value={editDescription}
+            onChange={(e) => setEditDescription(e.target.value)}
+            placeholder="Optional description"
+            className="rounded-xl text-sm min-h-[60px]"
+          />
+          <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer select-none">
+            <Checkbox
+              checked={editCompleted}
+              onCheckedChange={(c) => setEditCompleted(c === true)}
+              className="rounded-full h-4 w-4"
+            />
+            Mark as completed
+          </label>
+          <div className="flex items-center gap-2 pt-1">
+            <Button
+              onClick={saveEdit}
+              disabled={saving || !editTitle.trim()}
+              size="sm"
+              className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              {scheduled ? <CalendarCheck className="h-4 w-4" /> : <CalendarPlus className="h-4 w-4" />}
+              {saving ? 'Saving…' : 'Save'}
+            </Button>
+            <Button
+              onClick={() => setEditing(false)}
+              size="sm"
+              variant="ghost"
+              className="rounded-full"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={deleteItem}
+              size="sm"
+              variant="ghost"
+              className="rounded-full text-destructive hover:text-destructive ml-auto"
+            >
+              <Trash2 className="h-4 w-4 mr-1" />
+              Delete
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div
+          className={`flex items-start gap-2 p-3 rounded-2xl transition-all duration-300 hover:bg-muted/30 group ${
+            item.is_completed ? 'opacity-60' : ''
+          }`}
+        >
+          {dragHandleProps && (
+            <button
+              {...dragHandleProps}
+              className="shrink-0 mt-0.5 h-5 w-5 flex items-center justify-center text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing touch-none"
+              aria-label="Drag to reorder"
+              onClick={(e) => e.preventDefault()}
+            >
+              <GripVertical className="h-4 w-4" />
             </button>
-          </PopoverTrigger>
-          <PopoverContent align="end" className="w-auto p-0">
-            <Calendar mode="single" onSelect={(d) => d && schedule(d)} initialFocus />
-          </PopoverContent>
-        </Popover>
-      </div>
+          )}
+          <Checkbox
+            checked={item.is_completed}
+            onCheckedChange={(c) => toggle(c === true)}
+            className="rounded-full h-5 w-5 mt-0.5"
+          />
+          <div className="flex-1 min-w-0">
+            <p className={`text-sm font-semibold text-foreground ${item.is_completed ? 'line-through' : ''}`}>
+              {item.title}
+            </p>
+            {item.description && (
+              <p className={`text-xs text-muted-foreground mt-0.5 ${item.is_completed ? 'line-through' : ''}`}>
+                {item.description}
+              </p>
+            )}
+          </div>
+          <button
+            onClick={openEdit}
+            className="h-8 w-8 rounded-full flex items-center justify-center transition-colors shrink-0 text-muted-foreground hover:text-foreground hover:bg-muted opacity-0 group-hover:opacity-100"
+            aria-label="Edit task"
+          >
+            <Pencil className="h-3.5 w-3.5" />
+          </button>
+          <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+            <PopoverTrigger asChild>
+              <button
+                className={`h-8 w-8 rounded-full flex items-center justify-center transition-colors shrink-0 ${
+                  scheduled
+                    ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                }`}
+                aria-label={scheduled ? 'Scheduled' : 'Schedule'}
+              >
+                {scheduled ? <CalendarCheck className="h-4 w-4" /> : <CalendarPlus className="h-4 w-4" />}
+              </button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-auto p-0">
+              <Calendar mode="single" onSelect={(d) => d && schedule(d)} initialFocus />
+            </PopoverContent>
+          </Popover>
+        </div>
+      )}
       <AnimatePresence>
         {reward && (
           <motion.p
