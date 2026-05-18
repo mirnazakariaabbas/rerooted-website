@@ -719,6 +719,5 @@ function getDimensionPillStyle(dimensionId: string | undefined): string {
   ];
   return palette[h % palette.length];
 }
-}
 
 export default MemberHome;
