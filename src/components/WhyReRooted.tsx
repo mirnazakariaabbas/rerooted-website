@@ -6,7 +6,7 @@ import offeringCoach from "@/assets/offering-coach.png";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
-import heroTree from "@/assets/hero-tree.png";
+import heroTreeCropped from "@/assets/hero-tree-cropped.png";
 
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
@@ -38,13 +38,12 @@ export function WhyReRootedStatement() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto flex w-full flex-col"
+        className="relative mx-auto flex w-full flex-col pb-[240px] md:pb-20 lg:pb-24"
         style={{
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
           paddingRight: "clamp(28px, 4vw, 56px)",
           paddingTop: "clamp(160px, 18vh, 220px)",
-          paddingBottom: "clamp(48px, 8vh, 80px)",
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
@@ -153,18 +152,18 @@ export function WhyReRootedStatement() {
         {/* Tree hero image, positioned on the right of the hero */}
         <div
           aria-hidden="true"
-          className="pointer-events-none mt-10 block aspect-square w-[92%] self-center md:absolute md:right-[2%] md:top-[clamp(260px,30vh,360px)] md:mt-0 md:w-[46%] md:max-w-[560px] md:self-auto lg:right-[3%] lg:w-[44%] lg:max-w-[600px]"
+          className="pointer-events-none absolute bottom-[8px] right-[-10%] aspect-[1438/1385] w-[74%] max-w-[300px] sm:right-[-6%] sm:w-[70%] md:bottom-[-2px] md:right-[0%] md:w-[47%] md:max-w-[640px] lg:bottom-0 lg:right-[1%] lg:w-[48%] lg:max-w-[680px] xl:right-[2%] xl:w-[47%] xl:max-w-[700px]"
           style={{ zIndex: 0 }}
         >
           <img
-            src={heroTree}
+            src={heroTreeCropped}
             alt=""
             draggable={false}
+            className="absolute inset-0 h-full w-full"
             style={{
-              width: "100%",
-              height: "100%",
               display: "block",
               objectFit: "contain",
+              objectPosition: "center bottom",
             }}
           />
         </div>
