@@ -142,30 +142,22 @@ export function WhyReRootedStatement() {
           </a>
         </div>
 
-        {/* Tree animation video: stacks below on mobile, absolutely positioned to the right of paragraph + CTAs on desktop. Scaled and clipped so the tree fills the frame and the bg blends into the page. */}
-        <div
-          className="mt-10 w-[80%] self-center overflow-hidden md:absolute md:right-[clamp(28px,4vw,56px)] md:top-[clamp(380px,46vh,520px)] md:mt-0 md:w-[52%] md:max-w-[820px] md:self-auto"
-          style={{ aspectRatio: "1 / 1" }}
-        >
-          <video
-            src="/hero-tree-animation.mp4"
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            className="block h-full w-full"
-            style={{
-              border: "none",
-              borderRadius: 0,
-              boxShadow: "none",
-              mixBlendMode: "multiply",
-              backgroundColor: "transparent",
-              objectFit: "cover",
-              transform: "scale(1.6)",
-              transformOrigin: "center center",
-            }}
-          />
-        </div>
+        {/* Tree animation video: stacks below on mobile, absolutely positioned to the right of paragraph + CTAs on desktop. Background is matched to the page so it blends seamlessly. */}
+        <video
+          src="/hero-tree-animation.mp4"
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          className="mt-10 block h-auto w-[80%] self-center md:absolute md:right-[clamp(28px,4vw,56px)] md:top-[clamp(380px,46vh,520px)] md:mt-0 md:w-[56%] md:max-w-[900px] md:self-auto"
+          style={{
+            border: "none",
+            borderRadius: 0,
+            boxShadow: "none",
+            mixBlendMode: "multiply",
+            backgroundColor: "transparent",
+          }}
+        />
       </motion.div>
     </section>
   );
