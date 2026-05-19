@@ -9,6 +9,44 @@ import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
 
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
+
+    if (!section || !video) return;
+
+    let hasStarted = false;
+
+    const playVideo = () => {
+      if (hasStarted || video.ended) return;
+      hasStarted = true;
+      void video.play().catch(() => {
+        hasStarted = false;
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting && entry.intersectionRatio >= 0.35) {
+          playVideo();
+        }
+      },
+      { threshold: [0.35] },
+    );
+
+    observer.observe(section);
+
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      playVideo();
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleCta = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -22,11 +60,12 @@ export function WhyReRootedStatement() {
 
   return (
     <section
+      ref={sectionRef}
       id="why-rerooted"
       data-dark="1"
       className="relative overflow-hidden"
       style={{
-        background: "#FAF9F6",
+        background: "hsl(var(--background))",
         minHeight: "calc(100vh - 84px)",
       }}
     >
@@ -151,26 +190,27 @@ export function WhyReRootedStatement() {
         */}
         <div
           aria-hidden="true"
-          className="pointer-events-none mt-10 block aspect-square w-[80%] self-center overflow-hidden md:absolute md:right-[clamp(20px,3vw,48px)] md:top-[clamp(330px,40vh,460px)] md:mt-0 md:w-[58%] md:max-w-[820px] md:self-auto"
-          style={{ backgroundColor: "#FAF9F6" }}
+          className="pointer-events-none mt-10 block aspect-square w-[88%] self-center overflow-hidden md:absolute md:right-[-64px] md:top-[clamp(360px,43vh,500px)] md:mt-0 md:w-[62%] md:max-w-[920px] md:self-auto lg:right-[-88px]"
+          style={{ backgroundColor: "hsl(var(--background))" }}
         >
           <video
+            ref={videoRef}
             autoPlay
             muted
             playsInline
             preload="auto"
             src="/hero-tree-animation.mp4"
             style={{
-              width: "134%",
-              height: "134%",
-              marginLeft: "-17%",
-              marginTop: "-17%",
+              width: "142%",
+              height: "142%",
+              marginLeft: "-15%",
+              marginTop: "-21%",
               display: "block",
               objectFit: "cover",
               border: "none",
               borderRadius: 0,
               boxShadow: "none",
-              backgroundColor: "#FAF9F6",
+              backgroundColor: "hsl(var(--background))",
               mixBlendMode: "multiply",
             }}
           />
