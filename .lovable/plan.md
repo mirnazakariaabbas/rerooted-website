@@ -16,6 +16,7 @@ Small, scoped fix to the first homepage section only. Keep the existing hero com
 3. **Remove the visible white box around the video**
    - Use a dedicated clipping wrapper with `overflow: hidden` so only the intended portion of the MP4 is visible.
    - Tune the video’s crop using `object-fit`, `object-position`, and/or transform offsets so the extra matte area is hidden.
+   - The uploaded MP4 has a real white background inside the file, so scale the video up within the wrapper and crop inward until only the tree drawing area remains visible.
    - Keep the page background and the video wrapper background aligned to the same Warm White tone so there is no visible edge.
 
 4. **Preserve the requested video behavior**
