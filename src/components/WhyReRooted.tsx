@@ -12,6 +12,28 @@ export function WhyReRootedStatement() {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Live tree positioning controls (enable with ?tree=1 in URL)
+  const [showTreeControls, setShowTreeControls] = useState(false);
+  const [treePos, setTreePos] = useState(() => {
+    if (typeof window === "undefined") return { top: 180, right: 0, width: 50 };
+    try {
+      const saved = localStorage.getItem("treePos");
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return { top: 180, right: 0, width: 50 };
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("tree")) setShowTreeControls(true);
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("treePos", JSON.stringify(treePos));
+    } catch {}
+  }, [treePos]);
 
   const handleCta = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
