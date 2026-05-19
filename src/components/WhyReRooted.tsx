@@ -12,6 +12,28 @@ export function WhyReRootedStatement() {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Live tree positioning controls (enable with ?tree=1 in URL)
+  const [showTreeControls, setShowTreeControls] = useState(false);
+  const [treePos, setTreePos] = useState(() => {
+    if (typeof window === "undefined") return { top: 180, right: 0, width: 50 };
+    try {
+      const saved = localStorage.getItem("treePos");
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return { top: 180, right: 0, width: 50 };
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("tree")) setShowTreeControls(true);
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("treePos", JSON.stringify(treePos));
+    } catch {}
+  }, [treePos]);
 
   const handleCta = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -149,13 +171,15 @@ export function WhyReRootedStatement() {
           </a>
         </div>
 
-        {/* Tree hero image, positioned on the right spanning roughly logo-top to section-bottom */}
+        {/* Tree hero image — positioned via live controls (?tree=1) */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-0 aspect-[1438/1385] w-[78%] max-w-[420px] sm:w-[70%] sm:max-w-[480px] md:w-[52%] md:max-w-[640px] lg:w-[50%] lg:max-w-[700px] xl:w-[48%] xl:max-w-[760px]"
+          className="pointer-events-none absolute aspect-[1438/1385]"
           style={{
             zIndex: 0,
-            top: "clamp(140px, 16vh, 200px)",
+            top: `${treePos.top}px`,
+            right: `${treePos.right}%`,
+            width: `${treePos.width}%`,
           }}
         >
           <img
@@ -169,6 +193,71 @@ export function WhyReRootedStatement() {
             }}
           />
         </div>
+
+        {showTreeControls && (
+          <div
+            className="fixed bottom-4 right-4 z-[9999] rounded-xl border border-black/10 bg-white/95 p-4 shadow-lg backdrop-blur"
+            style={{ width: 280, fontFamily: '"DM Sans", sans-serif' }}
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <strong style={{ fontSize: 13, color: "#1F299C" }}>Tree position</strong>
+              <button
+                type="button"
+                onClick={() => setShowTreeControls(false)}
+                style={{ fontSize: 12, color: "#666" }}
+              >
+                ✕
+              </button>
+            </div>
+            {([
+              { key: "top", label: "Top (px)", min: -200, max: 600, step: 1 },
+              { key: "right", label: "Right (%)", min: -20, max: 40, step: 0.5 },
+              { key: "width", label: "Width (%)", min: 20, max: 90, step: 0.5 },
+            ] as const).map((c) => (
+              <div key={c.key} style={{ marginBottom: 10 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#333" }}>
+                  <span>{c.label}</span>
+                  <span style={{ fontVariantNumeric: "tabular-nums" }}>
+                    {treePos[c.key]}
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={c.min}
+                  max={c.max}
+                  step={c.step}
+                  value={treePos[c.key]}
+                  onChange={(e) =>
+                    setTreePos((p: typeof treePos) => ({ ...p, [c.key]: parseFloat(e.target.value) }))
+                  }
+                  style={{ width: "100%" }}
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard?.writeText(
+                  `top: ${treePos.top}px; right: ${treePos.right}%; width: ${treePos.width}%;`
+                );
+              }}
+              style={{
+                width: "100%",
+                marginTop: 4,
+                padding: "8px 10px",
+                borderRadius: 8,
+                background: "#1F299C",
+                color: "#fff",
+                fontSize: 12,
+              }}
+            >
+              Copy values
+            </button>
+            <p style={{ marginTop: 8, fontSize: 10, color: "#666", lineHeight: 1.4 }}>
+              Tell me these numbers and I'll lock them in for all breakpoints.
+            </p>
+          </div>
+        )}
 
       </motion.div>
     </section>
