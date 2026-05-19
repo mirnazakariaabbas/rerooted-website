@@ -153,7 +153,7 @@ export function WhyReRootedStatement() {
         {/* Tree hero image, positioned on the right of the hero */}
         <div
           aria-hidden="true"
-          className="pointer-events-none mt-10 block aspect-square w-[92%] self-center md:absolute md:right-[2%] md:top-[clamp(260px,30vh,360px)] md:mt-0 md:w-[46%] md:max-w-[560px] md:self-auto lg:right-[3%] lg:w-[44%] lg:max-w-[600px]"
+          className="pointer-events-none mt-6 block aspect-square w-[112%] max-w-none self-end translate-x-[14%] md:absolute md:bottom-[-2%] md:right-[-1%] md:mt-0 md:w-[60%] md:max-w-[860px] md:translate-x-0 lg:bottom-[-3%] lg:right-[-1%] lg:w-[58%] lg:max-w-[920px] xl:right-0 xl:w-[56%] xl:max-w-[960px]"
           style={{ zIndex: 0 }}
         >
           <img
@@ -165,6 +165,7 @@ export function WhyReRootedStatement() {
               height: "100%",
               display: "block",
               objectFit: "contain",
+              objectPosition: "center bottom",
             }}
           />
         </div>
