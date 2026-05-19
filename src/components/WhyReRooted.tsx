@@ -11,22 +11,30 @@ import heroTreeCropped from "@/assets/hero-tree-cropped.png";
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const treeRef = useRef<HTMLDivElement>(null);
 
-  // Live tree positioning controls (enable with ?tree=1 in URL)
-  const [showTreeControls, setShowTreeControls] = useState(false);
+  // Tree editor (visible only on Lovable preview hosts)
+  const [isPreviewHost, setIsPreviewHost] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [saved, setSaved] = useState<null | { top: number; right: number; width: number }>(null);
   const [treePos, setTreePos] = useState(() => {
     if (typeof window === "undefined") return { top: 180, right: 0, width: 50 };
     try {
-      const saved = localStorage.getItem("treePos");
-      if (saved) return JSON.parse(saved);
+      const v = localStorage.getItem("treePos");
+      if (v) return JSON.parse(v);
     } catch {}
     return { top: 180, right: 0, width: 50 };
   });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    if (params.has("tree")) setShowTreeControls(true);
+    const h = window.location.hostname;
+    setIsPreviewHost(
+      h.endsWith(".lovable.app") ||
+        h.endsWith(".lovableproject.com") ||
+        h === "localhost"
+    );
   }, []);
 
   useEffect(() => {
@@ -34,6 +42,57 @@ export function WhyReRootedStatement() {
       localStorage.setItem("treePos", JSON.stringify(treePos));
     } catch {}
   }, [treePos]);
+
+  // Drag the tree to move it (updates top + right)
+  const onDragStart = (e: React.MouseEvent) => {
+    if (!editMode || !containerRef.current) return;
+    e.preventDefault();
+    const container = containerRef.current;
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const start = { ...treePos };
+    const cw = container.clientWidth;
+
+    const onMove = (ev: MouseEvent) => {
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      setTreePos({
+        top: Math.round(start.top + dy),
+        right: +(start.right - (dx / cw) * 100).toFixed(2),
+        width: start.width,
+      });
+    };
+    const onUp = () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  };
+
+  // Resize via bottom-left handle (updates width, keeps right anchor)
+  const onResizeStart = (e: React.MouseEvent) => {
+    if (!editMode || !containerRef.current) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const container = containerRef.current;
+    const startX = e.clientX;
+    const start = { ...treePos };
+    const cw = container.clientWidth;
+
+    const onMove = (ev: MouseEvent) => {
+      const dx = ev.clientX - startX;
+      // dragging left = wider
+      const next = Math.max(20, Math.min(95, start.width - (dx / cw) * 100));
+      setTreePos({ ...start, width: +next.toFixed(2) });
+    };
+    const onUp = () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  };
 
   const handleCta = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -44,6 +103,7 @@ export function WhyReRootedStatement() {
       navigate(href);
     }
   };
+
 
   return (
     <section
