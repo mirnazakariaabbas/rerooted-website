@@ -38,13 +38,12 @@ export function WhyReRootedStatement() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto flex w-full flex-col"
+        className="relative mx-auto flex w-full flex-col pb-[240px] md:pb-20 lg:pb-24"
         style={{
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
           paddingRight: "clamp(28px, 4vw, 56px)",
           paddingTop: "clamp(160px, 18vh, 220px)",
-          paddingBottom: "clamp(48px, 8vh, 80px)",
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
@@ -153,19 +152,18 @@ export function WhyReRootedStatement() {
         {/* Tree hero image, positioned on the right of the hero */}
         <div
           aria-hidden="true"
-          className="pointer-events-none mt-2 block aspect-square w-[104%] max-w-[540px] self-end translate-x-[10%] md:absolute md:right-[-4%] md:top-[clamp(120px,16vh,170px)] md:mt-0 md:w-[62%] md:max-w-[900px] md:translate-x-0 lg:right-[-2%] lg:top-[clamp(130px,17vh,190px)] lg:w-[60%] lg:max-w-[940px] xl:right-0 xl:w-[57%] xl:max-w-[980px]"
+          className="pointer-events-none absolute bottom-[20px] right-[-16%] aspect-[1438/1385] w-[82%] max-w-[340px] sm:right-[-10%] sm:w-[72%] md:bottom-auto md:right-[-2%] md:top-[150px] md:w-[44%] md:max-w-[620px] lg:right-[-1%] lg:top-[145px] lg:w-[46%] lg:max-w-[690px] xl:right-0 xl:top-[140px] xl:w-[45%] xl:max-w-[720px]"
           style={{ zIndex: 0 }}
         >
           <img
             src={heroTree}
             alt=""
             draggable={false}
+            className="absolute bottom-[-18.5%] left-1/2 h-[133.5%] w-[133.5%] max-w-none -translate-x-1/2"
             style={{
-              width: "100%",
-              height: "100%",
               display: "block",
               objectFit: "contain",
-              objectPosition: "center bottom",
+              objectPosition: "center center",
             }}
           />
         </div>
