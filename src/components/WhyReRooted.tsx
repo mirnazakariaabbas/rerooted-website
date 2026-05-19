@@ -150,40 +150,25 @@ export function WhyReRootedStatement() {
           </a>
         </div>
 
-        {/*
-          Tree animation video.
-          The MP4 has a real white matte that occupies ~12% of each edge inside the file itself.
-          We hide it by placing the <video> inside a clipping wrapper with overflow:hidden and
-          scaling the video up so its tree content fills the wrapper exactly. mix-blend-mode: multiply
-          drops any remaining off-white pixels onto the #FAF9F6 page background.
-        */}
+        {/* Tree hero image, positioned on the right of the hero */}
         <div
           aria-hidden="true"
-          className="pointer-events-none mt-10 block aspect-square w-[92%] self-center overflow-hidden md:absolute md:right-[-112px] md:top-[clamp(320px,38vh,450px)] md:mt-0 md:w-[66%] md:max-w-[980px] md:self-auto lg:right-[-148px]"
-          style={{ backgroundColor: "#FAF9F6", zIndex: 0 }}
+          className="pointer-events-none mt-10 block aspect-square w-[92%] self-center md:absolute md:right-[-112px] md:top-[clamp(320px,38vh,450px)] md:mt-0 md:w-[66%] md:max-w-[980px] md:self-auto lg:right-[-148px]"
+          style={{ zIndex: 0 }}
         >
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            src="/hero-tree-animation.mp4"
+          <img
+            src={heroTree}
+            alt=""
+            draggable={false}
             style={{
-              width: "132%",
-              height: "132%",
-              marginLeft: "-16%",
-              marginTop: "-22%",
+              width: "100%",
+              height: "100%",
               display: "block",
-              objectFit: "cover",
-              border: "none",
-              borderRadius: 0,
-              boxShadow: "none",
-              backgroundColor: "transparent",
-              mixBlendMode: "multiply",
+              objectFit: "contain",
             }}
           />
         </div>
+
       </motion.div>
     </section>
   );
