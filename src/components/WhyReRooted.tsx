@@ -144,26 +144,37 @@ export function WhyReRootedStatement() {
 
         {/*
           Tree animation video.
-          Desktop (md+): absolutely positioned into the empty space on the right of the paragraph/CTAs.
-          Mobile: stacks below the CTAs, centered.
-          mix-blend-mode: multiply makes the video's white background blend invisibly with the #FAF9F6 page
-          background, while keeping the dark blue tree strokes fully visible — no visible white box.
+          The MP4 has a real white matte that occupies ~12% of each edge inside the file itself.
+          We hide it by placing the <video> inside a clipping wrapper with overflow:hidden and
+          scaling the video up so its tree content fills the wrapper exactly. mix-blend-mode: multiply
+          drops any remaining off-white pixels onto the #FAF9F6 page background.
         */}
-        <video
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-          className="mt-10 block h-auto w-[80%] self-center md:absolute md:right-[clamp(28px,4vw,56px)] md:top-[clamp(380px,46vh,520px)] md:mt-0 md:w-[44%] md:max-w-[640px] md:self-auto"
-          style={{
-            border: "none",
-            borderRadius: 0,
-            boxShadow: "none",
-            backgroundColor: "transparent",
-            mixBlendMode: "multiply",
-          }}
-          src="/hero-tree-animation.mp4"
-        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none mt-10 block aspect-square w-[80%] self-center overflow-hidden md:absolute md:right-[clamp(20px,3vw,48px)] md:top-[clamp(330px,40vh,460px)] md:mt-0 md:w-[58%] md:max-w-[820px] md:self-auto"
+          style={{ backgroundColor: "#FAF9F6" }}
+        >
+          <video
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            src="/hero-tree-animation.mp4"
+            style={{
+              width: "134%",
+              height: "134%",
+              marginLeft: "-17%",
+              marginTop: "-17%",
+              display: "block",
+              objectFit: "cover",
+              border: "none",
+              borderRadius: 0,
+              boxShadow: "none",
+              backgroundColor: "#FAF9F6",
+              mixBlendMode: "multiply",
+            }}
+          />
+        </div>
       </motion.div>
     </section>
   );
