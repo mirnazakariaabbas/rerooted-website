@@ -34,7 +34,7 @@ export function WhyReRootedStatement() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto flex w-full flex-col"
+        className="mx-auto flex w-full flex-col md:flex-row md:items-center md:gap-10 lg:gap-16"
         style={{
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
@@ -44,6 +44,7 @@ export function WhyReRootedStatement() {
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
+        <div className="flex w-full flex-col md:w-[55%]">
         {/* 1. Masthead lockup */}
         <img
           src={logoWordmarkBlue}
