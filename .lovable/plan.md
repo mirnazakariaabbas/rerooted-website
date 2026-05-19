@@ -1,35 +1,27 @@
-# Fix hero tree video without moving hero content
+# Drag the tree to position it
 
-Small, scoped fix to the first homepage section only. Keep the existing hero composition exactly where it is, then correct only the video’s visible area, scale, and blend.
+Right now positioning the tree requires opening the preview with `?tree=1` in the URL and using sliders, which is confusing. Let me replace that with a direct drag interaction so you can just grab the tree and move it where you want.
 
-## Steps
+## How it will work
 
-1. **Keep the current hero layout untouched**
-   - Do not change the logo, tagline, paragraph, CTA row, section spacing, or overall orientation.
-   - Keep the video as an overlay inside the existing hero container, not as a grid or layout column.
+1. Open the homepage like normal (no special URL needed).
+2. A small **"Edit tree position"** button appears in the bottom-right corner of the screen (only visible to you in the Lovable preview, never to real visitors).
+3. Click it. The tree gets a dashed outline and becomes draggable.
+4. **Drag** the tree to move it.
+5. **Resize** it using a handle in the bottom-right corner of the tree.
+6. A small readout shows the current position and size live.
+7. Click **"Save & lock in"** when you're happy. The values are written into the code so the tree stays exactly there for every visitor on every screen size.
+8. Click **"Reset"** to go back to the current position if you want to start over.
 
-2. **Match the screenshot placement more closely**
-   - Reposition the video wrapper so it sits in the empty lower-right area shown in the reference image.
-   - Increase the video’s displayed footprint so the tree occupies much more of that available space.
-   - Adjust only the video wrapper dimensions and offsets, leaving all other hero elements in their current positions.
+## What you'll do
 
-3. **Remove the visible white box around the video**
-   - Use a dedicated clipping wrapper with `overflow: hidden` so only the intended portion of the MP4 is visible.
-   - Tune the video’s crop using `object-fit`, `object-position`, and/or transform offsets so the extra matte area is hidden.
-   - The uploaded MP4 has a real white background inside the file, so scale the video up within the wrapper and crop inward until only the tree drawing area remains visible.
-   - Keep the page background and the video wrapper background aligned to the same Warm White tone so there is no visible edge.
-
-4. **Preserve the requested video behavior**
-   - `autoPlay`, `muted`, `playsInline`
-   - No controls, no poster, no spinner, no play overlay, no loop
-   - The video plays once and stops on the final frame
-
-5. **Verify only the video changed**
-   - Check the hero in preview against the screenshot reference.
-   - Confirm that the text block, CTA row, nav, logo, and all lower sections remain unchanged.
+- Tell me "ready" and I'll build it.
+- Open the preview, click **Edit tree position**, drag/resize until it looks right.
+- Click **Save & lock in**, then tell me "done" — I'll bake those exact values into the hero so they're permanent.
 
 ## Technical notes
 
-- File to update: `src/components/WhyReRooted.tsx`, hero section only.
-- Asset path remains `public/hero-tree-animation.mp4`.
-- Likely implementation: keep absolute positioning, add a tighter wrapper, and crop the MP4 inside that wrapper rather than changing the hero layout.
+- Edit mode is gated on the Lovable preview origin (`*.lovable.app` / `*.lovableproject.com`) so it never shows on the published site.
+- Position and size persist in `localStorage` while you experiment, so refreshes don't lose your work.
+- On "Save & lock in", the chosen `top` / `right` / `width` values get printed in a copy-ready block; I then hardcode them into `WhyReRootedStatement` and remove the editor entirely.
+- Responsive behavior: you position it once at desktop size, and I'll derive proportional values for tablet/mobile from that baseline.
