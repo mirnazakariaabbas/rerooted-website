@@ -88,7 +88,7 @@ export function WhyReRootedStatement() {
           src={logoWordmarkBlue}
           alt="Re-Rooted® Switzerland"
           className="block h-auto w-full select-none"
-          style={{ maxWidth: 1400 }}
+          style={{ maxWidth: 1400, position: "relative", zIndex: 1 }}
           draggable={false}
         />
 
@@ -104,6 +104,8 @@ export function WhyReRootedStatement() {
             marginTop: 56,
             marginBottom: 36,
             textTransform: "uppercase",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           The Human Side of Relocation
@@ -121,13 +123,15 @@ export function WhyReRootedStatement() {
             maxWidth: "22ch",
             marginBottom: 40,
             textAlign: "left",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
         </p>
 
         {/* 4. CTAs */}
-        <div className="flex flex-wrap items-center" style={{ gap: 12 }}>
+        <div className="flex flex-wrap items-center" style={{ gap: 12, position: "relative", zIndex: 1 }}>
           <a
             href="#program"
             onClick={handleCta("#program")}
@@ -190,8 +194,8 @@ export function WhyReRootedStatement() {
         */}
         <div
           aria-hidden="true"
-          className="pointer-events-none mt-10 block aspect-square w-[88%] self-center overflow-hidden md:absolute md:right-[-64px] md:top-[clamp(360px,43vh,500px)] md:mt-0 md:w-[62%] md:max-w-[920px] md:self-auto lg:right-[-88px]"
-          style={{ backgroundColor: "hsl(var(--background))" }}
+          className="pointer-events-none mt-10 block aspect-square w-[92%] self-center overflow-hidden md:absolute md:right-[-112px] md:top-[clamp(390px,46vh,545px)] md:mt-0 md:w-[66%] md:max-w-[980px] md:self-auto lg:right-[-148px]"
+          style={{ backgroundColor: "hsl(var(--background))", zIndex: 0 }}
         >
           <video
             ref={videoRef}
@@ -201,10 +205,10 @@ export function WhyReRootedStatement() {
             preload="auto"
             src="/hero-tree-animation.mp4"
             style={{
-              width: "142%",
-              height: "142%",
-              marginLeft: "-15%",
-              marginTop: "-21%",
+              width: "148%",
+              height: "148%",
+              marginLeft: "-13%",
+              marginTop: "-24%",
               display: "block",
               objectFit: "cover",
               border: "none",
