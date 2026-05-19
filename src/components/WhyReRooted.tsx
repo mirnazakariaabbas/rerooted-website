@@ -149,7 +149,7 @@ export function WhyReRootedStatement() {
           muted
           playsInline
           preload="auto"
-          className="mt-10 block h-auto w-[80%] self-center md:absolute md:right-[clamp(28px,4vw,56px)] md:top-[clamp(300px,34vh,400px)] md:mt-0 md:w-[48%] md:max-w-[720px] md:self-auto"
+          className="mt-10 block h-auto w-[80%] self-center md:absolute md:right-[clamp(28px,4vw,56px)] md:top-[clamp(440px,52vh,560px)] md:mt-0 md:w-[52%] md:max-w-[820px] md:self-auto"
           style={{
             border: "none",
             borderRadius: 0,
