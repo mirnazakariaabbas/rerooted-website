@@ -195,7 +195,7 @@ export function WhyReRootedStatement() {
         <div
           aria-hidden="true"
           className="pointer-events-none mt-10 block aspect-square w-[92%] self-center overflow-hidden md:absolute md:right-[-112px] md:top-[clamp(320px,38vh,450px)] md:mt-0 md:w-[66%] md:max-w-[980px] md:self-auto lg:right-[-148px]"
-          style={{ backgroundColor: "transparent", zIndex: 0 }}
+          style={{ backgroundColor: "#FAF9F6", zIndex: 0 }}
         >
           <video
             ref={videoRef}
