@@ -7,6 +7,7 @@ import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
 import heroTree from "@/assets/hero-tree.png";
+import heroTreeCropped from "@/assets/hero-tree-cropped.png";
 
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
@@ -156,14 +157,14 @@ export function WhyReRootedStatement() {
           style={{ zIndex: 0 }}
         >
           <img
-            src={heroTree}
+            src={heroTreeCropped}
             alt=""
             draggable={false}
-            className="absolute bottom-[-18.5%] left-1/2 h-[133.5%] w-[133.5%] max-w-none -translate-x-1/2"
+            className="absolute inset-0 h-full w-full"
             style={{
               display: "block",
               objectFit: "contain",
-              objectPosition: "center center",
+              objectPosition: "center bottom",
             }}
           />
         </div>
