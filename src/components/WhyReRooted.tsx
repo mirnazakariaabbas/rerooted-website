@@ -11,43 +11,7 @@ import heroTree from "@/assets/hero-tree.png";
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const video = videoRef.current;
-
-    if (!section || !video) return;
-
-    let hasStarted = false;
-
-    const playVideo = () => {
-      if (hasStarted || video.ended) return;
-      hasStarted = true;
-      void video.play().catch(() => {
-        hasStarted = false;
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting && entry.intersectionRatio >= 0.35) {
-          playVideo();
-        }
-      },
-      { threshold: [0.35] },
-    );
-
-    observer.observe(section);
-
-    const rect = section.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      playVideo();
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const handleCta = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
