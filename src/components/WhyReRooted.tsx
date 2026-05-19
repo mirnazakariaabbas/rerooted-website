@@ -34,7 +34,7 @@ export function WhyReRootedStatement() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto flex w-full flex-col md:flex-row md:items-center md:gap-10 lg:gap-16"
+        className="relative mx-auto flex w-full flex-col"
         style={{
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
@@ -44,7 +44,6 @@ export function WhyReRootedStatement() {
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
-        <div className="flex w-full flex-col md:w-[55%]">
         {/* 1. Masthead lockup */}
         <img
           src={logoWordmarkBlue}
@@ -142,20 +141,24 @@ export function WhyReRootedStatement() {
             How it works
           </a>
         </div>
-        </div>
 
-        {/* Right column: tree animation video */}
-        <div className="mt-10 flex w-[80%] self-center md:mt-0 md:w-[45%] md:self-auto">
-          <video
-            src="/hero-tree-animation.mp4"
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            className="block h-auto w-full"
-            style={{ backgroundColor: "#FAF9F6", border: "none", borderRadius: 0, boxShadow: "none" }}
-          />
-        </div>
+        {/* Tree animation video: stacks below on mobile, absolutely positioned to the right of paragraph + CTAs on desktop. Transparent-background WebM so it blends seamlessly with the page. */}
+        <video
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          className="mt-10 block h-auto w-[80%] self-center md:absolute md:right-[clamp(28px,4vw,56px)] md:top-[clamp(380px,46vh,520px)] md:mt-0 md:w-[56%] md:max-w-[900px] md:self-auto"
+          style={{
+            border: "none",
+            borderRadius: 0,
+            boxShadow: "none",
+            backgroundColor: "transparent",
+          }}
+        >
+          <source src="/hero-tree-animation.webm" type="video/webm" />
+          <source src="/hero-tree-animation.mp4" type="video/mp4" />
+        </video>
       </motion.div>
     </section>
   );
