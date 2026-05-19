@@ -8,7 +8,7 @@ interface HeroProps {
   headline2: string;
   body: ReactNode;
   cta1: { label: string; href: string };
-  cta2: { label: string; href: string };
+  cta2?: { label: string; href: string };
   variant?: "corporate" | "individual";
 }
 
@@ -85,15 +85,17 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
             >
               {cta1.label}
             </a>
-            <a
-              href={cta2.href}
-              onClick={handleCtaClick(cta2.href)}
-              className={`text-base font-semibold underline-offset-4 transition-colors hover:underline ${
-                isIndividual ? "text-secondary" : "text-primary"
-              }`}
-            >
-              {cta2.label}
-            </a>
+            {cta2 && (
+              <a
+                href={cta2.href}
+                onClick={handleCtaClick(cta2.href)}
+                className={`text-base font-semibold underline-offset-4 transition-colors hover:underline ${
+                  isIndividual ? "text-secondary" : "text-primary"
+                }`}
+              >
+                {cta2.label}
+              </a>
+            )}
           </motion.div>
         </div>
 
