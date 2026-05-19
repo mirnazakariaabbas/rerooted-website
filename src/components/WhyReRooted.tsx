@@ -34,7 +34,7 @@ export function WhyReRootedStatement() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto grid w-full grid-cols-1 items-center gap-0 md:grid-cols-2"
+        className="relative mx-auto flex w-full flex-col"
         style={{
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
@@ -44,116 +44,126 @@ export function WhyReRootedStatement() {
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
-        <div className="flex flex-col">
-          {/* 1. Masthead lockup */}
-          <img
-            src={logoWordmarkBlue}
-            alt="Re-Rooted® Switzerland"
-            className="block h-auto w-full select-none"
-            style={{ maxWidth: 1400 }}
-            draggable={false}
-          />
+        {/* 1. Masthead lockup */}
+        <img
+          src={logoWordmarkBlue}
+          alt="Re-Rooted® Switzerland"
+          className="block h-auto w-full select-none"
+          style={{ maxWidth: 1400 }}
+          draggable={false}
+        />
 
-          {/* 2. Centered tagline */}
-          <p
-            className="text-center"
+        {/* 2. Centered tagline */}
+        <p
+          className="text-center"
+          style={{
+            color: "#1F299C",
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 800,
+            fontSize: "clamp(17px, 1.6vw, 24px)",
+            letterSpacing: "0.28em",
+            marginTop: 56,
+            marginBottom: 36,
+            textTransform: "uppercase",
+          }}
+        >
+          The Human Side of Relocation
+        </p>
+
+        {/* 3. Left-aligned editorial paragraph */}
+        <p
+          style={{
+            color: "#1F299C",
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 400,
+            fontSize: "clamp(24px, 2.7vw, 39px)",
+            lineHeight: 1.16,
+            letterSpacing: "-0.018em",
+            maxWidth: "22ch",
+            marginBottom: 40,
+            textAlign: "left",
+          }}
+        >
+          Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
+        </p>
+
+        {/* 4. CTAs */}
+        <div className="flex flex-wrap items-center" style={{ gap: 12 }}>
+          <a
+            href="#program"
+            onClick={handleCta("#program")}
+            className="inline-flex items-center gap-2 transition-all"
             style={{
-              color: "#1F299C",
+              background: "#1F299C",
+              color: "#FFFFFF",
+              padding: "14px 22px",
+              borderRadius: 999,
               fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 800,
-              fontSize: "clamp(17px, 1.6vw, 24px)",
-              letterSpacing: "0.28em",
-              marginTop: 56,
-              marginBottom: 36,
-              textTransform: "uppercase",
+              fontWeight: 500,
+              fontSize: 14,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#141A6B";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#1F299C";
+              e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            The Human Side of Relocation
-          </p>
-
-          {/* 3. Left-aligned editorial paragraph */}
-          <p
+            Start your journey
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+          <a
+            href="#approach"
+            onClick={handleCta("#approach")}
+            className="inline-flex items-center transition-colors"
             style={{
+              background: "transparent",
               color: "#1F299C",
+              padding: "14px 22px",
+              borderRadius: 999,
+              border: "1px solid rgba(31, 41, 156, 0.10)",
               fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 400,
-              fontSize: "clamp(24px, 2.7vw, 39px)",
-              lineHeight: 1.16,
-              letterSpacing: "-0.018em",
-              maxWidth: "22ch",
-              marginBottom: 40,
-              textAlign: "left",
+              fontWeight: 500,
+              fontSize: 14,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(31, 41, 156, 0.05)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
             }}
           >
-            Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
-          </p>
-
-          {/* 4. CTAs */}
-          <div className="flex flex-wrap items-center" style={{ gap: 12 }}>
-            <a
-              href="#program"
-              onClick={handleCta("#program")}
-              className="inline-flex items-center gap-2 transition-all"
-              style={{
-                background: "#1F299C",
-                color: "#FFFFFF",
-                padding: "14px 22px",
-                borderRadius: 999,
-                fontFamily: '"DM Sans", sans-serif',
-                fontWeight: 500,
-                fontSize: 14,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#141A6B";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#1F299C";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Start your journey
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
-            <a
-              href="#approach"
-              onClick={handleCta("#approach")}
-              className="inline-flex items-center transition-colors"
-              style={{
-                background: "transparent",
-                color: "#1F299C",
-                padding: "14px 22px",
-                borderRadius: 999,
-                border: "1px solid rgba(31, 41, 156, 0.10)",
-                fontFamily: '"DM Sans", sans-serif',
-                fontWeight: 500,
-                fontSize: 14,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(31, 41, 156, 0.05)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-              }}
-            >
-              How it works
-            </a>
-          </div>
+            How it works
+          </a>
         </div>
 
-        {/* Video column: fills its grid cell, no padding/border/background. Mobile ~300px tall with cover crop. */}
-        <div className="relative overflow-hidden h-[300px] md:h-full mt-10 md:mt-0">
-          <video
-            autoPlay
-            muted
-            playsInline
-            className="w-full h-full object-cover block"
-            src="/hero-tree-animation.mp4"
-          />
-        </div>
+        {/*
+          Tree animation video.
+          Desktop (md+): absolutely positioned into the empty space on the right of the paragraph/CTAs.
+          Mobile: stacks below the CTAs, centered.
+          mix-blend-mode: multiply makes the video's white background blend invisibly with the #FAF9F6 page
+          background, while keeping the dark blue tree strokes fully visible — no visible white box.
+        */}
+        <video
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          className="mt-10 block h-auto w-[80%] self-center md:absolute md:right-[clamp(28px,4vw,56px)] md:top-[clamp(380px,46vh,520px)] md:mt-0 md:w-[44%] md:max-w-[640px] md:self-auto"
+          style={{
+            border: "none",
+            borderRadius: 0,
+            boxShadow: "none",
+            backgroundColor: "transparent",
+            mixBlendMode: "multiply",
+          }}
+          src="/hero-tree-animation.mp4"
+        />
       </motion.div>
     </section>
   );
