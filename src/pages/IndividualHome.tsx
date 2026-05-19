@@ -43,8 +43,7 @@ const IndividualHome = () => (
           </p>
         </>
       }
-      cta1={{ label: "Explore your journey", href: "#journey" }}
-      cta2={{ label: "Reach out", href: "#contact" }}
+      cta1={{ label: "Contact us", href: "#contact" }}
     />
     <Footer />
   </main>
