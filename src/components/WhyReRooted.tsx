@@ -120,6 +120,7 @@ export function WhyReRootedStatement() {
         ref={containerRef}
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="relative mx-auto flex w-full flex-col pb-[240px] md:pb-20 lg:pb-24"
         style={{
           maxWidth: 1600,
