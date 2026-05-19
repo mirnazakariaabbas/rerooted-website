@@ -384,9 +384,8 @@ width: ${saved.width}%`}
           )}
         </div>
       )}
-
-      </motion.div>
     </section>
+
   );
 }
 
