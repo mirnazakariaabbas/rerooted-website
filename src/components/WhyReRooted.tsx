@@ -65,7 +65,7 @@ export function WhyReRootedStatement() {
       data-dark="1"
       className="relative overflow-hidden"
       style={{
-        background: "#FFFFFF",
+        background: "#FAF9F6",
         minHeight: "calc(100vh - 84px)",
       }}
     >
