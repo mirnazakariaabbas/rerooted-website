@@ -149,19 +149,21 @@ export function WhyReRootedStatement() {
           </a>
         </div>
 
-        {/* Tree hero image, positioned on the right of the hero */}
+        {/* Tree hero image, positioned on the right spanning roughly logo-top to section-bottom */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-[324px] right-[-10%] aspect-[1438/1385] w-[70%] max-w-[280px] sm:bottom-[332px] sm:right-[-6%] sm:w-[66%] md:bottom-[290px] md:right-[1%] md:w-[42%] md:max-w-[580px] lg:bottom-[304px] lg:right-[2%] lg:w-[43%] lg:max-w-[610px] xl:bottom-[310px] xl:right-[2%] xl:w-[42%] xl:max-w-[630px]"
-          style={{ zIndex: 0 }}
+          className="pointer-events-none absolute right-0 aspect-[1438/1385] w-[78%] max-w-[420px] sm:w-[70%] sm:max-w-[480px] md:w-[52%] md:max-w-[640px] lg:w-[50%] lg:max-w-[700px] xl:w-[48%] xl:max-w-[760px]"
+          style={{
+            zIndex: 0,
+            top: "clamp(140px, 16vh, 200px)",
+          }}
         >
           <img
             src={heroTreeCropped}
             alt=""
             draggable={false}
-            className="absolute inset-0 h-full w-full"
+            className="block h-full w-full"
             style={{
-              display: "block",
               objectFit: "contain",
               objectPosition: "center bottom",
             }}
