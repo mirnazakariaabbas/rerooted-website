@@ -232,93 +232,158 @@ export function WhyReRootedStatement() {
           </a>
         </div>
 
-        {/* Tree hero image — positioned via live controls (?tree=1) */}
+        {/* Tree hero image (draggable in edit mode) */}
         <div
+          ref={treeRef}
           aria-hidden="true"
-          className="pointer-events-none absolute aspect-[1438/1385]"
+          onMouseDown={onDragStart}
+          className={`absolute aspect-[1438/1385] ${
+            editMode ? "cursor-move" : "pointer-events-none"
+          }`}
           style={{
             zIndex: 0,
             top: `${treePos.top}px`,
             right: `${treePos.right}%`,
             width: `${treePos.width}%`,
+            outline: editMode ? "2px dashed #1F299C" : undefined,
+            outlineOffset: editMode ? 4 : undefined,
           }}
         >
           <img
             src={heroTreeCropped}
             alt=""
             draggable={false}
-            className="block h-full w-full"
+            className="block h-full w-full select-none"
             style={{
               objectFit: "contain",
               objectPosition: "center bottom",
+              pointerEvents: "none",
             }}
           />
+          {editMode && (
+            <div
+              onMouseDown={onResizeStart}
+              title="Drag left/right to resize"
+              style={{
+                position: "absolute",
+                left: -10,
+                bottom: -10,
+                width: 22,
+                height: 22,
+                borderRadius: 999,
+                background: "#1F299C",
+                border: "2px solid #FAF9F6",
+                cursor: "ew-resize",
+                zIndex: 2,
+              }}
+            />
+          )}
         </div>
 
-        {showTreeControls && (
-          <div
-            className="fixed bottom-4 right-4 z-[9999] rounded-xl border border-black/10 bg-white/95 p-4 shadow-lg backdrop-blur"
-            style={{ width: 280, fontFamily: '"DM Sans", sans-serif' }}
-          >
-            <div className="mb-3 flex items-center justify-between">
-              <strong style={{ fontSize: 13, color: "#1F299C" }}>Tree position</strong>
-              <button
-                type="button"
-                onClick={() => setShowTreeControls(false)}
-                style={{ fontSize: 12, color: "#666" }}
-              >
-                ✕
-              </button>
-            </div>
-            {([
-              { key: "top", label: "Top (px)", min: -200, max: 600, step: 1 },
-              { key: "right", label: "Right (%)", min: -20, max: 40, step: 0.5 },
-              { key: "width", label: "Width (%)", min: 20, max: 90, step: 0.5 },
-            ] as const).map((c) => (
-              <div key={c.key} style={{ marginBottom: 10 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#333" }}>
-                  <span>{c.label}</span>
-                  <span style={{ fontVariantNumeric: "tabular-nums" }}>
-                    {treePos[c.key]}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={c.min}
-                  max={c.max}
-                  step={c.step}
-                  value={treePos[c.key]}
-                  onChange={(e) =>
-                    setTreePos((p: typeof treePos) => ({ ...p, [c.key]: parseFloat(e.target.value) }))
-                  }
-                  style={{ width: "100%" }}
-                />
-              </div>
-            ))}
+      </motion.div>
+
+      {/* Tree editor — only on Lovable preview hosts */}
+      {isPreviewHost && (
+        <div
+          className="fixed bottom-4 right-4 z-[9999] rounded-xl border border-black/10 bg-white p-3 shadow-lg"
+          style={{ width: 260, fontFamily: '"DM Sans", sans-serif', color: "#1F299C" }}
+        >
+          {!editMode ? (
             <button
               type="button"
-              onClick={() => {
-                navigator.clipboard?.writeText(
-                  `top: ${treePos.top}px; right: ${treePos.right}%; width: ${treePos.width}%;`
-                );
-              }}
+              onClick={() => { setEditMode(true); setSaved(null); }}
               style={{
                 width: "100%",
-                marginTop: 4,
-                padding: "8px 10px",
+                padding: "10px 12px",
                 borderRadius: 8,
                 background: "#1F299C",
                 color: "#fff",
-                fontSize: 12,
+                fontSize: 13,
+                fontWeight: 600,
               }}
             >
-              Copy values
+              Edit tree position
             </button>
-            <p style={{ marginTop: 8, fontSize: 10, color: "#666", lineHeight: 1.4 }}>
-              Tell me these numbers and I'll lock them in for all breakpoints.
-            </p>
-          </div>
-        )}
+          ) : (
+            <>
+              <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>
+                Drag the tree to move it. Drag the blue dot to resize.
+              </div>
+              <div style={{ fontSize: 11, lineHeight: 1.6, color: "#333", background: "#FAF9F6", padding: 8, borderRadius: 6, marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>
+                top: <b>{Math.round(treePos.top)}px</b><br />
+                right: <b>{treePos.right}%</b><br />
+                width: <b>{treePos.width}%</b>
+              </div>
+              <div style={{ display: "flex", gap: 6 }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSaved({ ...treePos });
+                    setEditMode(false);
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: "8px 10px",
+                    borderRadius: 8,
+                    background: "#3DA776",
+                    color: "#fff",
+                    fontSize: 12,
+                    fontWeight: 600,
+                  }}
+                >
+                  Save & lock in
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const d = { top: 180, right: 0, width: 50 };
+                    setTreePos(d);
+                  }}
+                  style={{
+                    padding: "8px 10px",
+                    borderRadius: 8,
+                    background: "transparent",
+                    border: "1px solid rgba(31,41,156,0.2)",
+                    color: "#1F299C",
+                    fontSize: 12,
+                  }}
+                >
+                  Reset
+                </button>
+              </div>
+            </>
+          )}
+          {saved && !editMode && (
+            <div style={{ marginTop: 10, padding: 8, borderRadius: 6, background: "#FAF9F6", fontSize: 11, lineHeight: 1.5 }}>
+              <b style={{ color: "#3DA776" }}>Saved.</b> Send me these values and I'll bake them in permanently:
+              <pre style={{ marginTop: 6, fontSize: 11, whiteSpace: "pre-wrap", color: "#1F299C", fontWeight: 600 }}>
+{`top: ${Math.round(saved.top)}px
+right: ${saved.right}%
+width: ${saved.width}%`}
+              </pre>
+              <button
+                type="button"
+                onClick={() =>
+                  navigator.clipboard?.writeText(
+                    `top: ${Math.round(saved.top)}px; right: ${saved.right}%; width: ${saved.width}%;`
+                  )
+                }
+                style={{
+                  marginTop: 4,
+                  width: "100%",
+                  padding: "6px 8px",
+                  borderRadius: 6,
+                  background: "#1F299C",
+                  color: "#fff",
+                  fontSize: 11,
+                }}
+              >
+                Copy to clipboard
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       </motion.div>
     </section>
