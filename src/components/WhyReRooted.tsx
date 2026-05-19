@@ -34,7 +34,7 @@ export function WhyReRootedStatement() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto flex w-full flex-col"
+        className="relative mx-auto grid w-full grid-cols-1 items-center gap-0 md:grid-cols-2"
         style={{
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
@@ -44,121 +44,116 @@ export function WhyReRootedStatement() {
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
-        {/* 1. Masthead lockup */}
-        <img
-          src={logoWordmarkBlue}
-          alt="Re-Rooted® Switzerland"
-          className="block h-auto w-full select-none"
-          style={{ maxWidth: 1400 }}
-          draggable={false}
-        />
+        <div className="flex flex-col">
+          {/* 1. Masthead lockup */}
+          <img
+            src={logoWordmarkBlue}
+            alt="Re-Rooted® Switzerland"
+            className="block h-auto w-full select-none"
+            style={{ maxWidth: 1400 }}
+            draggable={false}
+          />
 
-        {/* 2. Centered tagline */}
-        <p
-          className="text-center"
-          style={{
-            color: "#1F299C",
-            fontFamily: '"DM Sans", sans-serif',
-            fontWeight: 800,
-            fontSize: "clamp(17px, 1.6vw, 24px)",
-            letterSpacing: "0.28em",
-            marginTop: 56,
-            marginBottom: 36,
-            textTransform: "uppercase",
-          }}
-        >
-          The Human Side of Relocation
-        </p>
-
-        {/* 3. Left-aligned editorial paragraph */}
-        <p
-          style={{
-            color: "#1F299C",
-            fontFamily: '"DM Sans", sans-serif',
-            fontWeight: 400,
-            fontSize: "clamp(24px, 2.7vw, 39px)",
-            lineHeight: 1.16,
-            letterSpacing: "-0.018em",
-            maxWidth: "22ch",
-            marginBottom: 40,
-            textAlign: "left",
-          }}
-        >
-          Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
-        </p>
-
-        {/* 4. CTAs */}
-        <div className="flex flex-wrap items-center" style={{ gap: 12 }}>
-          <a
-            href="#program"
-            onClick={handleCta("#program")}
-            className="inline-flex items-center gap-2 transition-all"
+          {/* 2. Centered tagline */}
+          <p
+            className="text-center"
             style={{
-              background: "#1F299C",
-              color: "#FFFFFF",
-              padding: "14px 22px",
-              borderRadius: 999,
-              fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 500,
-              fontSize: 14,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#141A6B";
-              e.currentTarget.style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#1F299C";
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
-          >
-            Start your journey
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </a>
-          <a
-            href="#approach"
-            onClick={handleCta("#approach")}
-            className="inline-flex items-center transition-colors"
-            style={{
-              background: "transparent",
               color: "#1F299C",
-              padding: "14px 22px",
-              borderRadius: 999,
-              border: "1px solid rgba(31, 41, 156, 0.10)",
               fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 500,
-              fontSize: 14,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(31, 41, 156, 0.05)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
+              fontWeight: 800,
+              fontSize: "clamp(17px, 1.6vw, 24px)",
+              letterSpacing: "0.28em",
+              marginTop: 56,
+              marginBottom: 36,
+              textTransform: "uppercase",
             }}
           >
-            How it works
-          </a>
+            The Human Side of Relocation
+          </p>
+
+          {/* 3. Left-aligned editorial paragraph */}
+          <p
+            style={{
+              color: "#1F299C",
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 400,
+              fontSize: "clamp(24px, 2.7vw, 39px)",
+              lineHeight: 1.16,
+              letterSpacing: "-0.018em",
+              maxWidth: "22ch",
+              marginBottom: 40,
+              textAlign: "left",
+            }}
+          >
+            Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
+          </p>
+
+          {/* 4. CTAs */}
+          <div className="flex flex-wrap items-center" style={{ gap: 12 }}>
+            <a
+              href="#program"
+              onClick={handleCta("#program")}
+              className="inline-flex items-center gap-2 transition-all"
+              style={{
+                background: "#1F299C",
+                color: "#FFFFFF",
+                padding: "14px 22px",
+                borderRadius: 999,
+                fontFamily: '"DM Sans", sans-serif',
+                fontWeight: 500,
+                fontSize: 14,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#141A6B";
+                e.currentTarget.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#1F299C";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              Start your journey
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+            <a
+              href="#approach"
+              onClick={handleCta("#approach")}
+              className="inline-flex items-center transition-colors"
+              style={{
+                background: "transparent",
+                color: "#1F299C",
+                padding: "14px 22px",
+                borderRadius: 999,
+                border: "1px solid rgba(31, 41, 156, 0.10)",
+                fontFamily: '"DM Sans", sans-serif',
+                fontWeight: 500,
+                fontSize: 14,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(31, 41, 156, 0.05)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              How it works
+            </a>
+          </div>
         </div>
 
-        {/* Tree animation video: stacks below on mobile, absolutely positioned to the right of paragraph + CTAs on desktop. Transparent-background WebM so it blends seamlessly with the page. */}
-        <video
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-          className="mt-10 block h-auto w-[80%] self-center md:absolute md:right-[clamp(28px,4vw,56px)] md:top-[clamp(380px,46vh,520px)] md:mt-0 md:w-[56%] md:max-w-[900px] md:self-auto"
-          style={{
-            border: "none",
-            borderRadius: 0,
-            boxShadow: "none",
-            backgroundColor: "transparent",
-          }}
-        >
-          <source src="/hero-tree-animation.webm" type="video/webm" />
-          <source src="/hero-tree-animation.mp4" type="video/mp4" />
-        </video>
+        {/* Video column: fills its grid cell, no padding/border/background. Mobile ~300px tall with cover crop. */}
+        <div className="relative overflow-hidden h-[300px] md:h-full mt-10 md:mt-0">
+          <video
+            autoPlay
+            muted
+            playsInline
+            className="w-full h-full object-cover block"
+            src="/hero-tree-animation.mp4"
+          />
+        </div>
       </motion.div>
     </section>
   );
