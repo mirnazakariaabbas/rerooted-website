@@ -142,9 +142,8 @@ export function WhyReRootedStatement() {
           </a>
         </div>
 
-        {/* Tree animation video: stacks below on mobile, absolutely positioned to the right of paragraph + CTAs on desktop. Background is matched to the page so it blends seamlessly. */}
+        {/* Tree animation video: stacks below on mobile, absolutely positioned to the right of paragraph + CTAs on desktop. Transparent-background WebM so it blends seamlessly with the page. */}
         <video
-          src="/hero-tree-animation.mp4"
           autoPlay
           muted
           playsInline
@@ -154,10 +153,12 @@ export function WhyReRootedStatement() {
             border: "none",
             borderRadius: 0,
             boxShadow: "none",
-            mixBlendMode: "multiply",
             backgroundColor: "transparent",
           }}
-        />
+        >
+          <source src="/hero-tree-animation.webm" type="video/webm" />
+          <source src="/hero-tree-animation.mp4" type="video/mp4" />
+        </video>
       </motion.div>
     </section>
   );
