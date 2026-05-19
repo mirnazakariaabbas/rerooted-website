@@ -6,7 +6,6 @@ import offeringCoach from "@/assets/offering-coach.png";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
-import heroTree from "@/assets/hero-tree.png";
 import heroTreeCropped from "@/assets/hero-tree-cropped.png";
 
 export function WhyReRootedStatement() {
