@@ -403,7 +403,7 @@ export function WhyReRootedPillars() {
       id="approach"
       className="relative overflow-hidden bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[1760px] px-6 pb-16 pt-12 sm:px-8 md:px-10 md:pb-20 md:pt-16 lg:px-14 lg:pb-24 lg:pt-20 xl:px-16 xl:pt-24">
+      <div className="mx-auto max-w-[1760px] px-6 pb-16 pt-4 sm:px-8 md:px-10 md:pb-20 md:pt-6 lg:px-14 lg:pb-24 lg:pt-8 xl:px-16 xl:pt-10">
         <div className="mb-8 flex flex-col gap-4 md:mb-10">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
             ​
