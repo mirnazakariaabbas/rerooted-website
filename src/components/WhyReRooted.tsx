@@ -421,7 +421,7 @@ export function WhyReRootedPillars() {
             A complete integration system 
           </h2>
           <p className="text-primary/85 max-w-[44ch] text-base md:text-lg leading-relaxed">
-            allowing the expat to adapt faster, perform better, and stay longer in the company
+            Allowing the expat to adapt faster, perform better, and stay longer in the company
           </p>
         </div>
 
