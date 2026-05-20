@@ -5,8 +5,6 @@ import { LogIn } from "lucide-react";
 import { useAudience } from "@/contexts/AudienceContext";
 import logoWhite from "@/assets/logo-wordmark-white.png";
 
-type Rect = { x: number; y: number; width: number; height: number };
-
 const AudienceGate = () => {
   const { gateOpen, setGateOpen, setAudience, audience } = useAudience();
   const [hoveredButton, setHoveredButton] = useState<"org" | "individual" | null>(null);
