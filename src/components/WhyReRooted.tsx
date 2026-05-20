@@ -418,7 +418,7 @@ export function WhyReRootedPillars() {
               maxWidth: "22ch",
             }}
           >
-            What sets Re-Rooted® apart
+            A complete integration system 
           </h2>
         </div>
 
