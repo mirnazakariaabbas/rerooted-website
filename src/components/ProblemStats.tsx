@@ -73,7 +73,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
 
   const oneIn = useOneInCountdown(3, 1800, inView, 200);
   const stat42 = useCountUp(42, 1800, inView, 300);
-  const stat98 = useCountUp(90, 2000, inView, 400, 90);
+  const stat98 = useCountUp(98, 2000, inView, 400, 90);
   const stat80 = useCountUp(80, 1800, inView, 500);
 
   // Tile types for the 3x2 grid
@@ -116,7 +116,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
       number: (
         <>
           <span className="text-primary">{stat98}</span>
-          <span className="text-secondary" style={{ fontSize: "0.55em" }}>%</span>
+          <span className="text-secondary">%</span>
         </>
       ),
       caption: (
@@ -201,13 +201,8 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                 >
                   <div className="flex-1 flex items-center justify-center w-full">
                     <div
-                      className="leading-none flex items-start"
-                      style={{
-                        fontFamily: '"DM Sans", system-ui, sans-serif',
-                        fontWeight: 400,
-                        fontSize: "clamp(160px, 20vw, 300px)",
-                        lineHeight: 0.9,
-                      }}
+                      className="leading-none flex items-baseline"
+                      style={{ ...serif, fontStyle: "italic", fontSize: "clamp(110px, 14vw, 200px)" }}
                     >
                       {tile.number}
                     </div>
