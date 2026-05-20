@@ -6,7 +6,8 @@ import offeringCoach from "@/assets/offering-coach.png";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
-import heroTreeCropped from "@/assets/hero-tree-cropped.png";
+import AnimatedTree from "@/components/AnimatedTree";
+
 
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
