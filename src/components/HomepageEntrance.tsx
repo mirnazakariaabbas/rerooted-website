@@ -3,32 +3,35 @@ import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * Wraps the homepage so that the first reveal after the cinematic intro
- * runs a staggered settle-in. Subsequent re-renders (e.g. audience toggle)
- * skip the entrance.
+ * runs a staggered settle-in. Subsequent re-renders skip the entrance.
  *
- * Children using `data-hero-stagger="headline|sub|cta|cards"` will be
- * animated in sequence via CSS variables on the wrapper.
+ * Usage: pass `active=true` while the portal overlay is on screen. When
+ * it flips back to false, the entrance plays exactly once.
  */
 
 type Props = {
-  /** Trigger the entrance. Flip from false -> true exactly once. */
   active: boolean;
   children: ReactNode;
 };
 
 const HomepageEntrance = ({ active, children }: Props) => {
   const prefersReduced = useReducedMotion();
-  const [hasEntered, setHasEntered] = useState(false);
-  const firedRef = useRef(false);
+  const [playing, setPlaying] = useState(false);
+  const armedRef = useRef(false);
+  const playedRef = useRef(false);
 
   useEffect(() => {
-    if (active && !firedRef.current) {
-      firedRef.current = true;
-      setHasEntered(true);
+    if (active && !playedRef.current) {
+      armedRef.current = true;
+      return;
+    }
+    if (!active && armedRef.current && !playedRef.current) {
+      playedRef.current = true;
+      setPlaying(true);
     }
   }, [active]);
 
-  if (!hasEntered || prefersReduced) {
+  if (!playing || prefersReduced) {
     return <>{children}</>;
   }
 
@@ -38,6 +41,7 @@ const HomepageEntrance = ({ active, children }: Props) => {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
       style={{ willChange: "transform, opacity" }}
+      onAnimationComplete={() => setPlaying(false)}
     >
       {children}
     </motion.div>

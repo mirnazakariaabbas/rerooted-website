@@ -14,7 +14,6 @@ const Index = () => {
     setTransitioning,
     setGateOpen,
     markIntroSeen,
-    hasSeenIntro,
   } = useAudience();
   const isIndividual = audience === "individual";
 
