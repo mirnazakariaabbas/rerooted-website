@@ -64,7 +64,7 @@ interface ProblemStatsProps {
   closingLine?: string | null;
 }
 
-const serif = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
+const serif = { fontFamily: '"DM Sans", system-ui, sans-serif', fontWeight: 400 } as const;
 
 const ProblemStats = ({ label }: ProblemStatsProps) => {
   const ref = useRef<HTMLElement>(null);
@@ -208,7 +208,7 @@ const ProblemStats = ({ label }: ProblemStatsProps) => {
                     <div
                       className="leading-none flex items-start"
                       style={{
-                        fontFamily: '"Yellowtail", cursive',
+                        fontFamily: '"DM Sans", system-ui, sans-serif',
                         fontWeight: 400,
                         fontSize: "clamp(160px, 20vw, 300px)",
                         lineHeight: 0.9,
