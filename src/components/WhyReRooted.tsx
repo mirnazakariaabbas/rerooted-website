@@ -276,7 +276,7 @@ export function WhyReRootedStatement() {
 
 const PILLARS = [
   {
-    eyebrow: "",
+    eyebrow: "Coach",
     title: "A coach picked for you",
     body: "Every client is matched with a coach hand-picked for their move, holding at least a PCC accreditation and trained in the Re-Rooted® methodology and principles.",
     image: offeringCoach,
