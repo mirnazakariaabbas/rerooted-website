@@ -88,15 +88,16 @@ const ExpatJourney = () => {
                 ) : (
                   <>
                     SUPPORTING YOU THROUGH EVERY{" "}
-                    <span className="inline-flex items-center gap-4 align-middle">
+                    <span className="relative inline-block align-baseline">
                       STAGE
                       <img
                         src={heartDrawn}
                         alt=""
                         aria-hidden="true"
-                        className="inline-block h-[2.7em] w-auto select-none"
                         draggable={false}
+                        className="pointer-events-none absolute left-full top-1/2 ml-4 h-[2.7em] w-auto -translate-y-1/2 select-none"
                       />
+                    </span>
                     </span>
                   </>
                 )}
