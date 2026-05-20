@@ -6,6 +6,7 @@ import preRootedImg from "@/assets/journey-pre-rooted.webp";
 import rootingInImg from "@/assets/journey-rooting-in.webp";
 import rootingBackImg from "@/assets/journey-rooting-back.webp";
 import familySupportImg from "@/assets/journey-family-support.webp";
+import heartDrawn from "@/assets/heart-drawn.png";
 
 type Stage = {
   name: string;
@@ -85,7 +86,19 @@ const ExpatJourney = () => {
                 {isIndividual ? (
                   <>Where are you<br />right now.</>
                 ) : (
-                  <>SUPPORTING YOU THROUGH EVERY STAGE</>
+                  <>
+                    SUPPORTING YOU THROUGH EVERY{" "}
+                    <span className="inline-flex items-center gap-4 align-middle">
+                      STAGE
+                      <img
+                        src={heartDrawn}
+                        alt=""
+                        aria-hidden="true"
+                        className="inline-block h-[0.9em] w-auto select-none"
+                        draggable={false}
+                      />
+                    </span>
+                  </>
                 )}
               </h2>
             </div>
