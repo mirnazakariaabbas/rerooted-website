@@ -405,21 +405,9 @@ export function WhyReRootedPillars() {
       className="relative overflow-hidden bg-background text-foreground"
     >
       <div className="relative mx-auto max-w-[1760px] px-6 pb-16 pt-4 sm:px-8 md:px-10 md:pb-20 md:pt-6 lg:px-14 lg:pb-24 lg:pt-8 xl:px-16 xl:pt-10">
-        {/* Decorative swiggly arrow pointing from the heading area down toward the pill row */}
-        <img
-          src={swigglyArrowSection3}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute hidden md:block select-none"
-          style={{
-            top: "clamp(140px, 16vw, 260px)",
-            left: "clamp(280px, 32vw, 560px)",
-            width: "clamp(440px, 44vw, 720px)",
-            height: "auto",
-            zIndex: 2,
-          }}
-          draggable={false}
-        />
+        {/* Decorative swiggly arrow — draggable for positioning. Drag with mouse; position persists in localStorage. */}
+        <DraggableArrow src={swigglyArrowSection3} />
+
         <div className="mb-8 flex flex-col gap-4 md:mb-10">
 
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
