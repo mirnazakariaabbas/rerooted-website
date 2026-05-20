@@ -127,7 +127,7 @@ export function WhyReRootedStatement() {
           className="pointer-events-none absolute aspect-[1438/1385]"
           style={{
             zIndex: 0,
-            top: "233px",
+            top: "271px",
             right: "2.51%",
             width: "44%",
           }}
