@@ -98,7 +98,8 @@ const ExpatJourney = () => {
 
               </div>
               <h2
-                className="font-display"
+                ref={headlineRef}
+                className="font-display relative"
                 style={{
                   fontSize: "clamp(36px, 4.5vw, 64px)",
                   lineHeight: 1.05,
@@ -111,17 +112,50 @@ const ExpatJourney = () => {
                   <>Where are you<br />right now.</>
                 ) : (
                   <>
-                    SUPPORTING YOU THROUGH EVERY{" "}
-                    <span className="relative inline-block align-baseline">
-                      STAGE
-                      <img
-                        src={heartDrawn}
-                        alt=""
-                        aria-hidden="true"
-                        draggable={false}
-                        className="pointer-events-none absolute left-full top-1/2 ml-4 h-[2.7em] w-auto -translate-y-1/2 select-none"
-                      />
-                    </span>
+                    SUPPORTING YOU THROUGH EVERY STAGE
+                    <img
+                      src={heartDrawn}
+                      alt=""
+                      aria-hidden="true"
+                      draggable={false}
+                      onMouseDown={(e) => {
+                        const target = e.currentTarget.getBoundingClientRect();
+                        dragStateRef.current = {
+                          active: true,
+                          offX: e.clientX - target.left,
+                          offY: e.clientY - target.top,
+                        };
+                        e.preventDefault();
+                      }}
+                      style={{
+                        position: "absolute",
+                        top: heartPos.top,
+                        left: heartPos.left,
+                        height: `${heartPos.size}em`,
+                        width: "auto",
+                        cursor: "grab",
+                        userSelect: "none",
+                      }}
+                      className="select-none"
+                    />
+                    {/* Position badge — remove once hardcoded */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: -28,
+                        right: 0,
+                        background: "#1F299C",
+                        color: "#FAF9F6",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        padding: "4px 8px",
+                        borderRadius: 4,
+                        fontFamily: "monospace",
+                        letterSpacing: 0,
+                      }}
+                    >
+                      top: {heartPos.top}px · left: {heartPos.left}px · size: {heartPos.size}em
+                    </div>
                   </>
                 )}
               </h2>
