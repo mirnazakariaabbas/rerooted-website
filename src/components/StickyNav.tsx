@@ -11,14 +11,14 @@ type NavLink = { label: string; href: string; type: "route" | "hash" };
 
 const corporateLinks: NavLink[] = [
   { label: "Program", href: "/services", type: "route" },
-  { label: "The Stages", href: "#journey", type: "hash" },
+  { label: "Stages", href: "#journey", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
   { label: "Contact", href: "#contact", type: "hash" },
 ];
 
 const individualLinks: NavLink[] = [
-  { label: "Your Stages", href: "#journey", type: "hash" },
+  { label: "Stages", href: "#journey", type: "hash" },
   { label: "Support", href: "#support", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
@@ -180,7 +180,7 @@ const StickyNav = () => {
                 <button
                   key={link.href + link.label}
                   onClick={() => handleNavClick(link)}
-                  className="adaptive-nav__link text-sm font-medium cursor-pointer bg-transparent border-none"
+                  className="adaptive-nav__link text-sm font-medium cursor-pointer bg-transparent border-none font-sans"
                 >
                   {link.label}
                 </button>
