@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import mountainImg from "@/assets/problem-mountain.webp";
 import cityImg from "@/assets/problem-city.webp";
 import planeImg from "@/assets/problem-plane.jpg";
+import logoWhite from "@/assets/logo-white.png";
 
 // Cubic ease-out count-up
 function useCountUp(end: number, duration = 1800, start = false, delay = 0, from = 0) {
@@ -256,11 +257,12 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                     </div>
                   ) : (
                     <div className="text-center">
-                      <div
-                        className="text-white leading-none"
-                        style={{ ...serif, fontStyle: "italic", fontSize: "clamp(28px, 3vw, 40px)" }}
-                      >
-                        Re-Rooted<sup className="text-[0.5em] align-super">®</sup>
+                      <div className="flex justify-center">
+                        <img
+                          src={logoWhite}
+                          alt="Re-Rooted"
+                          className="h-10 md:h-12 w-auto"
+                        />
                       </div>
                       {tile.tagline && (
                         <div className="mt-3 text-white text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.22em]">
