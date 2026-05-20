@@ -162,7 +162,7 @@ const StickyNav = () => {
           <img
             src={logoShorthand}
             alt="Re-Rooted®"
-            className="adaptive-nav__logo h-24 w-auto"
+            className="adaptive-nav__logo h-48 w-auto"
           />
         </button>
 
