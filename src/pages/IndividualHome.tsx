@@ -15,7 +15,7 @@ const IndividualHome = () => (
     <WhyReRootedStatement />
     <ProblemStats
       label="You're Not Alone"
-      headline="What nobody told you before you moved"
+      headline="Moving is unpredictable, but…"
       closingLine="These aren't just numbers, they're people like you, navigating the same challenges you face right now."
     />
     <WhyReRootedPillars />
