@@ -96,8 +96,8 @@ export function WhyReRootedStatement() {
         {/* 4. CTAs */}
         <div className="flex flex-wrap items-center" style={{ gap: 12, position: "relative", zIndex: 1 }}>
           <a
-            href="#program"
-            onClick={handleCta("#program")}
+            href="#contact"
+            onClick={handleCta("#contact")}
             className="inline-flex items-center gap-2 transition-all"
             style={{
               background: "#1F299C",
@@ -117,34 +117,11 @@ export function WhyReRootedStatement() {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            Start your journey
+            Contact us
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>
-          </a>
-          <a
-            href="#approach"
-            onClick={handleCta("#approach")}
-            className="inline-flex items-center transition-colors"
-            style={{
-              background: "transparent",
-              color: "#1F299C",
-              padding: "14px 22px",
-              borderRadius: 999,
-              border: "1px solid rgba(31, 41, 156, 0.10)",
-              fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 500,
-              fontSize: 14,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(31, 41, 156, 0.05)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-            }}
-          >
-            How it works
           </a>
         </div>
 
