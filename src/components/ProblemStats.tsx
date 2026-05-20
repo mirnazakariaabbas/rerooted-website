@@ -99,7 +99,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
       kind: "image",
       src: mountainImg,
       eyebrow: "",
-      tagline: "Replanted, not relocated",
+      tagline: "Relocated and Replanted ",
     },
     {
       kind: "stat-blue",
