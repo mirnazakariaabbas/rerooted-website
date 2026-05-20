@@ -619,28 +619,47 @@ function DraggableArrow({ src }: { src: string }) {
   };
 
   return (
-    <img
-      ref={imgRef}
-      src={src}
-      alt=""
-      aria-hidden="true"
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerUp}
-      onWheel={onWheel}
-      className="absolute hidden md:block select-none"
-      style={{
-        top: pos.top,
-        left: pos.left,
-        width,
-        height: "auto",
-        zIndex: 5,
-        cursor: "grab",
-        touchAction: "none",
-      }}
-      draggable={false}
-    />
+    <>
+      <img
+        ref={imgRef}
+        src={src}
+        alt=""
+        aria-hidden="true"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        onWheel={onWheel}
+        className="absolute hidden md:block select-none"
+        style={{
+          top: pos.top,
+          left: pos.left,
+          width,
+          height: "auto",
+          zIndex: 5,
+          cursor: "grab",
+          touchAction: "none",
+        }}
+        draggable={false}
+      />
+      <div
+        className="fixed hidden md:block"
+        style={{
+          bottom: 12,
+          right: 12,
+          zIndex: 9999,
+          background: "rgba(0,0,0,0.85)",
+          color: "#fff",
+          fontFamily: "monospace",
+          fontSize: 12,
+          padding: "6px 10px",
+          borderRadius: 6,
+          pointerEvents: "none",
+        }}
+      >
+        top: {Math.round(pos.top)} · left: {Math.round(pos.left)} · width: {Math.round(width)}
+      </div>
+    </>
   );
 }
 
