@@ -161,10 +161,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
           </span>
 
           <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-left">
-
-            The problem most companies
-            <br />
-            <em className="italic text-secondary">live with.</em>
+            {headline}
           </h2>
         </motion.div>
 
