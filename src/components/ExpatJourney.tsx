@@ -86,7 +86,19 @@ const ExpatJourney = () => {
                 {isIndividual ? (
                   <>Where are you<br />right now.</>
                 ) : (
-                  <>SUPPORTING YOU THROUGH EVERY STAGE</>
+                  <>
+                    SUPPORTING YOU THROUGH EVERY{" "}
+                    <span className="inline-flex items-center gap-4 align-middle">
+                      STAGE
+                      <img
+                        src={heartDrawn}
+                        alt=""
+                        aria-hidden="true"
+                        className="inline-block h-[0.9em] w-auto select-none"
+                        draggable={false}
+                      />
+                    </span>
+                  </>
                 )}
               </h2>
             </div>
