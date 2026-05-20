@@ -3,18 +3,10 @@ import AudienceGate from "@/components/AudienceGate";
 import StickyNav from "@/components/StickyNav";
 import CorporateHome from "@/pages/CorporateHome";
 import IndividualHome from "@/pages/IndividualHome";
-import PortalTransition from "@/components/PortalTransition";
-import HomepageEntrance from "@/components/HomepageEntrance";
 import { useAudience } from "@/contexts/AudienceContext";
 
 const Index = () => {
-  const {
-    audience,
-    transitioning,
-    setTransitioning,
-    setGateOpen,
-    markIntroSeen,
-  } = useAudience();
+  const { audience } = useAudience();
   const isIndividual = audience === "individual";
 
   return (
@@ -31,9 +23,7 @@ const Index = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <HomepageEntrance active={transitioning}>
-              <IndividualHome />
-            </HomepageEntrance>
+            <IndividualHome />
           </motion.div>
         ) : (
           <motion.div
@@ -43,23 +33,8 @@ const Index = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <HomepageEntrance active={transitioning}>
-              <CorporateHome />
-            </HomepageEntrance>
+            <CorporateHome />
           </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {transitioning && (
-          <PortalTransition
-            key="portal"
-            onMidpoint={() => setGateOpen(false)}
-            onComplete={() => {
-              markIntroSeen();
-              setTransitioning(false);
-            }}
-          />
         )}
       </AnimatePresence>
     </>
