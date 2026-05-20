@@ -32,7 +32,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
 
   return (
     <section className="relative flex min-h-screen items-center bg-background">
-      <div className="container mx-auto flex max-w-6xl flex-col items-center gap-12 px-6 py-20 md:flex-row md:items-center md:gap-8 md:px-12 2xl:max-w-[1280px]">
+      <div className="container mx-auto flex max-w-6xl flex-col items-center gap-12 px-6 py-12 md:flex-row md:items-center md:gap-8 md:px-12 md:py-10 2xl:max-w-[1280px]">
         <div ref={textRef} className="w-full min-w-0 md:basis-[45%] md:flex-none">
           <h1
             className="text-4xl font-black leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-[56px]"
@@ -108,7 +108,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
           <img
             src={heroImage}
             alt="Professional in a modern workspace"
-            className="h-auto w-full max-w-[720px] object-contain sm:max-w-[860px] md:w-[184%] md:max-w-none md:translate-x-[20%]"
+            className="h-auto max-h-[78vh] w-full max-w-[640px] object-contain sm:max-w-[760px] md:w-[150%] md:max-w-none md:translate-x-[15%]"
             loading="eager"
             fetchPriority="high"
             decoding="async"
