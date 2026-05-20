@@ -59,6 +59,30 @@ const ExpatJourney = () => {
   const isIndividual = audience === "individual";
   const stages = isIndividual ? individualStages : corporateStages;
 
+  // Heart position tuning (corporate headline). Drag to position, then hardcode these values.
+  const [heartPos, setHeartPos] = useState({ top: 40, left: 760, size: 2.7 });
+  const dragStateRef = useRef<{ active: boolean; offX: number; offY: number }>({ active: false, offX: 0, offY: 0 });
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!dragStateRef.current.active || !headlineRef.current) return;
+      const rect = headlineRef.current.getBoundingClientRect();
+      setHeartPos((p) => ({
+        ...p,
+        left: Math.round(e.clientX - rect.left - dragStateRef.current.offX),
+        top: Math.round(e.clientY - rect.top - dragStateRef.current.offY),
+      }));
+    };
+    const onUp = () => { dragStateRef.current.active = false; };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, []);
+
   return (
     <section id="journey" className="px-6 lg:px-12" style={{ background: "#0A0A0A", paddingTop: 80, paddingBottom: 80 }}>
       <div className="container mx-auto max-w-[1760px]">
@@ -74,7 +98,8 @@ const ExpatJourney = () => {
 
               </div>
               <h2
-                className="font-display"
+                ref={headlineRef}
+                className="font-display relative"
                 style={{
                   fontSize: "clamp(36px, 4.5vw, 64px)",
                   lineHeight: 1.05,
@@ -87,17 +112,50 @@ const ExpatJourney = () => {
                   <>Where are you<br />right now.</>
                 ) : (
                   <>
-                    SUPPORTING YOU THROUGH EVERY{" "}
-                    <span className="relative inline-block align-baseline">
-                      STAGE
-                      <img
-                        src={heartDrawn}
-                        alt=""
-                        aria-hidden="true"
-                        draggable={false}
-                        className="pointer-events-none absolute left-full top-1/2 ml-4 h-[2.7em] w-auto -translate-y-1/2 select-none"
-                      />
-                    </span>
+                    SUPPORTING YOU THROUGH EVERY STAGE
+                    <img
+                      src={heartDrawn}
+                      alt=""
+                      aria-hidden="true"
+                      draggable={false}
+                      onMouseDown={(e) => {
+                        const target = e.currentTarget.getBoundingClientRect();
+                        dragStateRef.current = {
+                          active: true,
+                          offX: e.clientX - target.left,
+                          offY: e.clientY - target.top,
+                        };
+                        e.preventDefault();
+                      }}
+                      style={{
+                        position: "absolute",
+                        top: heartPos.top,
+                        left: heartPos.left,
+                        height: `${heartPos.size}em`,
+                        width: "auto",
+                        cursor: "grab",
+                        userSelect: "none",
+                      }}
+                      className="select-none"
+                    />
+                    {/* Position badge — remove once hardcoded */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: -28,
+                        right: 0,
+                        background: "#1F299C",
+                        color: "#FAF9F6",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        padding: "4px 8px",
+                        borderRadius: 4,
+                        fontFamily: "monospace",
+                        letterSpacing: 0,
+                      }}
+                    >
+                      top: {heartPos.top}px · left: {heartPos.left}px · size: {heartPos.size}em
+                    </div>
                   </>
                 )}
               </h2>
