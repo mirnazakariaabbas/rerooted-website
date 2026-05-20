@@ -98,7 +98,6 @@ const ExpatJourney = () => {
                         className="pointer-events-none absolute left-full top-1/2 ml-4 h-[2.7em] w-auto -translate-y-1/2 select-none"
                       />
                     </span>
-                    </span>
                   </>
                 )}
               </h2>
