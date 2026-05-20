@@ -256,7 +256,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                         <img
                           src={logoWhite}
                           alt="Re-Rooted"
-                          className="h-10 md:h-12 w-auto"
+                          className="w-3/4 max-w-[280px] h-auto"
                         />
                       </div>
                       {tile.tagline && (
