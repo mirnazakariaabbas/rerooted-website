@@ -11,6 +11,9 @@ import heroTreeCropped from "@/assets/hero-tree-cropped.png";
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
+  const [transitionPhase, setTransitionPhase] = useState<"idle" | "bounce" | "slide">("idle");
+  const triggeredRef = useRef(false);
+  const lockedRef = useRef(false);
 
   const handleCta = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -22,6 +25,79 @@ export function WhyReRootedStatement() {
     }
   };
 
+  // Trap the first downward scroll: bounce twice, then horizontally slide to #problem
+  useEffect(() => {
+    const runTransition = () => {
+      if (triggeredRef.current || lockedRef.current) return;
+      triggeredRef.current = true;
+      lockedRef.current = true;
+
+      // Lock page scroll during the choreography
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      setTransitionPhase("bounce");
+
+      // Bounce duration ~ 1100ms (two bounces), then slide for ~750ms
+      window.setTimeout(() => {
+        setTransitionPhase("slide");
+        window.setTimeout(() => {
+          const target = document.getElementById("problem");
+          if (target) {
+            target.scrollIntoView({ behavior: "auto", block: "start" });
+          }
+          // Reset
+          setTransitionPhase("idle");
+          document.body.style.overflow = prevOverflow;
+          lockedRef.current = false;
+        }, 780);
+      }, 1100);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (triggeredRef.current) return;
+      if (window.scrollY > 10) return;
+      if (e.deltaY <= 0) return;
+      e.preventDefault();
+      runTransition();
+    };
+
+    let touchStartY = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0]?.clientY ?? 0;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (triggeredRef.current) return;
+      if (window.scrollY > 10) return;
+      const y = e.touches[0]?.clientY ?? 0;
+      if (touchStartY - y > 12) {
+        e.preventDefault();
+        runTransition();
+      }
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, []);
+
+  const slideStyle: React.CSSProperties =
+    transitionPhase === "slide"
+      ? {
+          transform: "translateX(-100vw)",
+          transition: "transform 750ms cubic-bezier(0.7, 0, 0.2, 1)",
+        }
+      : transitionPhase === "bounce"
+      ? {
+          animation: "rr-bounce-stuck 1.1s cubic-bezier(0.4, 0, 0.2, 1) both",
+        }
+      : {};
+
   return (
     <section
       ref={sectionRef}
@@ -31,8 +107,23 @@ export function WhyReRootedStatement() {
       style={{
         background: "#FAF9F6",
         minHeight: "calc(100vh - 84px)",
+        ...slideStyle,
       }}
     >
+      <style>{`
+        @keyframes rr-bounce-stuck {
+          0%   { transform: translateY(0); }
+          25%  { transform: translateY(-18px); }
+          50%  { transform: translateY(0); }
+          75%  { transform: translateY(-12px); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes rr-arrow-bounce {
+          0%, 100% { transform: translateY(0); opacity: 0.7; }
+          50%      { transform: translateY(10px); opacity: 1; }
+        }
+      `}</style>
+
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -144,9 +235,48 @@ export function WhyReRootedStatement() {
           />
         </div>
       </motion.div>
+
+      {/* Animated scroll-down cue */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 z-[2] flex -translate-x-1/2 flex-col items-center gap-2"
+        style={{
+          bottom: 28,
+          color: "#1F299C",
+          fontFamily: '"DM Sans", sans-serif',
+          opacity: transitionPhase === "idle" ? 1 : 0,
+          transition: "opacity 250ms ease-out",
+        }}
+      >
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: "0.24em",
+            textTransform: "uppercase",
+          }}
+        >
+          Scroll
+        </span>
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ animation: "rr-arrow-bounce 1.6s ease-in-out infinite" }}
+        >
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <polyline points="6 13 12 19 18 13" />
+        </svg>
+      </div>
     </section>
   );
 }
+
 
 
 const PILLARS = [
