@@ -405,21 +405,9 @@ export function WhyReRootedPillars() {
       className="relative overflow-hidden bg-background text-foreground"
     >
       <div className="relative mx-auto max-w-[1760px] px-6 pb-16 pt-4 sm:px-8 md:px-10 md:pb-20 md:pt-6 lg:px-14 lg:pb-24 lg:pt-8 xl:px-16 xl:pt-10">
-        {/* Decorative swiggly arrow pointing from the heading area down toward the pill row */}
-        <img
-          src={swigglyArrowSection3}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute hidden md:block select-none"
-          style={{
-            top: "clamp(140px, 16vw, 260px)",
-            left: "clamp(280px, 32vw, 560px)",
-            width: "clamp(440px, 44vw, 720px)",
-            height: "auto",
-            zIndex: 2,
-          }}
-          draggable={false}
-        />
+        {/* Decorative swiggly arrow — draggable for positioning. Drag with mouse; position persists in localStorage. */}
+        <DraggableArrow src={swigglyArrowSection3} />
+
         <div className="mb-8 flex flex-col gap-4 md:mb-10">
 
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
@@ -563,3 +551,96 @@ export function WhyReRootedPillars() {
     </section>
   );
 }
+
+function DraggableArrow({ src }: { src: string }) {
+  const STORAGE_KEY = "rr-arrow-section3-pos";
+  const SIZE_KEY = "rr-arrow-section3-size";
+  const defaultPos = { top: 220, left: 420 };
+  const defaultWidth = 560;
+
+  const [pos, setPos] = useState<{ top: number; left: number }>(() => {
+    if (typeof window === "undefined") return defaultPos;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : defaultPos;
+    } catch {
+      return defaultPos;
+    }
+  });
+  const [width, setWidth] = useState<number>(() => {
+    if (typeof window === "undefined") return defaultWidth;
+    const raw = localStorage.getItem(SIZE_KEY);
+    return raw ? Number(raw) || defaultWidth : defaultWidth;
+  });
+  const draggingRef = useRef<{ dx: number; dy: number } | null>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    const el = imgRef.current;
+    if (!el) return;
+    const parent = el.offsetParent as HTMLElement | null;
+    if (!parent) return;
+    const parentRect = parent.getBoundingClientRect();
+    draggingRef.current = {
+      dx: e.clientX - (parentRect.left + pos.left),
+      dy: e.clientY - (parentRect.top + pos.top),
+    };
+    el.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    const drag = draggingRef.current;
+    const el = imgRef.current;
+    if (!drag || !el) return;
+    const parent = el.offsetParent as HTMLElement | null;
+    if (!parent) return;
+    const parentRect = parent.getBoundingClientRect();
+    const next = {
+      left: e.clientX - parentRect.left - drag.dx,
+      top: e.clientY - parentRect.top - drag.dy,
+    };
+    setPos(next);
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (!draggingRef.current) return;
+    draggingRef.current = null;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(pos));
+    } catch {}
+    imgRef.current?.releasePointerCapture(e.pointerId);
+  };
+  const onWheel = (e: React.WheelEvent) => {
+    if (!e.shiftKey) return;
+    e.preventDefault();
+    setWidth((w) => {
+      const next = Math.max(120, Math.min(1200, w - e.deltaY));
+      try { localStorage.setItem(SIZE_KEY, String(next)); } catch {}
+      return next;
+    });
+  };
+
+  return (
+    <img
+      ref={imgRef}
+      src={src}
+      alt=""
+      aria-hidden="true"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+      onWheel={onWheel}
+      className="absolute hidden md:block select-none"
+      style={{
+        top: pos.top,
+        left: pos.left,
+        width,
+        height: "auto",
+        zIndex: 5,
+        cursor: "grab",
+        touchAction: "none",
+      }}
+      draggable={false}
+    />
+  );
+}
+
