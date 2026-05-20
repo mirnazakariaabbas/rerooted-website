@@ -15,7 +15,7 @@ const CorporateHome = () => (
     <WhyReRootedStatement />
     <ProblemStats
       label="WHY RE-ROOTED® EXISTS"
-      headline="The Problem Companies Avoid"
+      headline="Moving is unpredictable, but…"
     />
     <WhyReRootedPillars />
     <ExpatJourney />
