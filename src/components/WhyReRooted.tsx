@@ -6,8 +6,7 @@ import offeringCoach from "@/assets/offering-coach.png";
 import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
-import AnimatedTree from "@/components/AnimatedTree";
-
+import heroTreeCropped from "@/assets/hero-tree-cropped.png";
 
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ export function WhyReRootedStatement() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto flex w-full flex-col gap-12 pb-20 md:flex-row md:items-center md:gap-10 lg:pb-24"
+        className="relative mx-auto flex w-full flex-col pb-[240px] md:pb-20 lg:pb-24"
         style={{
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
@@ -47,112 +46,131 @@ export function WhyReRootedStatement() {
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
-        {/* Left column: text content */}
-        <div className="w-full md:basis-[55%] md:flex-none">
-          {/* 1. Masthead lockup */}
-          <img
-            src={logoWordmarkBlue}
-            alt="Re-Rooted® Switzerland"
-            className="block h-auto w-full select-none"
-            style={{ maxWidth: 1400 }}
-            draggable={false}
-          />
+        {/* 1. Masthead lockup */}
+        <img
+          src={logoWordmarkBlue}
+          alt="Re-Rooted® Switzerland"
+          className="block h-auto w-full select-none"
+          style={{ maxWidth: 1400, position: "relative", zIndex: 1 }}
+          draggable={false}
+        />
 
-          {/* 2. Tagline */}
-          <p
+        {/* 2. Centered tagline */}
+        <p
+          className="text-center"
+          style={{
+            color: "#1F299C",
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 800,
+            fontSize: "clamp(17px, 1.6vw, 24px)",
+            letterSpacing: "0.28em",
+            marginTop: 56,
+            marginBottom: 36,
+            textTransform: "uppercase",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          The Human Side of Relocation
+        </p>
+
+        {/* 3. Left-aligned editorial paragraph */}
+        <p
+          style={{
+            color: "#1F299C",
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 400,
+            fontSize: "clamp(24px, 2.7vw, 39px)",
+            lineHeight: 1.16,
+            letterSpacing: "-0.018em",
+            maxWidth: "22ch",
+            marginBottom: 40,
+            textAlign: "left",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
+        </p>
+
+        {/* 4. CTAs */}
+        <div className="flex flex-wrap items-center" style={{ gap: 12, position: "relative", zIndex: 1 }}>
+          <a
+            href="#program"
+            onClick={handleCta("#program")}
+            className="inline-flex items-center gap-2 transition-all"
             style={{
-              color: "#1F299C",
+              background: "#1F299C",
+              color: "#FFFFFF",
+              padding: "14px 22px",
+              borderRadius: 999,
               fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 800,
-              fontSize: "clamp(17px, 1.6vw, 24px)",
-              letterSpacing: "0.28em",
-              marginTop: 56,
-              marginBottom: 36,
-              textTransform: "uppercase",
+              fontWeight: 500,
+              fontSize: 14,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#141A6B";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#1F299C";
+              e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            The Human Side of Relocation
-          </p>
-
-          {/* 3. Editorial paragraph */}
-          <p
+            Start your journey
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+          <a
+            href="#approach"
+            onClick={handleCta("#approach")}
+            className="inline-flex items-center transition-colors"
             style={{
+              background: "transparent",
               color: "#1F299C",
+              padding: "14px 22px",
+              borderRadius: 999,
+              border: "1px solid rgba(31, 41, 156, 0.10)",
               fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 400,
-              fontSize: "clamp(24px, 2.7vw, 39px)",
-              lineHeight: 1.16,
-              letterSpacing: "-0.018em",
-              maxWidth: "22ch",
-              marginBottom: 40,
-              textAlign: "left",
+              fontWeight: 500,
+              fontSize: 14,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(31, 41, 156, 0.05)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
             }}
           >
-            Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
-          </p>
-
-          {/* 4. CTAs */}
-          <div className="flex flex-wrap items-center" style={{ gap: 12 }}>
-            <a
-              href="#program"
-              onClick={handleCta("#program")}
-              className="inline-flex items-center gap-2 transition-all"
-              style={{
-                background: "#1F299C",
-                color: "#FFFFFF",
-                padding: "14px 22px",
-                borderRadius: 999,
-                fontFamily: '"DM Sans", sans-serif',
-                fontWeight: 500,
-                fontSize: 14,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#141A6B";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#1F299C";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Start your journey
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
-            <a
-              href="#approach"
-              onClick={handleCta("#approach")}
-              className="inline-flex items-center transition-colors"
-              style={{
-                background: "transparent",
-                color: "#1F299C",
-                padding: "14px 22px",
-                borderRadius: 999,
-                border: "1px solid rgba(31, 41, 156, 0.10)",
-                fontFamily: '"DM Sans", sans-serif',
-                fontWeight: 500,
-                fontSize: 14,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(31, 41, 156, 0.05)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-              }}
-            >
-              How it works
-            </a>
-          </div>
+            How it works
+          </a>
         </div>
 
-        {/* Right column: animated sketched tree */}
-        <div className="w-full md:basis-[45%] md:flex-none">
-          <AnimatedTree />
+        {/* Tree hero image — locked-in position */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute aspect-[1438/1385]"
+          style={{
+            zIndex: 0,
+            top: "269px",
+            right: "0.63%",
+            width: "50%",
+          }}
+        >
+          <img
+            src={heroTreeCropped}
+            alt=""
+            draggable={false}
+            className="block h-full w-full select-none"
+            style={{
+              objectFit: "contain",
+              objectPosition: "center bottom",
+            }}
+          />
         </div>
       </motion.div>
-
     </section>
   );
 }
