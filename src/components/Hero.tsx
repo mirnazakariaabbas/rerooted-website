@@ -108,7 +108,7 @@ const Hero = ({ headline1, headline2, body, cta1, cta2, variant = "corporate" }:
           <img
             src={heroImage}
             alt="Professional in a modern workspace"
-            className="h-auto max-h-[78vh] w-full max-w-[640px] object-contain sm:max-w-[760px] md:w-[150%] md:max-w-none md:translate-x-[15%]"
+            className="h-auto max-h-[70vh] w-auto max-w-[640px] object-contain sm:max-w-[760px] md:max-h-[72vh] md:max-w-none md:translate-x-[8%]"
             loading="eager"
             fetchPriority="high"
             decoding="async"
