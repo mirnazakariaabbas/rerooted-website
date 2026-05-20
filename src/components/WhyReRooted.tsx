@@ -36,23 +36,18 @@ export function WhyReRootedStatement() {
       const prevOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
 
-      setTransitionPhase("bounce");
-
-      // Bounce duration ~ 1100ms (two bounces), then slide for ~750ms
+      setTransitionPhase("slide");
       window.setTimeout(() => {
-        setTransitionPhase("slide");
-        window.setTimeout(() => {
-          const target = document.getElementById("problem");
-          if (target) {
-            target.scrollIntoView({ behavior: "auto", block: "start" });
-          }
-          // Reset
-          setTransitionPhase("idle");
-          document.body.style.overflow = prevOverflow;
-          lockedRef.current = false;
-        }, 780);
-      }, 1100);
+        const target = document.getElementById("problem");
+        if (target) {
+          target.scrollIntoView({ behavior: "auto", block: "start" });
+        }
+        setTransitionPhase("idle");
+        document.body.style.overflow = prevOverflow;
+        lockedRef.current = false;
+      }, 780);
     };
+
 
     const onWheel = (e: WheelEvent) => {
       if (triggeredRef.current) return;
