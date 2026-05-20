@@ -405,8 +405,16 @@ export function WhyReRootedPillars() {
       className="relative overflow-hidden bg-background text-foreground"
     >
       <div className="relative mx-auto max-w-[1760px] px-6 pb-16 pt-4 sm:px-8 md:px-10 md:pb-20 md:pt-6 lg:px-14 lg:pb-24 lg:pt-8 xl:px-16 xl:pt-10">
-        {/* Decorative swiggly arrow — draggable for positioning. Drag with mouse; position persists in localStorage. */}
-        <DraggableArrow src={swigglyArrowSection3} />
+        {/* Decorative swiggly arrow — locked position */}
+        <img
+          src={swigglyArrowSection3}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className="absolute hidden md:block select-none pointer-events-none"
+          style={{ top: 65, left: 596, width: 420, height: "auto", zIndex: 5 }}
+        />
+
 
         <div className="mb-8 flex flex-col gap-4 md:mb-10">
 
