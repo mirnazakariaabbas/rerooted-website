@@ -8,45 +8,9 @@ import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
 import heroTreeCropped from "@/assets/hero-tree-cropped.png";
 
-const TREE_DEFAULTS = { top: 200, rightPct: 0.63, widthPct: 44 };
-const TREE_STORAGE_KEY = "rerooted:treePosition:v1";
-
-function isLovablePreviewHost() {
-  if (typeof window === "undefined") return false;
-  const h = window.location.hostname;
-  return h.endsWith(".lovable.app") || h.endsWith(".lovableproject.com") || h === "localhost";
-}
-
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
-  const treeRef = useRef<HTMLDivElement>(null);
-
-  const [editorAvailable, setEditorAvailable] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [tree, setTree] = useState(TREE_DEFAULTS);
-
-  useEffect(() => {
-    setEditorAvailable(isLovablePreviewHost());
-    try {
-      const raw = localStorage.getItem(TREE_STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === "object") {
-          setTree({
-            top: Number(parsed.top ?? TREE_DEFAULTS.top),
-            rightPct: Number(parsed.rightPct ?? TREE_DEFAULTS.rightPct),
-            widthPct: Number(parsed.widthPct ?? TREE_DEFAULTS.widthPct),
-          });
-        }
-      }
-    } catch {}
-  }, []);
-
-  const persist = (next: typeof tree) => {
-    setTree(next);
-    try { localStorage.setItem(TREE_STORAGE_KEY, JSON.stringify(next)); } catch {}
-  };
 
   const handleCta = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -56,70 +20,6 @@ export function WhyReRootedStatement() {
     } else {
       navigate(href);
     }
-  };
-
-  // Drag handler
-  const onTreeMouseDown = (e: React.MouseEvent) => {
-    if (!editMode) return;
-    if ((e.target as HTMLElement).dataset.resizeHandle) return;
-    e.preventDefault();
-    const container = sectionRef.current?.querySelector("[data-tree-parent]") as HTMLElement | null;
-    const treeEl = treeRef.current;
-    if (!container || !treeEl) return;
-    const parentRect = container.getBoundingClientRect();
-    const treeRect = treeEl.getBoundingClientRect();
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const startTop = tree.top;
-    const startRightPx = parentRect.right - treeRect.right;
-
-    const onMove = (ev: MouseEvent) => {
-      const dx = ev.clientX - startX;
-      const dy = ev.clientY - startY;
-      const newTop = startTop + dy;
-      const newRightPx = startRightPx - dx;
-      const newRightPct = (newRightPx / parentRect.width) * 100;
-      persist({ ...tree, top: newTop, rightPct: newRightPct });
-    };
-    const onUp = () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-  };
-
-  const onResizeMouseDown = (e: React.MouseEvent) => {
-    if (!editMode) return;
-    e.preventDefault();
-    e.stopPropagation();
-    const container = sectionRef.current?.querySelector("[data-tree-parent]") as HTMLElement | null;
-    if (!container) return;
-    const parentRect = container.getBoundingClientRect();
-    const startX = e.clientX;
-    const startWidthPct = tree.widthPct;
-
-    const onMove = (ev: MouseEvent) => {
-      const dx = ev.clientX - startX;
-      const newWidthPct = startWidthPct + (dx / parentRect.width) * 100;
-      persist({ ...tree, widthPct: Math.max(10, Math.min(100, newWidthPct)) });
-    };
-    const onUp = () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-  };
-
-  const copySnippet = () => {
-    const snippet = `top: "${Math.round(tree.top)}px",\nright: "${tree.rightPct.toFixed(2)}%",\nwidth: "${tree.widthPct.toFixed(2)}%",`;
-    try { navigator.clipboard.writeText(snippet); } catch {}
-    alert("Copied tree position values to clipboard:\n\n" + snippet);
-  };
-
-  const reset = () => {
-    persist(TREE_DEFAULTS);
   };
 
   return (
@@ -134,7 +34,6 @@ export function WhyReRootedStatement() {
       }}
     >
       <motion.div
-        data-tree-parent
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -147,20 +46,90 @@ export function WhyReRootedStatement() {
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
-...
-        {/* Tree hero image — draggable in edit mode */}
-        <div
-          ref={treeRef}
-          aria-hidden="true"
-          onMouseDown={onTreeMouseDown}
-          className={`absolute aspect-[1438/1385] ${editMode ? "cursor-move" : "pointer-events-none"}`}
+        {/* 1. Masthead lockup */}
+        <img
+          src={logoWordmarkBlue}
+          alt="Re-Rooted® Switzerland"
+          className="block h-auto w-full select-none"
+          style={{ maxWidth: 1400, position: "relative", zIndex: 1 }}
+          draggable={false}
+        />
+
+        {/* 2. Centered tagline */}
+        <p
+          className="text-center"
           style={{
-            zIndex: editMode ? 5 : 0,
-            top: `${tree.top}px`,
-            right: `${tree.rightPct}%`,
-            width: `${tree.widthPct}%`,
-            outline: editMode ? "2px dashed #1F299C" : "none",
-            outlineOffset: 4,
+            color: "#1F299C",
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 800,
+            fontSize: "clamp(17px, 1.6vw, 24px)",
+            letterSpacing: "0.28em",
+            marginTop: 56,
+            marginBottom: 36,
+            textTransform: "uppercase",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          The Human Side of Relocation
+        </p>
+
+        {/* 3. Left-aligned editorial paragraph */}
+        <p
+          style={{
+            color: "#1F299C",
+            fontFamily: '"DM Sans", sans-serif',
+            fontWeight: 400,
+            fontSize: "clamp(24px, 2.7vw, 39px)",
+            lineHeight: 1.16,
+            letterSpacing: "-0.018em",
+            maxWidth: "22ch",
+            marginBottom: 40,
+            textAlign: "left",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          Global mobility is usually treated as logistics: visa, shipping, tax. But the hardest parts of moving are personal. Identity, belonging, family, balance, confidence in a new work assignment.
+        </p>
+
+        {/* 4. CTAs */}
+        <div className="flex flex-wrap items-center" style={{ gap: 12, position: "relative", zIndex: 1 }}>
+          <a
+            href="#contact"
+            onClick={handleCta("#contact")}
+            className="inline-flex items-center gap-2 transition-all"
+            style={{
+              background: "#1F299C",
+              color: "#FFFFFF",
+              padding: "14px 22px",
+              borderRadius: 999,
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 500,
+              fontSize: 14,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#141A6B";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#1F299C";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            Contact us
+          </a>
+        </div>
+
+        {/* Tree hero image — locked-in position */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute aspect-[1438/1385]"
+          style={{
+            zIndex: 0,
+            top: "236px",
+            right: "5.34%",
+            width: "44%",
           }}
         >
           <img
@@ -173,65 +142,12 @@ export function WhyReRootedStatement() {
               objectPosition: "center bottom",
             }}
           />
-          {editMode && (
-            <div
-              data-resize-handle="1"
-              onMouseDown={onResizeMouseDown}
-              className="absolute bottom-0 right-0 h-5 w-5 cursor-nwse-resize rounded-sm"
-              style={{ background: "#1F299C", border: "2px solid #FAF9F6" }}
-            />
-          )}
         </div>
       </motion.div>
-
-      {editorAvailable && (
-        <div
-          className="fixed bottom-4 right-4 z-[100] flex flex-col items-end gap-2"
-          style={{ fontFamily: '"DM Sans", sans-serif' }}
-        >
-          {editMode && (
-            <div
-              className="rounded-lg px-3 py-2 text-xs"
-              style={{ background: "#1F299C", color: "#FAF9F6" }}
-            >
-              top: {Math.round(tree.top)}px · right: {tree.rightPct.toFixed(2)}% · width: {tree.widthPct.toFixed(2)}%
-            </div>
-          )}
-          <div className="flex gap-2">
-            {editMode && (
-              <>
-                <button
-                  type="button"
-                  onClick={reset}
-                  className="rounded-full px-4 py-2 text-xs font-semibold"
-                  style={{ background: "#FAF9F6", color: "#1F299C", border: "1px solid #1F299C" }}
-                >
-                  Reset
-                </button>
-                <button
-                  type="button"
-                  onClick={copySnippet}
-                  className="rounded-full px-4 py-2 text-xs font-semibold"
-                  style={{ background: "#3DA776", color: "#FAF9F6" }}
-                >
-                  Save & lock in
-                </button>
-              </>
-            )}
-            <button
-              type="button"
-              onClick={() => setEditMode((v) => !v)}
-              className="rounded-full px-4 py-2 text-xs font-semibold"
-              style={{ background: "#1F299C", color: "#FAF9F6" }}
-            >
-              {editMode ? "Exit edit" : "Edit tree position"}
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
+
 
 
 const PILLARS = [
