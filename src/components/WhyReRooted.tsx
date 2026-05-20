@@ -285,7 +285,7 @@ const PILLARS = [
     tile: "hsl(var(--primary-foreground) / 0.08)",
   },
   {
-    eyebrow: "The App",
+    eyebrow: "",
     title: "The Re-Rooted® app",
     body: "Everything an expat needs to know, a pocket local guide.\nCompare cultures and cost of living from home to destination, connect with other expats on the ground, work through total-move checklists, and much more, all in one place.",
     image: offeringApp,
