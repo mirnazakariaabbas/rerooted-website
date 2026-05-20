@@ -37,12 +37,12 @@ export function WhyReRootedStatement() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto flex w-full flex-col pb-[240px] md:pb-20 lg:pb-24"
+        className="relative mx-auto flex w-full flex-col pb-[240px] md:pb-16 lg:pb-20"
         style={{
           maxWidth: 1600,
           paddingLeft: "clamp(28px, 4vw, 56px)",
           paddingRight: "clamp(28px, 4vw, 56px)",
-          paddingTop: "clamp(160px, 18vh, 220px)",
+          paddingTop: "clamp(110px, 13vh, 160px)",
           fontFamily: '"DM Sans", sans-serif',
         }}
       >
