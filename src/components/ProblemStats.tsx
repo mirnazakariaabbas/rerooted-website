@@ -66,7 +66,7 @@ interface ProblemStatsProps {
 
 const serif = { fontFamily: '"DM Sans", system-ui, sans-serif', fontWeight: 400 } as const;
 
-const ProblemStats = ({ label }: ProblemStatsProps) => {
+const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.15 });
 
