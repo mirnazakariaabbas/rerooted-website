@@ -586,7 +586,7 @@ const MemberHome = () => {
                               value={editPrompt}
                               onChange={e => setEditPrompt(e.target.value)}
                               placeholder="Prompt"
-                              className="text-sm italic font-serif bg-background"
+                              className="text-sm italic bg-background"
                             />
                             <Textarea
                               value={editResponse}
@@ -621,7 +621,7 @@ const MemberHome = () => {
                           </div>
                         ) : (
                           <>
-                            <p className="text-sm italic text-foreground/80 font-serif mb-3">"{r.prompt}"</p>
+                            <p className="text-sm italic text-foreground/80 mb-3">"{r.prompt}"</p>
                             <p className="text-sm text-foreground whitespace-pre-wrap">{r.response}</p>
                             <div className="flex flex-wrap gap-1.5 mt-3">
                               {r.isFavorite && (
