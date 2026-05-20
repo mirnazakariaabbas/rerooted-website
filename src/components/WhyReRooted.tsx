@@ -294,7 +294,7 @@ const PILLARS = [
     tile: "hsl(var(--secondary-foreground) / 0.1)",
   },
   {
-    eyebrow: "",
+    eyebrow: "Assessment",
     title: "Psychometric assessment to measure program results",
     body: "Diagnostic and outcome assessments prove the program works in a language organizations understand. Clear data, clear ROI, clear impact on performance and retention.",
     image: offeringAssessments,
