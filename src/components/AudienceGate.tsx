@@ -14,9 +14,10 @@ const AudienceGate = () => {
     setAudience,
     audience,
     hasSeenIntro,
+    transitioning,
+    setTransitioning,
   } = useAudience();
   const [hoveredButton, setHoveredButton] = useState<"org" | "individual" | null>(null);
-  const [transitioning, setTransitioning] = useState(false);
   const orgBtnRef = useRef<HTMLButtonElement>(null);
   const indBtnRef = useRef<HTMLButtonElement>(null);
   const notSureRef = useRef<HTMLParagraphElement>(null);

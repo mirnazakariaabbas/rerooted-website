@@ -9,6 +9,8 @@ interface AudienceContextType {
   setGateOpen: (open: boolean) => void;
   hasSeenIntro: boolean;
   markIntroSeen: () => void;
+  transitioning: boolean;
+  setTransitioning: (v: boolean) => void;
 }
 
 const AudienceContext = createContext<AudienceContextType | undefined>(undefined);
@@ -31,6 +33,7 @@ export function AudienceProvider({ children }: { children: ReactNode }) {
   const [audience, setAudienceState] = useState<Audience>(readAudience);
   const [gateOpen, setGateOpen] = useState(true);
   const [hasSeenIntro, setHasSeenIntro] = useState<boolean>(readIntroSeen);
+  const [transitioning, setTransitioning] = useState(false);
 
   const setAudience = useCallback((next: Audience) => {
     setAudienceState(next);
@@ -49,7 +52,16 @@ export function AudienceProvider({ children }: { children: ReactNode }) {
 
   return (
     <AudienceContext.Provider
-      value={{ audience, setAudience, gateOpen, setGateOpen, hasSeenIntro, markIntroSeen }}
+      value={{
+        audience,
+        setAudience,
+        gateOpen,
+        setGateOpen,
+        hasSeenIntro,
+        markIntroSeen,
+        transitioning,
+        setTransitioning,
+      }}
     >
       {children}
     </AudienceContext.Provider>
