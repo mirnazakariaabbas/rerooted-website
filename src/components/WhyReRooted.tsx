@@ -556,7 +556,7 @@ function DraggableArrow({ src }: { src: string }) {
   const STORAGE_KEY = "rr-arrow-section3-pos";
   const SIZE_KEY = "rr-arrow-section3-size";
   const defaultPos = { top: 220, left: 420 };
-  const defaultWidth = 560;
+  const defaultWidth = 420;
 
   const [pos, setPos] = useState<{ top: number; left: number }>(() => {
     if (typeof window === "undefined") return defaultPos;
