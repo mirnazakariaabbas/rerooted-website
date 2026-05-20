@@ -7,6 +7,7 @@ import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
 import heroTreeCropped from "@/assets/hero-tree-cropped.png";
+import swigglyArrowSection3 from "@/assets/swiggly-arrow-section-3.png";
 
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
@@ -403,8 +404,24 @@ export function WhyReRootedPillars() {
       id="approach"
       className="relative overflow-hidden bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[1760px] px-6 pb-16 pt-4 sm:px-8 md:px-10 md:pb-20 md:pt-6 lg:px-14 lg:pb-24 lg:pt-8 xl:px-16 xl:pt-10">
+      <div className="relative mx-auto max-w-[1760px] px-6 pb-16 pt-4 sm:px-8 md:px-10 md:pb-20 md:pt-6 lg:px-14 lg:pb-24 lg:pt-8 xl:px-16 xl:pt-10">
+        {/* Decorative swiggly arrow pointing from the heading area down toward the pill row */}
+        <img
+          src={swigglyArrowSection3}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute hidden md:block select-none"
+          style={{
+            top: "clamp(40px, 6vw, 90px)",
+            right: "clamp(120px, 22vw, 360px)",
+            width: "clamp(110px, 11vw, 180px)",
+            height: "auto",
+            zIndex: 2,
+          }}
+          draggable={false}
+        />
         <div className="mb-8 flex flex-col gap-4 md:mb-10">
+
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
             ​
           </p>
