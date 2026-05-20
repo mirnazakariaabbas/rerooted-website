@@ -94,7 +94,7 @@ const ExpatJourney = () => {
                         src={heartDrawn}
                         alt=""
                         aria-hidden="true"
-                        className="inline-block h-[0.9em] w-auto select-none"
+                        className="inline-block h-[2.7em] w-auto select-none"
                         draggable={false}
                       />
                     </span>
