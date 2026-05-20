@@ -127,9 +127,9 @@ export function WhyReRootedStatement() {
           className="pointer-events-none absolute aspect-[1438/1385]"
           style={{
             zIndex: 0,
-            top: "269px",
+            top: "200px",
             right: "0.63%",
-            width: "50%",
+            width: "44%",
           }}
         >
           <img
