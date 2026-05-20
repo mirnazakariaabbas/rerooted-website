@@ -6,6 +6,7 @@ import preRootedImg from "@/assets/journey-pre-rooted.webp";
 import rootingInImg from "@/assets/journey-rooting-in.webp";
 import rootingBackImg from "@/assets/journey-rooting-back.webp";
 import familySupportImg from "@/assets/journey-family-support.webp";
+import heartDrawn from "@/assets/heart-drawn.png";
 
 type Stage = {
   name: string;
