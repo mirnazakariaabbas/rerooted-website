@@ -31,7 +31,7 @@ const Index = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <HomepageEntrance active={transitioning || hasSeenIntro}>
+            <HomepageEntrance active={transitioning}>
               <IndividualHome />
             </HomepageEntrance>
           </motion.div>
@@ -43,7 +43,7 @@ const Index = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <HomepageEntrance active={transitioning || hasSeenIntro}>
+            <HomepageEntrance active={transitioning}>
               <CorporateHome />
             </HomepageEntrance>
           </motion.div>
