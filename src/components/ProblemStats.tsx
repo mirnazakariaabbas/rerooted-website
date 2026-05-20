@@ -256,13 +256,14 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                       </div>
                     </div>
                   ) : (
-                    <div className="text-center flex justify-center">
-                      <img
-                        src={logoWhite}
-                        alt="Re-Rooted"
-                        className="h-10 md:h-12 w-auto"
-                      />
-                    </div>
+                    <div className="text-center">
+                      <div className="flex justify-center">
+                        <img
+                          src={logoWhite}
+                          alt="Re-Rooted"
+                          className="h-10 md:h-12 w-auto"
+                        />
+                      </div>
                       {tile.tagline && (
                         <div className="mt-3 text-white text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.22em]">
                           {tile.tagline}
