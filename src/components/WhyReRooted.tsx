@@ -487,9 +487,11 @@ export function WhyReRootedPillars() {
               </div>
 
               <div className="flex flex-col justify-center gap-5 p-8 md:p-12 lg:p-16">
+              {pillar.eyebrow && (
                 <p className="text-[11px] font-semibold uppercase tracking-[0.26em] opacity-80 md:text-xs">
                   {pillar.eyebrow}
                 </p>
+              )}
                 <h3
                   className="font-display font-medium leading-[1.05] tracking-[-0.02em]"
                   style={{ fontSize: "clamp(1.75rem, 3vw, 2.75rem)" }}
