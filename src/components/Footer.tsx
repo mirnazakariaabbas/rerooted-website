@@ -6,7 +6,7 @@ import { Linkedin } from "lucide-react";
 type FooterLink = { label: string; href: string; type: "route" | "hash" };
 
 const corporateLinks: FooterLink[] = [
-  { label: "The Program", href: "/services", type: "route" },
+  { label: "Program", href: "/services", type: "route" },
   { label: "The Journey", href: "#journey", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },

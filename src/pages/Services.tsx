@@ -37,7 +37,7 @@ const Services = () => {
       <section className={s.phero}>
         <div className={s.pheroGlow}></div>
         <div className={s.pheroInner}>
-          <div className={s.pheroEyebrow}>The Program</div>
+          <div className={s.pheroEyebrow}>Program</div>
           <h1 className={s.pheroTitle}>
             The Re-Rooted
             <sup style={{ fontSize: "0.35em", verticalAlign: "super", opacity: 0.7, fontStyle: "normal" }}>®</sup>{" "}
