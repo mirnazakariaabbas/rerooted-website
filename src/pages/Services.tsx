@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
+import heroImage from "@/assets/hero-portrait.webp";
 import s from "./Services.module.css";
 
 const cn = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(" ");
@@ -182,8 +183,8 @@ const Services = () => {
               <div className={cn(s.mediaCard, s.green)}>
                 <div className={s.animTree}>
                   <div className={s.treeStage}>
-                    <img className={cn(s.treeImg, s.treeCanopyImg)} src="/assets/tree-of-life.png" alt="" />
-                    <img className={cn(s.treeImg, s.treeRootsImg)} src="/assets/tree-of-life.png" alt="" />
+                    <img className={cn(s.treeImg, s.treeCanopyImg)} src={heroImage} alt="" />
+                    <img className={cn(s.treeImg, s.treeRootsImg)} src={heroImage} alt="" />
                   </div>
                 </div>
               </div>
