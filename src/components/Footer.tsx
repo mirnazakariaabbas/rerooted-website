@@ -21,7 +21,7 @@ const individualLinks: FooterLink[] = [
   { label: "Support", href: "#support", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
-  { label: "Contact", href: "#contact", type: "hash" },
+  { label: "Contact Us", href: "#contact", type: "hash" },
   { label: "FAQ", href: "/faq", type: "route" },
   { label: "Privacy Policy", href: "/privacy", type: "route" },
   { label: "Terms & Conditions", href: "/terms", type: "route" },
