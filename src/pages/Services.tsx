@@ -1,14 +1,38 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-portrait.webp";
+import blueArrow from "@/assets/blue-arrow.png";
 import s from "./Services.module.css";
 
 const cn = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(" ");
 
 const Services = () => {
   const rootRef = useRef<HTMLElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const [arrowPos, setArrowPos] = useState({ top: 200, left: 600, size: 240 });
+  const dragRef = useRef<{ active: boolean; offX: number; offY: number }>({ active: false, offX: 0, offY: 0 });
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!dragRef.current.active || !heroRef.current) return;
+      const rect = heroRef.current.getBoundingClientRect();
+      setArrowPos((p) => ({
+        ...p,
+        left: Math.round(e.clientX - rect.left - dragRef.current.offX),
+        top: Math.round(e.clientY - rect.top - dragRef.current.offY),
+      }));
+    };
+    const onUp = () => { dragRef.current.active = false; };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, []);
+
 
   // Reveal-on-scroll observer (mirrors original inline script)
   useEffect(() => {
@@ -35,7 +59,7 @@ const Services = () => {
       <StickyNav />
 
       {/* HERO */}
-      <section className={s.phero}>
+      <section ref={heroRef} className={s.phero} style={{ position: "relative" }}>
         <div className={s.pheroGlow}></div>
         <div className={s.pheroInner}>
           <h1 className={cn(s.pheroTitle, "text-left")}>
@@ -44,7 +68,46 @@ const Services = () => {
             Integration Program
           </h1>
         </div>
+        <img
+          src={blueArrow}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          onMouseDown={(e) => {
+            const t = e.currentTarget.getBoundingClientRect();
+            dragRef.current = { active: true, offX: e.clientX - t.left, offY: e.clientY - t.top };
+            e.preventDefault();
+          }}
+          style={{
+            position: "absolute",
+            top: arrowPos.top,
+            left: arrowPos.left,
+            width: arrowPos.size,
+            height: "auto",
+            cursor: "grab",
+            userSelect: "none",
+            zIndex: 5,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            background: "#1F299C",
+            color: "#FAF9F6",
+            fontSize: 11,
+            fontWeight: 600,
+            padding: "4px 8px",
+            borderRadius: 4,
+            fontFamily: "monospace",
+            zIndex: 6,
+          }}
+        >
+          top: {arrowPos.top}px · left: {arrowPos.left}px · width: {arrowPos.size}px
+        </div>
       </section>
+
 
       {/* INTRO STRIP */}
       <section className={s.introStrip}>
