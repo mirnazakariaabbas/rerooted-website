@@ -160,7 +160,7 @@ const Services = () => {
           <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
-                <div className={s.stepNum}>02</div>
+                <div className={s.stepNum}>2.</div>
                 <div className={s.stepWhen}>Day 1</div>
               </div>
               <h3>Complexity Assessment</h3>
@@ -200,7 +200,7 @@ const Services = () => {
           <div className={cn(s.step, s.reveal)}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
-                <div className={s.stepNum}>03</div>
+                <div className={s.stepNum}>3.</div>
                 <div className={s.stepWhen}>Week 1</div>
               </div>
               <h3>Personal Needs Plan</h3>
@@ -231,7 +231,7 @@ const Services = () => {
           <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
-                <div className={s.stepNum}>04</div>
+                <div className={s.stepNum}>4.</div>
                 <div className={s.stepWhen}>Weeks 2 to 14</div>
               </div>
               <h3>Active Coaching</h3>
@@ -292,7 +292,7 @@ const Services = () => {
           <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
-                <div className={s.stepNum}>06</div>
+                <div className={s.stepNum}>6.</div>
                 <div className={s.stepWhen}>Post Program</div>
               </div>
               <h3>Ongoing Support</h3>
