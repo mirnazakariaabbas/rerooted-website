@@ -50,7 +50,7 @@ const Services = () => {
         <div className={cn(s.container, s.introStripGrid)}>
           <h2 className={s.reveal}>Relocation support shouldn't end at logistics.</h2>
           <div className={s.reveal}>
-            <p>Re-Rooted® combines diagnostic tools, personalized coaching, and measurable outcomes. The goal: help expatriates integrate, and help organizations see the difference.</p>
+            <p>Re-Rooted® combines diagnostic tools, personalized coaching, and measurable outcomes. The goal is to help expatriates integrate, and help organizations see the difference.</p>
             <p>Every engagement is tailored to the move, the person, and the stage they're in.</p>
           </div>
         </div>
