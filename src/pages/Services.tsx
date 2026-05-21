@@ -11,7 +11,7 @@ const cn = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).j
 const Services = () => {
   const rootRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const [arrowPos, setArrowPos] = useState({ top: 320, left: 380, size: 200 });
+  const [arrowPos, setArrowPos] = useState({ top: 320, left: 380, size: 300 });
   const dragRef = useRef<{ active: boolean; offX: number; offY: number }>({ active: false, offX: 0, offY: 0 });
 
   useEffect(() => {
