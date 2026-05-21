@@ -59,7 +59,7 @@ const Services = () => {
       <StickyNav />
 
       {/* HERO */}
-      <section className={s.phero}>
+      <section ref={heroRef} className={s.phero} style={{ position: "relative" }}>
         <div className={s.pheroGlow}></div>
         <div className={s.pheroInner}>
           <h1 className={cn(s.pheroTitle, "text-left")}>
@@ -68,7 +68,46 @@ const Services = () => {
             Integration Program
           </h1>
         </div>
+        <img
+          src={blueArrow}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          onMouseDown={(e) => {
+            const t = e.currentTarget.getBoundingClientRect();
+            dragRef.current = { active: true, offX: e.clientX - t.left, offY: e.clientY - t.top };
+            e.preventDefault();
+          }}
+          style={{
+            position: "absolute",
+            top: arrowPos.top,
+            left: arrowPos.left,
+            width: arrowPos.size,
+            height: "auto",
+            cursor: "grab",
+            userSelect: "none",
+            zIndex: 5,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            background: "#1F299C",
+            color: "#FAF9F6",
+            fontSize: 11,
+            fontWeight: 600,
+            padding: "4px 8px",
+            borderRadius: 4,
+            fontFamily: "monospace",
+            zIndex: 6,
+          }}
+        >
+          top: {arrowPos.top}px · left: {arrowPos.left}px · width: {arrowPos.size}px
+        </div>
       </section>
+
 
       {/* INTRO STRIP */}
       <section className={s.introStrip}>
