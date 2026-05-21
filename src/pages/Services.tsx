@@ -68,7 +68,7 @@ const Services = () => {
           </div>
 
           {/* STEP 01 */}
-          <div ref={heroRef} className={cn(s.step, s.reveal)} style={{ position: "relative" }}>
+          <div className={cn(s.step, s.reveal)}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
                 <div className={s.stepNum}>1.</div>
@@ -94,45 +94,8 @@ const Services = () => {
                 </div>
               </div>
             </div>
-            <img
-              src={blueArrow}
-              alt=""
-              aria-hidden="true"
-              draggable={false}
-              onMouseDown={(e) => {
-                const t = e.currentTarget.getBoundingClientRect();
-                dragRef.current = { active: true, offX: e.clientX - t.left, offY: e.clientY - t.top };
-                e.preventDefault();
-              }}
-              style={{
-                position: "absolute",
-                top: arrowPos.top,
-                left: arrowPos.left,
-                width: arrowPos.size,
-                height: "auto",
-                cursor: "grab",
-                userSelect: "none",
-                zIndex: 5,
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                top: 8,
-                right: 8,
-                background: "#1F299C",
-                color: "#FAF9F6",
-                fontSize: 11,
-                fontWeight: 600,
-                padding: "4px 8px",
-                borderRadius: 4,
-                fontFamily: "monospace",
-                zIndex: 6,
-              }}
-            >
-              top: {arrowPos.top}px · left: {arrowPos.left}px · width: {arrowPos.size}px
-            </div>
           </div>
+
 
           {/* STEP 02 */}
           <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
