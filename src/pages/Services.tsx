@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
@@ -9,22 +9,10 @@ import s from "./Services.module.css";
 
 const cn = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(" ");
 
+const ARROW = { top: 553, left: 475, size: 180 };
+
 const Services = () => {
   const rootRef = useRef<HTMLElement>(null);
-  const [arrowPos, setArrowPos] = useState({ top: 450, left: 520, size: 180 });
-  const dragRef = useRef<{ startX: number; startY: number; startTop: number; startLeft: number } | null>(null);
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (!dragRef.current) return;
-      const { startX, startY, startTop, startLeft } = dragRef.current;
-      setArrowPos((p) => ({ ...p, top: startTop + (e.clientY - startY), left: startLeft + (e.clientX - startX) }));
-    };
-    const onUp = () => { dragRef.current = null; };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
-  }, []);
 
 
   // Reveal-on-scroll observer (mirrors original inline script)
@@ -88,25 +76,18 @@ const Services = () => {
             <img
               src={blueArrow}
               alt=""
-              onMouseDown={(e) => {
-                e.preventDefault();
-                dragRef.current = { startX: e.clientX, startY: e.clientY, startTop: arrowPos.top, startLeft: arrowPos.left };
-              }}
               style={{
                 position: "absolute",
-                top: arrowPos.top,
-                left: arrowPos.left,
-                width: arrowPos.size,
+                top: ARROW.top,
+                left: ARROW.left,
+                width: ARROW.size,
                 height: "auto",
-                cursor: "grab",
+                pointerEvents: "none",
                 userSelect: "none",
                 zIndex: 20,
               }}
               draggable={false}
             />
-            <div style={{ position: "absolute", top: 8, right: 8, background: "#1F299C", color: "white", padding: "6px 10px", borderRadius: 6, fontSize: 12, fontFamily: "monospace", zIndex: 21 }}>
-              top: {Math.round(arrowPos.top)} | left: {Math.round(arrowPos.left)} | w: {arrowPos.size}
-            </div>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
                 <div className={s.stepNum}>1.</div>
