@@ -160,7 +160,7 @@ const Services = () => {
           <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
-                <div className={s.stepNum}>02</div>
+                <div className={s.stepNum}>2.</div>
                 <div className={s.stepWhen}>Day 1</div>
               </div>
               <h3>Complexity Assessment</h3>
