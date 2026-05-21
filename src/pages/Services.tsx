@@ -1,38 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-portrait.webp";
-import blueArrow from "@/assets/blue-arrow.png";
+
 import s from "./Services.module.css";
 
 const cn = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(" ");
 
 const Services = () => {
   const rootRef = useRef<HTMLElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const [arrowPos, setArrowPos] = useState({ top: 320, left: 380, size: 300 });
-  const dragRef = useRef<{ active: boolean; offX: number; offY: number }>({ active: false, offX: 0, offY: 0 });
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (!dragRef.current.active || !heroRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-      setArrowPos((p) => ({
-        ...p,
-        left: Math.round(e.clientX - rect.left - dragRef.current.offX),
-        top: Math.round(e.clientY - rect.top - dragRef.current.offY),
-      }));
-    };
-    const onUp = () => { dragRef.current.active = false; };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
-  }, []);
-
 
   // Reveal-on-scroll observer (mirrors original inline script)
   useEffect(() => {
@@ -53,6 +30,7 @@ const Services = () => {
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
+
 
   return (
     <main ref={rootRef} className={s.root}>
@@ -90,7 +68,7 @@ const Services = () => {
           </div>
 
           {/* STEP 01 */}
-          <div ref={heroRef} className={cn(s.step, s.reveal)} style={{ position: "relative" }}>
+          <div className={cn(s.step, s.reveal)}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
                 <div className={s.stepNum}>1.</div>
@@ -116,45 +94,8 @@ const Services = () => {
                 </div>
               </div>
             </div>
-            <img
-              src={blueArrow}
-              alt=""
-              aria-hidden="true"
-              draggable={false}
-              onMouseDown={(e) => {
-                const t = e.currentTarget.getBoundingClientRect();
-                dragRef.current = { active: true, offX: e.clientX - t.left, offY: e.clientY - t.top };
-                e.preventDefault();
-              }}
-              style={{
-                position: "absolute",
-                top: arrowPos.top,
-                left: arrowPos.left,
-                width: arrowPos.size,
-                height: "auto",
-                cursor: "grab",
-                userSelect: "none",
-                zIndex: 5,
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                top: 8,
-                right: 8,
-                background: "#1F299C",
-                color: "#FAF9F6",
-                fontSize: 11,
-                fontWeight: 600,
-                padding: "4px 8px",
-                borderRadius: 4,
-                fontFamily: "monospace",
-                zIndex: 6,
-              }}
-            >
-              top: {arrowPos.top}px · left: {arrowPos.left}px · width: {arrowPos.size}px
-            </div>
           </div>
+
 
           {/* STEP 02 */}
           <div className={cn(s.step, s.flip, s.isGreen, s.reveal)}>
