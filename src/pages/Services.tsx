@@ -183,8 +183,8 @@ const Services = () => {
               <div className={cn(s.mediaCard, s.green)}>
                 <div className={s.animTree}>
                   <div className={s.treeStage}>
-                    <img className={cn(s.treeImg, s.treeCanopyImg)} src="/assets/tree-of-life.png" alt="" />
-                    <img className={cn(s.treeImg, s.treeRootsImg)} src="/assets/tree-of-life.png" alt="" />
+                    <img className={cn(s.treeImg, s.treeCanopyImg)} src={heroImage} alt="" />
+                    <img className={cn(s.treeImg, s.treeRootsImg)} src={heroImage} alt="" />
                   </div>
                 </div>
               </div>
