@@ -37,39 +37,11 @@ const Services = () => {
       <section className={s.phero}>
         <div className={s.pheroGlow}></div>
         <div className={s.pheroInner}>
-          <div className={s.pheroEyebrow}>Program</div>
           <h1 className={s.pheroTitle}>
             The Re-Rooted
             <sup style={{ fontSize: "0.35em", verticalAlign: "super", opacity: 0.7, fontStyle: "normal" }}>®</sup>{" "}
             Integration Program
           </h1>
-          <p className={s.pheroSub}>
-            Tools to measure. Coaching to support. Data to prove it worked. <br />
-            A 90 day route in six clear steps, built for the person, the move, and the stage they're in.
-          </p>
-
-          <div className={s.metaStrip}>
-            <div className={s.metaCell}>
-              <div className="k">Duration</div>
-              <div className="num">90</div>
-              <div className="unit">Days</div>
-            </div>
-            <div className={s.metaCell}>
-              <div className="k">Coaching</div>
-              <div className="num">6</div>
-              <div className="unit">Sessions</div>
-            </div>
-            <div className={s.metaCell}>
-              <div className="k">Diagnostics</div>
-              <div className="num">2</div>
-              <div className="unit">Assessments</div>
-            </div>
-            <div className={s.metaCell}>
-              <div className="k">Outcome</div>
-              <div className="num">1</div>
-              <div className="unit">Final Report</div>
-            </div>
-          </div>
         </div>
       </section>
 
