@@ -22,7 +22,7 @@ const individualLinks: NavLink[] = [
   { label: "Support", href: "#support", type: "hash" },
   { label: "About", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
-  { label: "Contact", href: "#contact", type: "hash" },
+  { label: "Contact Us", href: "#contact", type: "hash" },
 ];
 
 interface AudienceToggleProps {
