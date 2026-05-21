@@ -93,7 +93,7 @@ const Services = () => {
           <div ref={heroRef} className={cn(s.step, s.reveal)} style={{ position: "relative" }}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
-                <div className={s.stepNum}>01</div>
+                <div className={s.stepNum}>1.</div>
                 <div className={s.stepWhen}>Day 0</div>
               </div>
               <h3>Discovery Call</h3>
