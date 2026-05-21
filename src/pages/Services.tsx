@@ -84,7 +84,29 @@ const Services = () => {
           </div>
 
           {/* STEP 01 */}
-          <div className={cn(s.step, s.reveal)}>
+          <div className={cn(s.step, s.reveal)} style={{ position: "relative" }}>
+            <img
+              src={blueArrow}
+              alt=""
+              onMouseDown={(e) => {
+                e.preventDefault();
+                dragRef.current = { startX: e.clientX, startY: e.clientY, startTop: arrowPos.top, startLeft: arrowPos.left };
+              }}
+              style={{
+                position: "absolute",
+                top: arrowPos.top,
+                left: arrowPos.left,
+                width: arrowPos.size,
+                height: "auto",
+                cursor: "grab",
+                userSelect: "none",
+                zIndex: 20,
+              }}
+              draggable={false}
+            />
+            <div style={{ position: "absolute", top: 8, right: 8, background: "#1F299C", color: "white", padding: "6px 10px", borderRadius: 6, fontSize: 12, fontFamily: "monospace", zIndex: 21 }}>
+              top: {Math.round(arrowPos.top)} | left: {Math.round(arrowPos.left)} | w: {arrowPos.size}
+            </div>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
                 <div className={s.stepNum}>1.</div>
