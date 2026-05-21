@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
@@ -10,29 +10,6 @@ const cn = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).j
 
 const Services = () => {
   const rootRef = useRef<HTMLElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const [arrowPos, setArrowPos] = useState({ top: 320, left: 380, size: 300 });
-  const dragRef = useRef<{ active: boolean; offX: number; offY: number }>({ active: false, offX: 0, offY: 0 });
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (!dragRef.current.active || !heroRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-      setArrowPos((p) => ({
-        ...p,
-        left: Math.round(e.clientX - rect.left - dragRef.current.offX),
-        top: Math.round(e.clientY - rect.top - dragRef.current.offY),
-      }));
-    };
-    const onUp = () => { dragRef.current.active = false; };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
-  }, []);
-
 
   // Reveal-on-scroll observer (mirrors original inline script)
   useEffect(() => {
@@ -53,6 +30,7 @@ const Services = () => {
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
+
 
   return (
     <main ref={rootRef} className={s.root}>
