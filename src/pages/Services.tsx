@@ -60,7 +60,6 @@ const Services = () => {
       <section className={s.steps} id="program">
         <div className={s.container}>
           <div className={cn(s.stepsHead, s.reveal)}>
-            <div className="eyebrow">Six Steps</div>
             <h2>How the program works</h2>
           </div>
 
