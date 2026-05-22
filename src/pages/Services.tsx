@@ -47,7 +47,7 @@ const Services = () => {
           <h1 className={cn(s.pheroTitle, "text-left")}>
             The Re-Rooted
             <sup style={{ fontSize: "0.35em", verticalAlign: "super", opacity: 0.7, fontStyle: "normal" }}>®</sup>{" "}
-            Integration Program
+            Integration PROGRAM
           </h1>
         </div>
       </section>
