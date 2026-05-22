@@ -147,7 +147,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
       ref={ref}
       id="problem"
       data-dark="1"
-      className="relative w-full bg-[#0A0A0A] pt-10 pb-24 md:pt-14 md:pb-32 overflow-hidden"
+      className="relative w-full bg-[#0A0A0A] pt-24 pb-24 md:pt-32 md:pb-32 overflow-hidden"
     >
       <div className="max-w-[1320px] mx-auto px-6 md:px-12">
         {/* Header row: eyebrow left, headline right */}
