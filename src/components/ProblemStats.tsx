@@ -158,7 +158,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
           transition={{ duration: 0.6 }}
         >
 
-          <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-left">
+          <h2 className="font-display m-0 text-white font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-left px-0">
             {headline}
           </h2>
         </motion.div>
