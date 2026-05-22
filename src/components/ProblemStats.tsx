@@ -279,6 +279,38 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
           })}
         </div>
 
+        {/* CTA */}
+        <motion.div
+          className="mt-12 md:mt-16 flex justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 transition-all"
+            style={{
+              background: "#1F299C",
+              color: "#FFFFFF",
+              padding: "14px 22px",
+              borderRadius: 999,
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 500,
+              fontSize: 14,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#141A6B";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#1F299C";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            Contact Us
+          </a>
+        </motion.div>
+
       </div>
     </section>
   );
