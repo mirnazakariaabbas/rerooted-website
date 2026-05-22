@@ -199,10 +199,10 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.06 }}
                 >
-                  <div className="flex-1 flex items-center justify-center w-full">
+                  <div className="flex items-center justify-center w-full">
                     <div
                       className="leading-none flex items-baseline"
-                      style={{ ...serif, fontStyle: "italic", fontSize: "clamp(110px, 14vw, 200px)" }}
+                      style={{ ...serif, fontStyle: "italic", fontSize: "clamp(82.5px, 10.5vw, 150px)" }}
                     >
                       {tile.number}
                     </div>
@@ -233,23 +233,30 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50" />
-                <div className="relative h-full flex flex-col justify-between p-6 md:p-7">
-                  <p
-                    className="text-white text-[11px] md:text-xs font-semibold uppercase tracking-[0.2em] whitespace-pre-line leading-snug max-w-[26ch]"
-                  >
-                    {tile.eyebrow}
-                  </p>
+                <div className={`relative h-full p-6 md:p-7 ${isPlane ? "flex flex-col justify-center items-center gap-4" : "flex flex-col justify-between"}`}>
+                  {!isPlane && (
+                    <p
+                      className="text-white text-[11px] md:text-xs font-semibold uppercase tracking-[0.2em] whitespace-pre-line leading-snug max-w-[26ch]"
+                    >
+                      {tile.eyebrow}
+                    </p>
+                  )}
 
                   {isPlane ? (
-                    <div className="flex-1 flex items-center justify-center -mt-4">
-                      <div
-                        className="text-white leading-none flex items-baseline"
-                        style={{ ...serif, fontStyle: "italic", fontSize: "clamp(110px, 14vw, 200px)" }}
-                      >
-                        <span>{stat80}</span>
-                        <span className="text-white/80">%</span>
+                    <>
+                      <div className="flex items-center justify-center w-full">
+                        <div
+                          className="text-white leading-none flex items-baseline"
+                          style={{ ...serif, fontStyle: "italic", fontSize: "clamp(82.5px, 10.5vw, 150px)" }}
+                        >
+                          <span>{stat80}</span>
+                          <span className="text-white/80">%</span>
+                        </div>
                       </div>
-                    </div>
+                      <p className="text-white text-xs md:text-sm text-center max-w-[26ch] mx-auto leading-tight font-semibold uppercase tracking-[0.06em]">
+                        Take over a year to recover productivity, or never fully do.
+                      </p>
+                    </>
                   ) : (
                     <div className="text-center">
                       <div className="flex justify-center">
@@ -265,12 +272,6 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                         </div>
                       )}
                     </div>
-                  )}
-
-                  {isPlane && (
-                    <p className="text-white/85 text-sm md:text-base text-center max-w-[26ch] mx-auto leading-snug">
-                      Take over a year to recover productivity, or never fully do.
-                    </p>
                   )}
                 </div>
               </motion.div>
