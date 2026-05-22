@@ -599,7 +599,9 @@ export function WhyReRootedPillars() {
           ))}
         </div>
       </div>
+      </div>
     </section>
   );
 }
+
 
