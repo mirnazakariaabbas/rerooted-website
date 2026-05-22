@@ -455,7 +455,7 @@ export function WhyReRootedPillars() {
                 key={p.title}
                 type="button"
                 onClick={() => goTo(i)}
-                className="rounded-full px-5 py-2.5 text-sm font-semibold transition-colors md:px-6 md:py-3 md:text-base"
+                className="rounded-full px-5 py-2.5 text-sm font-semibold uppercase transition-colors md:px-6 md:py-3 md:text-base"
                 style={{
                   background: isActive ? "hsl(var(--primary))" : "hsl(var(--muted))",
                   color: isActive
