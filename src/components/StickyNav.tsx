@@ -13,7 +13,7 @@ const corporateLinks: NavLink[] = [
   { label: "PROGRAM", href: "/services", type: "route" },
   { label: "STAGES", href: "#journey", type: "hash" },
   { label: "ABOUT", href: "/about", type: "route" },
-  { label: "CONTACT US", href: "/blog", type: "route" },
+  { label: "BLOG", href: "/blog", type: "route" },
   { label: "Contact Us", href: "#contact", type: "hash" },
 ];
 
@@ -21,7 +21,7 @@ const individualLinks: NavLink[] = [
   { label: "STAGES", href: "#journey", type: "hash" },
   { label: "Support", href: "#support", type: "hash" },
   { label: "ABOUT", href: "/about", type: "route" },
-  { label: "CONTACT US", href: "/blog", type: "route" },
+  { label: "BLOG", href: "/blog", type: "route" },
   { label: "Contact Us", href: "#contact", type: "hash" },
 ];
 
