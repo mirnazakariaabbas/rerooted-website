@@ -413,20 +413,6 @@ export function WhyReRootedPillars() {
 
 
         <div className="relative mb-8 flex flex-col gap-4 md:mb-10">
-          <img
-            src="/swiggly-arrow.png"
-            alt=""
-            aria-hidden="true"
-            className="hidden sm:block absolute pointer-events-none select-none"
-            style={{
-              width: "clamp(100px, 12vw, 150px)",
-              height: "auto",
-              right: "0%",
-              top: "0%",
-              mixBlendMode: "multiply",
-            }}
-          />
-
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
             ​
           </p>
@@ -438,10 +424,25 @@ export function WhyReRootedPillars() {
           >
             A COMPLETE INTEGRATION SYSTEM
           </h2>
+          <img
+            src="/swiggly-arrow.png"
+            alt=""
+            aria-hidden="true"
+            className="hidden md:block absolute pointer-events-none select-none"
+            style={{
+              width: "180px",
+              height: "auto",
+              right: "-60px",
+              top: "-10px",
+              mixBlendMode: "multiply",
+              opacity: 0.85,
+            }}
+          />
           <p className="text-primary/85 max-w-[44ch] text-base md:text-lg leading-relaxed">
             Allowing the expat to adapt faster, perform better, and stay longer in the company
           </p>
         </div>
+
 
         {/* Topic pills */}
         <div className="mb-6 flex flex-wrap gap-3 md:mb-8">
@@ -477,7 +478,7 @@ export function WhyReRootedPillars() {
 
         {/* Carousel wrapper with hover arrows */}
         <div
-          className="group relative"
+          className="group relative overflow-visible"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
@@ -495,16 +496,17 @@ export function WhyReRootedPillars() {
                 src="/hand-drawn-border.png"
                 alt=""
                 aria-hidden="true"
-                className="absolute pointer-events-none select-none z-10"
+                className="pointer-events-none select-none"
                 style={{
-                  inset: "-12px",
-                  width: "calc(100% + 24px)",
-                  height: "calc(100% + 24px)",
+                  position: "absolute",
+                  top: "-14px",
+                  left: "-14px",
+                  width: "calc(100% + 28px)",
+                  height: "calc(100% + 28px)",
                   objectFit: "fill",
+                  zIndex: 10,
                   mixBlendMode: "multiply",
-                  filter: pillar.borderFilter,
-                  borderRadius: "32px",
-                  opacity: 0.5,
+                  opacity: 0.4,
                 }}
               />
               <div
