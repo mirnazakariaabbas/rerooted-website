@@ -116,7 +116,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
       number: (
         <>
           <span className="text-primary">{stat98}</span>
-          <span className="text-secondary">%</span>
+          <span className="text-primary">%</span>
         </>
       ),
       caption: (
