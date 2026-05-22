@@ -8,7 +8,7 @@ type FooterLink = { label: string; href: string; type: "route" | "hash" };
 const corporateLinks: FooterLink[] = [
   { label: "PROGRAM", href: "/services", type: "route" },
   { label: "The Journey", href: "#journey", type: "hash" },
-  { label: "About", href: "/about", type: "route" },
+  { label: "ABOUT", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
   { label: "Contact Us", href: "#contact", type: "hash" },
   { label: "FAQ", href: "/faq", type: "route" },
@@ -19,7 +19,7 @@ const corporateLinks: FooterLink[] = [
 const individualLinks: FooterLink[] = [
   { label: "Your Journey", href: "#journey", type: "hash" },
   { label: "Support", href: "#support", type: "hash" },
-  { label: "About", href: "/about", type: "route" },
+  { label: "ABOUT", href: "/about", type: "route" },
   { label: "Insights", href: "/blog", type: "route" },
   { label: "Contact Us", href: "#contact", type: "hash" },
   { label: "FAQ", href: "/faq", type: "route" },
