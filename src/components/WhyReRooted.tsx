@@ -419,11 +419,11 @@ export function WhyReRootedPillars() {
             aria-hidden="true"
             className="hidden sm:block absolute pointer-events-none select-none"
             style={{
-              width: "clamp(80px, 10vw, 120px)",
+              width: "clamp(100px, 12vw, 150px)",
               height: "auto",
-              right: "-5%",
-              top: "20%",
-              mixBlendMode: "screen",
+              right: "0%",
+              top: "0%",
+              mixBlendMode: "multiply",
             }}
           />
 
