@@ -407,13 +407,6 @@ export function WhyReRootedPillars() {
       <div className="relative mx-auto max-w-[1760px] px-6 pb-16 pt-4 sm:px-8 md:px-10 md:pb-20 md:pt-6 lg:px-14 lg:pb-24 lg:pt-8 xl:px-16 xl:pt-10">
         {/* Decorative swiggly arrow — locked position */}
         <img
-          src={swigglyArrowSection3}
-          alt=""
-          aria-hidden="true"
-          draggable={false}
-          className="absolute hidden md:block select-none pointer-events-none"
-          style={{ top: 65, left: 596, width: 420, height: "auto", zIndex: 5 }}
-        />
 
 
         <div className="mb-8 flex flex-col gap-4 md:mb-10">
@@ -431,7 +424,26 @@ export function WhyReRootedPillars() {
               maxWidth: "22ch",
             }}
           >
-            A complete integration system 
+            A complete integration{" "}
+            <span style={{ position: "relative", display: "inline-block" }}>
+              <img
+                src={swigglyArrowSection3}
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+                className="hidden md:block select-none pointer-events-none"
+                style={{
+                  position: "absolute",
+                  top: "-0.9em",
+                  right: "100%",
+                  marginRight: "0.2em",
+                  width: "5.5em",
+                  height: "auto",
+                  zIndex: 5,
+                }}
+              />
+              system
+            </span>
           </h2>
           <p className="text-primary/85 max-w-[44ch] text-base md:text-lg leading-relaxed">
             Allowing the expat to adapt faster, perform better, and stay longer in the company
