@@ -95,7 +95,7 @@ const STEPS: Step[] = [
     icon: "flag",
   },
   {
-    when: "Post-program",
+    when: "Post-PROGRAM",
     title: "Ongoing support",
     body: "Quarterly check-ins for the first year. Because the roots take longer than 90 days to deepen, and we stay with them.",
     icon: "check",
