@@ -42,7 +42,7 @@ const AudienceToggle = ({ className = "" }: AudienceToggleProps) => {
       >
         {(["individual", "organization"] as const).map((opt) => {
           const active = (opt === "individual") === isIndividual;
-          const label = opt === "individual" ? "CORPORATE" : "Corporate";
+          const label = opt === "individual" ? "CORPORATE" : "CORPORATE";
           return (
             <button
               key={opt}
@@ -116,7 +116,7 @@ const StickyNav = () => {
       });
       const next = computeNavState(window.scrollY, rects);
       setNavState((prev) =>
-        prev.solid === next.solid && prev.onDark === next.onDark ? prev : next,
+        prev.solid === next.solid && prev.onDark === next.onDark ? prev : next
       );
     };
 
