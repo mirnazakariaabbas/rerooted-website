@@ -77,7 +77,7 @@ const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [navState, setNavState] = useState({ solid: false, onDark: false });
   const headerRef = useRef<HTMLElement>(null);
-  const { gateOpen, setGateOpen, audience } = useAudience();
+  const { gateOpen, setGateOpen, audience, setAudience } = useAudience();
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -150,12 +150,13 @@ const StickyNav = () => {
       <div className="container mx-auto flex h-24 items-center justify-between px-6 lg:px-12">
         <button
           onClick={() => {
-            setGateOpen(true);
-            if (location.pathname !== "/") {
-              navigate("/");
+            setAudience(null);
+            if (location.pathname !== "/" || location.hash) {
+              navigate("/", { replace: true });
             } else {
               window.scrollTo({ top: 0 });
             }
+            setGateOpen(true);
           }}
           className="shrink-0 cursor-pointer"
           aria-label="Re-Rooted home"
