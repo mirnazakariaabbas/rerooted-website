@@ -421,16 +421,16 @@ export function WhyReRootedPillars() {
             }}
           >
             A COMPLETE INTEGRATION{" "}
-            <span style={{ position: "relative", display: "inline-block", paddingRight: "clamp(170px, 17vw, 260px)" }}>
+            <span style={{ position: "relative", display: "inline-block" }}>
               SYSTEM
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute hidden overflow-hidden select-none md:block"
                 style={{
-                  left: "calc(100% - 0.22em)",
-                  top: "-0.1em",
-                  width: "clamp(170px, 18vw, 260px)",
-                  height: "clamp(315px, 33vw, 485px)",
+                  left: "calc(100% - 0.05em)",
+                  top: "-0.12em",
+                  width: "clamp(210px, 21vw, 300px)",
+                  height: "clamp(390px, 38vw, 560px)",
                   zIndex: 5,
                 }}
               >
@@ -443,7 +443,7 @@ export function WhyReRootedPillars() {
                     width: "363.22%",
                     height: "137.58%",
                     maxWidth: "none",
-                    transform: "translate(-131.03%, -11.34%)",
+                    transform: "translate(-133.5%, -11.34%)",
                     transformOrigin: "top left",
                     mixBlendMode: "multiply",
                     opacity: 0.92,
@@ -508,7 +508,7 @@ export function WhyReRootedPillars() {
               >
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-[28px] select-none md:rounded-[32px]"
+                  className="pointer-events-none absolute inset-0 z-20 select-none"
                 >
                   <img
                     src="/hand-drawn-border.png"
@@ -520,6 +520,7 @@ export function WhyReRootedPillars() {
                       top: "-48.2%",
                       width: "149.94%",
                       height: "188.11%",
+                      borderRadius: "inherit",
                       mixBlendMode: "multiply",
                       opacity: 0.72,
                     }}
