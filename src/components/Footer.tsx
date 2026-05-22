@@ -107,8 +107,8 @@ const Footer = () => {
             className="cursor-pointer text-xs transition-colors hover:text-white bg-transparent border-none"
             style={{ color: "rgba(255,255,255,0.5)" }}
           >
-            Viewing: {isOrg ? "For CORPORATE" : "For CORPORATE"} |{" "}
-            Switch to {isOrg ? "CORPORATE" : "CORPORATE"} →
+            Viewing: {isOrg ? "For CORPORATE" : "For INDIVIDUAL"} |{" "}
+            Switch to {isOrg ? "INDIVIDUAL" : "CORPORATE"} →
           </button>
         </div>
       </div>
