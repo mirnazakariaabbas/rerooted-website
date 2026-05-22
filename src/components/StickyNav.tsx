@@ -77,7 +77,7 @@ const StickyNav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [navState, setNavState] = useState({ solid: false, onDark: false });
   const headerRef = useRef<HTMLElement>(null);
-  const { gateOpen, setGateOpen, audience } = useAudience();
+  const { gateOpen, setGateOpen, audience, setAudience } = useAudience();
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
