@@ -284,6 +284,7 @@ const PILLARS = [
     bg: "hsl(var(--primary))",
     text: "hsl(var(--primary-foreground))",
     tile: "hsl(var(--primary-foreground) / 0.08)",
+    borderFilter: "brightness(3) saturate(0.3)",
   },
   {
     eyebrow: "App",
@@ -293,6 +294,7 @@ const PILLARS = [
     bg: "hsl(var(--secondary))",
     text: "hsl(var(--secondary-foreground))",
     tile: "hsl(var(--secondary-foreground) / 0.1)",
+    borderFilter: "brightness(2.5) saturate(0.2)",
   },
   {
     eyebrow: "Assessment",
@@ -302,6 +304,7 @@ const PILLARS = [
     bg: "hsl(var(--accent))",
     text: "hsl(var(--accent-foreground))",
     tile: "hsl(var(--accent-foreground) / 0.08)",
+    borderFilter: "brightness(1.2)",
   },
 ];
 
@@ -409,7 +412,20 @@ export function WhyReRootedPillars() {
 
 
 
-        <div className="mb-8 flex flex-col gap-4 md:mb-10">
+        <div className="relative mb-8 flex flex-col gap-4 md:mb-10">
+          <img
+            src="/swiggly-arrow.png"
+            alt=""
+            aria-hidden="true"
+            className="hidden sm:block absolute pointer-events-none select-none"
+            style={{
+              width: "clamp(80px, 10vw, 120px)",
+              height: "auto",
+              right: "-5%",
+              top: "20%",
+              mixBlendMode: "screen",
+            }}
+          />
 
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
             ​
@@ -491,9 +507,24 @@ export function WhyReRootedPillars() {
             {PILLARS.map((pillar) => (
               <article
                 key={pillar.title}
-                className="grid w-[70%] shrink-0 snap-start grid-cols-1 overflow-hidden rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
+                className="relative grid w-[70%] shrink-0 snap-start grid-cols-1 overflow-visible rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
                 style={{ background: pillar.bg, color: pillar.text }}
               >
+              <img
+                src="/hand-drawn-border.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute pointer-events-none select-none z-10"
+                style={{
+                  inset: "-8px",
+                  width: "calc(100% + 16px)",
+                  height: "calc(100% + 16px)",
+                  objectFit: "fill",
+                  mixBlendMode: "screen",
+                  filter: pillar.borderFilter,
+                  borderRadius: "32px",
+                }}
+              />
               <div
                 className="flex items-center justify-center p-3 md:p-5 lg:p-6"
                 style={{ minHeight: "clamp(280px, 32vw, 460px)" }}
