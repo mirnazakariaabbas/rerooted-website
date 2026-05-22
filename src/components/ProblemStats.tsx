@@ -176,7 +176,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.06 }}
                 >
-                  <div className="flex-1 flex items-center justify-center w-full">
+                  <div className="flex items-center justify-center w-full">
                     <div
                       className="text-white leading-none flex items-baseline"
                       style={{ ...serif, fontStyle: "italic", fontSize: "clamp(82.5px, 10.5vw, 150px)" }}
