@@ -95,7 +95,7 @@ const STEPS: Step[] = [
     icon: "flag",
   },
   {
-    when: "Post-program",
+    when: "Post-PROGRAM",
     title: "Ongoing support",
     body: "Quarterly check-ins for the first year. Because the roots take longer than 90 days to deepen, and we stay with them.",
     icon: "check",
@@ -106,7 +106,7 @@ const ProgramCTAs = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
-      <Button size="lg" onClick={() => navigate("/services")}>Get a program overview</Button>
+      <Button size="lg" onClick={() => navigate("/services")}>Get a PROGRAM overview</Button>
       <a
         href="/#contact"
         onClick={(e) => { e.preventDefault(); navigate("/#contact"); }}

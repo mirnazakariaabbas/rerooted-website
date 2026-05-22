@@ -47,7 +47,7 @@ const Services = () => {
           <h1 className={cn(s.pheroTitle, "text-left")}>
             The Re-Rooted
             <sup style={{ fontSize: "0.35em", verticalAlign: "super", opacity: 0.7, fontStyle: "normal" }}>®</sup>{" "}
-            Integration Program
+            Integration PROGRAM
           </h1>
         </div>
       </section>
@@ -68,7 +68,7 @@ const Services = () => {
       <section className={s.steps} id="program">
         <div className={s.container}>
           <div className={cn(s.stepsHead, s.reveal)}>
-            <h2>How the program works</h2>
+            <h2>How the PROGRAM works</h2>
           </div>
 
           {/* STEP 01 */}
@@ -255,7 +255,7 @@ const Services = () => {
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
                 <div className={s.stepNum}>6.</div>
-                <div className={s.stepWhen}>Post Program</div>
+                <div className={s.stepWhen}>Post PROGRAM</div>
               </div>
               <h3>Ongoing Support</h3>
               <p className="lead">Quarterly check ins for the first year. The roots take longer than 90 days to deepen, and we stay with them.</p>
