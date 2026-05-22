@@ -405,8 +405,8 @@ export function WhyReRootedPillars() {
       className="relative overflow-hidden bg-background text-foreground"
     >
       <div className="relative mx-auto max-w-[1760px] px-6 pb-16 pt-4 sm:px-8 md:px-10 md:pb-20 md:pt-6 lg:px-14 lg:pb-24 lg:pt-8 xl:px-16 xl:pt-10">
-        {/* Decorative swiggly arrow — locked position */}
-        <img
+
+
 
 
         <div className="mb-8 flex flex-col gap-4 md:mb-10">
