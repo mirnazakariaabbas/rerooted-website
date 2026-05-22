@@ -106,7 +106,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
       number: (
         <>
           <span>{stat42}</span>
-          <span className="text-white/70">%</span>
+          <span className="text-white/70" style={{ fontSize: '1em' }}>%</span>
         </>
       ),
       caption: "Considered leaving their employer because of relocation stress.",
@@ -116,7 +116,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
       number: (
         <>
           <span className="text-primary">{stat98}</span>
-          <span className="text-primary">%</span>
+          <span className="text-primary" style={{ fontSize: '1em' }}>%</span>
         </>
       ),
       caption: (
@@ -250,7 +250,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                           style={{ ...serif, fontStyle: "italic", fontSize: "clamp(82.5px, 10.5vw, 150px)" }}
                         >
                           <span>{stat80}</span>
-                          <span className="text-white/80">%</span>
+                          <span className="text-white/80" style={{ fontSize: '1em' }}>%</span>
                         </div>
                       </div>
                       <p className="text-white text-xs md:text-sm text-center max-w-[26ch] mx-auto leading-tight font-semibold uppercase tracking-[0.06em]">
