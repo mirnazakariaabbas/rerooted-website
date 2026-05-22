@@ -179,7 +179,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                   <div className="flex-1 flex items-center justify-center w-full">
                     <div
                       className="text-white leading-none flex items-baseline"
-                      style={{ ...serif, fontStyle: "italic", fontSize: "clamp(110px, 14vw, 200px)" }}
+                      style={{ ...serif, fontStyle: "italic", fontSize: "clamp(82.5px, 10.5vw, 150px)" }}
                     >
                       {tile.number}
                     </div>
