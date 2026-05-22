@@ -436,26 +436,7 @@ export function WhyReRootedPillars() {
               maxWidth: "22ch",
             }}
           >
-            A COMPLETE INTEGRATION{" "}
-            <span style={{ position: "relative", display: "inline-block" }}>
-              <img
-                src={swigglyArrowSection3}
-                alt=""
-                aria-hidden="true"
-                draggable={false}
-                className="hidden md:block select-none pointer-events-none"
-                style={{
-                  position: "absolute",
-                  top: "-0.9em",
-                  right: "100%",
-                  marginRight: "0.2em",
-                  width: "5.5em",
-                  height: "auto",
-                  zIndex: 5,
-                }}
-              />
-              SYSTEM
-            </span>
+            A COMPLETE INTEGRATION SYSTEM
           </h2>
           <p className="text-primary/85 max-w-[44ch] text-base md:text-lg leading-relaxed">
             Allowing the expat to adapt faster, perform better, and stay longer in the company
