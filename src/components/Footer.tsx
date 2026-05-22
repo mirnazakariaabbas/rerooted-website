@@ -9,7 +9,7 @@ const corporateLinks: FooterLink[] = [
   { label: "PROGRAM", href: "/services", type: "route" },
   { label: "The Journey", href: "#journey", type: "hash" },
   { label: "ABOUT", href: "/about", type: "route" },
-  { label: "Insights", href: "/blog", type: "route" },
+  { label: "CONTACT US", href: "/blog", type: "route" },
   { label: "Contact Us", href: "#contact", type: "hash" },
   { label: "FAQ", href: "/faq", type: "route" },
   { label: "Privacy Policy", href: "/privacy", type: "route" },
@@ -20,7 +20,7 @@ const individualLinks: FooterLink[] = [
   { label: "Your Journey", href: "#journey", type: "hash" },
   { label: "Support", href: "#support", type: "hash" },
   { label: "ABOUT", href: "/about", type: "route" },
-  { label: "Insights", href: "/blog", type: "route" },
+  { label: "CONTACT US", href: "/blog", type: "route" },
   { label: "Contact Us", href: "#contact", type: "hash" },
   { label: "FAQ", href: "/faq", type: "route" },
   { label: "Privacy Policy", href: "/privacy", type: "route" },
@@ -107,8 +107,8 @@ const Footer = () => {
             className="cursor-pointer text-xs transition-colors hover:text-white bg-transparent border-none"
             style={{ color: "rgba(255,255,255,0.5)" }}
           >
-            Viewing: {isOrg ? "For Organizations" : "For Individuals"} |{" "}
-            Switch to {isOrg ? "Individual" : "Organization"} →
+            Viewing: {isOrg ? "For CORPORATE" : "For CORPORATE"} |{" "}
+            Switch to {isOrg ? "CORPORATE" : "CORPORATE"} →
           </button>
         </div>
       </div>
