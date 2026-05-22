@@ -108,7 +108,7 @@ const Footer = () => {
             style={{ color: "rgba(255,255,255,0.5)" }}
           >
             Viewing: {isOrg ? "For Organizations" : "For Individuals"} |{" "}
-            Switch to {isOrg ? "Individual" : "Organization"} →
+            Switch to {isOrg ? "CORPORATE" : "CORPORATE"} →
           </button>
         </div>
       </div>
