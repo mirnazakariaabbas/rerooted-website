@@ -42,7 +42,7 @@ const AudienceToggle = ({ className = "" }: AudienceToggleProps) => {
       >
         {(["individual", "organization"] as const).map((opt) => {
           const active = (opt === "individual") === isIndividual;
-          const label = opt === "individual" ? "CORPORATE" : "CORPORATE";
+          const label = opt === "individual" ? "INDIVIDUAL" : "CORPORATE";
           return (
             <button
               key={opt}
