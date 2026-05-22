@@ -415,7 +415,7 @@ export function WhyReRootedPillars() {
             ​
           </p>
           <h2
-            className="font-display m-0 text-primary font-medium leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-left px-0"
+            className="font-display m-0 text-primary font-bold leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-left px-0"
             style={{
               maxWidth: "22ch",
             }}
