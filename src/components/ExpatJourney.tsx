@@ -88,7 +88,7 @@ const ExpatJourney = () => {
                   <>Where are you<br />right now.</>
                 ) : (
                   <>
-                    SUPPORTING YOU THROUGH EVERY{" "}
+                    SUPPORTING YOU THROUGH<br />EVERY{" "}
                     <span style={{ position: "relative", display: "inline-block" }}>
                       STAGE
                       <img
