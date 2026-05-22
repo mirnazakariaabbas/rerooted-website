@@ -1,53 +1,18 @@
-# Fix shifting decorative elements (Arrow + Heart)
+# Hardcode heart position + clean up drag UI
 
-## Problem
+Lock the drawn heart in the Stages headline (Corporate) at the values from your screenshot:
 
-Two decorative images are pinned with **fixed pixel offsets**:
+**top: 41px · left: 433px · size: 2.7em**
 
-- **Blue arrow** in Services → Step 1: `top: 553px, left: 475px`
-- **Drawn heart** in Stages headline (Corporate): `top: 40px, left: 760px`
+## Changes in `src/components/ExpatJourney.tsx`
 
-Because pixels don't scale with the container, every time the preview width changes (closing the chat sidebar, fullscreen, real visitor's browser) the elements drift away from where you placed them. Your live site will look different from the editor preview at 1432px.
+1. Replace the `heartPos` state with a `HEART` constant: `{ top: 41, left: 433, size: 2.7 }`.
+2. Remove the drag system: `useState` for `heartPos`, `dragStateRef`, the `useEffect` mouse handlers, and the `onMouseDown` prop.
+3. Remove the blue coordinate badge div above the headline.
+4. Remove `cursor: "grab"` from the heart image style.
 
-## Goal
+## Note on the shifting issue
 
-Pin both elements to a stable visual anchor so they stay in the same spot regardless of viewport width.
+These are still fixed pixels, so the heart will drift when the viewport changes width (same as before). You asked to hardcode the current position, so I'm doing that. When you're ready to make it stop shifting across viewports, say the word and I'll anchor it to the headline text with `em` units instead.
 
-## Approach
-
-### 1. Heart (Stages headline) — anchor to text
-
-The headline uses `clamp()` font sizing, so it scales with viewport. The heart should scale **with the headline**, not with pixels.
-
-- Wrap the last word (e.g. "STAGE") in an inline-block `<span style="position: relative">`.
-- Move the heart inside that span and position it with **`em` units** relative to that word (e.g. `top: -0.2em; right: -0.8em; height: 1.1em`).
-- Result: the heart scales and stays glued to the word at every viewport.
-
-### 2. Arrow (Services Step 1) — anchor to step number
-
-Same idea, different anchor.
-
-- Wrap the `1.` step number in a `position: relative` span.
-- Position the arrow with `em`/`%` values relative to that span (e.g. `top: 1.2em; left: 2em; width: 6em`).
-- Result: arrow follows the step number, scales with font size, no pixel drift.
-
-### 3. Remove the leftover drag/badge code on the heart
-
-The heart still has the draggable handler and the blue coordinate badge. Once the position is anchored, strip:
-- `useState` for `heartPos`
-- `dragStateRef` + the `useEffect` mouse handlers
-- The `onMouseDown` prop and `cursor: grab`
-- The blue coordinate badge div
-
-## Tuning workflow
-
-After the refactor, fine-tuning is done by editing 2–3 `em` numbers per element. I'll set sensible starting values; you tell me "nudge the heart up a bit" or give exact em values and I'll hardcode them. No more drag UI needed.
-
-## Answer to "which view matches my live site"
-
-Closest match: **collapse the chat sidebar / use the fullscreen preview** so the preview fills your browser at ~1440–1920px wide. That's what real visitors see. Once the elements are anchored (above), it won't matter anymore.
-
-## Files touched
-
-- `src/components/ExpatJourney.tsx` — heart anchoring + cleanup
-- `src/pages/Services.tsx` — arrow anchoring + remove `ARROW` constant
+Same goes for the arrow on Services, just let me know.
