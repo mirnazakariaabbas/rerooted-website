@@ -516,13 +516,14 @@ export function WhyReRootedPillars() {
                 aria-hidden="true"
                 className="absolute pointer-events-none select-none z-10"
                 style={{
-                  inset: "-8px",
-                  width: "calc(100% + 16px)",
-                  height: "calc(100% + 16px)",
+                  inset: "-12px",
+                  width: "calc(100% + 24px)",
+                  height: "calc(100% + 24px)",
                   objectFit: "fill",
-                  mixBlendMode: "screen",
+                  mixBlendMode: "multiply",
                   filter: pillar.borderFilter,
                   borderRadius: "32px",
+                  opacity: 0.5,
                 }}
               />
               <div
