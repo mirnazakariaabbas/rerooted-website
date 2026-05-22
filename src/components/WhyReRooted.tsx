@@ -424,7 +424,7 @@ export function WhyReRootedPillars() {
               maxWidth: "22ch",
             }}
           >
-            A complete integration{" "}
+            A COMPLETE INTEGRATION{" "}
             <span style={{ position: "relative", display: "inline-block" }}>
               <img
                 src={swigglyArrowSection3}
@@ -442,7 +442,7 @@ export function WhyReRootedPillars() {
                   zIndex: 5,
                 }}
               />
-              system
+              SYSTEM
             </span>
           </h2>
           <p className="text-primary/85 max-w-[44ch] text-base md:text-lg leading-relaxed">
