@@ -153,8 +153,9 @@ const StickyNav = () => {
             setGateOpen(true);
             if (location.pathname !== "/") {
               navigate("/");
+            } else {
+              window.scrollTo({ top: 0 });
             }
-            window.scrollTo({ top: 0 });
           }}
           className="shrink-0 cursor-pointer"
           aria-label="Re-Rooted home"
