@@ -9,7 +9,7 @@ import s from "./Services.module.css";
 
 const cn = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(" ");
 
-const ARROW = { top: 553, left: 475, size: 180 };
+
 
 const Services = () => {
   const rootRef = useRef<HTMLElement>(null);
@@ -72,25 +72,27 @@ const Services = () => {
           </div>
 
           {/* STEP 01 */}
-          <div className={cn(s.step, s.reveal)} style={{ position: "relative" }}>
-            <img
-              src={blueArrow}
-              alt=""
-              style={{
-                position: "absolute",
-                top: ARROW.top,
-                left: ARROW.left,
-                width: ARROW.size,
-                height: "auto",
-                pointerEvents: "none",
-                userSelect: "none",
-                zIndex: 20,
-              }}
-              draggable={false}
-            />
+          <div className={cn(s.step, s.reveal)}>
             <div className={s.stepContent}>
               <div className={s.stepNumRow}>
-                <div className={s.stepNum}>1.</div>
+                <div className={s.stepNum} style={{ position: "relative", display: "inline-block" }}>
+                  1.
+                  <img
+                    src={blueArrow}
+                    alt=""
+                    style={{
+                      position: "absolute",
+                      top: "1.1em",
+                      left: "1.6em",
+                      width: "3.2em",
+                      height: "auto",
+                      pointerEvents: "none",
+                      userSelect: "none",
+                      zIndex: 20,
+                    }}
+                    draggable={false}
+                  />
+                </div>
                 <div className={s.stepWhen}>Day 0</div>
               </div>
               <h3>Discovery Call</h3>
