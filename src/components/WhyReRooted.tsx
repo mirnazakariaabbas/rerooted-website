@@ -7,8 +7,6 @@ import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
 import heroTreeCropped from "@/assets/hero-tree-cropped.png";
-import swigglyArrowSection3 from "@/assets/swiggly-arrow-section-3.png";
-
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
@@ -423,26 +421,35 @@ export function WhyReRootedPillars() {
             }}
           >
             A COMPLETE INTEGRATION{" "}
-            <span style={{ position: "relative", display: "inline-block" }}>
+            <span style={{ position: "relative", display: "inline-block", paddingRight: "clamp(170px, 17vw, 260px)" }}>
               SYSTEM
-              <img
-                src="/swiggly-arrow.png"
-                alt=""
+              <span
                 aria-hidden="true"
-                draggable={false}
-                className="hidden md:block pointer-events-none select-none"
+                className="pointer-events-none absolute hidden overflow-hidden select-none md:block"
                 style={{
-                  position: "absolute",
-                  left: "100%",
-                  top: "-0.4em",
-                  marginLeft: "0.15em",
-                  width: "clamp(280px, 28vw, 540px)",
-                  height: "auto",
-                  mixBlendMode: "multiply",
-                  opacity: 0.9,
+                  left: "calc(100% - 0.22em)",
+                  top: "-0.1em",
+                  width: "clamp(170px, 18vw, 260px)",
+                  height: "clamp(315px, 33vw, 485px)",
                   zIndex: 5,
                 }}
-              />
+              >
+                <img
+                  src="/swiggly-arrow.png"
+                  alt=""
+                  draggable={false}
+                  className="block h-full max-w-none"
+                  style={{
+                    width: "363.22%",
+                    height: "137.58%",
+                    maxWidth: "none",
+                    transform: "translate(-131.03%, -11.34%)",
+                    transformOrigin: "top left",
+                    mixBlendMode: "multiply",
+                    opacity: 0.92,
+                  }}
+                />
+              </span>
             </span>
           </h2>
           <p className="text-primary/85 max-w-[44ch] text-base md:text-lg leading-relaxed">
@@ -499,23 +506,25 @@ export function WhyReRootedPillars() {
                 className="relative grid w-[70%] shrink-0 snap-start grid-cols-1 overflow-visible rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
                 style={{ background: pillar.bg, color: pillar.text }}
               >
-              <img
-                src="/hand-drawn-border.png"
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none select-none"
-                style={{
-                  position: "absolute",
-                  top: "-10px",
-                  left: "-10px",
-                  width: "calc(100% + 20px)",
-                  height: "calc(100% + 20px)",
-                  objectFit: "fill",
-                  zIndex: 20,
-                  mixBlendMode: "multiply",
-                  opacity: 1,
-                }}
-              />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-[28px] select-none md:rounded-[32px]"
+                >
+                  <img
+                    src="/hand-drawn-border.png"
+                    alt=""
+                    draggable={false}
+                    className="absolute max-w-none"
+                    style={{
+                      left: "-26.81%",
+                      top: "-48.2%",
+                      width: "149.94%",
+                      height: "188.11%",
+                      mixBlendMode: "multiply",
+                      opacity: 0.8,
+                    }}
+                  />
+                </span>
               <div
                 className="flex items-center justify-center p-3 md:p-5 lg:p-6"
                 style={{ minHeight: "clamp(280px, 32vw, 460px)" }}
