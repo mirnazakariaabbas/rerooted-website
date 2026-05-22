@@ -422,22 +422,29 @@ export function WhyReRootedPillars() {
               maxWidth: "22ch",
             }}
           >
-            A COMPLETE INTEGRATION SYSTEM
+            A COMPLETE INTEGRATION{" "}
+            <span style={{ position: "relative", display: "inline-block" }}>
+              SYSTEM
+              <img
+                src="/swiggly-arrow.png"
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+                className="hidden md:block pointer-events-none select-none"
+                style={{
+                  position: "absolute",
+                  left: "100%",
+                  top: "-0.4em",
+                  marginLeft: "0.15em",
+                  width: "clamp(280px, 28vw, 540px)",
+                  height: "auto",
+                  mixBlendMode: "multiply",
+                  opacity: 0.9,
+                  zIndex: 5,
+                }}
+              />
+            </span>
           </h2>
-          <img
-            src="/swiggly-arrow.png"
-            alt=""
-            aria-hidden="true"
-            className="hidden md:block absolute pointer-events-none select-none"
-            style={{
-              width: "180px",
-              height: "auto",
-              right: "-60px",
-              top: "-10px",
-              mixBlendMode: "multiply",
-              opacity: 0.85,
-            }}
-          />
           <p className="text-primary/85 max-w-[44ch] text-base md:text-lg leading-relaxed">
             Allowing the expat to adapt faster, perform better, and stay longer in the company
           </p>
@@ -499,14 +506,14 @@ export function WhyReRootedPillars() {
                 className="pointer-events-none select-none"
                 style={{
                   position: "absolute",
-                  top: "-14px",
-                  left: "-14px",
-                  width: "calc(100% + 28px)",
-                  height: "calc(100% + 28px)",
+                  top: "-10px",
+                  left: "-10px",
+                  width: "calc(100% + 20px)",
+                  height: "calc(100% + 20px)",
                   objectFit: "fill",
-                  zIndex: 10,
+                  zIndex: 20,
                   mixBlendMode: "multiply",
-                  opacity: 0.4,
+                  opacity: 1,
                 }}
               />
               <div
