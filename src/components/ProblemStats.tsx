@@ -171,12 +171,12 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               return (
                 <motion.div
                   key={i}
-                  className={`${common} bg-primary flex flex-col justify-between p-6 md:p-8`}
+                  className={`${common} bg-primary flex flex-col justify-center items-center gap-4 p-6 md:p-8`}
                   initial={{ opacity: 0, y: 24 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.06 }}
                 >
-                  <div className="flex-1 flex items-center justify-center">
+                  <div className="flex-1 flex items-center justify-center w-full">
                     <div
                       className="text-white leading-none flex items-baseline"
                       style={{ ...serif, fontStyle: "italic", fontSize: "clamp(110px, 14vw, 200px)" }}
@@ -184,7 +184,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
                       {tile.number}
                     </div>
                   </div>
-                  <p className="text-white/85 text-sm md:text-base text-center max-w-[26ch] mx-auto leading-snug">
+                  <p className="text-white text-xs md:text-sm text-center max-w-[26ch] mx-auto leading-tight font-semibold uppercase tracking-[0.06em]">
                     {tile.caption}
                   </p>
                 </motion.div>
