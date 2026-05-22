@@ -521,7 +521,7 @@ export function WhyReRootedPillars() {
                       width: "149.94%",
                       height: "188.11%",
                       mixBlendMode: "multiply",
-                      opacity: 0.8,
+                      opacity: 0.72,
                     }}
                   />
                 </span>
