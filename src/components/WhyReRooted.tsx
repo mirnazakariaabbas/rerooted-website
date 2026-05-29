@@ -529,7 +529,6 @@ export function WhyReRootedPillars() {
             </article>
           ))}
             </div>
-          </div>
 
           {/* Hover arrows */}
           <button
