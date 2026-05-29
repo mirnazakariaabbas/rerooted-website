@@ -328,35 +328,6 @@ export function WhyReRootedPillars() {
   const next = () => goTo(active + 1);
   const prev = () => goTo(active - 1);
 
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const center = track.scrollLeft + track.clientWidth / 2;
-        let bestIdx = 0;
-        let bestDist = Infinity;
-        Array.from(track.children).forEach((el, i) => {
-          const node = el as HTMLElement;
-          const c = node.offsetLeft + node.offsetWidth / 2;
-          const d = Math.abs(c - center);
-          if (d < bestDist) {
-            bestDist = d;
-            bestIdx = i;
-          }
-        });
-        setActive(bestIdx);
-      });
-    };
-    track.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      track.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
   // Detect when the section enters the viewport
   useEffect(() => {
     const node = sectionRef.current;
@@ -498,10 +469,12 @@ export function WhyReRootedPillars() {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          <div
-            ref={trackRef}
-            className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-4 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-5 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
-          >
+          <div className="overflow-x-clip">
+            <div
+              ref={trackRef}
+              className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-hidden scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-4 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-5 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+              style={{ touchAction: "pan-y pinch-zoom", overscrollBehaviorX: "none" }}
+            >
             {PILLARS.map((pillar) => (
               <article
                 key={pillar.title}
@@ -557,6 +530,7 @@ export function WhyReRootedPillars() {
               </div>
             </article>
           ))}
+            </div>
           </div>
 
           {/* Hover arrows */}
