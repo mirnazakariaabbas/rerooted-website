@@ -77,20 +77,21 @@ const ExpatJourney = () => {
               <h2
                 className="font-display"
                 style={{
-                  fontSize: "clamp(36px, 4.5vw, 64px)",
+                  fontSize: "clamp(28px, 3.6vw, 64px)",
                   lineHeight: 1.05,
                   color: "#FAF9F6",
                   letterSpacing: "-0.02em",
                   fontWeight: 700,
+                  whiteSpace: "nowrap",
                 }}
               >
                 {isIndividual ? (
                   <>Where are you<br />right now.</>
                 ) : (
                   <>
-                    SUPPORTING YOU THROUGH<br />EVERY{" "}
+                    SUPPORTING YOU THROUGH<br />
                     <span style={{ position: "relative", display: "inline-block" }}>
-                      STAGE
+                      EVERY STAGE
                       <img
                         src={heartDrawn}
                         alt=""
@@ -98,9 +99,9 @@ const ExpatJourney = () => {
                         draggable={false}
                         style={{
                           position: "absolute",
-                          top: "-0.55em",
-                          right: "-0.95em",
-                          height: "1.45em",
+                          top: "0.15em",
+                          right: "-1.4em",
+                          height: "0.9em",
                           width: "auto",
                           pointerEvents: "none",
                           userSelect: "none",
