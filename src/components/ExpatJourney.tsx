@@ -99,9 +99,9 @@ const ExpatJourney = () => {
                         draggable={false}
                         style={{
                           position: "absolute",
-                          top: "0.15em",
+                          top: "calc(0.15em + 1.5cm)",
                           left: "-0.15em",
-                          height: "1.5em",
+                          height: "12em",
                           width: "auto",
                           objectFit: "contain",
                           pointerEvents: "none",
