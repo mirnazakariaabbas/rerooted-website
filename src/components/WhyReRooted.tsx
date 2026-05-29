@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-// (scroll-trapping logic removed)
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import rootsIcon from "@/assets/roots-icon.png";
