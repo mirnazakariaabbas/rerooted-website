@@ -18,7 +18,33 @@ const AboutSection = () => {
           ​
         </p>
 
-
+        {/* Title at top of section, left-aligned, matches Journey section style */}
+        <h2
+          className="font-display"
+          style={{
+            fontSize: "clamp(28px, 3.6vw, 64px)",
+            lineHeight: 1.05,
+            color: "#FAF9F6",
+            letterSpacing: "-0.02em",
+            fontWeight: 700,
+            margin: "0 0 64px",
+            textAlign: "left",
+          }}
+        >
+          {isIndividual ? (
+            <>
+              I've been where
+              <br />
+              you are.
+            </>
+          ) : (
+            <>
+              Built from experience.
+              <br />
+              Designed for yours.
+            </>
+          )}
+        </h2>
 
         <div
           ref={ref}
@@ -46,22 +72,6 @@ const AboutSection = () => {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: isIndividual ? 0.9 : 0.7, ease: "easeOut", delay: 0.15 }}
         >
-          <h2 className="font-extrabold text-3xl md:text-[40px] leading-tight mb-6" style={{ color: "#FAF9F6" }}>
-            {isIndividual ? (
-              <>
-                I've been where
-                <br />
-                you are.
-              </>
-            ) : (
-              <>
-                Built from experience.
-                <br />
-                Designed for yours.
-              </>
-            )}
-          </h2>
-
           <div className={`space-y-4 leading-relaxed ${isIndividual ? "text-base md:text-lg" : "text-base"}`} style={{ color: "rgba(250,249,246,0.88)" }}>
             {isIndividual ? (
               <>
@@ -113,6 +123,7 @@ const AboutSection = () => {
         </div>
       </div>
     </section>
+
   );
 };
 
