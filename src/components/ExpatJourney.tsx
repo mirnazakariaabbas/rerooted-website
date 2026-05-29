@@ -265,7 +265,7 @@ const ExpatJourney = () => {
                   backgroundColor: "#FAF9F6",
                   color: "#1F299C",
                   borderRadius: "8px",
-                  boxShadow: "inset 0 0 0 3px #1F299C",
+                  border: "9px solid #1F299C",
                 }}
               >
                 Let us help you find what's right for your organization
