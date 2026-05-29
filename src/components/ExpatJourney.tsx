@@ -89,9 +89,9 @@ const ExpatJourney = () => {
                   <>Where are you<br />right now.</>
                 ) : (
                   <>
-                    SUPPORTING YOU THROUGH<br />
+                    SUPPORTING YOU{" "}
                     <span style={{ position: "relative", display: "inline-block" }}>
-                      EVERY STAGE
+                      T
                       <img
                         src={heartDrawn}
                         alt=""
@@ -99,16 +99,20 @@ const ExpatJourney = () => {
                         draggable={false}
                         style={{
                           position: "absolute",
-                          top: "0.15em",
-                          right: "-1.4em",
-                          height: "0.9em",
+                          top: "1.05em",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          height: "1.8em",
                           width: "auto",
                           pointerEvents: "none",
                           userSelect: "none",
+                          zIndex: 1,
                         }}
                         className="select-none"
                       />
                     </span>
+                    HROUGH<br />
+                    EVERY STAGE
                   </>
                 )}
               </h2>
