@@ -249,6 +249,29 @@ const ExpatJourney = () => {
             ))}
           </div>
         </FadeInOnScroll>
+
+        {/* CTA */}
+        <FadeInOnScroll delay={0.3}>
+          <div className="mt-16 md:mt-20 text-center">
+            {!isIndividual && (
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="inline-flex items-center justify-center px-8 py-4 text-sm font-semibold transition-transform duration-150 active:scale-[0.98]"
+                style={{
+                  backgroundColor: "#FAF9F6",
+                  color: "#1F299C",
+                  borderRadius: "8px",
+                }}
+              >
+                Let us help you find what's right for your organization
+              </a>
+            )}
+          </div>
+        </FadeInOnScroll>
       </div>
     </section>
   );
