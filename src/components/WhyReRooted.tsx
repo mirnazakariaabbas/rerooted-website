@@ -469,11 +469,9 @@ export function WhyReRootedPillars() {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          <div className="overflow-x-clip">
             <div
               ref={trackRef}
-              className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-hidden scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-4 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-5 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
-              style={{ touchAction: "pan-y pinch-zoom", overscrollBehaviorX: "none" }}
+              className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-4 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-5 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
             >
             {PILLARS.map((pillar) => (
               <article
