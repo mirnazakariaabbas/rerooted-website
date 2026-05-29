@@ -89,9 +89,9 @@ const ExpatJourney = () => {
                   <>Where are you<br />right now.</>
                 ) : (
                   <>
-                    SUPPORTING YOU{" "}
+                    SUPPORTING YO
                     <span style={{ position: "relative", display: "inline-block" }}>
-                      T
+                      U TH
                       <img
                         src={heartDrawn}
                         alt=""
@@ -111,7 +111,7 @@ const ExpatJourney = () => {
                         className="select-none"
                       />
                     </span>
-                    HROUGH<br />
+                    ROUGH<br />
                     EVERY STAGE
                   </>
                 )}
