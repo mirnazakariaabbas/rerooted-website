@@ -89,30 +89,25 @@ const ExpatJourney = () => {
                   <>Where are you<br />right now.</>
                 ) : (
                   <>
-                    SUPPORTING YO
-                    <span style={{ position: "relative", display: "inline-block" }}>
-                      U TH
-                      <img
-                        src={heartDrawn}
-                        alt=""
-                        aria-hidden="true"
-                        draggable={false}
-                        style={{
-                          position: "absolute",
-                          top: "-0.2em",
-                          left: "-0.15em",
-                          height: "12em",
-                          width: "auto",
-                          objectFit: "contain",
-                          pointerEvents: "none",
-                          userSelect: "none",
-                          zIndex: 2,
-                        }}
-                        className="select-none"
-                      />
-                    </span>
-                    ROUGH<br />
+                    SUPPORTING YOU THROUGH<br />
                     EVERY STAGE
+                    <img
+                      src={heartDrawn}
+                      alt=""
+                      aria-hidden="true"
+                      draggable={false}
+                      style={{
+                        display: "inline-block",
+                        height: "1.1em",
+                        width: "auto",
+                        marginLeft: "0.4em",
+                        verticalAlign: "-0.15em",
+                        objectFit: "contain",
+                        pointerEvents: "none",
+                        userSelect: "none",
+                      }}
+                      className="select-none"
+                    />
                   </>
                 )}
               </h2>
