@@ -102,7 +102,7 @@ const ExpatJourney = () => {
                           top: "1.05em",
                           left: "50%",
                           transform: "translateX(-25%)",
-                          height: "1.8em",
+                          height: "14.4em",
                           width: "auto",
                           objectFit: "contain",
                           pointerEvents: "none",
