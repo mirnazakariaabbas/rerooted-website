@@ -218,20 +218,19 @@ const IntegrationProgram = () => {
           <h2
             className="font-display"
             style={{
-              fontSize: "clamp(52px, 6vw, 96px)",
-              lineHeight: 1,
+              fontSize: "clamp(28px, 3.6vw, 64px)",
+              lineHeight: 1.05,
               color: COLORS.blue,
               letterSpacing: "-0.02em",
               fontWeight: 700,
-              margin: "0 auto",
-              textAlign: "center",
-              maxWidth: 780,
+              margin: 0,
+              textAlign: "left",
             }}
           >
             The Re-Rooted®{" "}
             <span style={{ color: COLORS.green }}>Journey</span>
           </h2>
-          <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute, textAlign: "center", maxWidth: 780, marginLeft: "auto", marginRight: "auto" }}>
+          <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute, textAlign: "left", maxWidth: 780 }}>
             Ninety days, six sessions, two assessments, one clear report. Here's how it goes, step by step.
           </p>
         </div>
