@@ -99,15 +99,14 @@ const ExpatJourney = () => {
                         draggable={false}
                         style={{
                           position: "absolute",
-                          top: "1.05em",
-                          left: "50%",
-                          transform: "translateX(-25%)",
-                          height: "14.4em",
+                          top: "0.15em",
+                          left: "-0.15em",
+                          height: "1.5em",
                           width: "auto",
                           objectFit: "contain",
                           pointerEvents: "none",
                           userSelect: "none",
-                          zIndex: 1,
+                          zIndex: 2,
                         }}
                         className="select-none"
                       />
