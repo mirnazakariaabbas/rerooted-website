@@ -99,7 +99,7 @@ const ExpatJourney = () => {
                         draggable={false}
                         style={{
                           position: "absolute",
-                          top: "calc(0.15em + 1.5cm)",
+                          top: "-0.2em",
                           left: "-0.15em",
                           height: "12em",
                           width: "auto",
