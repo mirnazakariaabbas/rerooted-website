@@ -19,7 +19,7 @@ const IndividualHome = () => (
       closingLine="These aren't just numbers, they're people like you, navigating the same challenges you face right now."
     />
     <WhyReRootedPillars />
-    <ExpatJourney />
+    <ReRootedJourney />
     <IndividualSupport />
     <AboutSection />
     
