@@ -61,7 +61,7 @@ const Footer = () => {
               <strong>Re-Rooted®</strong> is a registered trademark.
             </p>
             <p className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
-              Coaching is not therapy, counseling, or medical treatment.
+              <br />
             </p>
           </div>
 
