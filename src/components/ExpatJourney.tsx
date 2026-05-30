@@ -89,7 +89,7 @@ const ExpatJourney = () => {
                   <>Where are you<br />right now.</>
                 ) : (
                   <>
-                    SUPPORTING YOU THROUGH<br />
+                    SUPPORTING<br />
                     EVERY STAGE
                     <img
                       src={heartDrawn}
