@@ -384,26 +384,6 @@ export function WhyReRootedPillars() {
                 className="relative grid h-full w-[88%] shrink-0 grid-cols-1 overflow-visible rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
                 style={{ background: pillar.bg, color: pillar.text }}
               >
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 z-20 select-none"
-                >
-                  <img
-                    src="/hand-drawn-border.png"
-                    alt=""
-                    draggable={false}
-                    className="absolute max-w-none"
-                    style={{
-                      left: "-26.81%",
-                      top: "-48.2%",
-                      width: "149.94%",
-                      height: "188.11%",
-                      borderRadius: "inherit",
-                      mixBlendMode: "multiply",
-                      opacity: 0.72,
-                    }}
-                  />
-                </span>
               <div
                 className="flex items-center justify-center p-3 md:p-5 lg:p-6"
               >
