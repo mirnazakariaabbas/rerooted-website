@@ -19,7 +19,6 @@ const CorporateHome = () => (
     />
     <WhyReRootedPillars />
     <ReRootedJourney />
-    <IntegrationProgram />
     <AboutSection />
     
     <BlogPreview />
