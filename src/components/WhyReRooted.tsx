@@ -260,10 +260,9 @@ export function WhyReRootedPillars() {
       ref={sectionRef}
       id="approach"
       className="relative bg-background text-foreground"
-      style={{ height: `${PILLARS.length * 100}vh` }}
     >
       <div
-        className="sticky top-0 flex h-screen w-full flex-col overflow-hidden"
+        className="flex h-screen w-full flex-col overflow-hidden"
       >
         <div className="relative mx-auto w-full max-w-[1760px] flex-1 flex flex-col px-6 pb-4 pt-4 sm:px-8 md:px-10 md:pt-5 lg:px-14 xl:px-16">
 
