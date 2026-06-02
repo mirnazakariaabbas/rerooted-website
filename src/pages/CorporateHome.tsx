@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 import { WhyReRootedStatement, WhyReRootedPillars } from "@/components/WhyReRooted";
 import ProblemStats from "@/components/ProblemStats";
-import IntegrationProgram from "@/components/IntegrationProgram";
+
 import ReRootedJourney from "@/components/ReRootedJourney";
 import AboutSection from "@/components/AboutSection";
 
