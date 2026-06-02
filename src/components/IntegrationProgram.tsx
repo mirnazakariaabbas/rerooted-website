@@ -1,11 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 /**
- * The ReRooted Journey, vertical tree-timeline.
- * Corporate-only signature 6-step program. Replaces the previous horizontal
- * sticky-scroll. Keeps id="program" for the Hero "See how it works" anchor.
+ * Corporate-only signature program.
+ * Horizontal sticky-scroll: section pins to viewport, cards translate
+ * horizontally as the user scrolls vertically. Re-pin behavior matches
+ * GSAP-style pin without the dependency.
  */
 
 const COLORS = {
@@ -14,10 +15,8 @@ const COLORS = {
   warmWhite: "#FAF9F6",
   mute: "#6B6B6B",
   ink: "#1A1A1A",
-  line: "rgba(31,41,156,0.14)",
 };
 
-/* ── inline icons ── */
 const Ic = {
   star: (p: any) => (
     <svg viewBox="0 0 24 24" fill="currentColor" {...p}>
@@ -64,318 +63,168 @@ type Step = {
 };
 
 const STEPS: Step[] = [
-  {
-    when: "Day 0",
-    title: "Candidate shortlisted",
-    body: "A closing read against the initial 1 baseline. What shifted, what held, what's next. Delivered as a written report with measurements and focus areas.",
-    icon: "star",
-  },
-  {
-    when: "Day 1",
-    title: "Assignment complexity evaluation",
-    body: "A structured baseline across 8 dimensions: family, culture, role, language, timeline. Both the individual and the employer know what they're underwriting.",
-    icon: "graph",
-  },
-  {
-    when: "Week 1",
-    title: "Personal needs assessment",
-    body: "A confidential deep-dive with the relocating professional. Surfaces hidden blockers and defines the success measures for the next 12 weeks.",
-    icon: "list",
-  },
-  {
-    when: "Weeks 2–14",
-    title: "Active coaching",
-    body: "Six 1:1 sessions across three months. Real-time work on the things that actually determine whether the move takes root: identity, relationships, performance, belonging.",
-    icon: "sprout",
-  },
-  {
-    when: "Week 15",
-    title: "Final assessment",
-    body: "A closing read against the Week 1 baseline. What shifted, what held, what's next. Delivered as a written report, yours to keep, yours to share.",
-    icon: "flag",
-  },
-  {
-    when: "Post-PROGRAM",
-    title: "Ongoing support",
-    body: "Quarterly check-ins for the first year. Because the roots take longer than 90 days to deepen, and we stay with them.",
-    icon: "check",
-  },
+  { when: "Day 0", title: "Candidate shortlisted", body: "A closing read against the initial baseline. What shifted, what held, what's next. Delivered as a written report with measurements and focus areas.", icon: "star" },
+  { when: "Day 1", title: "Assignment complexity evaluation", body: "A structured baseline across 8 dimensions: family, culture, role, language, timeline. Both the individual and the employer know what they're underwriting.", icon: "graph" },
+  { when: "Week 1", title: "Personal needs assessment", body: "A confidential deep-dive with the relocating professional. Surfaces hidden blockers and defines the success measures for the next 12 weeks.", icon: "list" },
+  { when: "Weeks 2-14", title: "Active coaching", body: "Six 1:1 sessions across three months. Real-time work on the things that actually determine whether the move takes root: identity, relationships, performance, belonging.", icon: "sprout" },
+  { when: "Week 15", title: "Final assessment", body: "A closing read against the Week 1 baseline. What shifted, what held, what's next. Delivered as a written report, yours to keep, yours to share.", icon: "flag" },
+  { when: "Post-program", title: "Ongoing support", body: "Quarterly check-ins for the first year. Because the roots take longer than 90 days to deepen, and we stay with them.", icon: "check" },
 ];
 
-const ProgramCTAs = () => {
-  const navigate = useNavigate();
-  return (
-    <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
-      <Button size="lg" onClick={() => navigate("/services")}>Get a PROGRAM overview</Button>
-      <a
-        href="/#contact"
-        onClick={(e) => { e.preventDefault(); navigate("/#contact"); }}
-        className="text-sm font-medium text-primary hover:underline underline-offset-4"
-      >
-        Or start with a conversation
-      </a>
-    </div>
-  );
-};
-
 const IntegrationProgram = () => {
-  const wrapRef = useRef<HTMLDivElement | null>(null);
-  const spineFillRef = useRef<HTMLDivElement | null>(null);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const navigate = useNavigate();
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const [progress, setProgress] = useState(0);
 
-  // Scroll-linked green spine growth
   useEffect(() => {
     const onScroll = () => {
-      if (!wrapRef.current || !spineFillRef.current) return;
-      const r = wrapRef.current.getBoundingClientRect();
+      const section = sectionRef.current;
+      const track = trackRef.current;
+      if (!section || !track) return;
+      const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
-      const start = r.top - vh * 0.4;
-      const end = r.top + r.height - vh * 0.5;
-      const p = Math.max(0, Math.min(1, -start / (end - start)));
-      spineFillRef.current.style.transform = `scaleY(${p})`;
+      const scrollable = section.offsetHeight - vh;
+      const scrolled = Math.min(Math.max(-rect.top, 0), scrollable);
+      const p = scrollable > 0 ? scrolled / scrollable : 0;
+      const maxX = track.scrollWidth - window.innerWidth;
+      track.style.transform = `translate3d(${-p * Math.max(maxX, 0)}px,0,0)`;
+      setProgress(p);
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Reveal each step as it enters
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            (e.target as HTMLElement).style.opacity = "1";
-            (e.target as HTMLElement).style.transform = "none";
-            const dot = (e.target as HTMLElement).querySelector(
-              "[data-dot]"
-            ) as HTMLElement | null;
-            if (dot) dot.style.animation = "rrPop .6s ease both";
-          }
-        });
-      },
-      { rootMargin: "-15% 0px -15% 0px" }
-    );
-    stepRefs.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (
     <section
       id="program"
+      ref={sectionRef}
       style={{
-        padding: "140px 0 120px",
         position: "relative",
+        height: `${STEPS.length * 90}vh`,
         background: COLORS.warmWhite,
         color: COLORS.ink,
-        overflow: "hidden",
       }}
     >
-      <style>{`
-        @keyframes rrPop { 0% { transform: scale(0.4);} 60% { transform: scale(1.08);} 100% { transform: scale(1);} }
-        @media (max-width: 720px) {
-          .rr-step { grid-template-columns: 32px 1fr !important; gap: 8px 20px !important; }
-          .rr-spine { left: 16px !important; }
-          .rr-dot { width: 32px !important; height: 32px !important; box-shadow: 0 0 0 4px ${COLORS.warmWhite} !important; }
-          .rr-dot svg { width: 14px !important; height: 14px !important; }
-          .rr-node { grid-column: 1 !important; grid-row: 1 / span 2 !important; align-self: start; margin-top: 4px; }
-          .rr-meta { grid-column: 2 !important; grid-row: 1 !important; text-align: left !important; align-items: flex-start !important; justify-self: start !important; max-width: none !important; }
-          .rr-content { grid-column: 2 !important; grid-row: 2 !important; max-width: none !important; }
-          .rr-head h2 { font-size: 44px !important; }
-        }
-        @media (min-width: 721px) and (max-width: 1100px) {
-          .rr-step { grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr) !important; gap: 24px !important; }
-          .rr-meta { max-width: 16ch !important; }
-          .rr-meta h4 { font-size: 32px !important; }
-          .rr-dot { width: 56px !important; height: 56px !important; box-shadow: 0 0 0 6px ${COLORS.warmWhite} !important; }
-          .rr-dot svg { width: 22px !important; height: 22px !important; }
-          .rr-content { font-size: 14px !important; max-width: 34ch !important; }
-        }
-      `}</style>
-
-      <div style={{ maxWidth: 1320, margin: "0 auto", padding: "0 24px" }}>
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         {/* Heading */}
-        <div
-          className="rr-head"
-          style={{ textAlign: "left", margin: "0 0 80px" }}
-        >
+        <div style={{ maxWidth: 1320, margin: "0 auto", padding: "80px 24px 0", width: "100%" }}>
           <div
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 12,
               fontSize: 11,
               letterSpacing: "0.22em",
               textTransform: "uppercase",
               color: COLORS.green,
               fontWeight: 600,
-              marginBottom: 18,
-              whiteSpace: "nowrap",
+              marginBottom: 14,
             }}
           >
-            ​
+            The complete integration system
           </div>
           <h2
             className="font-display"
             style={{
-              fontSize: "clamp(28px, 3.6vw, 64px)",
+              fontSize: "clamp(28px, 3.2vw, 56px)",
               lineHeight: 1.05,
               color: COLORS.blue,
               letterSpacing: "-0.02em",
               fontWeight: 700,
               margin: 0,
-              textAlign: "left",
             }}
           >
-            The Re-Rooted®{" "}
-            <span style={{ color: COLORS.green }}>Journey</span>
+            The Re-Rooted® <span style={{ color: COLORS.green }}>Journey</span>
           </h2>
-          <p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.6, color: COLORS.mute, textAlign: "left", maxWidth: 780 }}>
-            Ninety days, six sessions, two assessments, one clear report. Here's how it goes, step by step.
+          <p style={{ marginTop: 16, fontSize: 16, lineHeight: 1.6, color: COLORS.mute, maxWidth: 780 }}>
+            Ninety days, six sessions, two assessments, one clear report. Scroll to walk through it.
           </p>
         </div>
 
-        {/* Timeline */}
-        <div
-          ref={wrapRef}
-          style={{ position: "relative", maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}
-        >
-          {/* Spine */}
+        {/* Horizontal track */}
+        <div style={{ flex: 1, display: "flex", alignItems: "center", overflow: "hidden" }}>
           <div
-            className="rr-spine"
+            ref={trackRef}
             style={{
-              position: "absolute",
-              left: "50%",
-              top: 0,
-              bottom: 0,
-              width: 3,
-              transform: "translateX(-50%)",
-              background: `linear-gradient(180deg, transparent 0%, ${COLORS.blue} 8%, ${COLORS.blue} 92%, transparent 100%)`,
-              opacity: 0.12,
+              display: "flex",
+              gap: 28,
+              padding: "0 10vw",
+              willChange: "transform",
+              transition: "transform 0.05s linear",
             }}
           >
-            <div
-              ref={spineFillRef}
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: COLORS.green,
-                transformOrigin: "top",
-                transform: "scaleY(0)",
-                transition: "transform 0.3s linear",
-                opacity: 1,
-              }}
-            />
-          </div>
-
-          {/* Steps */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 90 }}>
             {STEPS.map((s, i) => {
               const IcComp = Ic[s.icon];
               return (
                 <div
                   key={i}
-                  className="rr-step"
-                  ref={(el) => (stepRefs.current[i] = el)}
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "minmax(280px, 1fr) 88px minmax(280px, 1fr)",
-                    gap: 40,
-                    alignItems: "center",
-                    opacity: 0,
-                    transform: "translateY(40px)",
-                    transition: "opacity .7s ease, transform .7s ease",
+                    flex: "0 0 380px",
+                    background: "#fff",
+                    border: `1px solid rgba(31,41,156,0.10)`,
+                    borderRadius: 8,
+                    padding: 32,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 16,
+                    minHeight: 420,
                   }}
                 >
-                  {/* Meta (always left) */}
                   <div
-                    className="rr-meta"
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 8,
-                      gridColumn: 1,
-                      textAlign: "right",
-                      alignItems: "flex-end",
-                      justifySelf: "end",
-                      maxWidth: "18ch",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: 12,
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase",
-                        color: COLORS.green,
-                        fontWeight: 600,
-                      }}
-                    >
-                      {s.when}
-                    </span>
-                    <h4
-                      className="font-display"
-                      style={{
-                        fontSize: 42,
-                        lineHeight: 1.02,
-                        color: COLORS.blue,
-                        fontWeight: 700,
-                        letterSpacing: "-0.015em",
-                        margin: 0,
-                      }}
-                    >
-                      {s.title}
-                    </h4>
-                  </div>
-
-                  {/* Dot */}
-                  <div
-                    className="rr-node"
-                    style={{
-                      position: "relative",
+                      width: 56,
+                      height: 56,
+                      borderRadius: "50%",
+                      background: i % 2 === 0 ? COLORS.blue : COLORS.green,
+                      color: "#fff",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gridColumn: 2,
-                      justifySelf: "center",
-                      alignSelf: "center",
                     }}
                   >
-                    <div
-                      data-dot
-                      className="rr-dot"
-                      style={{
-                        width: 72,
-                        height: 72,
-                        borderRadius: "50%",
-                        background: i % 2 === 0 ? COLORS.blue : COLORS.green,
-                        color: "white",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        position: "relative",
-                        zIndex: 2,
-                        boxShadow: `0 0 0 8px ${COLORS.warmWhite}`,
-                        flexShrink: 0,
-                      }}
-                    >
-                      <IcComp style={{ width: 30, height: 30 }} />
-                    </div>
+                    <IcComp style={{ width: 24, height: 24 }} />
                   </div>
-
-                  {/* Body */}
-                  <div
-                    className="rr-content"
+                  <span
                     style={{
-                      fontSize: 15,
-                      lineHeight: 1.6,
-                      color: "#3a3a3a",
-                      maxWidth: "36ch",
-                      gridColumn: 3,
-                      textAlign: "left",
-                      justifySelf: "start",
+                      fontSize: 11,
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      color: COLORS.green,
+                      fontWeight: 700,
                     }}
                   >
+                    {s.when}
+                  </span>
+                  <h3
+                    className="font-display"
+                    style={{
+                      fontSize: 26,
+                      lineHeight: 1.1,
+                      color: COLORS.blue,
+                      fontWeight: 700,
+                      letterSpacing: "-0.015em",
+                      margin: 0,
+                    }}
+                  >
+                    {s.title}
+                  </h3>
+                  <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "#3a3a3a", margin: 0 }}>
                     {s.body}
+                  </p>
+                  <div style={{ marginTop: "auto", fontSize: 12, color: COLORS.mute, fontWeight: 600 }}>
+                    Step {String(i + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}
                   </div>
                 </div>
               );
@@ -383,7 +232,29 @@ const IntegrationProgram = () => {
           </div>
         </div>
 
-        <ProgramCTAs />
+        {/* Progress bar + CTAs */}
+        <div style={{ maxWidth: 1320, margin: "0 auto", padding: "0 24px 48px", width: "100%" }}>
+          <div style={{ height: 3, background: "rgba(31,41,156,0.12)", borderRadius: 2, overflow: "hidden", marginBottom: 24 }}>
+            <div
+              style={{
+                height: "100%",
+                width: `${progress * 100}%`,
+                background: COLORS.green,
+                transition: "width 0.05s linear",
+              }}
+            />
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Button size="lg" onClick={() => navigate("/services")}>Get a program overview</Button>
+            <a
+              href="/#contact"
+              onClick={(e) => { e.preventDefault(); navigate("/#contact"); }}
+              className="text-sm font-medium text-primary hover:underline underline-offset-4"
+            >
+              Or start with a conversation
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
