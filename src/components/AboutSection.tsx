@@ -58,7 +58,7 @@ const AboutSection = () => {
           transition={{ duration: isIndividual ? 0.9 : 0.7, ease: "easeOut" }}
         >
           <img
-            src={aboutPhoto}
+            src={aboutPhoto.url}
             alt="Yasser Abbas, founder of Re-Rooted"
             className="w-full h-full object-cover"
             style={{ objectPosition: "center 30%" }}
