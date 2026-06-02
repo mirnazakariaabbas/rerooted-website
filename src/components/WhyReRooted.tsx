@@ -392,7 +392,7 @@ export function WhyReRootedPillars() {
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full max-h-[60vh] w-auto max-w-full object-contain"
+                  className="h-full max-h-[42vh] w-auto max-w-full object-contain"
                 />
               </div>
 
