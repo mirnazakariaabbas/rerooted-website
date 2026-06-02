@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useAudience } from "@/contexts/AudienceContext";
-import aboutPhoto from "@/assets/rerooted-idea-tank.svg.asset.json";
+import aboutPhoto from "@/assets/rerooted-idea-tank-v2.svg.asset.json";
 
 const AboutSection = () => {
   const ref = useRef<HTMLDivElement>(null);
