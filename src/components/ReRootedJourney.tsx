@@ -233,17 +233,6 @@ export default function ReRootedJourney() {
           )}
         </div>
 
-        {/* Footer totals */}
-        <div style={{ marginTop: 80, display: "flex", gap: 48, justifyContent: "center", flexWrap: "wrap",
-          paddingTop: 38, borderTop: `1px solid ${C.line}`, maxWidth: 1080, marginInline: "auto" }}>
-          {[["90", "days total"], ["6", "coaching sessions"], ["2", "assessments"], ["1", "final report"]].map(([n, l]) => (
-            <div key={l} style={{ display: "flex", alignItems: "baseline", gap: 10, fontSize: 13,
-              letterSpacing: "0.12em", textTransform: "uppercase", color: C.mute }}>
-              <b style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 30, color: C.blue, fontWeight: 700, letterSpacing: "-0.02em" }}>{n}</b>
-              {l}
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
