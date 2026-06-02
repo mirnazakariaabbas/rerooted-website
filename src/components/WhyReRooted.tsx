@@ -231,87 +231,73 @@ const PILLARS = [
 
 export function WhyReRootedPillars() {
   const [active, setActive] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
-  const [hasEnteredView, setHasEnteredView] = useState(false);
-  const [readyToAutoplay, setReadyToAutoplay] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-pinned horizontal advance.
+  // Outer section is tall (N * 100vh); inner sticky panel holds the UI;
+  // the track translates horizontally based on scroll progress through the section.
+  useEffect(() => {
+    const onScroll = () => {
+      const section = sectionRef.current;
+      const track = trackRef.current;
+      if (!section || !track) return;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const scrollable = section.offsetHeight - vh;
+      if (scrollable <= 0) return;
+      const scrolled = Math.min(Math.max(-rect.top, 0), scrollable);
+      const p = scrolled / scrollable;
+      const maxX = track.scrollWidth - track.parentElement!.clientWidth;
+      track.style.transform = `translate3d(${-p * Math.max(maxX, 0)}px,0,0)`;
+      const idx = Math.min(
+        PILLARS.length - 1,
+        Math.floor(p * PILLARS.length + 0.0001)
+      );
+      setActive(idx);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
 
   const goTo = (i: number) => {
-    const idx = (i + PILLARS.length) % PILLARS.length;
-    setActive(idx);
-    const track = trackRef.current;
-    if (!track) return;
-    const slide = track.children[idx] as HTMLElement | undefined;
-    if (slide) {
-      track.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
-    }
+    const section = sectionRef.current;
+    if (!section) return;
+    const idx = Math.max(0, Math.min(PILLARS.length - 1, i));
+    const vh = window.innerHeight;
+    const scrollable = section.offsetHeight - vh;
+    const target =
+      section.getBoundingClientRect().top + window.scrollY +
+      (scrollable * idx) / (PILLARS.length - 1);
+    window.scrollTo({ top: target, behavior: "smooth" });
   };
 
   const next = () => goTo(active + 1);
   const prev = () => goTo(active - 1);
 
-  // Detect when the section enters the viewport
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
-            setHasEnteredView(true);
-          }
-        });
-      },
-      { threshold: [0, 0.4, 0.6] }
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  // After entering view, give the user time to read the first slide before autoplay
-  useEffect(() => {
-    if (!hasEnteredView) return;
-    const t = window.setTimeout(() => setReadyToAutoplay(true), 6000);
-    return () => window.clearTimeout(t);
-  }, [hasEnteredView]);
-
-  // Autoplay every 7 seconds, pause on hover
-  useEffect(() => {
-    if (isHovering || !readyToAutoplay) return;
-    const id = window.setInterval(() => {
-      setActive((curr) => {
-        const nextIdx = (curr + 1) % PILLARS.length;
-        const track = trackRef.current;
-        if (track) {
-          const slide = track.children[nextIdx] as HTMLElement | undefined;
-          if (slide) track.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
-        }
-        return nextIdx;
-      });
-    }, 7000);
-    return () => window.clearInterval(id);
-  }, [isHovering, readyToAutoplay]);
-
   return (
     <section
       ref={sectionRef}
       id="approach"
-      className="relative overflow-hidden bg-background text-foreground"
+      className="relative bg-background text-foreground"
+      style={{ height: `${PILLARS.length * 100}vh` }}
     >
-      <div className="relative mx-auto w-full max-w-[1760px] px-6 pb-8 pt-4 sm:px-8 md:px-10 md:pb-10 md:pt-6 lg:px-14 lg:pb-12 lg:pt-8 xl:px-16 xl:pt-10">
+      <div
+        className="sticky top-0 flex h-screen w-full flex-col overflow-hidden"
+      >
+        <div className="relative mx-auto w-full max-w-[1760px] flex-1 flex flex-col px-6 pb-6 pt-6 sm:px-8 md:px-10 md:pt-8 lg:px-14 xl:px-16">
 
-
-
-
-
-
-        <div className="relative mb-8 flex flex-col gap-4 md:mb-10">
+        <div className="relative mb-6 flex flex-col gap-3 md:mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
             ​
           </p>
           <h2
-            className="font-display m-0 text-primary font-bold leading-[0.96] tracking-[-0.055em] text-[clamp(34px,4.4vw,64px)] text-left px-0"
+            className="font-display m-0 text-primary font-bold leading-[0.96] tracking-[-0.055em] text-[clamp(28px,3.6vw,52px)] text-left px-0"
             style={{
               maxWidth: "22ch",
             }}
@@ -325,8 +311,8 @@ export function WhyReRootedPillars() {
                 style={{
                   left: "calc(100% - 0.05em)",
                   top: "-0.12em",
-                  width: "clamp(210px, 21vw, 300px)",
-                  height: "clamp(390px, 38vw, 560px)",
+                  width: "clamp(180px, 18vw, 260px)",
+                  height: "clamp(330px, 32vw, 480px)",
                   zIndex: 5,
                 }}
               >
@@ -348,14 +334,13 @@ export function WhyReRootedPillars() {
               </span>
             </span>
           </h2>
-          <p className="text-primary/85 max-w-[44ch] text-base md:text-lg leading-relaxed">
+          <p className="text-primary/85 max-w-[44ch] text-sm md:text-base leading-relaxed">
             Allowing the expat to adapt faster, perform better, and stay longer in the company
           </p>
         </div>
 
-
         {/* Topic pills */}
-        <div className="mb-6 flex flex-wrap gap-3 md:mb-8">
+        <div className="mb-4 flex flex-wrap gap-3 md:mb-6">
           {PILLARS.map((p, i) => {
             const isActive = i === active;
             return (
@@ -363,7 +348,7 @@ export function WhyReRootedPillars() {
                 key={p.title}
                 type="button"
                 onClick={() => goTo(i)}
-                className="rounded-full px-5 py-2.5 text-sm font-semibold uppercase transition-colors md:px-6 md:py-3 md:text-base"
+                className="rounded-full px-5 py-2 text-sm font-semibold uppercase transition-colors md:px-6 md:py-2.5"
                 style={{
                   background: isActive ? "hsl(var(--primary))" : "hsl(var(--muted))",
                   color: isActive
@@ -386,20 +371,17 @@ export function WhyReRootedPillars() {
           })}
         </div>
 
-        {/* Carousel wrapper with hover arrows */}
-        <div
-          className="group relative overflow-visible"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
+        {/* Pinned horizontal track */}
+        <div className="group relative flex-1 min-h-0 overflow-hidden">
             <div
               ref={trackRef}
-              className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-6 pb-4 sm:-mx-8 sm:gap-4 sm:px-8 md:-mx-10 md:px-10 lg:-mx-14 lg:gap-5 lg:px-14 xl:-mx-16 xl:px-16 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+              className="flex h-full gap-4 lg:gap-5 will-change-transform"
+              style={{ transition: "transform 0.05s linear" }}
             >
             {PILLARS.map((pillar) => (
               <article
                 key={pillar.title}
-                className="relative grid w-[70%] shrink-0 snap-start grid-cols-1 overflow-visible rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
+                className="relative grid h-full w-[88%] shrink-0 grid-cols-1 overflow-visible rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
                 style={{ background: pillar.bg, color: pillar.text }}
               >
                 <span
@@ -424,27 +406,26 @@ export function WhyReRootedPillars() {
                 </span>
               <div
                 className="flex items-center justify-center p-3 md:p-5 lg:p-6"
-                style={{ minHeight: "clamp(280px, 32vw, 460px)" }}
               >
                 <img
                   src={pillar.image}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full max-h-[480px] w-auto max-w-full object-contain"
+                  className="h-full max-h-[60vh] w-auto max-w-full object-contain"
                 />
               </div>
 
               <div className="flex flex-col justify-center gap-4 p-6 md:p-8 lg:p-10">
                 <h3
                   className="font-display font-medium leading-[1.05] tracking-[-0.02em]"
-                  style={{ fontSize: "clamp(1.75rem, 3vw, 2.75rem)" }}
+                  style={{ fontSize: "clamp(1.5rem, 2.6vw, 2.5rem)" }}
                 >
                   {pillar.title}
                 </h3>
                 <p
                   className="max-w-[44ch] font-normal leading-[1.55] opacity-90"
-                  style={{ fontSize: "clamp(1rem, 1.15vw, 1.125rem)" }}
+                  style={{ fontSize: "clamp(0.95rem, 1.05vw, 1.075rem)" }}
                 >
                   {pillar.body}
                 </p>
@@ -473,7 +454,7 @@ export function WhyReRootedPillars() {
         </div>
 
         {/* Dots */}
-        <div className="mt-6 flex justify-center gap-2">
+        <div className="mt-4 flex justify-center gap-2">
           {PILLARS.map((p, i) => (
             <button
               key={p.title}
@@ -491,6 +472,7 @@ export function WhyReRootedPillars() {
             />
           ))}
         </div>
+      </div>
       </div>
     </section>
 
