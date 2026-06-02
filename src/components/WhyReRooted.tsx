@@ -340,7 +340,7 @@ export function WhyReRootedPillars() {
         </div>
 
         {/* Topic pills */}
-        <div className="mb-4 flex flex-wrap gap-3 md:mb-6">
+        <div className="mb-2 flex flex-wrap gap-3 md:mb-3">
           {PILLARS.map((p, i) => {
             const isActive = i === active;
             return (
