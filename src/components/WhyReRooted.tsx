@@ -290,14 +290,14 @@ export function WhyReRootedPillars() {
       <div
         className="sticky top-0 flex h-screen w-full flex-col overflow-hidden"
       >
-        <div className="relative mx-auto w-full max-w-[1760px] flex-1 flex flex-col px-6 pb-6 pt-6 sm:px-8 md:px-10 md:pt-8 lg:px-14 xl:px-16">
+        <div className="relative mx-auto w-full max-w-[1760px] flex-1 flex flex-col px-6 pb-4 pt-4 sm:px-8 md:px-10 md:pt-5 lg:px-14 xl:px-16">
 
-        <div className="relative mb-6 flex flex-col gap-3 md:mb-8">
+        <div className="relative mb-4 flex flex-col gap-2 md:mb-5">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
             ​
           </p>
           <h2
-            className="font-display m-0 text-primary font-bold leading-[0.96] tracking-[-0.055em] text-[clamp(28px,3.6vw,52px)] text-left px-0"
+            className="font-display m-0 text-primary font-bold leading-[0.96] tracking-[-0.055em] text-[clamp(24px,2.8vw,40px)] text-left px-0"
             style={{
               maxWidth: "22ch",
             }}
@@ -392,20 +392,20 @@ export function WhyReRootedPillars() {
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full max-h-[60vh] w-auto max-w-full object-contain"
+                  className="h-full max-h-[42vh] w-auto max-w-full object-contain"
                 />
               </div>
 
-              <div className="flex flex-col justify-center gap-4 p-6 md:p-8 lg:p-10">
+              <div className="flex flex-col justify-center gap-3 p-5 md:p-6 lg:p-8">
                 <h3
                   className="font-display font-medium leading-[1.05] tracking-[-0.02em]"
-                  style={{ fontSize: "clamp(1.5rem, 2.6vw, 2.5rem)" }}
+                  style={{ fontSize: "clamp(1.25rem, 2vw, 2rem)" }}
                 >
                   {pillar.title}
                 </h3>
                 <p
-                  className="max-w-[44ch] font-normal leading-[1.55] opacity-90"
-                  style={{ fontSize: "clamp(0.95rem, 1.05vw, 1.075rem)" }}
+                  className="max-w-[44ch] font-normal leading-[1.5] opacity-90"
+                  style={{ fontSize: "clamp(0.9rem, 0.95vw, 1rem)" }}
                 >
                   {pillar.body}
                 </p>
