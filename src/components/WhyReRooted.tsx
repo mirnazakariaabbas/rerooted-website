@@ -350,7 +350,7 @@ export function WhyReRootedPillars() {
             <div
               ref={trackRef}
               className="flex h-full items-center gap-4 lg:gap-5 will-change-transform"
-              style={{ transition: "transform 0.05s linear" }}
+              style={{ transition: "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)" }}
             >
             {PILLARS.map((pillar) => (
               <article
