@@ -396,16 +396,16 @@ export function WhyReRootedPillars() {
                 />
               </div>
 
-              <div className="flex flex-col justify-center gap-4 p-6 md:p-8 lg:p-10">
+              <div className="flex flex-col justify-center gap-3 p-5 md:p-6 lg:p-8">
                 <h3
                   className="font-display font-medium leading-[1.05] tracking-[-0.02em]"
-                  style={{ fontSize: "clamp(1.5rem, 2.6vw, 2.5rem)" }}
+                  style={{ fontSize: "clamp(1.25rem, 2vw, 2rem)" }}
                 >
                   {pillar.title}
                 </h3>
                 <p
-                  className="max-w-[44ch] font-normal leading-[1.55] opacity-90"
-                  style={{ fontSize: "clamp(0.95rem, 1.05vw, 1.075rem)" }}
+                  className="max-w-[44ch] font-normal leading-[1.5] opacity-90"
+                  style={{ fontSize: "clamp(0.9rem, 0.95vw, 1rem)" }}
                 >
                   {pillar.body}
                 </p>
