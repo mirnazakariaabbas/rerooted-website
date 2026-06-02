@@ -234,47 +234,22 @@ export function WhyReRootedPillars() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Scroll-pinned horizontal advance.
-  // Outer section is tall (N * 100vh); inner sticky panel holds the UI;
-  // the track translates horizontally based on scroll progress through the section.
+  // Button/dot-driven carousel (no scroll coupling).
   useEffect(() => {
-    const onScroll = () => {
-      const section = sectionRef.current;
-      const track = trackRef.current;
-      if (!section || !track) return;
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const scrollable = section.offsetHeight - vh;
-      if (scrollable <= 0) return;
-      const scrolled = Math.min(Math.max(-rect.top, 0), scrollable);
-      const p = scrolled / scrollable;
+    const track = trackRef.current;
+    if (!track || !track.parentElement) return;
+    const update = () => {
       const maxX = track.scrollWidth - track.parentElement!.clientWidth;
+      const p = PILLARS.length > 1 ? active / (PILLARS.length - 1) : 0;
       track.style.transform = `translate3d(${-p * Math.max(maxX, 0)}px,0,0)`;
-      const idx = Math.min(
-        PILLARS.length - 1,
-        Math.floor(p * PILLARS.length + 0.0001)
-      );
-      setActive(idx);
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [active]);
 
   const goTo = (i: number) => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const idx = Math.max(0, Math.min(PILLARS.length - 1, i));
-    const vh = window.innerHeight;
-    const scrollable = section.offsetHeight - vh;
-    const target =
-      section.getBoundingClientRect().top + window.scrollY +
-      (scrollable * idx) / (PILLARS.length - 1);
-    window.scrollTo({ top: target, behavior: "smooth" });
+    setActive(Math.max(0, Math.min(PILLARS.length - 1, i)));
   };
 
   const next = () => goTo(active + 1);
