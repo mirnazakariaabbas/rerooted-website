@@ -173,11 +173,6 @@ export default function ReRootedJourney() {
       <div style={{ maxWidth: 1320, margin: "0 auto", padding: "0 48px" }}>
         {/* Heading — single navy color, DM Sans */}
         <div style={{ textAlign: "center", maxWidth: 820, margin: "0 auto 90px" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 12, fontSize: 11,
-            letterSpacing: "0.24em", textTransform: "uppercase", color: C.green, fontWeight: 600, marginBottom: 20 }}>
-            <span style={{ width: 28, height: 1, background: "currentColor", display: "inline-block" }} />
-            The Program
-          </div>
           <h2 className="jh2" style={{ fontSize: "clamp(46px, 5.4vw, 84px)", lineHeight: 1.02,
             letterSpacing: "-0.025em", color: C.blue, margin: 0 }}>
             The Re-Rooted Journey
