@@ -212,7 +212,7 @@ const PILLARS = [
     title: "The Re-Rooted® app",
     body: "Everything an expat needs to know, a pocket local guide.\nCompare cultures and cost of living from home to destination, connect with other expats on the ground, work through total-move checklists, and much more, all in one place.",
     image: offeringApp,
-    bg: "#3DA776",
+    bg: "hsl(152 60% 55%)",
     text: "#FFFFFF",
     tile: "rgba(255, 255, 255, 0.1)",
     borderFilter: "brightness(2.5) saturate(0.2)",
