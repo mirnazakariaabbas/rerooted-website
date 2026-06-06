@@ -319,7 +319,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               style={{
                 width: "min(560px, 80vw)",
                 height: "auto",
-                marginTop: "calc(min(560px, 80vw) * -0.165)",
+                marginTop: "calc(min(560px, 80vw) * -0.193)",
               }}
             />
           </div>
