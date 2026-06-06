@@ -315,10 +315,11 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               alt=""
               aria-hidden="true"
               draggable={false}
-              className="pointer-events-none select-none mt-0"
+              className="pointer-events-none select-none"
               style={{
                 width: "min(560px, 80vw)",
                 height: "auto",
+                marginTop: "calc(min(560px, 80vw) * -0.165)",
               }}
             />
           </div>
