@@ -25,8 +25,13 @@ const CookieBanner = () => {
     if (!stored) setVisible(true);
   }, []);
 
-  const accept = () => {
+  const acceptAll = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ essential: true, analytics: true, marketing: true }));
+    setVisible(false);
+  };
+
+  const rejectAll = () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ essential: true, analytics: false, marketing: false }));
     setVisible(false);
   };
 
@@ -51,18 +56,24 @@ const CookieBanner = () => {
             Learn more
           </Link>
         </p>
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex flex-wrap items-center gap-3 shrink-0 justify-center">
           <button
             onClick={() => setShowModal(true)}
             className="text-sm text-white/60 hover:text-white transition-colors bg-transparent border-none cursor-pointer underline"
           >
-            Manage preferences
+            Customize cookie settings
           </button>
           <button
-            onClick={accept}
+            onClick={rejectAll}
+            className="rounded-lg px-5 py-2 text-sm font-semibold text-white bg-white/10 hover:bg-white/20 transition-colors cursor-pointer border-none"
+          >
+            Reject all
+          </button>
+          <button
+            onClick={acceptAll}
             className="rounded-lg px-5 py-2 text-sm font-semibold text-white bg-secondary hover:bg-secondary/90 transition-colors cursor-pointer border-none"
           >
-            Accept
+            Accept all
           </button>
         </div>
       </div>
