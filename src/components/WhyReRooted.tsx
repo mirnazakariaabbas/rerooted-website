@@ -367,8 +367,9 @@ export function WhyReRootedPillars() {
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full max-h-[42vh] w-auto max-w-full object-contain"
+                  className="h-full max-h-[31.5vh] w-auto max-w-[75%] object-contain rounded-2xl"
                 />
+
               </div>
 
               <div className="flex flex-col justify-center gap-3 p-5 md:p-6 lg:p-8">
