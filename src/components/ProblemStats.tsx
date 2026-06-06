@@ -315,7 +315,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               alt=""
               aria-hidden="true"
               draggable={false}
-              className="pointer-events-none select-none mt-1"
+              className="pointer-events-none select-none mt-[1px]"
               style={{
                 width: "min(560px, 80vw)",
                 height: "auto",
