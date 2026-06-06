@@ -325,19 +325,15 @@ export function WhyReRootedPillars() {
                 onClick={() => goTo(i)}
                 className="rounded-full px-5 py-2 text-sm font-semibold uppercase transition-colors md:px-6 md:py-2.5"
                 style={{
-                  background: isActive ? "hsl(var(--primary))" : "hsl(var(--muted))",
-                  color: isActive
-                    ? "hsl(var(--primary-foreground))"
-                    : "hsl(var(--foreground))",
+                  background: isActive ? p.bg : "hsl(var(--muted))",
+                  color: isActive ? p.text : "hsl(var(--foreground))",
                 }}
                 aria-pressed={isActive}
               >
                 <span
                   className="mr-2 inline-block h-1.5 w-1.5 rounded-full align-middle"
                   style={{
-                    background: isActive
-                      ? "hsl(var(--primary-foreground))"
-                      : "transparent",
+                    background: isActive ? p.text : "transparent",
                   }}
                 />
                 {p.eyebrow}
