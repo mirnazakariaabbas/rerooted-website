@@ -318,7 +318,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               className="pointer-events-none absolute left-1/2 -translate-x-1/2 select-none"
               style={{
                 top: "calc(100% - 72px)",
-                width: 260,
+                width: 1040,
                 height: "auto",
               }}
             />
