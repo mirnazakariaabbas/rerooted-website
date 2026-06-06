@@ -286,7 +286,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <div className="relative inline-block">
+          <div className="relative flex flex-col items-center">
             <a
               href="#contact"
               className="relative z-10 inline-flex items-center gap-2 transition-all"
@@ -315,10 +315,9 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               alt=""
               aria-hidden="true"
               draggable={false}
-              className="pointer-events-none absolute left-1/2 -translate-x-1/2 select-none"
+              className="pointer-events-none select-none mt-2"
               style={{
-                top: "calc(100% - 72px)",
-                width: 1040,
+                width: "min(560px, 80vw)",
                 height: "auto",
               }}
             />
