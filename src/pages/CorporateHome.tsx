@@ -19,6 +19,7 @@ const CorporateHome = () => (
       headline="Relocations can be unpredictable, but here are some problems companies often face "
     />
     <WhyReRootedPillars />
+    <ExpatJourney />
     <ReRootedJourney />
     <AboutSection />
     
