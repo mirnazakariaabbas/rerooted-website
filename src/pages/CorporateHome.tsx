@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import { WhyReRootedStatement, WhyReRootedPillars } from "@/components/WhyReRooted";
 import ProblemStats from "@/components/ProblemStats";
+import ExpatJourney from "@/components/ExpatJourney";
 
 import ReRootedJourney from "@/components/ReRootedJourney";
 import AboutSection from "@/components/AboutSection";
@@ -18,6 +19,7 @@ const CorporateHome = () => (
       headline="Relocations can be unpredictable, but here are some problems companies often face "
     />
     <WhyReRootedPillars />
+    <ExpatJourney />
     <ReRootedJourney />
     <AboutSection />
     

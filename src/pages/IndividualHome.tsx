@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import { WhyReRootedStatement, WhyReRootedPillars } from "@/components/WhyReRooted";
 import ProblemStats from "@/components/ProblemStats";
 import ReRootedJourney from "@/components/ReRootedJourney";
+import ExpatJourney from "@/components/ExpatJourney";
 import IndividualSupport from "@/components/IndividualSupport";
 import AboutSection from "@/components/AboutSection";
 
@@ -19,6 +20,7 @@ const IndividualHome = () => (
       closingLine="These aren't just numbers, they're people like you, navigating the same challenges you face right now."
     />
     <WhyReRootedPillars />
+    <ExpatJourney />
     <ReRootedJourney />
     <IndividualSupport />
     <AboutSection />
