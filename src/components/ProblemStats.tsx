@@ -286,30 +286,45 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 transition-all"
-            style={{
-              background: "#1F299C",
-              color: "#FFFFFF",
-              padding: "14px 22px",
-              borderRadius: 999,
-              fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 500,
-              fontSize: 14,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#141A6B";
-              e.currentTarget.style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#1F299C";
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
-          >
-            Contact Us
-          </a>
+          <div className="relative inline-block">
+            <a
+              href="#contact"
+              className="relative z-10 inline-flex items-center gap-2 transition-all"
+              style={{
+                background: "#1F299C",
+                color: "#FFFFFF",
+                padding: "14px 22px",
+                borderRadius: 999,
+                fontFamily: '"DM Sans", sans-serif',
+                fontWeight: 500,
+                fontSize: 14,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#141A6B";
+                e.currentTarget.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#1F299C";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              Contact Us
+            </a>
+            <img
+              src="/__l5e/assets-v1/f60ce6da-1d96-4c0e-a7d7-43e7ac02bf86/swiggle-contact.svg"
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              className="pointer-events-none absolute left-1/2 -translate-x-1/2 select-none"
+              style={{
+                top: "calc(100% - 18px)",
+                width: 260,
+                height: "auto",
+              }}
+            />
+          </div>
         </motion.div>
+
 
       </div>
     </section>
