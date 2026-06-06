@@ -277,38 +277,24 @@ export function WhyReRootedPillars() {
               maxWidth: "22ch",
             }}
           >
-            A COMPLETE INTEGRATION{" "}
-            <span style={{ position: "relative", display: "inline-block" }}>
-              SYSTEM
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute hidden overflow-hidden select-none md:block"
-                style={{
-                  left: "calc(100% - 0.05em)",
-                  top: "-0.12em",
-                  width: "clamp(180px, 18vw, 260px)",
-                  height: "clamp(330px, 32vw, 480px)",
-                  zIndex: 5,
-                }}
-              >
-                <img
-                  src="/swiggly-arrow.png"
-                  alt=""
-                  draggable={false}
-                  className="block h-full max-w-none"
-                  style={{
-                    width: "363.22%",
-                    height: "137.58%",
-                    maxWidth: "none",
-                    transform: "translate(-133.5%, -11.34%)",
-                    transformOrigin: "top left",
-                    mixBlendMode: "multiply",
-                    opacity: 0.92,
-                  }}
-                />
-              </span>
-            </span>
+            A COMPLETE INTEGRATION SYSTEM
           </h2>
+          {/* Swiggly arrow pointing to topic pills */}
+          <img
+            src="/__l5e/assets-v1/ae3b7c9c-4521-40de-8eb9-f2885bacd7e4/swiggly-arrow-v2-cropped.png"
+            alt=""
+            aria-hidden="true"
+            draggable={false}
+            className="pointer-events-none absolute hidden select-none md:block"
+            style={{
+              right: "clamp(180px, 22vw, 360px)",
+              top: "clamp(40px, 5vw, 80px)",
+              height: "clamp(150px, 18vw, 240px)",
+              width: "auto",
+              zIndex: 5,
+              mixBlendMode: "multiply",
+            }}
+          />
           <p className="text-primary/85 max-w-[44ch] text-sm md:text-base leading-relaxed">
             Allowing the expat to adapt faster, perform better, and stay longer in the company
           </p>
