@@ -349,13 +349,13 @@ export function WhyReRootedPillars() {
         <div className="group relative flex-1 min-h-0 overflow-hidden">
             <div
               ref={trackRef}
-              className="flex h-full items-center gap-4 lg:gap-5 will-change-transform"
+              className="flex h-full items-stretch gap-4 lg:gap-5 will-change-transform"
               style={{ transition: "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)" }}
             >
             {PILLARS.map((pillar) => (
               <article
                 key={pillar.title}
-                className="relative grid w-[78%] max-h-[58vh] shrink-0 grid-cols-1 overflow-visible rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
+                className="relative grid h-full w-[78%] max-h-[58vh] shrink-0 grid-cols-1 overflow-visible rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
                 style={{ background: pillar.bg, color: pillar.text }}
               >
               <div
