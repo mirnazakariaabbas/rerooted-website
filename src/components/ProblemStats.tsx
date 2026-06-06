@@ -311,7 +311,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               Contact Us
             </a>
             <img
-              src="/__l5e/assets-v1/f60ce6da-1d96-4c0e-a7d7-43e7ac02bf86/swiggle-contact.svg"
+              src="/__l5e/assets-v1/6889fd07-8c1a-4fac-b57b-9303da78f8bb/swiggle-contact.svg"
               alt=""
               aria-hidden="true"
               draggable={false}
@@ -319,7 +319,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               style={{
                 width: "min(560px, 80vw)",
                 height: "auto",
-                marginTop: "calc(min(560px, 80vw) * -0.213)",
+                marginTop: "calc(min(560px, 80vw) * -0.018)",
               }}
             />
           </div>
