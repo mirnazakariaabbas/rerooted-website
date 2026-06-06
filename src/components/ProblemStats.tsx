@@ -317,7 +317,7 @@ const ProblemStats = ({ label, headline }: ProblemStatsProps) => {
               draggable={false}
               className="pointer-events-none absolute left-1/2 -translate-x-1/2 select-none"
               style={{
-                top: "calc(100% - 18px)",
+                top: "calc(100% - 72px)",
                 width: 260,
                 height: "auto",
               }}
