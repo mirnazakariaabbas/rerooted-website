@@ -303,26 +303,35 @@ export function WhyReRootedPillars() {
         {/* Topic pills as journey line */}
         <div className="mb-2 md:mb-3" role="tablist" aria-label="Integration topics">
           <div className="relative flex items-center justify-between">
-            {/* Base line */}
-            <div
-              className="absolute left-0 right-0 top-1/2 h-[2px] -translate-y-1/2 rounded-full"
-              style={{ background: "hsl(var(--muted))" }}
+            {/* Wavy line */}
+            <svg
+              className="absolute left-0 right-0 top-1/2 -translate-y-1/2 w-full"
+              style={{ height: "28px" }}
+              viewBox="0 0 300 28"
+              preserveAspectRatio="none"
               aria-hidden="true"
-            />
-            {/* Progress line */}
-            <div
-              className="absolute left-0 top-1/2 h-[2px] -translate-y-1/2 rounded-full"
-              style={{
-                background: PILLARS[active]?.bg,
-                width:
-                  PILLARS.length > 1
-                    ? `${(active / (PILLARS.length - 1)) * 100}%`
-                    : "0%",
-                transition:
-                  "width 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease",
-              }}
-              aria-hidden="true"
-            />
+            >
+              <path
+                d="M0,14 Q37.5,2 75,14 T150,14 T225,14 T300,14"
+                fill="none"
+                stroke="hsl(var(--muted))"
+                strokeWidth="5"
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+              />
+              <path
+                d="M0,14 Q37.5,2 75,14 T150,14 T225,14 T300,14"
+                fill="none"
+                stroke={PILLARS[active]?.bg}
+                strokeWidth="5"
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+                style={{
+                  clipPath: `inset(0 ${PILLARS.length > 1 ? (1 - active / (PILLARS.length - 1)) * 100 : 100}% 0 0)`,
+                  transition: "clip-path 0.5s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.4s ease",
+                }}
+              />
+            </svg>
             {PILLARS.map((p, i) => {
               const isActive = i === active;
               const isPassed = i <= active;
