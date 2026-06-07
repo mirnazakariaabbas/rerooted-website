@@ -300,32 +300,50 @@ export function WhyReRootedPillars() {
           </p>
         </div>
 
-        {/* Topic pills */}
-        <div className="mb-2 flex flex-wrap gap-3 md:mb-3">
-          {PILLARS.map((p, i) => {
-            const isActive = i === active;
-            return (
-              <button
-                key={p.title}
-                type="button"
-                onClick={() => goTo(i)}
-                className="rounded-full px-5 py-2 text-sm font-semibold uppercase transition-colors md:px-6 md:py-2.5"
-                style={{
-                  background: isActive ? p.bg : "hsl(var(--muted))",
-                  color: isActive ? p.text : "hsl(var(--foreground))",
-                }}
-                aria-pressed={isActive}
-              >
-                <span
-                  className="mr-2 inline-block h-1.5 w-1.5 rounded-full align-middle"
+        {/* Topic pills as journey line */}
+        <div className="mb-2 md:mb-3" role="tablist" aria-label="Integration topics">
+          <div className="relative flex items-center justify-between">
+            {/* Base line */}
+            <div
+              className="absolute left-0 right-0 top-1/2 h-[2px] -translate-y-1/2 rounded-full"
+              style={{ background: "hsl(var(--muted))" }}
+              aria-hidden="true"
+            />
+            {/* Progress line */}
+            <div
+              className="absolute left-0 top-1/2 h-[2px] -translate-y-1/2 rounded-full"
+              style={{
+                background: PILLARS[active]?.bg,
+                width:
+                  PILLARS.length > 1
+                    ? `${(active / (PILLARS.length - 1)) * 100}%`
+                    : "0%",
+                transition:
+                  "width 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease",
+              }}
+              aria-hidden="true"
+            />
+            {PILLARS.map((p, i) => {
+              const isActive = i === active;
+              const isPassed = i <= active;
+              return (
+                <button
+                  key={p.title}
+                  type="button"
+                  onClick={() => goTo(i)}
+                  aria-pressed={isActive}
+                  className="relative z-[1] rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-all md:px-5 md:py-2.5 md:text-sm"
                   style={{
-                    background: isActive ? p.text : "transparent",
+                    background: isPassed ? p.bg : "hsl(var(--muted))",
+                    color: isPassed ? p.text : "hsl(var(--foreground))",
+                    transform: isActive ? "scale(1.05)" : "scale(1)",
                   }}
-                />
-                {p.eyebrow}
-              </button>
-            );
-          })}
+                >
+                  {p.eyebrow}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Pinned horizontal track */}
