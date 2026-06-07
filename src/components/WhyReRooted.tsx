@@ -232,10 +232,10 @@ const PILLARS = [
 
 export function WhyReRootedPillars() {
   const [active, setActive] = useState(0);
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Button/dot-driven carousel (no scroll coupling).
+  // Button/dot-driven carousel (also driven by scroll position below).
   useEffect(() => {
     const track = trackRef.current;
     if (!track || !track.parentElement) return;
@@ -249,8 +249,41 @@ export function WhyReRootedPillars() {
     return () => window.removeEventListener("resize", update);
   }, [active]);
 
+  // Drive `active` from scroll position while the sticky inner is pinned.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const onScroll = () => {
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = rect.height - vh; // scrollable distance within pin
+      if (total <= 0) return;
+      const progressed = Math.min(Math.max(-rect.top, 0), total);
+      const p = progressed / total; // 0..1
+      const idx = Math.round(p * (PILLARS.length - 1));
+      setActive((prev) => (prev === idx ? prev : idx));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   const goTo = (i: number) => {
-    setActive(Math.max(0, Math.min(PILLARS.length - 1, i)));
+    const clamped = Math.max(0, Math.min(PILLARS.length - 1, i));
+    const section = sectionRef.current;
+    if (section) {
+      const vh = window.innerHeight;
+      const total = section.offsetHeight - vh;
+      const p = PILLARS.length > 1 ? clamped / (PILLARS.length - 1) : 0;
+      const targetY = section.offsetTop + p * total;
+      window.scrollTo({ top: targetY, behavior: "smooth" });
+    } else {
+      setActive(clamped);
+    }
   };
 
   const next = () => goTo(active + 1);
@@ -258,12 +291,16 @@ export function WhyReRootedPillars() {
 
   return (
     <section
-      ref={sectionRef}
       id="approach"
       className="relative bg-background text-foreground"
     >
       <div
-        className="flex h-screen w-full flex-col overflow-hidden"
+        ref={sectionRef}
+        style={{ height: `${PILLARS.length * 100}vh` }}
+        className="relative w-full"
+      >
+      <div
+        className="sticky top-0 flex h-screen w-full flex-col overflow-hidden"
       >
         <div className="relative mx-auto w-full max-w-[1760px] flex-1 flex flex-col px-6 pb-4 pt-4 sm:px-8 md:px-10 md:pt-5 lg:px-14 xl:px-16">
 
