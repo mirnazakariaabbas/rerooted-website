@@ -231,92 +231,25 @@ const PILLARS = [
 ];
 
 export function WhyReRootedPillars() {
-  const [active, setActive] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  // Button/dot-driven carousel (also driven by scroll position below).
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track || !track.parentElement) return;
-    const update = () => {
-      const maxX = track.scrollWidth - track.parentElement!.clientWidth;
-      const p = PILLARS.length > 1 ? active / (PILLARS.length - 1) : 0;
-      track.style.transform = `translate3d(${-p * Math.max(maxX, 0)}px,0,0)`;
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, [active]);
-
-  // Drive `active` from scroll position while the sticky inner is pinned.
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const onScroll = () => {
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const total = rect.height - vh; // scrollable distance within pin
-      if (total <= 0) return;
-      const progressed = Math.min(Math.max(-rect.top, 0), total);
-      const p = progressed / total; // 0..1
-      const idx = Math.round(p * (PILLARS.length - 1));
-      setActive((prev) => (prev === idx ? prev : idx));
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
-  const goTo = (i: number) => {
-    const clamped = Math.max(0, Math.min(PILLARS.length - 1, i));
-    const section = sectionRef.current;
-    if (section) {
-      const vh = window.innerHeight;
-      const total = section.offsetHeight - vh;
-      const p = PILLARS.length > 1 ? clamped / (PILLARS.length - 1) : 0;
-      const targetY = section.offsetTop + p * total;
-      window.scrollTo({ top: targetY, behavior: "smooth" });
-    } else {
-      setActive(clamped);
-    }
-  };
-
-  const next = () => goTo(active + 1);
-  const prev = () => goTo(active - 1);
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
     <section
+      ref={sectionRef}
       id="approach"
       className="relative bg-background text-foreground"
     >
-      <div
-        ref={sectionRef}
-        style={{ height: `${PILLARS.length * 100}vh` }}
-        className="relative w-full"
-      >
-      <div
-        className="sticky top-0 flex h-screen w-full flex-col overflow-hidden"
-      >
-        <div className="relative mx-auto w-full max-w-[1760px] flex-1 flex flex-col px-6 pb-4 pt-4 sm:px-8 md:px-10 md:pt-5 lg:px-14 xl:px-16">
-
-        <div className="relative mb-4 flex flex-col gap-2 md:mb-5">
+      <div className="mx-auto max-w-[1760px] px-6 pt-20 sm:px-8 md:px-10 md:pt-24 lg:px-14 lg:pt-36 xl:px-16 xl:pt-44">
+        <div className="relative mb-8 flex flex-col gap-4 md:mb-10">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
             ​
           </p>
           <h2
             className="font-display m-0 text-primary font-bold leading-[1.02] tracking-[-0.025em] text-[clamp(46px,5.4vw,84px)] text-left px-0"
-            style={{
-              maxWidth: "22ch",
-            }}
+            style={{ maxWidth: "22ch" }}
           >
             A COMPLETE INTEGRATION SYSTEM
           </h2>
-          {/* Swiggly arrow pointing to topic pills */}
           <img
             src="/__l5e/assets-v1/ae3b7c9c-4521-40de-8eb9-f2885bacd7e4/swiggly-arrow-v2-cropped.png"
             alt=""
@@ -336,149 +269,78 @@ export function WhyReRootedPillars() {
             Allowing the expat to adapt faster, perform better, and stay longer in the company
           </p>
         </div>
+      </div>
 
-        {/* Topic pills as journey line */}
-        <div className="mb-2 md:mb-3" role="tablist" aria-label="Integration topics">
-          <div className="relative flex items-center justify-between">
-            {/* Wavy line */}
-            <svg
-              className="absolute left-0 right-0 top-1/2 -translate-y-1/2 w-full"
-              style={{ height: "28px" }}
-              viewBox="0 0 300 28"
-              preserveAspectRatio="none"
-              aria-hidden="true"
+      <div className="mx-auto max-w-[1400px] px-6 pb-24 sm:px-8 md:px-10 lg:px-14 xl:px-16">
+        {PILLARS.map((pillar, index) => (
+          <div
+            key={pillar.title}
+            className="sticky mb-8 md:mb-10"
+            style={{
+              top: `${80 + index * 24}px`,
+              zIndex: index + 1,
+            }}
+          >
+            <article
+              className="relative grid grid-cols-1 overflow-visible rounded-[28px] shadow-lg md:grid-cols-2 md:rounded-[32px]"
+              style={{
+                background: pillar.bg,
+                color: pillar.text,
+              }}
             >
-              <path
-                d="M0,14 Q37.5,2 75,14 T150,14 T225,14 T300,14"
-                fill="none"
-                stroke="hsl(var(--muted))"
-                strokeWidth="5"
-                strokeLinecap="round"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                d="M0,14 Q37.5,2 75,14 T150,14 T225,14 T300,14"
-                fill="none"
-                stroke={PILLARS[active]?.bg}
-                strokeWidth="5"
-                strokeLinecap="round"
-                vectorEffect="non-scaling-stroke"
-                style={{
-                  clipPath: `inset(0 ${PILLARS.length > 1 ? (1 - active / (PILLARS.length - 1)) * 100 : 100}% 0 0)`,
-                  transition: "clip-path 0.5s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.4s ease",
-                }}
-              />
-            </svg>
-            {PILLARS.map((p, i) => {
-              const isActive = i === active;
-              const isPassed = i <= active;
-              return (
-                <button
-                  key={p.title}
-                  type="button"
-                  onClick={() => goTo(i)}
-                  aria-pressed={isActive}
-                  className="relative z-[1] rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-all md:px-5 md:py-2.5 md:text-sm"
-                  style={{
-                    background: isPassed ? p.bg : "hsl(var(--muted))",
-                    color: isPassed ? p.text : "hsl(var(--foreground))",
-                    transform: isActive ? "scale(1.05)" : "scale(1)",
-                  }}
-                >
-                  {p.eyebrow}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Pinned horizontal track */}
-        <div className="group relative flex-1 min-h-0 overflow-hidden">
-            <div
-              ref={trackRef}
-              className="flex h-full items-stretch gap-4 lg:gap-5 will-change-transform"
-              style={{ transition: "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)" }}
-            >
-            {PILLARS.map((pillar) => (
-              <article
-                key={pillar.title}
-                className="relative grid h-full w-[78%] max-h-[58vh] shrink-0 grid-cols-1 overflow-visible rounded-[28px] md:grid-cols-2 md:rounded-[32px]"
-                style={{ background: pillar.bg, color: pillar.text }}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-20 select-none"
               >
+                <img
+                  src="/hand-drawn-border.png"
+                  alt=""
+                  draggable={false}
+                  className="absolute max-w-none"
+                  style={{
+                    left: "-26.81%",
+                    top: "-48.2%",
+                    width: "149.94%",
+                    height: "188.11%",
+                    borderRadius: "inherit",
+                    mixBlendMode: "multiply",
+                    opacity: 0.72,
+                  }}
+                />
+              </span>
+
               <div
                 className="flex items-center justify-center p-3 md:p-5 lg:p-6"
+                style={{ minHeight: "clamp(280px, 32vw, 460px)" }}
               >
                 <img
                   src={pillar.image}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full max-h-[31.5vh] w-auto max-w-[75%] object-contain rounded-2xl"
+                  className="h-full max-h-[480px] w-auto max-w-full object-contain"
                 />
-
               </div>
 
-              <div className="flex flex-col justify-center gap-3 p-5 md:p-6 lg:p-8">
+              <div className="flex flex-col justify-center gap-4 p-6 md:p-8 lg:p-10">
                 <h3
                   className="font-display font-medium leading-[1.05] tracking-[-0.02em]"
-                  style={{ fontSize: "clamp(1.25rem, 2vw, 2rem)" }}
+                  style={{ fontSize: "clamp(1.75rem, 3vw, 2.75rem)" }}
                 >
                   {pillar.title}
                 </h3>
                 <p
-                  className="max-w-[44ch] font-normal leading-[1.5] opacity-90"
-                  style={{ fontSize: "clamp(0.9rem, 0.95vw, 1rem)" }}
+                  className="max-w-[44ch] font-normal leading-[1.55] opacity-90"
+                  style={{ fontSize: "clamp(1rem, 1.15vw, 1.125rem)" }}
                 >
                   {pillar.body}
                 </p>
               </div>
             </article>
-          ))}
-            </div>
-
-          {/* Hover arrows */}
-          <button
-            type="button"
-            onClick={prev}
-            aria-label="Previous"
-            className="absolute left-3 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border-2 border-primary bg-background text-primary transition-colors hover:bg-primary hover:text-primary-foreground md:flex"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-          </button>
-          <button
-            type="button"
-            onClick={next}
-            aria-label="Next"
-            className="absolute right-3 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border-2 border-primary bg-background text-primary transition-colors hover:bg-primary hover:text-primary-foreground md:flex"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
-          </button>
-        </div>
-
-        {/* Dots */}
-        <div className="mt-4 flex justify-center gap-2">
-          {PILLARS.map((p, i) => (
-            <button
-              key={p.title}
-              type="button"
-              onClick={() => goTo(i)}
-              aria-label={`Go to ${p.eyebrow}`}
-              className="h-2 rounded-full transition-all"
-              style={{
-                width: i === active ? 24 : 8,
-                background:
-                  i === active
-                    ? "hsl(var(--primary))"
-                    : "hsl(var(--muted-foreground) / 0.3)",
-              }}
-            />
-          ))}
-        </div>
-      </div>
-      </div>
+          </div>
+        ))}
       </div>
     </section>
-
   );
 }
 
