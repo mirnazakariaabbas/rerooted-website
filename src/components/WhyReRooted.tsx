@@ -239,7 +239,9 @@ function PillarCard({
   // the start; subsequent cards slide up from below their slice's start point
   // and rest a bit below the card above so its eyebrow (COACH / APP /
   // ASSESSMENT) stays visible.
-  const PEEK = 64; // px of the previous card that remains visible at the top
+  // Peek leaves enough room for the eyebrow + the full title of the card
+  // beneath, so every card title stays readable while stacked.
+  const PEEK = 168;
   const slice = 1 / total;
   const enterStart = Math.max(0, index * slice - slice * 0.6);
   const enterEnd = index * slice;
@@ -262,15 +264,15 @@ function PillarCard({
       className="absolute left-0 right-0 bottom-0 rounded-[24px] shadow-xl overflow-hidden flex flex-col"
     >
 
-      <div className="px-6 pt-6 lg:px-8 lg:pt-8">
-        <span className="text-[11px] font-bold uppercase tracking-[0.22em] opacity-50">
+      <div className="px-6 pt-6 lg:px-8 lg:pt-7">
+        <span className="text-[11px] font-bold uppercase tracking-[0.22em] opacity-60">
           {pillar.eyebrow}
         </span>
       </div>
-      <div className="px-6 pt-3 pb-2 lg:px-8">
+      <div className="px-6 pt-2 pb-3 lg:px-8">
         <h3
-          className="font-display font-semibold leading-[1.08] tracking-[-0.02em]"
-          style={{ fontSize: "clamp(1.5rem, 2.5vw, 2.25rem)" }}
+          className="font-display font-bold leading-[1.05] tracking-[-0.025em]"
+          style={{ fontSize: "clamp(1.75rem, 2.8vw, 2.5rem)" }}
         >
           {pillar.title}
         </h3>
