@@ -166,6 +166,12 @@ export default function ReRootedJourney() {
 
     const smoothScrollTo = (y: number, duration = 600) =>
       new Promise<void>((resolve) => {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduced) {
+          window.scrollTo(0, y);
+          resolve();
+          return;
+        }
         const startY = window.scrollY;
         const dy = y - startY;
         const t0 = performance.now();
@@ -276,6 +282,10 @@ export default function ReRootedJourney() {
           transition:opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1), filter .65s ease;
           will-change:opacity, transform; }
         .jh2 { font-family:'DM Sans',sans-serif; font-weight:700; }
+        @media (prefers-reduced-motion: reduce) {
+          .jpill { transition: none !important; }
+          .jtext h4, .jtext p { transition: none !important; }
+        }
       `}</style>
 
       <div style={{ maxWidth: 1320, margin: "0 auto", padding: "0 48px" }}>
