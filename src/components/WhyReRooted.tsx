@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent, type MotionValue } from "framer-motion";
+import { motion, useMotionValue, useTransform, type MotionValue } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import rootsIcon from "@/assets/roots-icon.png";
 import offeringCoachAsset from "@/assets/idea-tank.svg.asset.json";
