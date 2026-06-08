@@ -358,9 +358,6 @@ export function WhyReRootedPillars() {
 
           {/* ── LEFT COLUMN: Title ── */}
           <div className="flex h-full flex-col justify-center px-6 lg:px-14 xl:px-16">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs mb-6">
-              What makes Re-Rooted® Unique
-            </p>
             <h2
               className="font-display text-primary font-bold leading-[1.02] tracking-[-0.025em] mb-6"
               style={{ fontSize: "clamp(36px, 4.5vw, 72px)" }}
