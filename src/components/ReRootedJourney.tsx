@@ -298,7 +298,7 @@ export default function ReRootedJourney() {
               position: "absolute",
               right: "-2%",
               top: "50%",
-              transform: "translateY(-30%) scale(1.45)",
+              transform: "translateY(22%) scale(1.45)",
               transformOrigin: "right center",
               width: "32%",
               height: "auto",
