@@ -354,6 +354,33 @@ export default function ReRootedJourney() {
           )}
         </div>
 
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 80 }}>
+          <a
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              padding: "16px 36px",
+              borderRadius: 9999,
+              background: C.blue,
+              color: "#fff",
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 600,
+              fontSize: 16,
+              textDecoration: "none",
+              transition: "transform .15s ease, background .2s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#161F7A")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = C.blue)}
+          >
+            Contact us
+          </a>
+        </div>
+
       </div>
     </section>
   );
