@@ -8,6 +8,8 @@ import offeringApp from "@/assets/offering-app.png";
 import offeringAssessments from "@/assets/offering-assessments.jpg";
 import logoWordmarkBlue from "@/assets/logo-wordmark-blue.png";
 import heroTreeCropped from "@/assets/hero-tree-cropped.png";
+import manWithSuitcaseAsset from "@/assets/man-with-suitcase.svg.asset.json";
+const manWithSuitcase = manWithSuitcaseAsset.url;
 export function WhyReRootedStatement() {
   const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
