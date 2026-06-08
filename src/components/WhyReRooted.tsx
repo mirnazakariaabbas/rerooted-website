@@ -303,29 +303,120 @@ export function WhyReRootedPillars() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
+  const progress = useMotionValue(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const next = Math.min(PILLARS.length - 1, Math.max(0, Math.floor(v * PILLARS.length)));
-    setActiveIndex(next);
-  });
+  // Scroll-hijack: when the section's top reaches the bottom edge of the
+  // sticky nav, lock window scroll and convert wheel / touch input into
+  // animation progress. Release as soon as progress saturates at 0 or 1.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(max-width: 767px)").matches) return;
+
+    const STEP_PIXELS = 700; // wheel pixels to advance one full card
+    const total = PILLARS.length;
+    const maxDelta = STEP_PIXELS * (total - 1);
+
+    const progressRef = { current: 0 };
+    const lockedRef = { current: false };
+    let lockY = 0;
+
+    const getNavH = () => {
+      const nav = document.querySelector("header.adaptive-nav") as HTMLElement | null;
+      return nav?.getBoundingClientRect().height ?? 96;
+    };
+
+    const setP = (p: number) => {
+      const c = Math.max(0, Math.min(1, p));
+      progressRef.current = c;
+      progress.set(c);
+      setActiveIndex(Math.min(total - 1, Math.max(0, Math.round(c * (total - 1)))));
+    };
+
+    const tryEnterLock = (direction: 1 | -1) => {
+      const section = sectionRef.current;
+      if (!section || lockedRef.current) return false;
+      const rect = section.getBoundingClientRect();
+      const navH = getNavH();
+      // Section is covering the viewport below the nav.
+      const covering = rect.top <= navH + 1 && rect.bottom >= window.innerHeight - 1;
+      if (!covering) return false;
+      // Only re-enter if there's room to animate in the scroll direction.
+      if (direction > 0 && progressRef.current >= 1) return false;
+      if (direction < 0 && progressRef.current <= 0) return false;
+      lockedRef.current = true;
+      lockY = window.scrollY;
+      return true;
+    };
+
+    const onScroll = () => {
+      if (lockedRef.current) {
+        // Hold scroll precisely at lock point.
+        if (window.scrollY !== lockY) window.scrollTo(0, lockY);
+      }
+    };
+
+    const handleDelta = (delta: number, e: Event) => {
+      const direction: 1 | -1 = delta > 0 ? 1 : -1;
+      if (!lockedRef.current) tryEnterLock(direction);
+      if (!lockedRef.current) return;
+      const next = progressRef.current + delta / maxDelta;
+      if (next >= 1 && direction > 0) {
+        setP(1);
+        lockedRef.current = false;
+        return; // let the page scroll naturally past
+      }
+      if (next <= 0 && direction < 0) {
+        setP(0);
+        lockedRef.current = false;
+        return;
+      }
+      e.preventDefault();
+      setP(next);
+      window.scrollTo(0, lockY);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY === 0) return;
+      handleDelta(e.deltaY, e);
+    };
+
+    let touchY = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      touchY = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const y = e.touches[0].clientY;
+      const delta = touchY - y;
+      touchY = y;
+      if (delta === 0) return;
+      handleDelta(delta, e);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [progress]);
 
   return (
     <section
       ref={sectionRef}
       id="approach"
       className="relative bg-background text-foreground"
-      // Tall outer wrapper: one viewport per card. The inner sticky stage stays
-      // pinned to the top of the viewport (just under the nav) while the user
-      // scrolls, so page scroll is effectively "locked" on the section while the
-      // cards animate through their slices of scroll progress.
-      style={{ height: `${PILLARS.length * 100}vh` }}
+      // Single viewport tall. Scroll-hijack pins it in place while progress
+      // animates the cards; once progress saturates the page scroll releases.
+      style={{ minHeight: "100vh" }}
     >
       {/* ── Desktop: pinned stage ── */}
-      <div className="hidden md:block sticky top-0 h-screen overflow-hidden">
+      <div className="hidden md:block h-screen overflow-hidden">
+
         <div className="mx-auto grid h-full max-w-[1600px] grid-cols-[1fr_60px_1fr] lg:grid-cols-[1.1fr_60px_1fr]">
 
           {/* ── LEFT COLUMN: Title ── */}
