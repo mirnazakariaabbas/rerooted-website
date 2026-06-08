@@ -141,6 +141,102 @@ export default function ReRootedJourney() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [W, totalH]);
 
+  // Snap scroll: one wheel/touch gesture advances to the next stage
+  useEffect(() => {
+    if (!W) return;
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    let animating = false;
+    let lockUntil = 0;
+
+    const stepTargets = () => {
+      const wrapTop = wrap.getBoundingClientRect().top + window.scrollY;
+      const vh = window.innerHeight;
+      return pos.map((p) => wrapTop + p.y - vh / 2);
+    };
+
+    const smoothScrollTo = (y: number, duration = 600) =>
+      new Promise<void>((resolve) => {
+        const startY = window.scrollY;
+        const dy = y - startY;
+        const t0 = performance.now();
+        const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+        const tick = (now: number) => {
+          const p = Math.min(1, (now - t0) / duration);
+          window.scrollTo(0, startY + dy * ease(p));
+          if (p < 1) requestAnimationFrame(tick);
+          else resolve();
+        };
+        requestAnimationFrame(tick);
+      });
+
+    const nearestIndex = (targets: number[]) => {
+      const y = window.scrollY;
+      let best = 0, bd = Infinity;
+      targets.forEach((t, i) => {
+        const d = Math.abs(t - y);
+        if (d < bd) { bd = d; best = i; }
+      });
+      return best;
+    };
+
+    const sectionInView = () => {
+      const r = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+      return r.top < vh * 0.5 && r.bottom > vh * 0.5;
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!sectionInView()) return;
+      if (animating || performance.now() < lockUntil) {
+        e.preventDefault();
+        return;
+      }
+      const dir = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0;
+      if (!dir) return;
+      const targets = stepTargets();
+      const idx = nearestIndex(targets);
+      const next = idx + dir;
+      if (next < 0 || next >= targets.length) return; // let page scroll past
+      e.preventDefault();
+      animating = true;
+      smoothScrollTo(targets[next]).then(() => {
+        animating = false;
+        lockUntil = performance.now() + 250;
+      });
+    };
+
+    let touchStartY = 0;
+    const onTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
+    const onTouchMove = (e: TouchEvent) => {
+      if (!sectionInView()) return;
+      if (animating || performance.now() < lockUntil) { e.preventDefault(); return; }
+      const dy = touchStartY - e.touches[0].clientY;
+      if (Math.abs(dy) < 25) return;
+      const dir = dy > 0 ? 1 : -1;
+      const targets = stepTargets();
+      const idx = nearestIndex(targets);
+      const next = idx + dir;
+      if (next < 0 || next >= targets.length) return;
+      e.preventDefault();
+      animating = true;
+      smoothScrollTo(targets[next]).then(() => {
+        animating = false;
+        lockUntil = performance.now() + 250;
+      });
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [W, totalH]);
+
   return (
     <section
       id="journey"
