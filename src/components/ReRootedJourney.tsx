@@ -269,8 +269,12 @@ export default function ReRootedJourney() {
         }
         .jtext { position:absolute; z-index:2; transform:translateY(-50%); }
         .jtext h4 { font-family:'DM Sans',sans-serif; font-weight:600; font-size:25px; line-height:1.12;
-          letter-spacing:-0.01em; color:${C.blue}; margin:0 0 8px; transition:opacity .45s ease; }
-        .jtext p { font-size:14.5px; line-height:1.6; color:#3a3a3a; transition:opacity .45s ease; }
+          letter-spacing:-0.01em; color:${C.blue}; margin:0 0 8px;
+          transition:opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1), filter .6s ease;
+          will-change:opacity, transform; }
+        .jtext p { font-size:14.5px; line-height:1.6; color:#3a3a3a;
+          transition:opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1), filter .65s ease;
+          will-change:opacity, transform; }
         .jh2 { font-family:'DM Sans',sans-serif; font-weight:700; }
       `}</style>
 
