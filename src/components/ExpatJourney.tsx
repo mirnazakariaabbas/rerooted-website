@@ -8,6 +8,7 @@ import rootingInImg from "@/assets/journey-rooting-in.webp";
 import rootingBackImg from "@/assets/journey-rooting-back.webp";
 import familySupportImg from "@/assets/journey-family-support.webp";
 import heartDrawn from "@/assets/heart-drawn.png";
+import underlineYasser from "@/assets/underline-yasser.svg.asset.json";
 
 type Stage = {
   name: string;
@@ -94,6 +95,13 @@ const ExpatJourney = () => {
                   </>
                 )}
               </h2>
+              <img
+                src={underlineYasser.url}
+                alt=""
+                aria-hidden="true"
+                className="mt-3 block"
+                style={{ width: "38%", height: "auto", marginLeft: "2%" }}
+              />
             </div>
             <div className="md:pb-1">
               <p className="leading-[1.65]" style={{ color: "rgba(250,249,246,0.85)", fontSize: "clamp(15px, 1.2vw, 18px)" }}>
