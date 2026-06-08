@@ -205,8 +205,6 @@ const PILLARS = [
     image: offeringCoach,
     bg: "hsl(var(--primary))",
     text: "hsl(var(--primary-foreground))",
-    tile: "hsl(var(--primary-foreground) / 0.08)",
-    borderFilter: "brightness(3) saturate(0.3)",
   },
   {
     eyebrow: "App",
@@ -215,8 +213,6 @@ const PILLARS = [
     image: offeringApp,
     bg: "hsl(152 60% 55%)",
     text: "#FFFFFF",
-    tile: "rgba(255, 255, 255, 0.1)",
-    borderFilter: "brightness(2.5) saturate(0.2)",
   },
   {
     eyebrow: "Assessment",
@@ -225,8 +221,6 @@ const PILLARS = [
     image: offeringAssessments,
     bg: "hsl(var(--accent))",
     text: "hsl(var(--accent-foreground))",
-    tile: "hsl(var(--accent-foreground) / 0.08)",
-    borderFilter: "brightness(1.2)",
   },
 ];
 
@@ -239,90 +233,78 @@ export function WhyReRootedPillars() {
       id="approach"
       className="relative bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[1760px] px-6 pt-20 sm:px-8 md:px-10 md:pt-24 lg:px-14 lg:pt-36 xl:px-16 xl:pt-44">
-        <div className="relative mb-8 grid grid-cols-1 gap-8 md:mb-10 md:grid-cols-2 md:gap-12 md:items-end">
+      {/* ── Title area ── */}
+      {/* Normal flow, NOT sticky. Takes about 45vh so the first card peeks below it. */}
+      <div
+        className="mx-auto max-w-[1760px] px-6 pt-20 sm:px-8 md:px-10 md:pt-24 lg:px-14 lg:pt-36 xl:px-16 xl:pt-44"
+        style={{ minHeight: '45vh', paddingBottom: '2rem' }}
+      >
+        <div className="relative flex flex-col gap-4">
           <h2
             className="font-display m-0 text-primary font-bold leading-[1.02] tracking-[-0.025em] text-[clamp(46px,5.4vw,84px)] text-left px-0"
           >
             A COMPLETE<br />INTEGRATION<br />SYSTEM
           </h2>
-          <div className="flex flex-col gap-4 md:pb-4">
-            <p className="text-primary/85 max-w-[44ch] text-sm md:text-base leading-relaxed">
-              Allowing the expat to adapt faster, perform better, and stay longer in the company
-            </p>
-          </div>
+          <p className="text-primary/85 max-w-[44ch] text-sm md:text-base leading-relaxed mt-4">
+            Allowing the expat to adapt faster, perform better, and stay longer in the company
+          </p>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-6 pb-24 sm:px-8 md:px-10 lg:px-14 xl:px-16">
-        {PILLARS.map((pillar, index) => (
-          <div
-            key={pillar.title}
-            className="sticky mb-8 md:mb-10"
-            style={{
-              top: `${80 + index * 24}px`,
-              zIndex: index + 1,
-            }}
-          >
+      {/* ── Stacking cards ── */}
+      {/* Each wrapper is 100vh tall and sticky at top:0. */}
+      {/* As the user scrolls, each card slides up and fully covers the previous one. */}
+      {/* The 100vh height of each wrapper provides the scroll distance before the next card arrives. */}
+      {PILLARS.map((pillar, index) => (
+        <div
+          key={pillar.title}
+          className="sticky top-0 w-full"
+          style={{
+            zIndex: 10 + index,
+            height: '100vh',
+          }}
+        >
+          <div className="mx-auto max-w-[1400px] h-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 pt-3 pb-3">
             <article
-              className="relative grid grid-cols-1 overflow-visible rounded-[28px] shadow-lg md:grid-cols-2 md:rounded-[32px]"
+              className="relative grid h-full grid-cols-1 overflow-hidden rounded-[24px] shadow-2xl md:grid-cols-2 md:rounded-[32px]"
               style={{
                 background: pillar.bg,
                 color: pillar.text,
               }}
             >
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-20 select-none"
-              >
-                <img
-                  src="/hand-drawn-border.png"
-                  alt=""
-                  draggable={false}
-                  className="absolute max-w-none"
-                  style={{
-                    left: "-26.81%",
-                    top: "-48.2%",
-                    width: "149.94%",
-                    height: "188.11%",
-                    borderRadius: "inherit",
-                    mixBlendMode: "multiply",
-                    opacity: 0.72,
-                  }}
-                />
-              </span>
-
-              <div
-                className="flex items-center justify-center p-3 md:p-5 lg:p-6"
-                style={{ minHeight: "clamp(280px, 32vw, 460px)" }}
-              >
+              {/* Image side */}
+              <div className="flex items-center justify-center p-6 md:p-8 lg:p-10">
                 <img
                   src={pillar.image}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full max-h-[480px] w-auto max-w-full object-contain"
+                  className="max-h-[500px] w-auto max-w-full object-contain"
                 />
               </div>
 
-              <div className="flex flex-col justify-center gap-4 p-6 md:p-8 lg:p-10">
+              {/* Text side */}
+              <div className="flex flex-col justify-center gap-5 p-6 md:p-10 lg:p-14">
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] opacity-60">
+                  {pillar.eyebrow}
+                </span>
                 <h3
-                  className="font-display font-medium leading-[1.05] tracking-[-0.02em]"
-                  style={{ fontSize: "clamp(1.75rem, 3vw, 2.75rem)" }}
+                  className="font-display font-semibold leading-[1.08] tracking-[-0.02em]"
+                  style={{ fontSize: 'clamp(1.75rem, 3.2vw, 3rem)' }}
                 >
                   {pillar.title}
                 </h3>
                 <p
-                  className="max-w-[44ch] font-normal leading-[1.55] opacity-90"
-                  style={{ fontSize: "clamp(1rem, 1.15vw, 1.125rem)" }}
+                  className="max-w-[48ch] font-normal leading-[1.6] opacity-85"
+                  style={{ fontSize: 'clamp(1rem, 1.2vw, 1.15rem)' }}
                 >
                   {pillar.body}
                 </p>
               </div>
             </article>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </section>
   );
 }
