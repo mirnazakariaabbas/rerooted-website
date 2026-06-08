@@ -326,52 +326,56 @@ export function WhyReRootedPillars() {
         </div>
 
         {/* ── RIGHT COLUMN: Scrolling cards ── */}
-        <div className="py-24 pr-6 lg:pr-14 xl:pr-16 flex flex-col gap-6">
+        {/* Each card wrapper is 100vh tall to provide scroll distance. */}
+        {/* The card inside is sticky at top:80px so it locks just below the nav while the user scrolls. */}
+        <div className="pr-6 lg:pr-14 xl:pr-16">
           {PILLARS.map((pillar, index) => (
-            <div
-              key={pillar.title}
-              ref={(el) => { cardRefs.current[index] = el; }}
-              className="sticky rounded-[24px] shadow-xl overflow-hidden transition-shadow duration-300"
-              style={{
-                top: `${80 + index * 40}px`,
-                zIndex: 10 + index,
-                background: pillar.bg,
-                color: pillar.text,
-              }}
-            >
-              <div className="px-6 pt-6 lg:px-8 lg:pt-8">
-                <span className="text-[11px] font-bold uppercase tracking-[0.22em] opacity-50">
-                  {pillar.eyebrow}
-                </span>
-              </div>
-              <div className="px-6 pt-3 pb-2 lg:px-8">
-                <h3
-                  className="font-display font-semibold leading-[1.08] tracking-[-0.02em]"
-                  style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)' }}
-                >
-                  {pillar.title}
-                </h3>
-              </div>
-              <div className="px-6 pb-4 lg:px-8">
-                <p
-                  className="max-w-[44ch] font-normal leading-[1.6] opacity-80"
-                  style={{ fontSize: 'clamp(0.875rem, 1.1vw, 1rem)' }}
-                >
-                  {pillar.body}
-                </p>
-              </div>
-              <div className="flex items-center justify-center p-4 lg:p-6">
-                <img
-                  src={pillar.image}
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  className="max-h-[360px] w-auto max-w-full object-contain rounded-[16px]"
-                />
+            <div key={pillar.title} className="relative h-screen">
+              <div
+                ref={(el) => { cardRefs.current[index] = el; }}
+                className="sticky rounded-[24px] shadow-xl overflow-hidden"
+                style={{
+                  top: '80px',
+                  zIndex: 10 + index,
+                  background: pillar.bg,
+                  color: pillar.text,
+                }}
+              >
+                <div className="px-6 pt-6 lg:px-8 lg:pt-8">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.22em] opacity-50">
+                    {pillar.eyebrow}
+                  </span>
+                </div>
+                <div className="px-6 pt-3 pb-2 lg:px-8">
+                  <h3
+                    className="font-display font-semibold leading-[1.08] tracking-[-0.02em]"
+                    style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)' }}
+                  >
+                    {pillar.title}
+                  </h3>
+                </div>
+                <div className="px-6 pb-4 lg:px-8">
+                  <p
+                    className="max-w-[44ch] font-normal leading-[1.6] opacity-80"
+                    style={{ fontSize: 'clamp(0.875rem, 1.1vw, 1rem)' }}
+                  >
+                    {pillar.body}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center p-4 lg:p-6">
+                  <img
+                    src={pillar.image}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    className="max-h-[360px] w-auto max-w-full object-contain rounded-[16px]"
+                  />
+                </div>
               </div>
             </div>
           ))}
         </div>
+
       </div>
 
       {/* ── Mobile: Simple vertical stack ── */}
