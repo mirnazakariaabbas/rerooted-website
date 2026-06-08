@@ -91,23 +91,6 @@ const ExpatJourney = () => {
                   <>
                     SUPPORTING<br />
                     EVERY STAGE
-                    <img
-                      src={heartDrawn}
-                      alt=""
-                      aria-hidden="true"
-                      draggable={false}
-                      style={{
-                        display: "inline-block",
-                        height: "1.1em",
-                        width: "auto",
-                        marginLeft: "0.4em",
-                        verticalAlign: "-0.15em",
-                        objectFit: "contain",
-                        pointerEvents: "none",
-                        userSelect: "none",
-                      }}
-                      className="select-none"
-                    />
                   </>
                 )}
               </h2>
