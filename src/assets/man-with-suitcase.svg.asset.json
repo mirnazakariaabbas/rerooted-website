@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "19fb5978-0e26-4f58-90fb-4b39ed45adff",
+  "asset_id": "79c17c47-76f6-48f3-b61e-4c7baf54f917",
   "project_id": "793e3013-a527-4e9a-b6ac-8771d38a5603",
-  "url": "/__l5e/assets-v1/19fb5978-0e26-4f58-90fb-4b39ed45adff/man-with-suitcase.svg",
-  "r2_key": "a/v1/793e3013-a527-4e9a-b6ac-8771d38a5603/19fb5978-0e26-4f58-90fb-4b39ed45adff/man-with-suitcase.svg",
-  "original_filename": "man-with-suitcase.svg",
-  "size": 174510,
+  "url": "/__l5e/assets-v1/79c17c47-76f6-48f3-b61e-4c7baf54f917/man-with-suitcase-cropped.svg",
+  "r2_key": "a/v1/793e3013-a527-4e9a-b6ac-8771d38a5603/79c17c47-76f6-48f3-b61e-4c7baf54f917/man-with-suitcase-cropped.svg",
+  "original_filename": "man-with-suitcase-cropped.svg",
+  "size": 174506,
   "content_type": "image/svg+xml",
-  "created_at": "2026-06-08T18:37:25Z"
+  "created_at": "2026-06-08T18:41:19Z"
 }
