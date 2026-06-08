@@ -239,9 +239,9 @@ function PillarCard({
   // the start; subsequent cards slide up from below their slice's start point
   // and rest a bit below the card above so its eyebrow (COACH / APP /
   // ASSESSMENT) stays visible.
-  // Peek leaves enough room for the eyebrow + the full title of the card
-  // beneath, so every card title stays readable while stacked.
-  const PEEK = 168;
+  // Peek leaves enough room for the eyebrow + title + description of the card
+  // beneath, so previous cards remain fully readable while stacked.
+  const PEEK = 280;
   const slice = 1 / total;
   const enterStart = Math.max(0, index * slice - slice * 0.6);
   const enterEnd = index * slice;
