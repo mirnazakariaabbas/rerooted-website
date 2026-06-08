@@ -226,6 +226,29 @@ const PILLARS = [
 
 export function WhyReRootedPillars() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Track which card is most visible to update the vertical indicator
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
+            if (index !== -1) setActiveIndex(index);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    cardRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -233,80 +256,175 @@ export function WhyReRootedPillars() {
       id="approach"
       className="relative bg-background text-foreground"
     >
-      {/* ── Title area ── */}
-      {/* Normal flow, NOT sticky. Takes about 45vh so the first card peeks below it. */}
-      <div
-        className="sticky top-0 z-[1] bg-background mx-auto max-w-[1760px] px-6 pt-20 sm:px-8 md:px-10 md:pt-24 lg:px-14 lg:pt-36 xl:px-16 xl:pt-44"
-        style={{ minHeight: '45vh', paddingBottom: '2rem' }}
-      >
-        <div className="relative flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-10">
+      {/* ── Desktop: Three-column split layout ── */}
+      <div className="hidden md:grid md:grid-cols-[1fr_60px_1fr] lg:grid-cols-[1.1fr_60px_1fr] mx-auto max-w-[1600px]">
+
+        {/* ── LEFT COLUMN: Title (sticky) ── */}
+        <div className="sticky top-0 h-screen flex flex-col justify-center px-6 lg:px-14 xl:px-16">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs mb-6">
+            What makes Re-Rooted® Unique
+          </p>
           <h2
-            className="font-display m-0 text-primary font-bold leading-[1.02] tracking-[-0.025em] text-[clamp(46px,5.4vw,84px)] text-left px-0"
+            className="font-display text-primary font-bold leading-[1.02] tracking-[-0.025em] mb-6"
+            style={{ fontSize: 'clamp(36px, 4.5vw, 72px)' }}
           >
-            A COMPLETE<br />INTEGRATION<br />SYSTEM
+            A COMPLETE
+            <br />
+            INTEGRATION
+            <br />
+            SYSTEM
           </h2>
-          <p className="text-primary/85 max-w-[44ch] text-sm md:text-base leading-relaxed md:pb-4">
+          <p className="text-primary/75 max-w-[36ch] text-sm lg:text-base leading-relaxed">
             Allowing the expat to adapt faster, perform better, and stay longer in the company
           </p>
         </div>
-      </div>
 
-      {/* ── Stacking cards ── */}
-      {/* Each wrapper is 100vh tall and sticky at top:0. */}
-      {/* As the user scrolls, each card slides up and fully covers the previous one. */}
-      {/* The 100vh height of each wrapper provides the scroll distance before the next card arrives. */}
-      {PILLARS.map((pillar, index) => (
-        <div
-          key={pillar.title}
-          className="sticky top-0 w-full"
-          style={{
-            zIndex: 10 + index,
-            height: '100vh',
-          }}
-        >
-          <div className="mx-auto max-w-[1400px] h-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 pt-3 pb-3">
-            <article
-              className="relative grid h-full grid-cols-1 overflow-hidden rounded-[24px] shadow-2xl md:grid-cols-2 md:rounded-[32px]"
+        {/* ── CENTER: Vertical scroll indicator (sticky) ── */}
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
+          <div className="relative flex flex-col items-center gap-0">
+            {PILLARS.map((pillar, index) => (
+              <div key={pillar.eyebrow} className="flex flex-col items-center">
+                {index > 0 && (
+                  <div
+                    className="w-[2px] h-12 transition-colors duration-500"
+                    style={{
+                      backgroundColor: activeIndex >= index
+                        ? 'hsl(var(--primary))'
+                        : 'hsl(var(--primary) / 0.15)',
+                    }}
+                  />
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    cardRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }}
+                  className="relative flex items-center justify-center transition-all duration-500"
+                  aria-label={`Go to ${pillar.eyebrow}`}
+                  style={{
+                    width: activeIndex === index ? 14 : 10,
+                    height: activeIndex === index ? 14 : 10,
+                    borderRadius: '50%',
+                    backgroundColor: activeIndex === index
+                      ? 'hsl(var(--primary))'
+                      : 'hsl(var(--primary) / 0.2)',
+                  }}
+                />
+                {index < PILLARS.length - 1 && (
+                  <div
+                    className="w-[2px] h-12 transition-colors duration-500"
+                    style={{
+                      backgroundColor: activeIndex > index
+                        ? 'hsl(var(--primary))'
+                        : 'hsl(var(--primary) / 0.15)',
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── RIGHT COLUMN: Scrolling cards ── */}
+        <div className="py-24 pr-6 lg:pr-14 xl:pr-16 flex flex-col gap-6">
+          {PILLARS.map((pillar, index) => (
+            <div
+              key={pillar.title}
+              ref={(el) => { cardRefs.current[index] = el; }}
+              className="sticky rounded-[24px] shadow-xl overflow-hidden transition-shadow duration-300"
               style={{
+                top: `${80 + index * 40}px`,
+                zIndex: 10 + index,
                 background: pillar.bg,
                 color: pillar.text,
               }}
             >
-              {/* Image side */}
-              <div className="flex items-center justify-center p-6 md:p-8 lg:p-10">
+              <div className="px-6 pt-6 lg:px-8 lg:pt-8">
+                <span className="text-[11px] font-bold uppercase tracking-[0.22em] opacity-50">
+                  {pillar.eyebrow}
+                </span>
+              </div>
+              <div className="px-6 pt-3 pb-2 lg:px-8">
+                <h3
+                  className="font-display font-semibold leading-[1.08] tracking-[-0.02em]"
+                  style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)' }}
+                >
+                  {pillar.title}
+                </h3>
+              </div>
+              <div className="px-6 pb-4 lg:px-8">
+                <p
+                  className="max-w-[44ch] font-normal leading-[1.6] opacity-80"
+                  style={{ fontSize: 'clamp(0.875rem, 1.1vw, 1rem)' }}
+                >
+                  {pillar.body}
+                </p>
+              </div>
+              <div className="flex items-center justify-center p-4 lg:p-6">
                 <img
                   src={pillar.image}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="max-h-[500px] w-auto max-w-full object-contain"
+                  className="max-h-[360px] w-auto max-w-full object-contain rounded-[16px]"
                 />
               </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-              {/* Text side */}
-              <div className="flex flex-col justify-center gap-5 p-6 md:p-10 lg:p-14">
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] opacity-60">
+      {/* ── Mobile: Simple vertical stack ── */}
+      <div className="md:hidden px-6 py-16">
+        <div className="mb-10">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary mb-4">
+            What makes Re-Rooted® Unique
+          </p>
+          <h2
+            className="font-display text-primary font-bold leading-[1.05] tracking-[-0.025em] mb-4"
+            style={{ fontSize: 'clamp(32px, 8vw, 48px)' }}
+          >
+            A COMPLETE INTEGRATION SYSTEM
+          </h2>
+          <p className="text-primary/75 text-sm leading-relaxed">
+            Allowing the expat to adapt faster, perform better, and stay longer in the company
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          {PILLARS.map((pillar) => (
+            <article
+              key={pillar.title}
+              className="rounded-[20px] overflow-hidden shadow-lg"
+              style={{ background: pillar.bg, color: pillar.text }}
+            >
+              <div className="p-5">
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] opacity-50">
                   {pillar.eyebrow}
                 </span>
-                <h3
-                  className="font-display font-semibold leading-[1.08] tracking-[-0.02em]"
-                  style={{ fontSize: 'clamp(1.75rem, 3.2vw, 3rem)' }}
-                >
+                <h3 className="font-display font-semibold text-xl leading-[1.1] tracking-[-0.02em] mt-2 mb-2">
                   {pillar.title}
                 </h3>
-                <p
-                  className="max-w-[48ch] font-normal leading-[1.6] opacity-85"
-                  style={{ fontSize: 'clamp(1rem, 1.2vw, 1.15rem)' }}
-                >
+                <p className="text-sm leading-[1.6] opacity-80">
                   {pillar.body}
                 </p>
               </div>
+              <div className="flex items-center justify-center p-4">
+                <img
+                  src={pillar.image}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  className="max-h-[260px] w-auto max-w-full object-contain rounded-[12px]"
+                />
+              </div>
             </article>
-          </div>
+          ))}
         </div>
-      ))}
+      </div>
     </section>
   );
 }
+
 
 
