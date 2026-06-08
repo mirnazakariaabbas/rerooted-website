@@ -95,13 +95,14 @@ const ExpatJourney = () => {
                   </>
                 )}
               </h2>
-              <img
-                src={underlineYasser.url}
-                alt=""
-                aria-hidden="true"
-                className="mt-3 block"
-                style={{ width: "38%", height: "auto", marginLeft: "2%" }}
-              />
+              <div aria-hidden="true" className="relative" style={{ height: 0 }}>
+                <img
+                  src={underlineYasser.url}
+                  alt=""
+                  className="absolute block pointer-events-none"
+                  style={{ width: "38%", height: "auto", left: "2%", top: "0.5rem" }}
+                />
+              </div>
             </div>
             <div className="md:pb-1">
               <p className="leading-[1.65]" style={{ color: "rgba(250,249,246,0.85)", fontSize: "clamp(15px, 1.2vw, 18px)" }}>
