@@ -296,7 +296,10 @@ function PillarCard({
           {pillar.body}
         </p>
       </motion.div>
-      <div className="flex flex-1 items-center justify-center p-4 lg:p-6 min-h-0">
+      <motion.div
+        className="flex flex-1 items-center justify-center p-4 lg:p-6 min-h-0"
+        style={{ opacity: contentOpacity }}
+      >
         <img
           src={pillar.image}
           alt=""
@@ -304,7 +307,7 @@ function PillarCard({
           loading="lazy"
           className="max-h-full w-auto max-w-full object-contain rounded-[16px]"
         />
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
