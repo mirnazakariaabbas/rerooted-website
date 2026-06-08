@@ -247,18 +247,6 @@ export function WhyReRootedPillars() {
             A COMPLETE<br />INTEGRATION<br />SYSTEM
           </h2>
           <div className="flex flex-col gap-4 md:pb-4">
-            <img
-              src="/__l5e/assets-v1/ae3b7c9c-4521-40de-8eb9-f2885bacd7e4/swiggly-arrow-v2-cropped.png"
-              alt=""
-              aria-hidden="true"
-              draggable={false}
-              className="pointer-events-none hidden select-none md:block"
-              style={{
-                height: "clamp(120px, 14vw, 200px)",
-                width: "auto",
-                mixBlendMode: "multiply",
-              }}
-            />
             <p className="text-primary/85 max-w-[44ch] text-sm md:text-base leading-relaxed">
               Allowing the expat to adapt faster, perform better, and stay longer in the company
             </p>
