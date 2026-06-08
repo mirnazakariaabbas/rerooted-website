@@ -130,9 +130,17 @@ export default function ReRootedJourney() {
           pill.style.transform = on ? "scale(1)" : "scale(0.9)";
         }
         const t = titleRefs.current[i];
-        if (t) t.style.opacity = on ? "1" : "0.4";
+        if (t) {
+          t.style.opacity = on ? "1" : "0.35";
+          t.style.transform = on ? "translateY(0)" : "translateY(8px)";
+          t.style.filter = on ? "blur(0)" : "blur(0.4px)";
+        }
         const b = bodyRefs.current[i];
-        if (b) b.style.opacity = on ? "1" : "0.5";
+        if (b) {
+          b.style.opacity = on ? "1" : "0.4";
+          b.style.transform = on ? "translateY(0)" : "translateY(10px)";
+          b.style.filter = on ? "blur(0)" : "blur(0.5px)";
+        }
       }
     };
     const onScroll = () => update();
