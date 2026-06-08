@@ -235,8 +235,11 @@ function PillarCard({
   total: number;
   progress: MotionValue<number>;
 }) {
-  // Each card occupies a slice of the scroll. The first card is visible from the
-  // start. Subsequent cards slide up from below their slice's start point.
+  // Each card occupies a slice of the scroll. The first card is visible from
+  // the start; subsequent cards slide up from below their slice's start point
+  // and rest a bit below the card above so its eyebrow (COACH / APP /
+  // ASSESSMENT) stays visible.
+  const PEEK = 64; // px of the previous card that remains visible at the top
   const slice = 1 / total;
   const enterStart = Math.max(0, index * slice - slice * 0.6);
   const enterEnd = index * slice;
@@ -247,24 +250,18 @@ function PillarCard({
     [index === 0 ? "0%" : "100%", "0%"]
   );
 
-  // Cards below the active one shrink/recede slightly to expose the stack edge.
-  const remaining = total - 1 - index;
-  const scale = useTransform(progress, [enterEnd, 1], [1, 1 - remaining * 0.04]);
-  const translateY = useTransform(progress, [enterEnd, 1], ["0px", `-${remaining * 16}px`]);
-
   return (
     <motion.div
       style={{
         y,
-        scale,
-        translateY,
+        top: index * PEEK,
         zIndex: 10 + index,
         background: pillar.bg,
         color: pillar.text,
-        transformOrigin: "top center",
       }}
-      className="absolute inset-0 rounded-[24px] shadow-xl overflow-hidden flex flex-col"
+      className="absolute left-0 right-0 bottom-0 rounded-[24px] shadow-xl overflow-hidden flex flex-col"
     >
+
       <div className="px-6 pt-6 lg:px-8 lg:pt-8">
         <span className="text-[11px] font-bold uppercase tracking-[0.22em] opacity-50">
           {pillar.eyebrow}
