@@ -280,14 +280,32 @@ export default function ReRootedJourney() {
 
       <div style={{ maxWidth: 1320, margin: "0 auto", padding: "0 48px" }}>
         {/* Heading — single navy color, DM Sans */}
-        <div style={{ textAlign: "left", maxWidth: 820, margin: "0 0 90px" }}>
-          <h2 className="jh2" style={{ fontSize: "clamp(46px, 5.4vw, 84px)", lineHeight: 1.02,
-            letterSpacing: "-0.025em", color: C.blue, margin: 0 }}>
-            The Re-Rooted® Journey
-          </h2>
-          <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.6, color: C.mute, maxWidth: "58ch" }}>
-            We combine diagnostic tools, personalized coaching, and measurable outcomes. We integrate expats and provide organizations with the measurable difference.
-          </p>
+        <div style={{ position: "relative", margin: "0 0 90px" }}>
+          <div style={{ textAlign: "left", maxWidth: 820 }}>
+            <h2 className="jh2" style={{ fontSize: "clamp(46px, 5.4vw, 84px)", lineHeight: 1.02,
+              letterSpacing: "-0.025em", color: C.blue, margin: 0 }}>
+              The Re-Rooted® Journey
+            </h2>
+            <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.6, color: C.mute, maxWidth: "58ch" }}>
+              We combine diagnostic tools, personalized coaching, and measurable outcomes. We integrate expats and provide organizations with the measurable difference.
+            </p>
+          </div>
+          <img
+            src="/__l5e/assets-v1/81da4feb-aaa8-4a58-9ff9-216dd2a7104d/origami-crane.svg"
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              right: 0,
+              top: "50%",
+              transform: "translateY(-30%) scale(1.4)",
+              transformOrigin: "right center",
+              width: "26%",
+              height: "auto",
+              pointerEvents: "none",
+              userSelect: "none",
+            }}
+          />
         </div>
 
         {/* Winding journey */}
