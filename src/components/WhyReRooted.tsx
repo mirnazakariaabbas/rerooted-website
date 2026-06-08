@@ -246,28 +246,22 @@ function PillarCard({
   const enterStart = Math.max(0, index * slice - slice * 0.6);
   const enterEnd = index * slice;
 
-  // All cards share the full stage height (top:0 / bottom:0) so the topmost
-  // card always has room for eyebrow + title + description + image. Resting
-  // stack offset is applied via translateY in px (index * PEEK) so lower
-  // cards' eyebrow + title peek out above each newer card.
+  // All cards share full stage height so the topmost card always has room
+  // for eyebrow + title + description + image. Resting stack offset is
+  // applied via translateY in px so lower cards' eyebrow + title peek out
+  // above each newer card. Entering cards slide from below the stage to
+  // their resting offset.
   const restY = index * PEEK;
-  const y = useTransform(progress, [enterStart, enterEnd], (p) => {
-    if (index === 0) return restY;
-    const t = Math.min(1, Math.max(0, (p - enterStart) / (enterEnd - enterStart || 1)));
-    // start fully below the stage, land at restY
-    return `calc(100% + ${restY - 100}px * 0 + ${restY}px - (1 - ${t}) * 100%)`;
-  });
-  // Simpler: numeric interpolation between "below stage" and restY.
-  const yNum = useTransform(
+  const y = useTransform(
     progress,
     [enterStart, enterEnd],
-    [index === 0 ? restY : 1000, restY]
+    [index === 0 ? restY : 1200, restY]
   );
 
   return (
     <motion.div
       style={{
-        y: index === 0 ? restY : yNum,
+        y: index === 0 ? restY : y,
         zIndex: 10 + index,
         background: pillar.bg,
         color: pillar.text,
