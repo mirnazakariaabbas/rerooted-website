@@ -377,7 +377,7 @@ export function WhyReRootedPillars() {
 
 
           {/* ── LEFT COLUMN: Title ── */}
-          <div className="flex h-full flex-col justify-center px-6 lg:px-14 xl:px-16">
+          <div className="relative flex h-full flex-col justify-center px-6 lg:px-14 xl:px-16">
             <h2
               className="font-display text-primary font-bold leading-[1.02] tracking-[-0.025em] mb-6"
               style={{ fontSize: "clamp(36px, 4.5vw, 72px)" }}
@@ -391,6 +391,13 @@ export function WhyReRootedPillars() {
             <p className="text-primary/75 max-w-[36ch] text-sm lg:text-base leading-relaxed">
               Allowing the expat to adapt faster, perform better, and stay longer in the company
             </p>
+            <img
+              src={manWithSuitcase}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 h-[68%] w-auto select-none"
+            />
           </div>
 
           {/* ── CENTER: Vertical scroll indicator ── */}
