@@ -166,6 +166,12 @@ export default function ReRootedJourney() {
 
     const smoothScrollTo = (y: number, duration = 600) =>
       new Promise<void>((resolve) => {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduced) {
+          window.scrollTo(0, y);
+          resolve();
+          return;
+        }
         const startY = window.scrollY;
         const dy = y - startY;
         const t0 = performance.now();
