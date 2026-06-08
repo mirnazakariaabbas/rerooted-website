@@ -130,9 +130,17 @@ export default function ReRootedJourney() {
           pill.style.transform = on ? "scale(1)" : "scale(0.9)";
         }
         const t = titleRefs.current[i];
-        if (t) t.style.opacity = on ? "1" : "0.4";
+        if (t) {
+          t.style.opacity = on ? "1" : "0.35";
+          t.style.transform = on ? "translateY(0)" : "translateY(8px)";
+          t.style.filter = on ? "blur(0)" : "blur(0.4px)";
+        }
         const b = bodyRefs.current[i];
-        if (b) b.style.opacity = on ? "1" : "0.5";
+        if (b) {
+          b.style.opacity = on ? "1" : "0.4";
+          b.style.transform = on ? "translateY(0)" : "translateY(10px)";
+          b.style.filter = on ? "blur(0)" : "blur(0.5px)";
+        }
       }
     };
     const onScroll = () => update();
@@ -261,8 +269,12 @@ export default function ReRootedJourney() {
         }
         .jtext { position:absolute; z-index:2; transform:translateY(-50%); }
         .jtext h4 { font-family:'DM Sans',sans-serif; font-weight:600; font-size:25px; line-height:1.12;
-          letter-spacing:-0.01em; color:${C.blue}; margin:0 0 8px; transition:opacity .45s ease; }
-        .jtext p { font-size:14.5px; line-height:1.6; color:#3a3a3a; transition:opacity .45s ease; }
+          letter-spacing:-0.01em; color:${C.blue}; margin:0 0 8px;
+          transition:opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1), filter .6s ease;
+          will-change:opacity, transform; }
+        .jtext p { font-size:14.5px; line-height:1.6; color:#3a3a3a;
+          transition:opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1), filter .65s ease;
+          will-change:opacity, transform; }
         .jh2 { font-family:'DM Sans',sans-serif; font-weight:700; }
       `}</style>
 
