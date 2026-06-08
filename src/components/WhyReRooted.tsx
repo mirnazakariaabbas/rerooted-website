@@ -252,6 +252,17 @@ function PillarCard({
     [index === 0 ? "0%" : "100%", "0%"]
   );
 
+  // Fade out the description + image as the NEXT card starts to cover this one.
+  // Last card has no successor, so it stays fully visible.
+  const isLast = index === total - 1;
+  const fadeStart = (index + 1) * slice - slice * 0.6;
+  const fadeEnd = (index + 1) * slice - slice * 0.1;
+  const contentOpacity = useTransform(
+    progress,
+    [fadeStart, fadeEnd],
+    isLast ? [1, 1] : [1, 0]
+  );
+
   return (
     <motion.div
       style={{
@@ -277,15 +288,18 @@ function PillarCard({
           {pillar.title}
         </h3>
       </div>
-      <div className="px-6 pb-4 lg:px-8">
+      <motion.div className="px-6 pb-4 lg:px-8" style={{ opacity: contentOpacity }}>
         <p
           className="max-w-[44ch] font-normal leading-[1.6] opacity-80"
           style={{ fontSize: "clamp(0.875rem, 1.1vw, 1rem)" }}
         >
           {pillar.body}
         </p>
-      </div>
-      <div className="flex flex-1 items-center justify-center p-4 lg:p-6 min-h-0">
+      </motion.div>
+      <motion.div
+        className="flex flex-1 items-center justify-center p-4 lg:p-6 min-h-0"
+        style={{ opacity: contentOpacity }}
+      >
         <img
           src={pillar.image}
           alt=""
@@ -293,7 +307,7 @@ function PillarCard({
           loading="lazy"
           className="max-h-full w-auto max-w-full object-contain rounded-[16px]"
         />
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
