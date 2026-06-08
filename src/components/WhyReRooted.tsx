@@ -236,7 +236,7 @@ export function WhyReRootedPillars() {
       {/* ── Title area ── */}
       {/* Normal flow, NOT sticky. Takes about 45vh so the first card peeks below it. */}
       <div
-        className="mx-auto max-w-[1760px] px-6 pt-20 sm:px-8 md:px-10 md:pt-24 lg:px-14 lg:pt-36 xl:px-16 xl:pt-44"
+        className="sticky top-0 z-[1] bg-background mx-auto max-w-[1760px] px-6 pt-20 sm:px-8 md:px-10 md:pt-24 lg:px-14 lg:pt-36 xl:px-16 xl:pt-44"
         style={{ minHeight: '45vh', paddingBottom: '2rem' }}
       >
         <div className="relative flex flex-col gap-4">
