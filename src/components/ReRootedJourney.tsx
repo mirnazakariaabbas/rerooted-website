@@ -283,7 +283,7 @@ export default function ReRootedJourney() {
         <div style={{ textAlign: "left", maxWidth: 820, margin: "0 0 90px" }}>
           <h2 className="jh2" style={{ fontSize: "clamp(46px, 5.4vw, 84px)", lineHeight: 1.02,
             letterSpacing: "-0.025em", color: C.blue, margin: 0 }}>
-            The Re-Rooted Journey
+            The Re-Rooted® Journey
           </h2>
           <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.6, color: C.mute, maxWidth: "58ch" }}>
             Ninety days, six sessions, two assessments, one clear report, built as a route, not a
