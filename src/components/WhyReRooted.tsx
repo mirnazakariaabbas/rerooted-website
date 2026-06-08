@@ -346,9 +346,11 @@ export function WhyReRootedPillars() {
   });
 
   useMotionValueEvent(progress, "change", (v) => {
+    // Match the card stacking cadence: card `i` rests at v = i / total,
+    // so the indicator should advance to dot `i` at the same threshold.
     const idx = Math.min(
       PILLARS.length - 1,
-      Math.max(0, Math.round(v * (PILLARS.length - 1)))
+      Math.max(0, Math.floor(v * PILLARS.length))
     );
     setActiveIndex((prev) => (prev === idx ? prev : idx));
   });
