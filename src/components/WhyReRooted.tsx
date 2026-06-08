@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, useMotionValueEvent, type MotionValue } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import rootsIcon from "@/assets/roots-icon.png";
 import offeringCoachAsset from "@/assets/idea-tank.svg.asset.json";
@@ -302,180 +302,62 @@ function PillarCard({
 export function WhyReRootedPillars() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [navH, setNavH] = useState(96);
 
-  // `progress` is the smoothed value used to drive the cards. We lerp it
-  // toward `targetRef` inside a rAF loop so wheel / touch input never
-  // produces stepped, jittery transforms.
-  const progress = useMotionValue(0);
-
+  // Measure the sticky nav so the pinned stage parks flush against its bottom.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(max-width: 767px)").matches) return;
-
-    const total = PILLARS.length;
-    const STEP_PIXELS = 700;          // wheel pixels to advance one card
-    const MAX_DELTA = STEP_PIXELS * (total - 1);
-    const MAX_STEP_PER_EVENT = 0.18;  // clamp per-event jump (~18% of full range)
-    const LERP = 0.18;                // smoothing factor toward target per frame
-    const SETTLE_EPS = 0.0005;
-
-    const targetRef = { current: 0 };
-    const currentRef = { current: 0 };
-    const lockedRef = { current: false };
-    const lastDirRef = { current: 0 as 0 | 1 | -1 };
-    let lockY = 0;
-    let rafId = 0;
-
-    const getNavH = () => {
+    const measure = () => {
       const nav = document.querySelector("header.adaptive-nav") as HTMLElement | null;
-      return nav?.getBoundingClientRect().height ?? 96;
+      setNavH(nav?.getBoundingClientRect().height ?? 96);
     };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
-    const setActiveFromProgress = (p: number) => {
-      const idx = Math.min(total - 1, Math.max(0, Math.round(p * (total - 1))));
-      setActiveIndex((prev) => (prev === idx ? prev : idx));
-    };
+  // Native scroll drives progress through the section. The outer wrapper is
+  // tall (one viewport per card) and the inner stage is `position: sticky`
+  // pinned just below the nav: the browser handles the lock, so the user
+  // never feels scroll fighting and there is no jitter from JS scrollTo.
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
 
-    const tick = () => {
-      const t = targetRef.current;
-      const c = currentRef.current;
-      const diff = t - c;
-      if (Math.abs(diff) > SETTLE_EPS) {
-        const next = c + diff * LERP;
-        currentRef.current = next;
-        progress.set(next);
-        setActiveFromProgress(next);
-      } else if (c !== t) {
-        currentRef.current = t;
-        progress.set(t);
-        setActiveFromProgress(t);
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-    rafId = requestAnimationFrame(tick);
+  // Smooth the raw scroll progress with a spring so any micro-deltas from
+  // trackpad inertia translate into a silky card transition.
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 28,
+    mass: 0.4,
+  });
 
-    const tryEnterLock = (direction: 1 | -1) => {
-      const section = sectionRef.current;
-      if (!section || lockedRef.current) return;
-      const rect = section.getBoundingClientRect();
-      const navH = getNavH();
-      const covering = rect.top <= navH + 1 && rect.bottom >= window.innerHeight - 1;
-      if (!covering) return;
-      // Don't re-enter if we're already saturated in the requested direction.
-      if (direction > 0 && targetRef.current >= 1) return;
-      if (direction < 0 && targetRef.current <= 0) return;
-      lockedRef.current = true;
-      lockY = window.scrollY;
-    };
-
-    const releaseLock = (atEnd: 0 | 1) => {
-      lockedRef.current = false;
-      targetRef.current = atEnd;
-      // Snap current to target so we don't keep animating after release.
-      currentRef.current = atEnd;
-      progress.set(atEnd);
-      setActiveFromProgress(atEnd);
-    };
-
-    const consume = (rawDelta: number, e: Event) => {
-      if (rawDelta === 0) return;
-      const direction: 1 | -1 = rawDelta > 0 ? 1 : -1;
-      lastDirRef.current = direction;
-
-      if (!lockedRef.current) {
-        tryEnterLock(direction);
-        if (!lockedRef.current) return;
-      }
-
-      // Normalize delta into progress space, then clamp so a single big
-      // wheel notch or fast touch flick can't skip multiple cards at once.
-      let dp = rawDelta / MAX_DELTA;
-      if (dp > MAX_STEP_PER_EVENT) dp = MAX_STEP_PER_EVENT;
-      if (dp < -MAX_STEP_PER_EVENT) dp = -MAX_STEP_PER_EVENT;
-
-      const nextTarget = targetRef.current + dp;
-
-      // Hand control back to the page once we've fully saturated.
-      if (nextTarget >= 1 && direction > 0) {
-        releaseLock(1);
-        return;
-      }
-      if (nextTarget <= 0 && direction < 0) {
-        releaseLock(0);
-        return;
-      }
-
-      e.preventDefault();
-      targetRef.current = Math.max(0, Math.min(1, nextTarget));
-      // Hold the page exactly at the lock anchor.
-      if (window.scrollY !== lockY) window.scrollTo(0, lockY);
-    };
-
-    const onScroll = () => {
-      if (lockedRef.current && window.scrollY !== lockY) {
-        window.scrollTo(0, lockY);
-      }
-    };
-
-    const onWheel = (e: WheelEvent) => {
-      // Normalize across delta modes (line / page).
-      let dy = e.deltaY;
-      if (e.deltaMode === 1) dy *= 16;
-      else if (e.deltaMode === 2) dy *= window.innerHeight;
-      consume(dy, e);
-    };
-
-    let touchY = 0;
-    let touchActive = false;
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length !== 1) return;
-      touchY = e.touches[0].clientY;
-      touchActive = true;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      if (!touchActive || e.touches.length !== 1) return;
-      const y = e.touches[0].clientY;
-      const dy = touchY - y;
-      touchY = y;
-      // Touch deltas are small per-event, amplify slightly for parity with wheel.
-      consume(dy * 2.2, e);
-    };
-    const onTouchEnd = () => {
-      touchActive = false;
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    window.addEventListener("touchend", onTouchEnd, { passive: true });
-    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("touchcancel", onTouchEnd);
-    };
-  }, [progress]);
-
+  useMotionValueEvent(progress, "change", (v) => {
+    const idx = Math.min(
+      PILLARS.length - 1,
+      Math.max(0, Math.round(v * (PILLARS.length - 1)))
+    );
+    setActiveIndex((prev) => (prev === idx ? prev : idx));
+  });
 
   return (
     <section
       ref={sectionRef}
       id="approach"
       className="relative bg-background text-foreground"
-      // Single viewport tall. Scroll-hijack pins it in place while progress
-      // animates the cards; once progress saturates the page scroll releases.
-      style={{ minHeight: "100vh" }}
+      // Tall wrapper: scrolling through it pins the inner stage. Length tuned
+      // so each card transition takes roughly one viewport of scroll, which
+      // matches the user's natural scroll rhythm.
+      style={{ height: `${PILLARS.length * 100}vh` }}
     >
       {/* ── Desktop: pinned stage ── */}
-      <div className="hidden md:block h-screen overflow-hidden">
+      <div
+        className="hidden md:block sticky overflow-hidden"
+        style={{ top: navH, height: `calc(100vh - ${navH}px)` }}
+      >
 
         <div className="mx-auto grid h-full max-w-[1600px] grid-cols-[1fr_60px_1fr] lg:grid-cols-[1.1fr_60px_1fr]">
+
 
           {/* ── LEFT COLUMN: Title ── */}
           <div className="flex h-full flex-col justify-center px-6 lg:px-14 xl:px-16">
