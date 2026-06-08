@@ -296,14 +296,15 @@ export default function ReRootedJourney() {
             aria-hidden="true"
             style={{
               position: "absolute",
-              right: 0,
+              right: "-2%",
               top: "50%",
-              transform: "translateY(-30%) scale(1.4)",
+              transform: "translateY(-30%) scale(1.45)",
               transformOrigin: "right center",
-              width: "26%",
+              width: "32%",
               height: "auto",
               pointerEvents: "none",
               userSelect: "none",
+              mixBlendMode: "multiply",
             }}
           />
         </div>
