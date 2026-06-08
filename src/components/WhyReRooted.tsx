@@ -493,7 +493,7 @@ export function WhyReRootedPillars() {
                   pillar={pillar}
                   index={index}
                   total={PILLARS.length}
-                  progress={scrollYProgress}
+                  progress={progress}
                 />
               ))}
             </div>
