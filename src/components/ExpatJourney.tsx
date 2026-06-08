@@ -247,15 +247,14 @@ const ExpatJourney = () => {
                   e.preventDefault();
                   document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="inline-flex items-center justify-center px-8 py-4 text-sm font-semibold transition-transform duration-150 active:scale-[0.98]"
+                className="inline-flex items-center gap-2 px-8 py-4 text-base font-semibold transition-transform duration-150 active:scale-[0.98]"
                 style={{
                   backgroundColor: "#FAF9F6",
                   color: "#1F299C",
-                  borderRadius: "8px",
-                  border: "9px solid #1F299C",
+                  borderRadius: "9999px",
                 }}
               >
-                Let us help you find what's right for your organization
+                Get Started <span aria-hidden="true">→</span>
               </a>
             )}
           </div>
