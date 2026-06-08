@@ -303,107 +303,165 @@ export function WhyReRootedPillars() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // `progress` is the smoothed value used to drive the cards. We lerp it
+  // toward `targetRef` inside a rAF loop so wheel / touch input never
+  // produces stepped, jittery transforms.
   const progress = useMotionValue(0);
 
-  // Scroll-hijack: when the section's top reaches the bottom edge of the
-  // sticky nav, lock window scroll and convert wheel / touch input into
-  // animation progress. Release as soon as progress saturates at 0 or 1.
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(max-width: 767px)").matches) return;
 
-    const STEP_PIXELS = 700; // wheel pixels to advance one full card
     const total = PILLARS.length;
-    const maxDelta = STEP_PIXELS * (total - 1);
+    const STEP_PIXELS = 700;          // wheel pixels to advance one card
+    const MAX_DELTA = STEP_PIXELS * (total - 1);
+    const MAX_STEP_PER_EVENT = 0.18;  // clamp per-event jump (~18% of full range)
+    const LERP = 0.18;                // smoothing factor toward target per frame
+    const SETTLE_EPS = 0.0005;
 
-    const progressRef = { current: 0 };
+    const targetRef = { current: 0 };
+    const currentRef = { current: 0 };
     const lockedRef = { current: false };
+    const lastDirRef = { current: 0 as 0 | 1 | -1 };
     let lockY = 0;
+    let rafId = 0;
 
     const getNavH = () => {
       const nav = document.querySelector("header.adaptive-nav") as HTMLElement | null;
       return nav?.getBoundingClientRect().height ?? 96;
     };
 
-    const setP = (p: number) => {
-      const c = Math.max(0, Math.min(1, p));
-      progressRef.current = c;
-      progress.set(c);
-      setActiveIndex(Math.min(total - 1, Math.max(0, Math.round(c * (total - 1)))));
+    const setActiveFromProgress = (p: number) => {
+      const idx = Math.min(total - 1, Math.max(0, Math.round(p * (total - 1))));
+      setActiveIndex((prev) => (prev === idx ? prev : idx));
     };
+
+    const tick = () => {
+      const t = targetRef.current;
+      const c = currentRef.current;
+      const diff = t - c;
+      if (Math.abs(diff) > SETTLE_EPS) {
+        const next = c + diff * LERP;
+        currentRef.current = next;
+        progress.set(next);
+        setActiveFromProgress(next);
+      } else if (c !== t) {
+        currentRef.current = t;
+        progress.set(t);
+        setActiveFromProgress(t);
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
 
     const tryEnterLock = (direction: 1 | -1) => {
       const section = sectionRef.current;
-      if (!section || lockedRef.current) return false;
+      if (!section || lockedRef.current) return;
       const rect = section.getBoundingClientRect();
       const navH = getNavH();
-      // Section is covering the viewport below the nav.
       const covering = rect.top <= navH + 1 && rect.bottom >= window.innerHeight - 1;
-      if (!covering) return false;
-      // Only re-enter if there's room to animate in the scroll direction.
-      if (direction > 0 && progressRef.current >= 1) return false;
-      if (direction < 0 && progressRef.current <= 0) return false;
+      if (!covering) return;
+      // Don't re-enter if we're already saturated in the requested direction.
+      if (direction > 0 && targetRef.current >= 1) return;
+      if (direction < 0 && targetRef.current <= 0) return;
       lockedRef.current = true;
       lockY = window.scrollY;
-      return true;
+    };
+
+    const releaseLock = (atEnd: 0 | 1) => {
+      lockedRef.current = false;
+      targetRef.current = atEnd;
+      // Snap current to target so we don't keep animating after release.
+      currentRef.current = atEnd;
+      progress.set(atEnd);
+      setActiveFromProgress(atEnd);
+    };
+
+    const consume = (rawDelta: number, e: Event) => {
+      if (rawDelta === 0) return;
+      const direction: 1 | -1 = rawDelta > 0 ? 1 : -1;
+      lastDirRef.current = direction;
+
+      if (!lockedRef.current) {
+        tryEnterLock(direction);
+        if (!lockedRef.current) return;
+      }
+
+      // Normalize delta into progress space, then clamp so a single big
+      // wheel notch or fast touch flick can't skip multiple cards at once.
+      let dp = rawDelta / MAX_DELTA;
+      if (dp > MAX_STEP_PER_EVENT) dp = MAX_STEP_PER_EVENT;
+      if (dp < -MAX_STEP_PER_EVENT) dp = -MAX_STEP_PER_EVENT;
+
+      const nextTarget = targetRef.current + dp;
+
+      // Hand control back to the page once we've fully saturated.
+      if (nextTarget >= 1 && direction > 0) {
+        releaseLock(1);
+        return;
+      }
+      if (nextTarget <= 0 && direction < 0) {
+        releaseLock(0);
+        return;
+      }
+
+      e.preventDefault();
+      targetRef.current = Math.max(0, Math.min(1, nextTarget));
+      // Hold the page exactly at the lock anchor.
+      if (window.scrollY !== lockY) window.scrollTo(0, lockY);
     };
 
     const onScroll = () => {
-      if (lockedRef.current) {
-        // Hold scroll precisely at lock point.
-        if (window.scrollY !== lockY) window.scrollTo(0, lockY);
+      if (lockedRef.current && window.scrollY !== lockY) {
+        window.scrollTo(0, lockY);
       }
-    };
-
-    const handleDelta = (delta: number, e: Event) => {
-      const direction: 1 | -1 = delta > 0 ? 1 : -1;
-      if (!lockedRef.current) tryEnterLock(direction);
-      if (!lockedRef.current) return;
-      const next = progressRef.current + delta / maxDelta;
-      if (next >= 1 && direction > 0) {
-        setP(1);
-        lockedRef.current = false;
-        return; // let the page scroll naturally past
-      }
-      if (next <= 0 && direction < 0) {
-        setP(0);
-        lockedRef.current = false;
-        return;
-      }
-      e.preventDefault();
-      setP(next);
-      window.scrollTo(0, lockY);
     };
 
     const onWheel = (e: WheelEvent) => {
-      if (e.deltaY === 0) return;
-      handleDelta(e.deltaY, e);
+      // Normalize across delta modes (line / page).
+      let dy = e.deltaY;
+      if (e.deltaMode === 1) dy *= 16;
+      else if (e.deltaMode === 2) dy *= window.innerHeight;
+      consume(dy, e);
     };
 
     let touchY = 0;
+    let touchActive = false;
     const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
       touchY = e.touches[0].clientY;
+      touchActive = true;
     };
     const onTouchMove = (e: TouchEvent) => {
+      if (!touchActive || e.touches.length !== 1) return;
       const y = e.touches[0].clientY;
-      const delta = touchY - y;
+      const dy = touchY - y;
       touchY = y;
-      if (delta === 0) return;
-      handleDelta(delta, e);
+      // Touch deltas are small per-event, amplify slightly for parity with wheel.
+      consume(dy * 2.2, e);
+    };
+    const onTouchEnd = () => {
+      touchActive = false;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
 
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
     };
   }, [progress]);
+
 
   return (
     <section
