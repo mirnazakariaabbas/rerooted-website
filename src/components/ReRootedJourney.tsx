@@ -286,8 +286,7 @@ export default function ReRootedJourney() {
             The Re-Rooted® Journey
           </h2>
           <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.6, color: C.mute, maxWidth: "58ch" }}>
-            Ninety days, six sessions, two assessments, one clear report, built as a route, not a
-            retainer. Follow the path, step by step.
+            We combine diagnostic tools, personalized coaching, and measurable outcomes. We integrate expats and provide organizations with the measurable difference.
           </p>
         </div>
 
