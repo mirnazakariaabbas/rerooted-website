@@ -240,34 +240,29 @@ export function WhyReRootedPillars() {
       className="relative bg-background text-foreground"
     >
       <div className="mx-auto max-w-[1760px] px-6 pt-20 sm:px-8 md:px-10 md:pt-24 lg:px-14 lg:pt-36 xl:px-16 xl:pt-44">
-        <div className="relative mb-8 flex flex-col gap-4 md:mb-10">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-primary md:text-xs">
-            ​
-          </p>
+        <div className="relative mb-8 grid grid-cols-1 gap-8 md:mb-10 md:grid-cols-2 md:gap-12 md:items-end">
           <h2
             className="font-display m-0 text-primary font-bold leading-[1.02] tracking-[-0.025em] text-[clamp(46px,5.4vw,84px)] text-left px-0"
-            style={{ maxWidth: "22ch" }}
           >
-            A COMPLETE INTEGRATION SYSTEM
+            A COMPLETE<br />INTEGRATION<br />SYSTEM
           </h2>
-          <img
-            src="/__l5e/assets-v1/ae3b7c9c-4521-40de-8eb9-f2885bacd7e4/swiggly-arrow-v2-cropped.png"
-            alt=""
-            aria-hidden="true"
-            draggable={false}
-            className="pointer-events-none absolute hidden select-none md:block"
-            style={{
-              right: "clamp(180px, 22vw, 360px)",
-              top: "clamp(40px, 5vw, 80px)",
-              height: "clamp(150px, 18vw, 240px)",
-              width: "auto",
-              zIndex: 5,
-              mixBlendMode: "multiply",
-            }}
-          />
-          <p className="text-primary/85 max-w-[44ch] text-sm md:text-base leading-relaxed">
-            Allowing the expat to adapt faster, perform better, and stay longer in the company
-          </p>
+          <div className="flex flex-col gap-4 md:pb-4">
+            <img
+              src="/__l5e/assets-v1/ae3b7c9c-4521-40de-8eb9-f2885bacd7e4/swiggly-arrow-v2-cropped.png"
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              className="pointer-events-none hidden select-none md:block"
+              style={{
+                height: "clamp(120px, 14vw, 200px)",
+                width: "auto",
+                mixBlendMode: "multiply",
+              }}
+            />
+            <p className="text-primary/85 max-w-[44ch] text-sm md:text-base leading-relaxed">
+              Allowing the expat to adapt faster, perform better, and stay longer in the company
+            </p>
+          </div>
         </div>
       </div>
 
