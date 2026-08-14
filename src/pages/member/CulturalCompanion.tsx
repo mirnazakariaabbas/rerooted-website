@@ -174,26 +174,45 @@ const CulturalCompanion = () => {
                   </button>
                   {expanded && (
                     <CardContent className="pt-0 pb-4 px-4">
-                      <div className="space-y-3 mb-4">
-                        <div>
-                          <div className="flex justify-between text-xs mb-1">
-                            <span className="font-medium">{homeCountry}</span>
-                            <span className="text-muted-foreground">{homeScore}/10 · {dim.scale_low} → {dim.scale_high}</span>
-                          </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-accent rounded-full transition-all" style={{ width: `${homeScore * 10}%` }} />
-                          </div>
+                      <div className="mb-5">
+                        <div className="flex justify-between text-[11px] text-muted-foreground mb-3">
+                          <span>{dim.scale_low}</span>
+                          <span>{dim.scale_high}</span>
                         </div>
-                        <div>
-                          <div className="flex justify-between text-xs mb-1">
+                        <div className="relative h-2 bg-muted rounded-full">
+                          {/* connecting segment between the two countries */}
+                          <div
+                            className="absolute top-0 h-2 bg-foreground/10 rounded-full"
+                            style={{
+                              left: `${Math.min(homeScore, hostScore) * 10}%`,
+                              width: `${Math.abs(homeScore - hostScore) * 10}%`,
+                            }}
+                          />
+                          <div
+                            className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent border-2 border-card"
+                            style={{ left: `${homeScore * 10}%` }}
+                            title={`${homeCountry}: ${homeScore}/10`}
+                          />
+                          <div
+                            className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary border-2 border-card"
+                            style={{ left: `${hostScore * 10}%` }}
+                            title={`${hostCountry}: ${hostScore}/10`}
+                          />
+                        </div>
+                        <div className="flex items-center gap-4 mt-3 text-xs">
+                          <span className="flex items-center gap-1.5">
+                            <span className="h-2.5 w-2.5 rounded-full bg-accent" />
+                            <span className="font-medium">{homeCountry}</span>
+                            <span className="text-muted-foreground">{homeScore}/10</span>
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <span className="h-2.5 w-2.5 rounded-full bg-primary" />
                             <span className="font-medium">{hostCountry}</span>
                             <span className="text-muted-foreground">{hostScore}/10</span>
-                          </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${hostScore * 10}%` }} />
-                          </div>
+                          </span>
                         </div>
                       </div>
+
                       <p className="text-sm text-foreground/80 mb-3">{dim.explanation}</p>
                       <div className="bg-muted rounded-lg p-3">
                         <p className="text-xs italic text-foreground/70">💡 {dim.tip}</p>
