@@ -37,11 +37,11 @@ serve(async (req) => {
       });
     }
 
-    // Sort alphabetically for consistent caching
-    const sorted = [countryA, countryB].sort();
-    const dbA = sorted[0];
-    const dbB = sorted[1];
-    const swapped = dbA !== countryA; // true if we swapped the user's order
+    // Cache per direction: the analysis is written for someone moving A -> B,
+    // so Egypt -> Switzerland is not the same content as Switzerland -> Egypt.
+    const dbA = countryA as string;
+    const dbB = countryB as string;
+    const swapped = false;
 
     const supabaseAdmin = createClient(
       Deno.env.get("SUPABASE_URL")!,
