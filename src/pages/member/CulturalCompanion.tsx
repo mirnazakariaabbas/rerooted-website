@@ -11,7 +11,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, ArrowRightLeft, Sparkles, Briefcase, Users as UsersIcon, Coffee, RefreshCw, BookOpen } from 'lucide-react';
+import { CULTURE_MAP_INTRO, PRIMER_BY_ID } from '@/data/culture-map';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { RerootedTitle } from '@/components/layout/RerootedTitle';
 
@@ -78,6 +79,7 @@ const CulturalCompanion = () => {
   const [hostCountry, setHostCountry] = useState(user.countryTo || 'Switzerland');
   const [expandedDim, setExpandedDim] = useState<string | null>(null);
   const [tipsKey, setTipsKey] = useState(0);
+  const [introOpen, setIntroOpen] = useState(false);
 
   const { data: aiTips, isLoading: tipsLoading } = useQuery<any[]>({
     queryKey: ['cultural-tips', homeCountry, hostCountry, tipsKey],
