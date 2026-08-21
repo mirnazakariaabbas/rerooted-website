@@ -156,25 +156,91 @@ const CulturalCompanion = () => {
         </Card>
       ) : comparison ? (
         <>
-          <Card className="mb-8 border border-border bg-muted">
-            <CardHeader className="pb-2"><CardTitle className="text-base font-[900] tracking-tight">Overview</CardTitle></CardHeader>
-            <CardContent><p className="text-sm leading-relaxed text-foreground/80">{comparison.summary}</p></CardContent>
+          {/* 1. Standard intro read */}
+          <Card className="mb-6 border border-border">
+            <button
+              className="w-full text-left p-4 flex items-center justify-between"
+              onClick={() => setIntroOpen(o => !o)}
+            >
+              <span className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4 text-primary" />
+                <span className="font-[900] tracking-tight text-base">Start here: culture, and the Culture Map</span>
+              </span>
+              {introOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+            </button>
+            {introOpen && (
+              <CardContent className="pt-0 pb-5 px-4 space-y-5">
+                {CULTURE_MAP_INTRO.map(section => (
+                  <div key={section.heading}>
+                    <p className="text-xs font-bold uppercase tracking-wide text-accent mb-2">{section.heading}</p>
+                    {section.body.map((p, i) => (
+                      <p key={i} className="text-sm leading-relaxed text-foreground/80 mb-2 last:mb-0">{p}</p>
+                    ))}
+                  </div>
+                ))}
+              </CardContent>
+            )}
           </Card>
+
+          {/* 2. Overview of this specific move */}
+          <Card className="mb-8 border border-border bg-muted">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base font-[900] tracking-tight">
+                Your move: {homeCountry} to {hostCountry}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {String(comparison.summary || '').split('\n').filter(Boolean).map((p, i) => (
+                <p key={i} className="text-sm leading-relaxed text-foreground/80">{p}</p>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* 3. Dimension by dimension */}
+          <p className="text-xs font-bold uppercase tracking-wide text-accent mb-3">The ten scales</p>
           <div className="space-y-2">
             {comparison.dimensions.map((dim: any) => {
               const expanded = expandedDim === dim.id;
               // If swapped, score_a in DB is actually hostCountry and score_b is homeCountry
               const homeScore = swapped ? dim.score_b : dim.score_a;
               const hostScore = swapped ? dim.score_a : dim.score_b;
+              const primer = PRIMER_BY_ID[dim.id];
+              const scenario = dim.scenario;
+              const homeDialogue = scenario ? (swapped ? scenario.dialogue_b : scenario.dialogue_a) : null;
+              const hostDialogue = scenario ? (swapped ? scenario.dialogue_a : scenario.dialogue_b) : null;
               return (
                 <Card key={dim.id} className="border border-border overflow-hidden">
-                  <button className="w-full text-left p-4 flex items-center justify-between" onClick={() => setExpandedDim(expanded ? null : dim.id)}>
-                    <span className="font-medium text-sm">{dim.name}</span>
-                    {expanded ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                  <button className="w-full text-left p-4 flex items-center justify-between gap-3" onClick={() => setExpandedDim(expanded ? null : dim.id)}>
+                    <span className="min-w-0">
+                      <span className="block font-bold text-sm">{dim.name}</span>
+                      {primer && (
+                        <span className="block text-[11px] text-muted-foreground truncate">{primer.lowLabel} to {primer.highLabel}</span>
+                      )}
+                    </span>
+                    {expanded ? <ChevronUp className="h-4 w-4 shrink-0 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />}
                   </button>
                   {expanded && (
-                    <CardContent className="pt-0 pb-4 px-4">
-                      <div className="mb-5">
+                    <CardContent className="pt-0 pb-5 px-4">
+                      {/* Fixed primer: what this scale means */}
+                      {primer && (
+                        <div className="mb-6 rounded-lg border border-border p-4">
+                          <p className="text-xs font-bold uppercase tracking-wide text-accent mb-2">What this scale measures</p>
+                          <p className="text-sm leading-relaxed text-foreground/80 mb-3">{primer.whatItMeasures}</p>
+                          <div className="grid gap-3 sm:grid-cols-2 mb-3">
+                            <div className="rounded-lg bg-muted p-3">
+                              <p className="text-xs font-bold mb-1">{primer.lowLabel} (1)</p>
+                              <p className="text-xs leading-relaxed text-foreground/70">{primer.lowMeans}</p>
+                            </div>
+                            <div className="rounded-lg bg-muted p-3">
+                              <p className="text-xs font-bold mb-1">{primer.highLabel} (10)</p>
+                              <p className="text-xs leading-relaxed text-foreground/70">{primer.highMeans}</p>
+                            </div>
+                          </div>
+                          <p className="text-xs leading-relaxed text-foreground/70"><span className="font-bold">Why it matters: </span>{primer.whyItMatters}</p>
+                        </div>
+                      )}
+
+                      <div className="mb-6">
                         <div className="flex justify-between text-[11px] text-muted-foreground mb-3">
                           <span>{dim.scale_low}</span>
                           <span>{dim.scale_high}</span>
@@ -213,7 +279,44 @@ const CulturalCompanion = () => {
                         </div>
                       </div>
 
-                      <p className="text-sm text-foreground/80 mb-3">{dim.explanation}</p>
+                      {/* Country-specific difference */}
+                      <p className="text-xs font-bold uppercase tracking-wide text-accent mb-2">{homeCountry} vs {hostCountry}</p>
+                      <p className="text-sm leading-relaxed text-foreground/80 mb-4">{dim.explanation}</p>
+
+                      {/* Real life example */}
+                      {scenario && homeDialogue && hostDialogue && (
+                        <div className="mb-4">
+                          <p className="text-xs font-bold uppercase tracking-wide text-accent mb-2">Same moment, two cultures</p>
+                          <p className="text-sm text-foreground/80 mb-3">{scenario.situation}</p>
+                          <div className="grid gap-3 md:grid-cols-2">
+                            {[
+                              { country: homeCountry, lines: homeDialogue, dot: 'bg-accent' },
+                              { country: hostCountry, lines: hostDialogue, dot: 'bg-primary' },
+                            ].map(col => (
+                              <div key={col.country} className="rounded-lg border border-border p-3">
+                                <p className="flex items-center gap-1.5 text-xs font-bold mb-3">
+                                  <span className={cn('h-2.5 w-2.5 rounded-full', col.dot)} />
+                                  In {col.country}
+                                </p>
+                                <div className="space-y-2.5">
+                                  {(col.lines as any[]).map((turn, i) => (
+                                    <div key={i}>
+                                      <p className="text-[11px] font-semibold text-muted-foreground">{turn.speaker}</p>
+                                      <p className="text-xs leading-relaxed text-foreground/80">“{turn.line}”</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          {scenario.contrast && (
+                            <p className="text-xs leading-relaxed text-foreground/70 mt-3">
+                              <span className="font-bold">What changed: </span>{scenario.contrast}
+                            </p>
+                          )}
+                        </div>
+                      )}
+
                       <div className="bg-muted rounded-lg p-3">
                         <p className="text-xs italic text-foreground/70">💡 {dim.tip}</p>
                       </div>
@@ -224,9 +327,10 @@ const CulturalCompanion = () => {
             })}
           </div>
           <p className="text-xs text-muted-foreground mt-6 text-center">
-            Cultural profiles use the Culture Map framework (Erin Meyer) as a guide. Scores are AI-assisted and intended as a practical starting point. They do not represent the views of Re-Rooted®
+            Cultural profiles use the Culture Map framework (Erin Meyer) as a guide. Scores, explanations and example conversations are AI-assisted and intended as a practical starting point. They do not represent the views of Re-Rooted®
           </p>
         </>
+
       ) : null}
 
       {/* AI-Powered Tips */}
