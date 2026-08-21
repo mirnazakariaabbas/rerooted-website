@@ -7,6 +7,22 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+// Bump when the payload shape or depth of content changes so cached rows regenerate.
+const SCHEMA_VERSION = 2;
+
+const DIMENSIONS = [
+  { id: "communicating", name: "Communicating", low: "Low context", high: "High context" },
+  { id: "evaluating", name: "Evaluating", low: "Direct negative feedback", high: "Indirect negative feedback" },
+  { id: "persuading", name: "Persuading", low: "Principles first", high: "Applications first" },
+  { id: "leading", name: "Leading", low: "Egalitarian", high: "Hierarchical" },
+  { id: "deciding", name: "Deciding", low: "Consensual", high: "Top-down" },
+  { id: "trusting", name: "Trusting", low: "Task based", high: "Relationship based" },
+  { id: "disagreeing", name: "Disagreeing", low: "Confrontational", high: "Avoids confrontation" },
+  { id: "scheduling", name: "Scheduling", low: "Linear time", high: "Flexible time" },
+  { id: "emotional_expression", name: "Emotional expression", low: "Reserved", high: "Expressive" },
+  { id: "work_life", name: "Work-life integration", low: "Strictly separated", high: "Fully blended" },
+];
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -21,11 +37,11 @@ serve(async (req) => {
       });
     }
 
-    // Sort alphabetically for consistent caching
-    const sorted = [countryA, countryB].sort();
-    const dbA = sorted[0];
-    const dbB = sorted[1];
-    const swapped = dbA !== countryA; // true if we swapped the user's order
+    // Cache per direction: the analysis is written for someone moving A -> B,
+    // so Egypt -> Switzerland is not the same content as Switzerland -> Egypt.
+    const dbA = countryA as string;
+    const dbB = countryB as string;
+    const swapped = false;
 
     const supabaseAdmin = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -35,14 +51,15 @@ serve(async (req) => {
     // Check cache
     const { data: cached } = await supabaseAdmin
       .from("cultural_comparisons")
-      .select("comparison_data")
+      .select("id, comparison_data")
       .eq("country_a", dbA)
       .eq("country_b", dbB)
       .maybeSingle();
 
-    if (cached) {
+    const cachedData = cached?.comparison_data as Record<string, unknown> | undefined;
+    if (cachedData && cachedData.version === SCHEMA_VERSION) {
       return new Response(
-        JSON.stringify({ comparison: cached.comparison_data, swapped }),
+        JSON.stringify({ comparison: cachedData, swapped }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -56,29 +73,32 @@ serve(async (req) => {
       });
     }
 
-    const prompt = `You are a cultural intelligence expert using the Culture Map framework by Erin Meyer.
+    const dimensionList = DIMENSIONS.map(
+      (d, i) => `${i + 1}. id "${d.id}" (${d.name}): 1 = ${d.low}, 10 = ${d.high}`
+    ).join("\n");
 
-For a professional relocating from ${dbA} to ${dbB}, provide a cultural comparison across all 8 Culture Map dimensions plus 2 additional dimensions.
+    const prompt = `You are a cultural intelligence expert using the Culture Map framework by Erin Meyer, coaching a professional who is relocating from ${dbA} to ${dbB}.
 
-For each dimension, return:
-- A score for ${dbA} from 1-10 on the dimension scale
-- A score for ${dbB} from 1-10 on the dimension scale
-- A 2-sentence practical explanation written directly to the expat (use "you" / "your")
-- A one-sentence actionable tip
+Produce a deep, specific and practical comparison. Avoid generic filler, avoid stereotypes framed as absolutes, and never use em dashes.
 
-Dimensions and their scales:
-1. Communicating: 1=Low context, 10=High context
-2. Evaluating: 1=Direct negative feedback, 10=Indirect negative feedback
-3. Persuading: 1=Principles-first, 10=Applications-first
-4. Leading: 1=Egalitarian, 10=Hierarchical
-5. Deciding: 1=Consensual, 10=Top-down
-6. Trusting: 1=Task-based, 10=Relationship-based
-7. Disagreeing: 1=Confrontational, 10=Avoids confrontation
-8. Scheduling: 1=Linear-time, 10=Flexible-time
-9. Emotional Expression: 1=Reserved/private, 10=Open/expressive
-10. Work-Life Integration: 1=Strictly separated, 10=Fully blended
+OVERVIEW
+Write 5 to 7 sentences describing this specific move: the two or three widest cultural gaps, what the first weeks typically feel like, what is commonly misread in each direction, and what tends to become easier once understood. Speak directly to the person using "you".
 
-Also return a 3-sentence overall summary describing the biggest cultural shifts this person will encounter.`;
+FOR EACH OF THE 10 DIMENSIONS BELOW, return:
+- score_a: where ${dbA} sits on the 1 to 10 scale
+- score_b: where ${dbB} sits on the 1 to 10 scale
+- gap_explanation: 4 to 6 sentences explaining the concrete difference between ${dbA} and ${dbB} on this dimension. Name real behaviours: how meetings run, how emails are written, how disagreement surfaces, how time is treated. Explain what a person from ${dbA} typically misreads in ${dbB}, and what people in ${dbB} typically misread about them.
+- tip: one specific, actionable sentence the person can apply this week.
+- scenario: a real-life illustration with:
+    - situation: one sentence describing a single concrete everyday situation (for example a project is running late, a colleague declines an invitation, a manager reviews poor work). Use the SAME situation for both countries.
+    - dialogue_a: 3 to 5 turns showing how that exact conversation typically sounds in ${dbA}. Each turn has "speaker" (a first name plus a short role, for example "Layla, team lead") and "line" (natural spoken language, not narration).
+    - dialogue_b: 3 to 5 turns showing the same conversation in ${dbB}, with different names appropriate to that country.
+    - contrast: 2 sentences naming exactly what changed between the two versions and what an outsider would miss.
+
+Dimensions and scales:
+${dimensionList}
+
+Use exactly these ids, in this order.`;
 
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -97,26 +117,56 @@ Also return a 3-sentence overall summary describing the biggest cultural shifts 
             type: "function",
             function: {
               name: "cultural_comparison",
-              description: "Return a cultural comparison between two countries",
+              description: "Return an in-depth cultural comparison between two countries",
               parameters: {
                 type: "object",
                 properties: {
-                  summary: { type: "string", description: "3-sentence overview of biggest cultural shifts" },
+                  summary: { type: "string", description: "5 to 7 sentence overview of this specific move" },
                   dimensions: {
                     type: "array",
                     items: {
                       type: "object",
                       properties: {
                         id: { type: "string" },
-                        name: { type: "string" },
-                        scale_low: { type: "string" },
-                        scale_high: { type: "string" },
                         score_a: { type: "number" },
                         score_b: { type: "number" },
-                        explanation: { type: "string" },
+                        gap_explanation: { type: "string" },
                         tip: { type: "string" },
+                        scenario: {
+                          type: "object",
+                          properties: {
+                            situation: { type: "string" },
+                            dialogue_a: {
+                              type: "array",
+                              items: {
+                                type: "object",
+                                properties: {
+                                  speaker: { type: "string" },
+                                  line: { type: "string" },
+                                },
+                                required: ["speaker", "line"],
+                                additionalProperties: false,
+                              },
+                            },
+                            dialogue_b: {
+                              type: "array",
+                              items: {
+                                type: "object",
+                                properties: {
+                                  speaker: { type: "string" },
+                                  line: { type: "string" },
+                                },
+                                required: ["speaker", "line"],
+                                additionalProperties: false,
+                              },
+                            },
+                            contrast: { type: "string" },
+                          },
+                          required: ["situation", "dialogue_a", "dialogue_b", "contrast"],
+                          additionalProperties: false,
+                        },
                       },
-                      required: ["id", "name", "scale_low", "scale_high", "score_a", "score_b", "explanation", "tip"],
+                      required: ["id", "score_a", "score_b", "gap_explanation", "tip", "scenario"],
                       additionalProperties: false,
                     },
                   },
@@ -163,14 +213,44 @@ Also return a 3-sentence overall summary describing the biggest cultural shifts 
       });
     }
 
-    const comparisonData = JSON.parse(toolCall.function.arguments);
+    const parsed = JSON.parse(toolCall.function.arguments);
 
-    // Cache in DB
-    await supabaseAdmin.from("cultural_comparisons").insert({
-      country_a: dbA,
-      country_b: dbB,
-      comparison_data: comparisonData,
+    // Normalise: keep the canonical dimension order, names and scale labels server side.
+    const byId = new Map<string, any>((parsed.dimensions || []).map((d: any) => [d.id, d]));
+    const dimensions = DIMENSIONS.map((d) => {
+      const src = byId.get(d.id) || {};
+      return {
+        id: d.id,
+        name: d.name,
+        scale_low: d.low,
+        scale_high: d.high,
+        score_a: typeof src.score_a === "number" ? src.score_a : 5,
+        score_b: typeof src.score_b === "number" ? src.score_b : 5,
+        explanation: src.gap_explanation || "",
+        tip: src.tip || "",
+        scenario: src.scenario || null,
+      };
     });
+
+    const comparisonData = {
+      version: SCHEMA_VERSION,
+      summary: parsed.summary || "",
+      dimensions,
+    };
+
+    // Cache in DB (replace any stale version)
+    if (cached?.id) {
+      await supabaseAdmin
+        .from("cultural_comparisons")
+        .update({ comparison_data: comparisonData })
+        .eq("id", cached.id);
+    } else {
+      await supabaseAdmin.from("cultural_comparisons").insert({
+        country_a: dbA,
+        country_b: dbB,
+        comparison_data: comparisonData,
+      });
+    }
 
     return new Response(
       JSON.stringify({ comparison: comparisonData, swapped }),
