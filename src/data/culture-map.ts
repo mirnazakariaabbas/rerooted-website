@@ -19,7 +19,7 @@ export const CULTURE_MAP_INTRO: CultureMapIntroSection[] = [
   {
     heading: 'What the Culture Map is',
     body: [
-      'The Culture Map is a framework developed by Erin Meyer at INSEAD. It maps national work cultures across eight behavioural scales, from how people communicate to how they handle deadlines. Each scale is a spectrum, not a category.',
+      'The Culture Map is a framework that draws on the work of researchers such as Erin Meyer and Geert Hofstede, who spent decades comparing how national cultures handle work and relationships. It maps national work cultures across eight behavioural scales, from how people communicate to how they handle deadlines. Each scale is a spectrum, not a category.',
       'The insight that makes it useful is relative positioning. There is no correct place on a scale. What matters is the distance between where you sit and where the people around you sit. A Dutch manager is direct compared with a Japanese colleague and reserved compared with an Israeli one.',
       'We add two further scales, emotional expression and work-life integration, because expats consistently report those as the areas where daily life, not just work, feels different.',
     ],
