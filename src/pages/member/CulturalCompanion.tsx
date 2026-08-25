@@ -166,7 +166,7 @@ const CulturalCompanion = () => {
             >
               <span className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4 text-primary" />
-                <span className="font-[900] tracking-tight text-base">Start here: culture, and the Culture Map</span>
+                <span className="font-[900] tracking-tight text-base">Start here: culture, and how it differs</span>
               </span>
               {introOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
             </button>
@@ -329,7 +329,7 @@ const CulturalCompanion = () => {
             })}
           </div>
           <p className="text-xs text-muted-foreground mt-6 text-center">
-            Cultural profiles use the Culture Map framework (Erin Meyer) as a guide. Scores, explanations and example conversations are AI-assisted and intended as a practical starting point. They do not represent the views of Re-Rooted®
+            This Cultural Companion draws inspiration from the work of Geert Hofstede and Erin Meyer, who studied culture comparisons across nations. Scores, explanations and example conversations are AI-assisted and intended as a practical starting point. They do not represent the views of Re-Rooted®, nor those of the cited researchers.
           </p>
         </>
 

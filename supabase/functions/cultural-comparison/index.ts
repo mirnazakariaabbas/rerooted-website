@@ -77,7 +77,7 @@ serve(async (req) => {
       (d, i) => `${i + 1}. id "${d.id}" (${d.name}): 1 = ${d.low}, 10 = ${d.high}`
     ).join("\n");
 
-    const prompt = `You are a cultural intelligence expert using the Culture Map framework by Erin Meyer, coaching a professional who is relocating from ${dbA} to ${dbB}.
+    const prompt = `You are a cultural intelligence expert drawing on the work of researchers such as Geert Hofstede and Erin Meyer, who studied how national cultures differ across behavioural scales. You are coaching a professional who is relocating from ${dbA} to ${dbB}.
 
 Produce a deep, specific and practical comparison. Avoid generic filler, avoid stereotypes framed as absolutes, and never use em dashes.
 
