@@ -166,7 +166,7 @@ const CulturalCompanion = () => {
             >
               <span className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4 text-primary" />
-                <span className="font-[900] tracking-tight text-base">Start here: culture, and the Culture Map</span>
+                <span className="font-[900] tracking-tight text-base">Start here: culture, and how it differs</span>
               </span>
               {introOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
             </button>
