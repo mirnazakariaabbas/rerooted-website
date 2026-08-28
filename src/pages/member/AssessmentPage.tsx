@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
 import {
@@ -10,7 +9,7 @@ import {
   getPriorityDimensions,
   getVisibleQuestions,
 } from '@/data/assessment-questions';
-import { ROOTING_IN_DIMENSIONS } from '@/data/coaching-content';
+import { ASSESSMENT_RISK_AREAS } from '@/data/assessment-risk-areas';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -18,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight, Download, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { generateAssessmentPdf } from '@/utils/assessmentPdf';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { RerootedTitle } from '@/components/layout/RerootedTitle';
@@ -56,7 +55,6 @@ const bandColors: Record<string, string> = {
 
 const AssessmentPage = () => {
   const { user, assessment, setAssessment, reflections, profileLoading } = useUser();
-  const navigate = useNavigate();
 
   const saved = useMemo(() => loadProgress(), []);
   const [taking, setTaking] = useState(false);
@@ -120,14 +118,14 @@ const AssessmentPage = () => {
     const answeredCount = Object.keys(answers).length;
     return (
       <div className="pb-24">
-        <PageHeader eyebrow={false} title={<RerootedTitle suffix="Relocation Complexity Score" showBreak />} subtitle="Resume your assessment" />
+        <PageHeader eyebrow={false} title={<RerootedTitle suffix="Relocation Complexity Score" showBreak />} subtitle="Resume this assessment" />
         <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
         <Card className="border-0 bg-card rounded-3xl">
           <CardContent className="py-10 text-center">
             <div className="text-4xl mb-4">📝</div>
             <h2 className="text-xl font-[900] tracking-tight mb-2">Resume Assessment?</h2>
             <p className="text-sm text-muted-foreground mb-2 max-w-sm mx-auto">
-              You have an assessment in progress: {answeredCount} of {visibleQuestions.length} questions answered.
+              There is an assessment in progress: {answeredCount} of {visibleQuestions.length} questions answered.
             </p>
             {savedQuestion && (
               <p className="text-xs text-muted-foreground mb-6">
@@ -222,7 +220,7 @@ const AssessmentPage = () => {
   if (profileLoading) {
     return (
       <div className="pb-24 px-6 pt-8 lg:px-12 max-w-2xl mx-auto flex items-center justify-center min-h-[40vh]">
-        <div className="animate-pulse text-muted-foreground text-sm">Loading your assessment…</div>
+        <div className="animate-pulse text-muted-foreground text-sm">Loading the assessment…</div>
       </div>
     );
   }
@@ -238,7 +236,7 @@ const AssessmentPage = () => {
       <PageHeader
         eyebrow={false}
         title={<RerootedTitle suffix="Relocation Complexity Score" showBreak />}
-        subtitle="Understand the full complexity of your relocation"
+        subtitle="Relocation risk profile for this employee"
       />
       <div className="max-w-2xl mx-auto px-6 -mt-10 relative">
 
@@ -248,7 +246,7 @@ const AssessmentPage = () => {
             <div className="text-4xl mb-4">📊</div>
             <h2 className="text-xl font-[900] tracking-tight mb-2">Relocation Complexity Assessment</h2>
             <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
-              Answer {ASSESSMENT_QUESTIONS.length} questions across 8 categories to understand the full complexity of this relocation.
+              Answer {ASSESSMENT_QUESTIONS.length} questions across 8 categories to see where this relocation is most likely to run into trouble, before you move the employee.
             </p>
             <Button onClick={() => { setTaking(true); setCurrentIdx(0); setAnswers({}); }} className="rounded-full px-8">Start Assessment</Button>
           </CardContent>
@@ -273,20 +271,25 @@ const AssessmentPage = () => {
           </Card>
 
           <div className="mb-10">
-            <h3 className="text-base font-[900] tracking-tight mb-3">Priority Focus Areas</h3>
+            <h3 className="text-base font-[900] tracking-tight mb-3">Key Risk Areas</h3>
             <div className="space-y-3">
               {getPriorityDimensions(assessment.score, assessment.answers).map(dimId => {
-                const dim = ROOTING_IN_DIMENSIONS.find(d => d.id === dimId);
-                if (!dim) return null;
+                const area = ASSESSMENT_RISK_AREAS[dimId];
+                if (!area) return null;
                 return (
-                  <Card key={dimId} className="border border-border hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => navigate('/app/home?dimension=' + dimId)}>
-                    <CardContent className="p-4 flex items-center gap-3">
-                      <span className="text-2xl">{dim.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-sm">{dim.name}</div>
-                        <div className="text-xs text-muted-foreground truncate">{dim.shortDescription}</div>
+                  <Card key={dimId} className="border border-border">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-2xl">{area.icon}</span>
+                        <div className="font-[900] text-sm tracking-tight">{area.title}</div>
                       </div>
-                      <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                      <p className="text-xs leading-relaxed text-foreground/80 mb-2">{area.risk}</p>
+                      <p className="text-xs leading-relaxed text-muted-foreground mb-1">
+                        <span className="font-semibold text-foreground">Watch for: </span>{area.watchFor}
+                      </p>
+                      <p className="text-xs leading-relaxed text-muted-foreground">
+                        <span className="font-semibold text-foreground">Recommended action: </span>{area.action}
+                      </p>
                     </CardContent>
                   </Card>
                 );

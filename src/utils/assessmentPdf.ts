@@ -4,7 +4,7 @@ import {
   getScoreBand,
   getPriorityDimensions,
 } from '@/data/assessment-questions';
-import { ROOTING_IN_DIMENSIONS } from '@/data/coaching-content';
+import { ASSESSMENT_RISK_AREAS } from '@/data/assessment-risk-areas';
 import type { UserProfile, AssessmentResult } from '@/types/user';
 
 /* ── Palette ── */
@@ -130,20 +130,24 @@ export function generateAssessmentPdf(
   // Title
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(26);
-  doc.text('Relocation Complexity Score', mx, 42);
+  doc.setFontSize(24);
+  doc.text('Relocation Risk Assessment', mx, 40);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(180, 185, 220);
+  doc.text('Relocation Complexity Score', mx, 47);
 
   // Meta line
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(180, 185, 220);
   const metaParts: string[] = [];
-  if (user.name) metaParts.push(sanitize(user.name));
+  if (user.name) metaParts.push(sanitize(`Employee: ${user.name}`));
   if (user.countryFrom && user.countryTo) {
     metaParts.push(sanitize(`${user.countryFrom} -> ${user.countryTo}`));
   }
   metaParts.push(dateStr);
-  doc.text(metaParts.join('  |  '), mx, 52);
+  doc.text(metaParts.join('  |  '), mx, 56);
 
   // ── Score circle ──
   const circleX = mx + 28;
@@ -179,38 +183,81 @@ export function generateAssessmentPdf(
   const recLines = doc.splitTextToSize(sanitize(band.recommendation), cw - 62);
   doc.text(recLines, bandX, bandY + 16);
 
-  // ── PRIORITY FOCUS AREAS ──
+  // Compact header used on any continuation page of the summary section.
+  const drawCompactHeader = (rightTitle: string) => {
+    doc.setFillColor(...DEEP_BLUE);
+    doc.rect(0, 0, pw, 18, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.text('Re-Rooted\u00AE', mx, 12);
+    doc.setFontSize(5.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(200, 200, 230);
+    doc.text('SWITZERLAND', mx + 35, 12);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.text(rightTitle, pw - mx, 12, { align: 'right' });
+  };
+
+  // ── KEY RISK AREAS ──
   y = headerH + 8;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
   doc.setTextColor(...DEEP_BLUE);
-  doc.text('PRIORITY FOCUS AREAS', mx, y);
+  doc.text('KEY RISK AREAS', mx, y);
   y += 5;
 
   const priorities = getPriorityDimensions(assessment.score, assessment.answers);
-  const colW = (cw - 4) / 2;
-  const pillH = 10;
-  const pillGap = 2;
 
-  priorities.forEach((dimId, i) => {
-    const dim = ROOTING_IN_DIMENSIONS.find((d) => d.id === dimId);
-    if (!dim) return;
-    const col = i % 2;
-    const row = Math.floor(i / 2);
-    const px = mx + col * (colW + 4);
-    const py = y + row * (pillH + pillGap);
+  priorities.forEach((dimId) => {
+    const area = ASSESSMENT_RISK_AREAS[dimId];
+    if (!area) return;
+
+    const riskLines = doc.splitTextToSize(sanitize(area.risk), cw - 12);
+    const actionLines = doc.splitTextToSize(
+      sanitize('Recommended action: ' + area.action),
+      cw - 12
+    );
+    const blockH = 8 + riskLines.length * 3.4 + actionLines.length * 3.4 + 5;
+
+    if (y + blockH > ph - 20) {
+      doc.addPage();
+      drawCompactHeader('Key Risk Areas (continued)');
+      y = 28;
+    }
+
     doc.setFillColor(...LIGHT_BG);
-    doc.roundedRect(px, py, colW, pillH, 3, 3, 'F');
+    doc.roundedRect(mx, y, cw, blockH, 3, 3, 'F');
+
+    let ty = y + 6;
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9);
     doc.setTextColor(...DEEP_BLUE);
-    doc.text(sanitize(dim.name), px + 6, py + 6.5);
+    doc.text(sanitize(area.title), mx + 6, ty);
+    ty += 4.5;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...TEXT_DARK);
+    doc.text(riskLines, mx + 6, ty);
+    ty += riskLines.length * 3.4 + 1;
+
+    doc.setTextColor(...TEXT_MID);
+    doc.text(actionLines, mx + 6, ty);
+
+    y += blockH + 3;
   });
 
-  const priorityRows = Math.ceil(priorities.length / 2);
-  y += priorityRows * (pillH + pillGap) + 6;
+  y += 3;
 
   // ── COMPLEXITY BY CATEGORY ──
+  if (y + 40 > ph - 20) {
+    doc.addPage();
+    drawCompactHeader('Complexity by Category');
+    y = 28;
+  }
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
   doc.setTextColor(...DEEP_BLUE);
@@ -230,6 +277,11 @@ export function generateAssessmentPdf(
   const barRowH = 12;
 
   catData.forEach((cat) => {
+    if (y + barRowH > ph - 18) {
+      doc.addPage();
+      drawCompactHeader('Complexity by Category (continued)');
+      y = 28;
+    }
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9.5);
     doc.setTextColor(...TEXT_DARK);
@@ -274,7 +326,7 @@ export function generateAssessmentPdf(
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(10);
-    doc.text('Answer Breakdown', pw - mx, 12, { align: 'right' });
+    doc.text('Relocation Risk Assessment  |  Answer Breakdown', pw - mx, 12, { align: 'right' });
 
     y = 26;
     if (continued) {
@@ -385,7 +437,13 @@ export function generateAssessmentPdf(
     doc.setTextColor(...TEXT_MID);
 
     if (i === totalPages) {
-      doc.text('Re-Rooted\u00AE  |  The human side of relocation', mx, ph - 8);
+      doc.text(
+        sanitize(
+          'Re-Rooted\u00AE  |  Planning aid based on the inputs provided. Not a performance evaluation of the individual.'
+        ),
+        mx,
+        ph - 8
+      );
     } else {
       doc.text('Generated by Re-Rooted\u00AE  |  ' + dateStr, mx, ph - 8);
     }
@@ -393,6 +451,6 @@ export function generateAssessmentPdf(
   }
 
   doc.save(
-    'Re-Rooted-Complexity-Score-' + (user.name?.replace(/\s+/g, '-') || 'Report') + '.pdf'
+    'Re-Rooted-Relocation-Risk-Assessment-' + (user.name?.replace(/\s+/g, '-') || 'Report') + '.pdf'
   );
 }

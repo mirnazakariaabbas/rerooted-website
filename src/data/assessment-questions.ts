@@ -352,22 +352,22 @@ export function getVisibleQuestions(answers: Record<string, number | number[]>):
 
 export function getScoreInterpretation(score: number, countryFrom: string, countryTo: string): string {
   if (score <= 25) {
-    return `The relocation from ${countryFrom} to ${countryTo} shows low structural complexity with strong personal readiness. A standard relocation package is likely sufficient, with light-touch check-ins to ensure a smooth landing.`;
+    return `Moving this employee from ${countryFrom} to ${countryTo} carries low structural complexity. Your standard relocation package is likely sufficient. Keep light-touch check-ins in the first six months so that any issue surfaces early rather than at exit interview.`;
   }
   if (score <= 45) {
-    return `The move from ${countryFrom} to ${countryTo} carries meaningful differences in culture or role, but they're manageable. Targeted coaching on 2–3 key focus areas will make a significant difference in how quickly they settle and perform.`;
+    return `The move from ${countryFrom} to ${countryTo} carries meaningful differences in culture or role scope. They are manageable, but not automatically. Budget targeted coaching on the 2 to 3 risk areas below. Without it, expect a slower ramp-up and a higher chance of early friction with the receiving team.`;
   }
   if (score <= 65) {
-    return `The relocation from ${countryFrom} to ${countryTo} shows significant complexity across multiple dimensions. A structured Re-Rooted® coaching program is recommended to support the transition across professional, cultural, and personal domains.`;
+    return `This relocation from ${countryFrom} to ${countryTo} shows significant complexity across several dimensions at once. Risk here is cumulative, not additive. A structured Re-Rooted® coaching program is recommended alongside the relocation package, covering the professional, cultural and personal factors identified below.`;
   }
-  return `The move from ${countryFrom} to ${countryTo} is one of the most complex relocation profiles, compounding factors across assignment, culture, family, and readiness. A full Re-Rooted® program with ongoing support across all pillars is strongly recommended.`;
+  return `This is one of the highest complexity relocation profiles we assess. Assignment demands, cultural distance, family factors and readiness all compound in the move from ${countryFrom} to ${countryTo}. The risk of early return or assignment failure is material. We strongly recommend a full Re-Rooted® program with ongoing support, and a review of the timeline and expectations before the start date.`;
 }
 
 export function getScoreBand(score: number): { label: string; recommendation: string } {
   if (score <= 25) return { label: 'Standard Support', recommendation: 'Standard relocation package likely sufficient. Light-touch check-ins.' };
-  if (score <= 45) return { label: 'Enhanced Support', recommendation: 'Targeted coaching on 2–3 key focus areas.' };
-  if (score <= 65) return { label: 'Intensive Support', recommendation: 'Structured Re-Rooted® coaching program recommended.' };
-  return { label: 'High-Touch Program', recommendation: 'Full Re-Rooted® program with ongoing support across all pillars.' };
+  if (score <= 45) return { label: 'Enhanced Support', recommendation: 'Add targeted coaching on 2 to 3 risk areas to the standard package.' };
+  if (score <= 65) return { label: 'Intensive Support', recommendation: 'Structured Re-Rooted® coaching program recommended alongside the package.' };
+  return { label: 'High-Touch Program', recommendation: 'Full Re-Rooted® program with ongoing support. Review timeline and expectations before start date.' };
 }
 
 export function getPriorityDimensions(score: number, answers: Record<string, number | number[]>): string[] {
