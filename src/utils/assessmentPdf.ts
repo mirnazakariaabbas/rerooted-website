@@ -183,6 +183,24 @@ export function generateAssessmentPdf(
   const recLines = doc.splitTextToSize(sanitize(band.recommendation), cw - 62);
   doc.text(recLines, bandX, bandY + 16);
 
+  // Compact header used on any continuation page of the summary section.
+  const drawCompactHeader = (rightTitle: string) => {
+    doc.setFillColor(...DEEP_BLUE);
+    doc.rect(0, 0, pw, 18, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.text('Re-Rooted\u00AE', mx, 12);
+    doc.setFontSize(5.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(200, 200, 230);
+    doc.text('SWITZERLAND', mx + 35, 12);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.text(rightTitle, pw - mx, 12, { align: 'right' });
+  };
+
   // ── KEY RISK AREAS ──
   y = headerH + 8;
   doc.setFont('helvetica', 'bold');
@@ -206,7 +224,8 @@ export function generateAssessmentPdf(
 
     if (y + blockH > ph - 20) {
       doc.addPage();
-      y = 20;
+      drawCompactHeader('Key Risk Areas (continued)');
+      y = 28;
     }
 
     doc.setFillColor(...LIGHT_BG);
@@ -236,7 +255,8 @@ export function generateAssessmentPdf(
   // ── COMPLEXITY BY CATEGORY ──
   if (y + 40 > ph - 20) {
     doc.addPage();
-    y = 20;
+    drawCompactHeader('Complexity by Category');
+    y = 28;
   }
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
@@ -259,7 +279,8 @@ export function generateAssessmentPdf(
   catData.forEach((cat) => {
     if (y + barRowH > ph - 18) {
       doc.addPage();
-      y = 20;
+      drawCompactHeader('Complexity by Category (continued)');
+      y = 28;
     }
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9.5);
