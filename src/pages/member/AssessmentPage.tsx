@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/contexts/UserContext';
 import {
@@ -18,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight, Download, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { generateAssessmentPdf } from '@/utils/assessmentPdf';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { RerootedTitle } from '@/components/layout/RerootedTitle';
@@ -56,7 +55,6 @@ const bandColors: Record<string, string> = {
 
 const AssessmentPage = () => {
   const { user, assessment, setAssessment, reflections, profileLoading } = useUser();
-  const navigate = useNavigate();
 
   const saved = useMemo(() => loadProgress(), []);
   const [taking, setTaking] = useState(false);
