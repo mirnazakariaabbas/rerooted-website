@@ -183,7 +183,7 @@ export function generateAssessmentPdf(
   const recLines = doc.splitTextToSize(sanitize(band.recommendation), cw - 62);
   doc.text(recLines, bandX, bandY + 16);
 
-  // ── PRIORITY FOCUS AREAS ──
+  // ── KEY RISK AREAS ──
   y = headerH + 8;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
@@ -234,6 +234,10 @@ export function generateAssessmentPdf(
   y += 3;
 
   // ── COMPLEXITY BY CATEGORY ──
+  if (y + 40 > ph - 20) {
+    doc.addPage();
+    y = 20;
+  }
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
   doc.setTextColor(...DEEP_BLUE);
@@ -253,6 +257,10 @@ export function generateAssessmentPdf(
   const barRowH = 12;
 
   catData.forEach((cat) => {
+    if (y + barRowH > ph - 18) {
+      doc.addPage();
+      y = 20;
+    }
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9.5);
     doc.setTextColor(...TEXT_DARK);
